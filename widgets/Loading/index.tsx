@@ -1,15 +1,18 @@
 "use client"
 
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import BoneIcon from "@/public/images/svg/bone.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import Lottie from 'react-lottie';
 import animationData from '@/public/lotties/loading.json';
+import { useRouter } from "next/navigation";
 
 interface IModalLoadingProps {
 }
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
+  const {push} = useRouter()
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -19,8 +22,11 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
     }
   };
 
-  // left: calc(50% - 296px/2 - 2px);
-  //       top: calc(50% - 184px/2 + 4.5px);
+  useEffect(() => {
+    setTimeout(() => {
+      push("/onboarding")
+    }, 2000)
+  }, []);
 
   return (
     <div

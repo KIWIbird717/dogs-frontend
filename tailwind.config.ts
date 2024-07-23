@@ -17,6 +17,7 @@ const config: Config = {
         "gradient-button-sec": "linear-gradient(127.89deg, #4100CC -22.47%, #210066 138.25%)",
         "gradient-loading": "linear-gradient(116.22deg, #9C91FF 16.5%, #4731FF 83.59%)",
         "gradient-background": "linear-gradient(180deg, #1C1C1C 50%, #2E2E2E 103.67%)",
+        "gradient-logo": "radial-gradient(28.64% 28.64% at 50% 50%, #F5DFE1 0%, rgba(41, 39, 44, 0) 100%)",
       },
       boxShadow: {
         buttonAccent: "4px 4px 12px 0px rgba(122, 107, 255, 0.24) inset, -4px -4px 12px 0px rgba(23, 13, 108, 0.24) inset",

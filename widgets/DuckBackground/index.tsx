@@ -1,10 +1,10 @@
 import { FC } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import Gradient1 from "@/public/images/svg/gradient1.svg";
-import Gradient2 from "@/public/images/svg/gradient2.svg";
-import Gradient3 from "@/public/images/svg/gradient3.svg";
-import Gradient4 from "@/public/images/svg/gradient4.svg";
+import Gradient1 from "@/public/images/svg/loading/gradient1.svg";
+import Gradient2 from "@/public/images/svg/loading/gradient2.svg";
+import Gradient3 from "@/public/images/svg/loading/gradient3.svg";
+import Gradient4 from "@/public/images/svg/loading/gradient4.svg";
 
 interface IDuckBackgroundProps {
 }
