@@ -25,6 +25,13 @@ const config: Config = {
         buttonSec: "19px 19px 24.8px 0px rgba(140, 121, 255, 0.25) inset, 19px 19px 24.8px 0px rgba(22, 0, 159, 0.25) inset",
       }
     },
+    fontFamily: {
+      inter: ["Inter"],
+      luckiestGuy: ["LuckiestGuy"],
+      sFProText: ["SFProText"],
+      epilogue: ["Epilogue"],
+      portico: ["Portico"],
+    },
     colors: {
       white: {
         DEFAULT: "var(--white-default)",

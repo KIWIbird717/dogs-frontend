@@ -1,11 +1,11 @@
 "use client ";
 
-import { Inter } from "next/font/google";
+import { Epilogue } from "next/font/google";
 import "@/public/styles/globals.scss";
 import Script from "next/script";
 import StoreProvider from "@/shared/lib/redux-store/StoreProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const epilogue = Epilogue({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -17,7 +17,7 @@ export default function RootLayout({
       <head>
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
-      <body className={inter.className}>
+      <body className={epilogue.className}>
         <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
