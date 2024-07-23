@@ -8,6 +8,27 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --blue-default: #4100CC;
+  --blue-900: #6857FD;
+  --blue-800: #1E90FF;
+
+  --white-default: #FFFFFF;
+  --white-900: #FCFCFC;
+  --white-800: #B0B0B0;
+
+  --black-default: #000000;
+  --black-900: #030303;
+  --black-800: rgba(17, 17, 17, 0.67);
+  --black-700: #222137;
+  --black-600: #2e2e2e;
+  --black-500: #383838;
+  --black-400: rgba(120, 120, 128, 0.16);
+  --black-300: #4F4F4F;
+
+  --green-default: #32CD32;
+
+  --red-default: #FF4500;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,8 +41,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
