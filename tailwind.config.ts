@@ -23,6 +23,7 @@ const config: Config = {
         boneButton: "0px 4px 12px 0px rgba(97, 62, 234, 0.5)",
         buttonNoAccent: "2px 2px 4px 0px rgba(120, 120, 128, 0.25) inset",
         buttonSec: "19px 19px 24.8px 0px rgba(140, 121, 255, 0.25) inset, 19px 19px 24.8px 0px rgba(22, 0, 159, 0.25) inset",
+        loadingModal: "0px 0px 36.5px 9px rgba(104, 87, 253, 0.24), inset 2px 2px 4px rgba(120, 120, 128, 0.25)"
       }
     },
     fontFamily: {
@@ -42,6 +43,7 @@ const config: Config = {
         DEFAULT: "var(--black-default)",
         900: "var(--black-900)",
         800: "var(--black-800)",
+        750: "var(--black-750)",
         700: "var(--black-700)",
         600: "var(--black-600)",
         500: "var(--black-500)",
