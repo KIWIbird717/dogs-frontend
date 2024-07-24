@@ -1,14 +1,24 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./entities/**/*.{js,ts,jsx,tsx,mdx}",
+    './components/**/*.{ts,tsx}',
     "./widgets/**/*.{js,ts,jsx,tsx,mdx}",
     "./features/**/*.{js,ts,jsx,tsx,mdx}",
     "./shared/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -26,7 +36,21 @@ const config: Config = {
         buttonNoAccent: "2px 2px 4px 0px rgba(120, 120, 128, 0.25) inset",
         buttonSec: "19px 19px 24.8px 0px rgba(140, 121, 255, 0.25) inset, 19px 19px 24.8px 0px rgba(22, 0, 159, 0.25) inset",
         loadingModal: "0px 0px 36.5px 9px rgba(104, 87, 253, 0.24), inset 2px 2px 4px rgba(120, 120, 128, 0.25)"
-      }
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
     fontFamily: {
       inter: ["Inter"],

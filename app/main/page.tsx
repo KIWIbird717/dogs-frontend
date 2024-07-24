@@ -12,7 +12,7 @@ interface IMainPageProps {
 const MainPage: NextPage<IMainPageProps> = () => {
   return (
     <View fadeInOnLoad
-          className="flex flex-col gap-[21px] w-full h-screen relative bg-gradient-accent-center pt-6 overflow-hidden"
+          className="flex flex-col gap-[21px] w-full h-screen relative bg-gradient-accent-center pt-6 overflow-hidden "
     >
       <Gradient1 className={"absolute top-0"}/>
       <Gradient2 className={"absolute -bottom-[100px] z-[1]"}/>

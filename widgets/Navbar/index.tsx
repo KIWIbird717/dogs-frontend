@@ -30,7 +30,7 @@ const navItemsSecond: INavItems[] = [
 
 export const Navbar: FC<INavbarProps> = () => {
   return (
-    <div className={"flex items-end w-full h-[107px] z-[10]"}>
+    <div className={"flex items-end w-full h-[107px] z-[10] fixed bottom-0 left-0"}>
       <div className={"flex bg-black-790 justify-between w-full h-[75px] px-4 rounded-t-xl relative"}>
         <NavItems items={navItemsFirst} />
 

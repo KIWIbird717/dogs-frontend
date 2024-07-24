@@ -3,15 +3,18 @@ import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 
-import AvatarIcon from "@/public/images/avatar.png"
-import WalletIcon from "@/public/images/svg/wallet.svg"
-import QuestionIcon from "@/public/images/svg/question-icon.svg"
-import SettingsIcon from "@/public/images/svg/settings.svg"
+import AvatarIcon from "@/public/images/avatar.png";
+import WalletIcon from "@/public/images/svg/wallet.svg";
+import QuestionIcon from "@/public/images/svg/question-icon.svg";
+import SettingsIcon from "@/public/images/svg/settings.svg";
+import { useRouter } from "next/navigation";
 
 interface IHeaderProps {
 }
 
 export const Header: FC<IHeaderProps> = () => {
+  const { push } = useRouter();
+  const redirectToFaq = () => push("/faq");
   return (
     <div className={"w-full flex gap-4 h-[48px]"}>
       <div className={"w-[56%] flex justify-between gap-2"}>
@@ -46,10 +49,13 @@ export const Header: FC<IHeaderProps> = () => {
       </div>
 
       <div className={"flex gap-2"}>
-        <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent opacity-45 bg-black-400 border border-black-400"}>
+        <Button
+          className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent opacity-45 bg-black-400 border border-black-400"}>
           <WalletIcon />
         </Button>
-        <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}>
+        <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}
+                onClick={redirectToFaq}
+        >
           <QuestionIcon />
         </Button>
         <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}>

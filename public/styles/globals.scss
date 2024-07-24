@@ -86,6 +86,11 @@ span {
   line-height: 18px;
 }
 
+input {
+  background: none;
+  outline: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
