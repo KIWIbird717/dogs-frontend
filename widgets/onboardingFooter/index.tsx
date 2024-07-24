@@ -18,7 +18,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = (
   },
 ) => {
   return (
-    <div className={"w-full flex flex-col gap-1 pb-3 relative z-[1]"}>
+    <div className={"w-full flex flex-col gap-1 pb-3 relative z-[10]"}>
       <div className={"w-full flex gap-2"}>
         <AnimatePresence>
           {step !== 0 && (

@@ -12,7 +12,7 @@ interface IMainForClickerProps {
 
 export const MainForClicker: FC<IMainForClickerProps> = () => {
   const [coins, setCoins] = useState(27139454);
-  const [boosts, setBoosts] = useState(490);
+  const [boosts, setBoosts] = useState(500);
   const maxBoost = 500;
 
   const onIncrementCoin = () => {

@@ -115,7 +115,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
 
   return (
     <>
-      <div className={"w-full flex flex-col gap-6 z-[1]"}>
+      <div className={"w-full flex flex-col gap-6 z-[10]"}>
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
