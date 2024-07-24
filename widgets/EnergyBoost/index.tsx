@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@/shared/ui/Button/Button";
 import EnergyIcon from "@/public/images/svg/energy.svg";
-import BowlIcon from "@/public/images/svg/bowl.svg";
+import BowlIcon from "@/public/images/svg/racket.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 
 interface IEnergyBoostProps {
