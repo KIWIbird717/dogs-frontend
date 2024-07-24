@@ -21,8 +21,10 @@
   --black-default: #000000;
   --black-900: #030303;
   --black-800: rgba(17, 17, 17, 0.67);
+  --black-790: #1E1E1E;
   --black-750: rgba(17, 17, 17, 0.16);
   --black-700: #222137;
+  --black-650: #2D2D2D;
   --black-600: #2e2e2e;
   --black-500: #383838;
   --black-400: rgba(120, 120, 128, 0.16);
@@ -67,6 +69,7 @@ h3 {
 
 h4 {
   font-size: 18px;
+  font-family: "Portico";
   font-weight: 400;
   line-height: 24px;
 }
