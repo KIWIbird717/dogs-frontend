@@ -42,7 +42,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
 
 
   return (
-    <div className={"w-full h-full flex flex-col gap-4 px-4"}>
+    <div className={"w-full h-full flex flex-col gap-4 px-4 z-[10]"}>
       <Header />
 
       <div className={"flex h-full flex-col justify-between gap-8"}>
