@@ -33,6 +33,7 @@ const config: Config = {
       boxShadow: {
         buttonAccent: "4px 4px 12px 0px rgba(122, 107, 255, 0.24) inset, -4px -4px 12px 0px rgba(23, 13, 108, 0.24) inset",
         boneButton: "0px 4px 12px 0px rgba(97, 62, 234, 0.5)",
+        switch: "0px 3px 1px 0px rgba(0, 0, 0, 0.06), 0px 3px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 0px 1px rgba(0, 0, 0, 0.04)",
         buttonNoAccent: "2px 2px 4px 0px rgba(120, 120, 128, 0.25) inset",
         buttonSec: "19px 19px 24.8px 0px rgba(140, 121, 255, 0.25) inset, 19px 19px 24.8px 0px rgba(22, 0, 159, 0.25) inset",
         loadingModal: "0px 0px 36.5px 9px rgba(104, 87, 253, 0.24), inset 2px 2px 4px rgba(120, 120, 128, 0.25)",

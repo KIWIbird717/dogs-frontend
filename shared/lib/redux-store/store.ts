@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
 
 export const store = () => {
   return configureStore({
     reducer: {
       user: UserSlice.userReducer,
+      modal: ModalSlice.modalReducer
     },
     /**
      * You cant set up more middlewares

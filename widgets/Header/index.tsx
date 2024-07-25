@@ -8,13 +8,20 @@ import WalletIcon from "@/public/images/svg/wallet.svg";
 import QuestionIcon from "@/public/images/svg/question-icon.svg";
 import SettingsIcon from "@/public/images/svg/settings.svg";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/shared/hooks/useModal";
 
 interface IHeaderProps {
 }
 
 export const Header: FC<IHeaderProps> = () => {
+  const { onOpenModal } = useModal();
   const { push } = useRouter();
   const redirectToFaq = () => push("/faq");
+
+  const onOpenSettings = () => {
+    onOpenModal("settings", {});
+  };
+
   return (
     <div className={"w-full flex gap-4 h-[48px]"}>
       <div className={"w-[56%] flex justify-between gap-2"}>
@@ -58,7 +65,9 @@ export const Header: FC<IHeaderProps> = () => {
         >
           <QuestionIcon />
         </Button>
-        <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}>
+        <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}
+                onClick={onOpenSettings}
+        >
           <SettingsIcon />
         </Button>
       </div>
