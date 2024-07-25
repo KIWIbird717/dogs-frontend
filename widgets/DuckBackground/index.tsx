@@ -13,10 +13,10 @@ export const DuckBackground: FC<IDuckBackgroundProps> = () => {
   return (
     <div>
       <>
-        <Gradient1 className={"absolute top-0 left-0"} />
-        <Gradient2 className={"absolute top-0 left-0"}/>
-        <Gradient3 className={"absolute top-0 left-0"}/>
-        <Gradient4 className={"absolute top-0 left-0"}/>
+        <Gradient1 className={"absolute top-0 left-0 z-[1]"} />
+        <Gradient2 className={"absolute top-0 left-0 z-[1]"} />
+        <Gradient3 className={"absolute top-0 left-0 z-[1]"} />
+        <Gradient4 className={"absolute top-0 left-4 z-[1]"} />
       </>
 
       {Array.from(Array(4)).map((value, index) => {

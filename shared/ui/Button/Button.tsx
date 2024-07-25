@@ -15,13 +15,17 @@ export namespace ButtonNS {
     noAccent: {
       className:
         "bg-black-400 text-white-800",
-    }
+    },
+    bowl: {
+      className: "h-[68px] p-3 bg-black-400 border border-black-300 shadow-buttonNoAccent rounded-xl",
+    },
+
   } as const;
 
   // дефолтный вариант кнопки (если в пропсах не был указан параметр variant)
   export const DEFAULT_VARIANT = {
     className:
-      "text-white-800 text-[18px] font-normal leading-6"
+      "text-white-800 text-[18px] font-normal leading-6",
   };
   // варианты размеров кнопок
 
@@ -64,7 +68,15 @@ export const Button: FC<ButtonNS.Props> = ({ children, icon, onClick, ...props }
         props.className,
       )}
     >
-      {children}
+      {icon
+        ? <div className={"w-full flex justify-between"}>
+          {children}
+          <div className={twMerge("flex items-center", props.disabled && "hidden")}>
+            {icon}
+          </div>
+        </div>
+        : children
+      }
     </button>
   );
 };

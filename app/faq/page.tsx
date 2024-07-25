@@ -23,9 +23,9 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
   const onRedirect = () => push("/support")
   return (
     <View fadeInOnLoad
-          className="w-full flex flex-col gap-6 px-4 h-screen relative pt-6 overflow-hidden "
+          className="w-full flex flex-col gap-6 px-4 h-screen bg-gradient-background relative pt-6 overflow-hidden "
     >
-      <div className={"flex flex-col gap-4"}>
+      <div className={"flex flex-col gap-4 z-[10]"}>
         <FaqHeader />
         <FaqDescription />
         <Input placeholder={"Search Help"} />
@@ -34,7 +34,7 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
       <AccordionList />
 
       <Button variant={"primary"}
-              className={"fixed left-4 bottom-[112px] w-[calc(100%-32px)]"}
+              className={"fixed left-4 bottom-[112px] w-[calc(100%-32px)] z-[10]"}
               onClick={onRedirect}
       >
         Send A message
@@ -43,10 +43,10 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
       <Navbar />
 
 
-      <Gradient1 className={"absolute left-0 top-0 z-[-1]"} />
-      <Gradient2 className={"absolute left-0 top-0 z-[-1]"} />
-      <Gradient3 className={"absolute left-0 top-0 z-[-1]"} />
-      <Gradient4 className={"absolute left-0 bottom-0 z-[-1]"} />
+      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
+      <Gradient2 className={"absolute left-0 top-0 z-[1]"} />
+      <Gradient3 className={"absolute left-0 top-0 z-[1]"} />
+      <Gradient4 className={"absolute left-0 bottom-0 z-[1]"} />
 
     </View>
   );

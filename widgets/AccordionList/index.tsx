@@ -48,7 +48,7 @@ const faqs = [
 
 export const AccordionList: FC<IAccordionListProps> = () => {
   return (
-    <div className={"w-full flex flex-col gap-4 overflow-auto"}>
+    <div className={"w-full flex flex-col gap-4 overflow-auto z-[10]"}>
 
       <Typography tag={"h2"}
                   className={"text-white"}
