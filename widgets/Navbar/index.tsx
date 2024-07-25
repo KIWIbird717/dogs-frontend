@@ -1,4 +1,6 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useMemo } from "react";
 import { Button } from "@/shared/ui/Button/Button";
 import NftIcon from "@/public/images/svg/nav/nft.svg";
 import StatusIcon from "@/public/images/svg/nav/status.svg";
@@ -7,32 +9,49 @@ import FriendIcon from "@/public/images/svg/nav/friend.svg";
 import BoneIcon from "@/public/images/svg/nav/bone.svg";
 
 import { INavItems, NavItems } from "@/widgets/Navbar/shared/ui/NavItems";
+import { usePathname } from "next/navigation";
 
 interface INavbarProps {
 }
 
-const navItemsFirst: INavItems[] = [
-  {
-    icon: <NftIcon />,
-  },
-  {
-    icon: <StatusIcon />,
-  },
-];
-const navItemsSecond: INavItems[] = [
-  {
-    icon: <EarnIcon />,
-  },
-  {
-    icon: <FriendIcon />,
-  },
-];
+
 
 export const Navbar: FC<INavbarProps> = () => {
+  const pathName = usePathname();
+  const className = pathName
+
+  const navItemsFirst: INavItems[] = useMemo(()=> [
+    {
+      icon: NftIcon,
+      title: "NFT",
+      link: "/nft",
+    },
+    {
+      icon: StatusIcon,
+      title: "NFT",
+      link: "/nft1",
+    },
+  ], [])
+
+  const navItemsSecond: INavItems[] = useMemo(() => [
+    {
+      icon: EarnIcon,
+      title: "NFT",
+      link: "/nft2",
+    },
+    {
+      icon: FriendIcon,
+      title: "NFT",
+      link: "/nft3",
+    },
+  ], [])
+
   return (
     <div className={"flex items-end w-full h-[107px] z-[10] fixed bottom-0 left-0"}>
       <div className={"flex bg-black-790 justify-between w-full h-[75px] px-4 rounded-t-xl relative"}>
-        <NavItems items={navItemsFirst} />
+        <NavItems items={navItemsFirst}
+                  pathName={pathName}
+        />
 
         <div className={"w-full flex justify-center relative"}>
           <div
@@ -53,7 +72,9 @@ export const Navbar: FC<INavbarProps> = () => {
           </div>
         </div>
 
-        <NavItems items={navItemsSecond} />
+        <NavItems items={navItemsSecond}
+                  pathName={pathName}
+        />
       </div>
     </div>
   );

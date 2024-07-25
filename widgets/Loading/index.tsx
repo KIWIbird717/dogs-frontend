@@ -30,7 +30,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
 
   return (
     <div
-      className={"flex flex-col gap-4 w-[296px] px-4 pb-4 pt-6 rounded-xl border-[1px] border-black-300 shadow-loadingModal backdrop-blur-[16px] bg-black-750 z-[10]"}>
+      className={"relative flex flex-col gap-4 w-[296px] px-4 pb-4 pt-6 rounded-xl border-[1px] border-black-300 shadow-loadingModal  z-[10]"}>
       <div className={"w-full flex flex-col gap-2"}>
         <div className={"flex gap-2"}>
           <div>
@@ -69,6 +69,9 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
           />
         </div>
       </div>
+
+      <div
+        className={"w-full h-full absolute left-0 top-0 backdrop-blur-[16px] bg-black-750 rounded-xl z-[-1]"} />
     </div>
   );
 };
