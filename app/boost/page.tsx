@@ -17,7 +17,7 @@ const BoostPage: NextPage<IBoostPageProps> = () => {
     boosts,
     maxBoost,
     onMaxBoost
-  } = useClicker();
+  } = useClicker(true);
 
   return (
     <View fadeInOnLoad

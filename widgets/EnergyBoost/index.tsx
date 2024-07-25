@@ -6,21 +6,22 @@ import { Block } from "@/widgets/Block";
 interface IEnergyBoostProps {
   boosts: number;
   maxBoost: number;
-  onMaxBoost: () => void
+  onMaxBoost: () => void;
 }
 
 export const EnergyBoost: FC<IEnergyBoostProps> = (
   {
     boosts,
     maxBoost,
-    onMaxBoost
+    onMaxBoost,
   },
 ) => {
   return (
     <div className={"w-full flex justify-between"}>
       <Block icon={<EnergyIcon />}
              title={`${boosts}/${maxBoost}`}
-      />
+             onClick={() => {
+             }} />
       <Block icon={<RacketIcon />}
              title={"Boost"}
              onClick={onMaxBoost}

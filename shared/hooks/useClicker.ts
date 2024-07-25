@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-export const useClicker = () => {
+export const useClicker = (isSetInterval?: boolean) => {
   const [coins, setCoins] = useState(27139454);
 
   const [boosts, setBoosts] = useState(200);
@@ -26,14 +26,17 @@ export const useClicker = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (boosts < maxBoost) {
-        onIncrementBoost();
-      }
-    }, 1000);
+    let interval;
 
+    if (isSetInterval) {
+      interval = setInterval(() => {
+        if (boosts < maxBoost) {
+          onIncrementBoost();
+        }
+      }, 1000);
+    }
     return () => clearInterval(interval);
-  }, [boosts, onIncrementBoost]);
+  }, [boosts, isSetInterval, onIncrementBoost]);
 
   return {
     boosts,
@@ -42,6 +45,6 @@ export const useClicker = () => {
     onIncrementCoin,
     onIncrementBoost,
     onDecrementBoost,
-    onMaxBoost
-  }
-}
+    onMaxBoost,
+  };
+};

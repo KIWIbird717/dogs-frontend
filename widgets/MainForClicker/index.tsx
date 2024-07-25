@@ -18,7 +18,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     boosts,
     coins,
     onMaxBoost
-  } = useClicker();
+  } = useClicker(true);
 
   return (
     <div className={"w-full h-[calc(100%-112px)] flex flex-col gap-4 px-4 z-[10]"}>
