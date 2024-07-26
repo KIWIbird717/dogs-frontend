@@ -3,7 +3,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { Header } from "@/widgets/Header";
 import { Board } from "@/widgets/Board";
-import { Money } from "@/widgets/Money";
+import { StatsInfo } from "../StatsInfo";
 import { Clicker } from "@/widgets/Clicker";
 import { EnergyBoost } from "@/widgets/EnergyBoost";
 import { useClicker } from "@/shared/hooks/useClicker";
@@ -17,7 +17,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     maxBoost,
     boosts,
     coins,
-    onMaxBoost
+    onMaxBoost,
   } = useClicker(true);
 
   return (
@@ -28,7 +28,9 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
         <div className={"w-full flex flex-col gap-8"}>
           <div className={"w-full flex flex-col gap-6"}>
             <Board />
-            <Money coins={coins} />
+            <StatsInfo value={coins}
+                       isIcon
+            />
           </div>
 
           <Clicker onIncrementCoin={onIncrementCoin} />

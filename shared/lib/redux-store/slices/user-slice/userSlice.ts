@@ -3,24 +3,24 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type IUserSlice = {
-    username: string | null;
+    age: number
   };
 
   const initialState: IUserSlice = {
-    username: null,
+    age: 32
   };
 
   export const userSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-      update: (state, action: PayloadAction<IUserSlice>) => {
-        state = action.payload;
+      setAge: (state, action: PayloadAction<IUserSlice["age"]>) => {
+        state.age = action.payload
       },
     },
   });
 
-  export const { update } = userSlice.actions;
+  export const { setUser, setAge } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

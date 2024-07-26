@@ -1,4 +1,4 @@
-export type ModelType = "settings"
+export type ModelType = "settings" | "editAge"
 
 export interface IModalData {}
 

@@ -28,7 +28,7 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
       <div className={"flex flex-col gap-4 z-[10]"}>
         <FaqHeader />
         <FaqDescription />
-        <Input placeholder={"Search Help"} />
+        <Input placeholder={"Search Help"} isIcon />
       </div>
 
       <AccordionList />

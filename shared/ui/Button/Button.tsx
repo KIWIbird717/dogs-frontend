@@ -12,6 +12,10 @@ export namespace ButtonNS {
       className:
         "bg-blue-900 text-white shadow-buttonAccent",
     },
+    deepBlue: {
+      className:
+        "bg-gradient-button-accent text-white-900 shadow-buttonAccent",
+    },
     noAccent: {
       className:
         "bg-black-400 text-white-800",

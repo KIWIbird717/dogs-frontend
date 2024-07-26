@@ -1,3 +1,5 @@
+"use client"
+
 import { FC } from "react";
 import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography/Typography";
