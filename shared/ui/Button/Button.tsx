@@ -23,6 +23,12 @@ export namespace ButtonNS {
     bowl: {
       className: "h-[68px] p-3 bg-black-400 border border-black-300 shadow-buttonNoAccent rounded-xl",
     },
+    select: {
+      className: "h-[56px] py-3 px-4 bg-black-400 border border-black-300 rounded-xl text-[18px] text-white-900 font-bold leading-6"
+    },
+    default: {
+      className: "h-fit w-fit p-0"
+    }
 
   } as const;
 
@@ -44,6 +50,7 @@ export namespace ButtonNS {
     variant?: keyof typeof variants;
     className?: string;
     icon?: ReactNode;
+    isSelected?:boolean
   } & ComponentProps<"button">;
 }
 
@@ -70,6 +77,7 @@ export const Button: FC<ButtonNS.Props> = ({ children, icon, onClick, ...props }
         variantClassName,
         ButtonNS.DEFAULT_CLASSES,
         props.className,
+        props.isSelected && "border-blue-800 bg-black-800"
       )}
     >
       {icon

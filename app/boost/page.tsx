@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
-import { BoostHeader } from "@/widgets/BoostHeader";
 import { Navbar } from "@/widgets/Navbar";
 import { BoostBowl } from "@/widgets/BoostBowl";
 import Gradient1 from "@/public/images/svg/boost/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/boost/gradient/gradient2.svg";
 import { useClicker } from "@/shared/hooks/useClicker";
+import RacketIcon from "@/public/images/svg/boost/racket.svg";
+import EnergyIcon from "@/public/images/svg/energy.svg";
+import { Block } from "@/widgets/Block";
+import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 
 interface IBoostPageProps {
 }
@@ -16,15 +19,20 @@ const BoostPage: NextPage<IBoostPageProps> = () => {
   const {
     boosts,
     maxBoost,
-    onMaxBoost
+    onMaxBoost,
   } = useClicker(true);
 
   return (
     <View fadeInOnLoad
           className="flex flex-col gap-4 w-full h-screen bg-gradient-background relative pt-6 px-4 overflow-hidden"
     >
-      <BoostHeader boosts={boosts}
-                   maxBoost={maxBoost}
+      <HeaderWithIcon title={"Boost"}
+        icon={<RacketIcon />}
+                      button={
+                     <Block icon={<EnergyIcon />}
+                            title={`${boosts}/${maxBoost}`}
+                            onClick={() => {}}
+                     />}
       />
       <BoostBowl onMaxBoost={onMaxBoost} />
 

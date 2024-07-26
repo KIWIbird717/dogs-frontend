@@ -24,7 +24,7 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
       onClose();
     }
   };
-  console.log({age});
+
   const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newAge = event.currentTarget.value;
     if (newAge === "" || (/^\d+$/.test(newAge) && parseInt(newAge) <= 80)) {

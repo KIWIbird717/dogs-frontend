@@ -14,6 +14,7 @@
   --blue-900: #6857FD;
   --blue-800: #1E90FF;
 
+
   --white-default: #FFFFFF;
   --white-900: #FCFCFC;
   --white-800: #B0B0B0;
@@ -91,6 +92,11 @@ span {
 input {
   background: none;
   outline: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @layer utilities {
