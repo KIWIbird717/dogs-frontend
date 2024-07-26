@@ -5,11 +5,13 @@ export namespace UserSlice {
   export type IUserSlice = {
     age: number
     breed: string
+    country: string
   };
 
   const initialState: IUserSlice = {
     age: 32,
-    breed: "Husky"
+    breed: "Husky",
+    country: "Kazakhstan"
   };
 
   export const userSlice = createSlice({
@@ -22,10 +24,13 @@ export namespace UserSlice {
       setBreed: (state, action: PayloadAction<IUserSlice["breed"]>) => {
         state.breed = action.payload
       },
+      setCountry: (state, action: PayloadAction<IUserSlice["country"]>) => {
+        state.country = action.payload
+      },
     },
   });
 
-  export const { setUser, setAge, setBreed } = userSlice.actions;
+  export const { setAge, setBreed, setCountry } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

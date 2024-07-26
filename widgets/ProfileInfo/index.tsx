@@ -3,11 +3,13 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 interface IProfileInfoProps {
 }
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
+  const {push} = useRouter()
   const {age} = useUser()
   const {onOpenModal} = useModal()
 
@@ -21,15 +23,13 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
     }, {
       title: "Breed",
       value: "Husky",
-      onClick: () => {
-      },
+      onClick: () => push("/profile/breed"),
     }, {
       title: "Country",
       value: "Ukraine",
-      onClick: () => {
-      },
+      onClick: () => push("/profile/country"),
     },
-  ], [age, onOpenEditAgeModal]);
+  ], [age, onOpenEditAgeModal, push]);
 
   return (
     <div className={"w-full flex gap-1"}>

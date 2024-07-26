@@ -3,43 +3,52 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
-import DogIcon from "@/public/images/svg/breed/dog.svg";
 import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
 import { useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
+import World from "@/public/images/svg/country/world.svg";
 
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
+import useRequest from "@/shared/hooks/useRequest";
+import axios from "axios";
 import { IBreedCountry } from "@/widgets/BreedCountryList";
 
-interface IBreedPageProps {
+interface ICountryPageProps {
 }
 
-const breeds: IBreedCountry[] = [
+const items: IBreedCountry[] = [
   {
-    id: "husky",
-    value: "Husky",
+    id: "kz",
+    value: "Kazakhstan",
   }, {
-    id: "bulldog",
-    value: "Bulldog",
+    id: "ua",
+    value: "Ukraine",
   }, {
-    id: "doberman",
-    value: "Doberman",
-  }, {
-    id: "fox_terrie",
-    value: "Fox Terrie",
-  }, {
-    id: "jeck_rassel",
-    value: "Jeck Rassel",
+    id: "uk",
+    value: "United Kingdom",
   },
 ];
 
-const BreedPage: NextPage<IBreedPageProps> = () => {
+const CountryPage: NextPage<ICountryPageProps> = () => {
+  const [countries, setCountries] = useState(items)
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeBreed, breed } = useUser();
+  const { onChangeCountry, country } = useUser();
 
-  const handleClick = (breed: string) => onChangeBreed(breed);
+  useRequest(async () => {
+    const {data} = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images")
+    const countriesWithIcons = countries.map(item => {
+      const countryData = data.data.find((country) => country.name === item.value);
+      return {
+        ...item,
+        flagUrl: countryData.flag
+      }
+    });
+    setCountries(countriesWithIcons);
+  }, [])
+
+  const handleClick = (breed: string) => onChangeCountry(breed);
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
@@ -47,17 +56,17 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
     <View fadeInOnLoad
           className="flex flex-col gap-4 w-full h-screen bg-gradient-background relative pt-6 px-4 overflow-hidden"
     >
-      <HeaderWithIcon title={"Select Breed"}
-                      icon={<DogIcon />}
+      <HeaderWithIcon title={"Select Country"}
+                      icon={<World />}
       />
 
-      <BreedCountryBlock item={breed}
+      <BreedCountryBlock item={country}
                          onClick={handleClick}
-                         items={breeds}
+                         items={countries}
                          onChange={handleSearch}
                          value={searchValue}
                          setClearValue={clearValue}
-                         pageName={"breed"}
+                         pageName={"country"}
       />
 
       <Navbar />
@@ -67,4 +76,4 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
     </View>
   );
 };
-export default BreedPage;
+export default CountryPage;

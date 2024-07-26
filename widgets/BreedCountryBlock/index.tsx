@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { IBreedCountry } from "@/app/profile/breed/page";
 import { Input } from "@/shared/ui/Input";
 import { NotFound } from "@/shared/ui/NotFound";
-import { BreedCountryList } from "@/widgets/BreedCountryList";
+import { BreedCountryList, IBreedCountry } from "@/widgets/BreedCountryList";
 
 interface IBreedCountryBlockProps {
   items: IBreedCountry[];
@@ -11,6 +10,7 @@ interface IBreedCountryBlockProps {
   onChange: (value: string) => void;
   setClearValue: () => void;
   value: string;
+  pageName: "country" | "breed"
 }
 
 export const BreedCountryBlock: FC<IBreedCountryBlockProps> = (
@@ -21,6 +21,7 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = (
     onChange,
     value,
     setClearValue,
+    pageName
   },
 ) => {
 
@@ -46,7 +47,7 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = (
                               onClick={onClick}
                               item={item}
           />
-          : <NotFound title={"breed"}
+          : <NotFound title={pageName}
                       searchValue={value}
                       onClick={setClearValue}
 
