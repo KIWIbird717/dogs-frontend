@@ -55,10 +55,18 @@ export namespace ButtonNS {
 }
 
 export const Button: FC<ButtonNS.Props> = ({ children, icon, onClick, ...props }) => {
+  const {
+    isSelected,
+    className,
+    disabled,
+    variant,
+    ...rest
+  } = props
+
   const [scope, animate] = useAnimate();
 
-  const variantClassName = props.variant
-    ? ButtonNS.variants[props.variant].className
+  const variantClassName = variant
+    ? ButtonNS.variants[variant].className
     : ButtonNS.DEFAULT_VARIANT.className;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -70,20 +78,20 @@ export const Button: FC<ButtonNS.Props> = ({ children, icon, onClick, ...props }
   };
   return (
     <button
-      {...props}
+      {...rest}
       ref={scope}
       onClick={handleClick}
       className={twMerge(
         variantClassName,
         ButtonNS.DEFAULT_CLASSES,
-        props.className,
-        props.isSelected && "border-blue-800 bg-black-800"
+        className,
+        isSelected && "border-blue-800 bg-black-800"
       )}
     >
       {icon
         ? <div className={"w-full flex justify-between"}>
           {children}
-          <div className={twMerge("flex items-center", props.disabled && "hidden")}>
+          <div className={twMerge("flex items-center", disabled && "hidden")}>
             {icon}
           </div>
         </div>

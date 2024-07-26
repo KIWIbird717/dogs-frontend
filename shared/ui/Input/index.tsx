@@ -1,17 +1,15 @@
 "use client";
 
-import { cn } from "../../lib/utils/cn";
 import React, { ComponentProps, forwardRef, useImperativeHandle, useRef } from "react";
 import SearchIcon from "@/public/images/svg/faq/search.svg";
 import CloseIcon from "@/public/images/svg/close.svg";
 import { twMerge } from "tailwind-merge";
 import { Button } from "@/shared/ui/Button/Button";
+import { cn } from "@/shared/lib/utils/cn";
 
 type InputRefType = HTMLInputElement | null;
 
-
 export namespace InputNS {
-
   export const DEFAULT_CLASSES = twMerge(
     "w-full p-3 pl-10 h-[48px] text-[17px] border border-black-300 bg-black-400 shadow-buttonNoAccent text-white-900 font-normal leading-6 rounded-xl z-[10] placeholder:text-[17px] placeholder:font-normal placeholder:leading-6 placeholder:text-white-800",
     "focus-visible:border-[2px] focus-visible:border-blue-900 disabled:cursor-not-allowed disabled:opacity-50");
@@ -25,6 +23,16 @@ export namespace InputNS {
 }
 
 export const Input = forwardRef<InputRefType, InputNS.Props>((props, ref) => {
+  const {
+    isIcon,
+    isInputError,
+    onClear,
+    disabled,
+    className,
+    value,
+    type,
+    ...rest
+  } = props;
   const inputRef = useRef<InputRefType>(null);
   useImperativeHandle<InputRefType, InputRefType>(ref, () => inputRef.current, []);
 
@@ -34,26 +42,27 @@ export const Input = forwardRef<InputRefType, InputNS.Props>((props, ref) => {
         InputNS.DEFAULT_WRAPPER_LASSES,
       )}
     >
-      {props.isIcon && <div className={"absolute left-3"}>
+      {isIcon && <div className={"absolute left-3"}>
         <SearchIcon />
       </div>}
 
       <input
         ref={inputRef}
-        disabled={props.disabled}
+        disabled={disabled}
         className={cn(
           InputNS.DEFAULT_CLASSES,
-          props.isInputError && "focus-visible:border-red",
-          props.className,
-          !props.isIcon && "pl-3",
+          isInputError && "focus-visible:border-red",
+          className,
+          !isIcon && "pl-3",
         )}
-        {...props}
+        value={value}
+        {...rest}
       />
 
-      {props.type === "search" && props.value
+      {type === "search" && value
         && <Button className={"w-fit h-fit p-0"}
                    variant={"default"}
-                   onClick={props.onClear}
+                   onClick={onClear}
         >
           <CloseIcon className={"absolute right-[10px] z-[10]"} />
         </Button>}
