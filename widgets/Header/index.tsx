@@ -35,7 +35,7 @@ export const Header: FC<IHeaderProps> = () => {
             />
           </div>
 
-          <Image src={"/images/clan.png"}
+          <Image src={"/images/guilds.png"}
                  alt={"avatar"}
                  width={16}
                  height={16}

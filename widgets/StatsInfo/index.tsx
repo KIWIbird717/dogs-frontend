@@ -1,6 +1,7 @@
 import { FC } from "react";
 import CoinIcon from "@/public/images/svg/coin.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { formatNumber } from "@/shared/lib/utils/formatNumber";
 
 interface IMoneyProps {
   value: number;
@@ -15,7 +16,7 @@ export const StatsInfo: FC<IMoneyProps> = (
     isIcon,
   },
 ) => {
-  const newFormatCoins = new Intl.NumberFormat("en").format(value).replace(/,/g, " ");
+  const newFormatCoins = formatNumber(value)
   return (
     <div className={"w-full flex flex-col gap-2 justify-center"}>
 

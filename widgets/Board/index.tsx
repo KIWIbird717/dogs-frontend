@@ -1,11 +1,14 @@
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { Button } from "@/shared/ui/Button/Button";
+import { useRouter } from "next/navigation";
 
 interface IBoardProps {
 }
 
 
 export const Board: FC<IBoardProps> = () => {
+  const {push} = useRouter()
   return (
     <div className={"w-full flex rounded-xl"}>
       <div
@@ -22,8 +25,8 @@ export const Board: FC<IBoardProps> = () => {
           <div className={"absolute left-0 top-0 h-full w-[33%] bg-gradient-loading"} />
         </div>
       </div>
-      <div
-        className={"w-1/2 min-h-[62px] h-full flex flex-col gap-1 items-center justify-center border border-black-300 rounded-r-xl shadow-buttonNoAccent bg-black-400 px-2"}
+      <Button onClick={() => push('/guilds')}
+        className={"w-1/2 min-h-[62px] h-full flex flex-col rounded-l-none gap-1 items-center justify-center border border-black-300 rounded-r-xl shadow-buttonNoAccent bg-black-400 px-2"}
       >
         <Typography tag={"p"}
                     className={"text-[15px] font-bold leading-[18px] text-white-900"}
@@ -35,7 +38,7 @@ export const Board: FC<IBoardProps> = () => {
         >
           Tom & Jerry
         </Typography>
-      </div>
+      </Button>
     </div>
   );
 };
