@@ -1,20 +1,28 @@
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { twMerge } from "tailwind-merge";
 
 interface IBlockProps {
   title: string
   value: string
+  isBanner?: boolean
 }
 
 export const Block: FC<IBlockProps> = (
   {
     title,
-    value
+    value,
+    isBanner
   }
 ) => {
   return (
     <div
-      className={"w-1/2 h-[93px] rounded-xl p-4 flex flex-col items-center justify-center gap-3 bg-black-750 border border-black-400 shadow-buttonNoAccent"}>
+      className={twMerge(
+        "w-1/2 rounded-xl p-4 flex flex-col items-center justify-center gap-3 bg-black-750 border border-black-400 shadow-buttonNoAccent",
+        isBanner && "h-[93px]",
+        !isBanner && "h-[100px]",
+      )}
+    >
       <Typography tag={"p"}
                   className={"text-[17px] font-normal leading-6 text-white-800"}
       >

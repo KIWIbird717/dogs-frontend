@@ -1,8 +1,10 @@
+"use client"
+
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Header } from "@/widgets/Header";
 import { Input } from "@/shared/ui/Input";
-import { GuildBanner } from "@/widgets/GuildBanner";
+import { GuildBanner, IGuild } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import GuildImage from "@/public/images/guild.png";
 import { Leaderboard } from "@/widgets/Leaderboard";
@@ -11,11 +13,12 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg"
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg"
 import Link from "next/link";
+import { useState } from "react";
 
 interface IGuildsProps {
 }
 
-const guild = {
+const guild: IGuild = {
   icon: GuildImage,
   name: "TOM & JERRY",
   author: "Nick Name Founder",
@@ -23,15 +26,9 @@ const guild = {
   totalScore: 923132,
 };
 
-export interface IGuild {
-  icon: typeof GuildImage,
-  name: string,
-  author: string,
-  members: string,
-  totalScore: number
-}
 
 const Guilds: NextPage<IGuildsProps> = () => {
+  const [isGuildJoined, setIsGuildJoined] = useState(false);
   return (
     <View fadeInOnLoad
           className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"
@@ -42,8 +39,8 @@ const Guilds: NextPage<IGuildsProps> = () => {
              className={"z-[10]"}
       />
 
-      {!!guild
-        ? <GuildBanner guild={guild} />
+      {isGuildJoined
+        ? <GuildBanner guildInfo={guild} />
         : <div className={"w-full flex gap-2 z-[10]"}>
             <Button variant={"primary"}
                     className={"text-[18px] font-bold leading-6 text-white-900"}
