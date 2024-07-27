@@ -4,7 +4,7 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 interface ILabelProps {
   keyForLabel: string
   label: string
-  labelDescription: string
+  labelDescription?: string
 }
 
 export const Label: FC<ILabelProps> = (
@@ -24,11 +24,11 @@ export const Label: FC<ILabelProps> = (
         {label}
       </Typography>
 
-      <Typography tag={"span"}
-                  className={"text-[15px] leading-[18px] font-bold text-white-800"}
+      {!!labelDescription && <Typography tag={"span"}
+                   className={"text-[15px] leading-[18px] font-bold text-white-800"}
       >
-        ( {labelDescription} )
-      </Typography>
+        ({labelDescription})
+      </Typography>}
     </label>
   );
 };

@@ -56,6 +56,7 @@ export const Input = forwardRef<InputRefType, InputNS.Props>((props, ref) => {
           !isIcon && "pl-3",
         )}
         value={value}
+        type={type}
         {...rest}
       />
 

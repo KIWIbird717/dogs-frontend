@@ -10,6 +10,7 @@ import { Navbar } from "@/widgets/Navbar";
 
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg"
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg"
+import Link from "next/link";
 
 interface IGuildsProps {
 }
@@ -29,7 +30,6 @@ export interface IGuild {
   members: string,
   totalScore: number
 }
-
 
 const Guilds: NextPage<IGuildsProps> = () => {
   return (
@@ -53,7 +53,9 @@ const Guilds: NextPage<IGuildsProps> = () => {
             <Button variant={"default"}
                     className={"text-[18px] font-bold leading-6 text-white-900"}
             >
-              Create Guild
+              <Link href={"/guilds/create"}>
+                Create Guild
+              </Link>
             </Button>
         </div>
       }

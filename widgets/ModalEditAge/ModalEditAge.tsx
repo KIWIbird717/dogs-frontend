@@ -70,6 +70,8 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
                    onChange={handleAgeChange}
                    isError={isError}
                    errorText={"Invalid age"}
+                   placeholder={"Age"}
+                   type={"number"}
             />
           </div>
 

@@ -81,11 +81,13 @@ export const Button: FC<ButtonNS.Props> = ({ children, icon, onClick, ...props }
       {...rest}
       ref={scope}
       onClick={handleClick}
+      disabled={disabled}
       className={twMerge(
         variantClassName,
         ButtonNS.DEFAULT_CLASSES,
         className,
-        isSelected && "border-blue-800 bg-black-800"
+        isSelected && "border-blue-800 bg-black-800",
+        disabled && "bg-black-400 shadow-none text-white-800"
       )}
     >
       {icon
