@@ -2,11 +2,13 @@
 
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { GuildItem } from "@/widgets/Leaderboard/ui/GuildItem";
 import { useRouter } from "next/navigation";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
+import { twMerge } from "tailwind-merge";
 
 interface IGuildPlayersProps {
+  title: string
+  classNameList?: string
 }
 
 const players = {
@@ -17,7 +19,12 @@ const players = {
   coins: "2,64",
 };
 
-export const GuildPlayers: FC<IGuildPlayersProps> = () => {
+export const GuildPlayers: FC<IGuildPlayersProps> = (
+  {
+    title,
+    classNameList
+  }
+) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string) => {
@@ -28,10 +35,14 @@ export const GuildPlayers: FC<IGuildPlayersProps> = () => {
     <div className={"w-full flex flex-col gap-2 overflow-y-auto z-[10]"}>
       <Typography tag={"h3"}
       >
-        Players
+        {title}
       </Typography>
 
-      <div className={"w-full flex flex-col gap-2 overflow-y-auto pb-28"}>
+      <div className={twMerge(
+        "w-full flex flex-col gap-2 overflow-y-auto pb-28",
+        classNameList
+      )
+      }>
         {Array.from(Array(20)).map((_, index) => {
           return <GuildPlayerItem key={index}
                                   id={players.id}

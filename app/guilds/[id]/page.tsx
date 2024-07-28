@@ -65,7 +65,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      <GuildPlayers />
+      <GuildPlayers title={"Players"}  />
 
       {isGuildJoined && <ShareAndInvite onShareHandler={onShareHandler}
                                         onCopyHandler={onCopyHandler}
