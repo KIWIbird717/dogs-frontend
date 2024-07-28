@@ -28,7 +28,7 @@ const guild: IGuild = {
 
 
 const Guilds: NextPage<IGuildsProps> = () => {
-  const [isGuildJoined, setIsGuildJoined] = useState(false);
+  const [isGuildJoined, setIsGuildJoined] = useState(true);
   return (
     <View fadeInOnLoad
           className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"

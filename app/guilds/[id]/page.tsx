@@ -6,13 +6,13 @@ import { Navbar } from "@/widgets/Navbar";
 import { GuildBanner, IGuild } from "@/widgets/GuildBanner";
 import GuildImage from "@/public/images/guild.png";
 import { Button } from "@/shared/ui/Button/Button";
-import LinkIcon from "@/public/images/svg/guild/inner-guild/link.svg";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
+import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 
 interface IGuildPageProps {
 }
@@ -23,28 +23,28 @@ const guild: IGuild = {
   author: "Nick Name Founder",
   members: "50/100",
   totalScore: 300000,
-  link: "/guild/1"
+  link: "/guild/1",
 };
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
-  const {push} = useRouter()
+  const { push } = useRouter();
   const [isGuildJoined, setIsGuildJoined] = useState(false);
 
   const handleToggleGuild = () => {
     if (isGuildJoined) {
       setIsGuildJoined(false);
-      push("/guilds")
+      push("/guilds");
     } else {
       setIsGuildJoined(true);
     }
   };
 
-  const onCopyHandler =  () => {
+  const onCopyHandler = () => {
     navigator.clipboard.writeText(guild.link as string);
   };
 
-  const onShareHandler =  () => {
-    navigator.share({text: guild.link as string});
+  const onShareHandler = () => {
+    navigator.share({ text: guild.link as string });
   };
 
   return (
@@ -67,20 +67,9 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
       <GuildPlayers />
 
-      {isGuildJoined && <div className={"absolute left-4 bottom-[116px] w-[calc(100%-32px)] flex gap-2 z-[10]"}>
-        <Button variant={"deepBlue"}
-                className={"text-[18px] font-bold leading-6 text-white-900"}
-                onClick={onShareHandler}
-        >
-          Invite Friend
-        </Button>
-        <Button variant={"deepBlue"}
-                className={"w-fit p-4"}
-                onClick={onCopyHandler}
-        >
-          <LinkIcon />
-        </Button>
-      </div>}
+      {isGuildJoined && <ShareAndInvite onShareHandler={onShareHandler}
+                                        onCopyHandler={onCopyHandler}
+      />}
 
 
       <Navbar />

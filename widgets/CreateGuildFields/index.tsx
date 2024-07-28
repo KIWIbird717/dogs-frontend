@@ -57,7 +57,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
              label={"Name Guild"}
              value={name}
              onChange={onChangeName}
-             isError={isError}
+             isError={false}
              placeholder={"Name"}
              type={"text"}
              isCorrect={isCorrect}
@@ -67,7 +67,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
              label={"Description Guild"}
              value={description}
              onChange={onChangeDescription}
-             isError={isError}
+             isError={false}
              placeholder={"Up to 300 characters"}
              isTextArea
       />
@@ -78,7 +78,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
              errorText={"Invalid link"}
              value={link}
              onChange={onChangeLink}
-             isError={isError}
+             isError={false}
              placeholder={"Link"}
              type={"url"}
       />
