@@ -24,6 +24,10 @@ export namespace TotalCoinNS {
       className:
         "text-[28px] font-normal leading-8 text-white-900",
     },
+    huge: {
+      className:
+        "text-[28px] font-normal leading-8 text-white-900",
+    },
   } as const;
 
   export type Props = {
@@ -33,6 +37,7 @@ export namespace TotalCoinNS {
     info?: string
     coin: number
     className?: string
+    classNameText?: string
   } & ComponentProps<"div">;
 }
 
@@ -44,6 +49,7 @@ export const TotalCoin: FC<TotalCoinNS.Props> = (
     isPlus,
     info,
     className,
+    classNameText,
     ...rest
   },
 ) => {
@@ -61,6 +67,7 @@ export const TotalCoin: FC<TotalCoinNS.Props> = (
       <Typography tag={tag}
                   className={twMerge(
                     TotalCoinNS.size[size].className,
+                    classNameText
                   )}
       >
         {isPlus && "+"}{coin} {info}

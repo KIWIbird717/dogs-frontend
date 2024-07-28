@@ -1,7 +1,7 @@
 import { FC } from "react";
-import CoinIcon from "@/public/images/svg/coin.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
+import { TotalCoin } from "@/shared/ui/TotalCoin";
 
 interface IMoneyProps {
   value: number;
@@ -27,16 +27,20 @@ export const StatsInfo: FC<IMoneyProps> = (
       </Typography>
 
       <div className={"w-full flex justify-center gap-2"}>
-        {isIcon && <div>
-          <CoinIcon />
-        </div>}
-        <div className={"flex items-center"}>
-          <Typography tag={"p"}
-                      className={"font-portico text-white-900 text-[32px] leading-[40px] font-normal"}
-          >
-            {newFormatCoins}
-          </Typography>
-        </div>
+        {isIcon ? <TotalCoin coin={newFormatCoins}
+                             tag={"p"}
+                             size={"huge"}
+                             className={"gap-2"}
+                             classNameText={"font-portico text-white-900 text-[32px] leading-[40px] font-normal"}
+          />
+          : <div className={"flex items-center"}>
+            <Typography tag={"p"}
+                        className={"font-portico text-white-900 text-[32px] leading-[40px] font-normal"}
+            >
+              {newFormatCoins}
+            </Typography>
+          </div>
+        }
       </div>
     </div>
   );

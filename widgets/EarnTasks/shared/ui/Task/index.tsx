@@ -2,12 +2,12 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
-import CoinIcon from "@/public/images/svg/earn/coin.svg";
 import { ToggleCategoryType } from "@/app/earn/page";
 import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { ITask } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import { useModal } from "@/shared/hooks/useModal";
+import { TotalCoin } from "@/shared/ui/TotalCoin";
 
 
 interface ITaskProps {
@@ -58,14 +58,12 @@ export const Task: FC<ITaskProps> = (
         </div>
         <div className={"w-full h-full flex gap-1"}>
           <div className={"flex items-center gap-1"}>
-            <div>
-              <CoinIcon />
-            </div>
-            <Typography tag={"span"}
-                        className={"font-bold"}
-            >
-              +{newFormatCoins}
-            </Typography>
+            <TotalCoin coin={newFormatCoins}
+                       isPlus
+                       tag={"span"}
+                       size={"small"}
+                       classNameText={"font-bold text-[15px]"}
+            />
           </div>
 
           <div className={"flex items-center"}>

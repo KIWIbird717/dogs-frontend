@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import GuildImage from "@/public/images/guild.png";
 import Image from "next/image";
-import CoinIcon from "@/public/images/svg/guild/coin.svg";
 import { Button } from "@/shared/ui/Button/Button";
+import { TotalCoin } from "@/shared/ui/TotalCoin";
 
 
 interface IGuildItemProps {
@@ -82,14 +82,13 @@ export const GuildItem: FC<IGuildItemProps> = (
 
 
       <div className={"w-[89px] h-full flex gap-2 items-center"}>
-        <div>
-          <CoinIcon />
-        </div>
-        <Typography tag={"h4"}
-                    className={"text-white-900"}
-        >
-          {coins} K
-        </Typography>
+        <TotalCoin coin={coins as number}
+                   tag={"h4"}
+                   size={"middle"}
+                   info={"K"}
+                   className={"gap-2"}
+                   classNameText={"font-normal"}
+        />
       </div>
     </Button>
   );

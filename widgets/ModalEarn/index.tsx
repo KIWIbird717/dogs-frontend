@@ -5,10 +5,10 @@ import { useModal } from "@/shared/hooks/useModal";
 import { ITask } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import CoinIcon from "@/public/images/svg/earn/modal/coin.svg";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
 import { AnimatePresence, motion } from "framer-motion";
 import { Field } from "@/widgets/Field";
+import { TotalCoin } from "@/shared/ui/TotalCoin";
 
 interface IModalEarnProps {
 }
@@ -77,14 +77,12 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
                 Reward
               </Typography>
               <div className={"flex items-center gap-1"}>
-                <div>
-                  <CoinIcon />
-                </div>
-                <Typography tag={"h2"}
-                            className={"text-white-900"}
-                >
-                  +{coin}
-                </Typography>
+                <TotalCoin coin={coin}
+                           isPlus
+                           tag={"h2"}
+                           size={"middle"}
+                           classNameText={"font-bold text-[24px] leading-8"}
+                />
               </div>
 
               <Typography tag={"span"}
@@ -99,7 +97,8 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
           </div>
           <div>
             {/*TODO: Настроить, когда реальные данные появятся*/}
-            <Field onChange={() => {}}
+            <Field onChange={() => {
+            }}
                    isError={false}
                    placeholder={"Attach File"}
                    type={"file"}
