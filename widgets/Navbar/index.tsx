@@ -14,11 +14,8 @@ import { usePathname } from "next/navigation";
 interface INavbarProps {
 }
 
-
-
 export const Navbar: FC<INavbarProps> = () => {
   const pathName = usePathname();
-  const className = pathName
 
   const navItemsFirst: INavItems[] = useMemo(()=> [
     {
@@ -37,7 +34,7 @@ export const Navbar: FC<INavbarProps> = () => {
     {
       icon: EarnIcon,
       title: "NFT",
-      link: "/nft2",
+      link: "/earn",
     },
     {
       icon: FriendIcon,

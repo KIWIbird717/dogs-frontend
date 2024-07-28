@@ -30,7 +30,7 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
       >
 
         <div
-          className={"flex flex-col gap-4 w-[344px] p-4 pb-6 rounded-xl border border-black-300 bg-black-750 shadow-buttonNoAccent backdrop-blur-lg"}
+          className={"flex flex-col gap-4 w-[344px] p-4 pb-6 rounded-xl border border-black-300 shadow-buttonNoAccent"}
         >
           <Button className={"w-fit h-[18px] !p-0 text-[15px] leading-4.5 font-normal"}
                   onClick={onClose}
@@ -70,6 +70,8 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
             </Button>
           </div>
 
+          <div
+            className={"w-full h-full absolute left-0 top-0 bg-black-750 backdrop-blur-lg rounded-xl z-[-1]"} />
         </div>
       </div>}
     </>

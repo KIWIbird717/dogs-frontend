@@ -8,8 +8,8 @@ import { Textarea } from "@/shared/ui/Textarea";
 import { twMerge } from "tailwind-merge";
 
 interface IFieldProps {
-  keyForLabel: string;
-  label: string;
+  keyForLabel?: string;
+  label?: string;
   labelDescription?: string;
   errorText?: string;
   value?: string | any;
@@ -23,6 +23,7 @@ interface IFieldProps {
   inputRef?: any;
   isTextArea?: boolean;
   isCorrect?: boolean;
+  buttonClassName?: string
 }
 
 export const Field: FC<IFieldProps> = (
@@ -38,7 +39,8 @@ export const Field: FC<IFieldProps> = (
     type,
     inputRef,
     isTextArea,
-    isCorrect
+    isCorrect,
+    buttonClassName
   },
 ) => {
 
@@ -46,16 +48,17 @@ export const Field: FC<IFieldProps> = (
 
   return (
     <div className={"w-full flex flex-col gap-2"}>
-      <Label keyForLabel={keyForLabel}
-             label={label}
-             labelDescription={labelDescription}
-      />
+      {!!label && <Label keyForLabel={keyForLabel!}
+              label={label}
+              labelDescription={labelDescription}
+      />}
 
 
       {type === "file" && <Button className={twMerge(
         "h-[48px] items-center justify-start px-3 border-[2px]",
         !isError && value && "border-blue-900",
         isError && "border-red",
+        buttonClassName,
 
       )}
                                   variant={"select"}

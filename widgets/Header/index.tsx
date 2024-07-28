@@ -25,13 +25,13 @@ export const Header: FC<IHeaderProps> = () => {
   };
 
   return (
-    <div className={"w-full flex gap-4 h-[48px]"}>
+    <div className={"w-full flex gap-4 h-[48px] z-[10]"}>
       <div className={"w-[56%] flex justify-between gap-2"}>
         <div className={"relative"}>
           <div className={"w-[48px] h-[48px]"}>
             <Image src={AvatarIcon}
                    alt={"avatar"}
-                   className={"rounded-2xl w-full h-full"}
+                   className={"rounded-2xl w-full h-full object-cover"}
             />
           </div>
 
