@@ -10,42 +10,32 @@ interface IBonusItemProps {
   item: IBonusList;
 }
 
-export const BonusItem: FC<IBonusItemProps> = (
-  {
-    item,
-  },
-) => {
-
+export const BonusItem: FC<IBonusItemProps> = ({ item }) => {
   const coinForFriend = formatNumber(item.coinForFriend);
   const coinPremium = formatNumber(item.coinPremium);
 
   return (
-    <Button className={"w-full h-[64px] flex items-center gap-2 px-3 py-2 bg-black-400 border border-blue-800 rounded-xl"}>
-      <div className={"w-[37%] flex items-center h-full gap-2"}>
+    <Button
+      className={
+        "flex h-[64px] w-full items-center gap-2 rounded-xl border border-blue-800 bg-black-400 px-3 py-2"
+      }
+    >
+      <div className={"flex h-full w-[37%] items-center gap-2"}>
         <div>
-          <Image src={item.icon}
-                 alt={"avatar"}
-                 className={"w-[48px] h-[48px] object-cover"}
-          />
+          <Image src={item.icon} alt={"avatar"} className={"h-[48px] w-[48px] object-cover"} />
         </div>
-        <Typography tag={"h3"}
-                    className={"font-normal text-white-900"}
-        >
+        <Typography tag={"h3"} className={"font-normal text-white-900"}>
           {item.level}
         </Typography>
       </div>
 
-      <TotalCoin coin={coinForFriend}
-                 isPlus
-                 tag={"p"}
-                 size={"middle"}
-                 className={"w-[30%]"}
-      />
-      <TotalCoin coin={coinPremium}
-                 isPlus
-                 tag={"p"}
-                 size={"middle"}
-                 className={"w-[33%] justify-end"}
+      <TotalCoin coin={coinForFriend} isPlus tag={"p"} size={"middle"} className={"w-[30%]"} />
+      <TotalCoin
+        coin={coinPremium}
+        isPlus
+        tag={"p"}
+        size={"middle"}
+        className={"w-[33%] justify-end"}
       />
     </Button>
   );

@@ -11,67 +11,80 @@ import BoneIcon from "@/public/images/svg/nav/bone.svg";
 import { INavItems, NavItems } from "@/widgets/Navbar/shared/ui/NavItems";
 import { usePathname } from "next/navigation";
 
-interface INavbarProps {
-}
+interface INavbarProps {}
 
 export const Navbar: FC<INavbarProps> = () => {
   const pathName = usePathname();
 
-  const navItemsFirst: INavItems[] = useMemo(()=> [
-    {
-      icon: NftIcon,
-      title: "NFT",
-      link: "/nft",
-    },
-    {
-      icon: StatusIcon,
-      title: "NFT",
-      link: "/nft1",
-    },
-  ], [])
+  const navItemsFirst: INavItems[] = useMemo(
+    () => [
+      {
+        icon: NftIcon,
+        title: "NFT",
+        link: "/nft",
+      },
+      {
+        icon: StatusIcon,
+        title: "NFT",
+        link: "/nft1",
+      },
+    ],
+    [],
+  );
 
-  const navItemsSecond: INavItems[] = useMemo(() => [
-    {
-      icon: EarnIcon,
-      title: "NFT",
-      link: "/earn",
-    },
-    {
-      icon: FriendIcon,
-      title: "NFT",
-      link: "/nft3",
-    },
-  ], [])
+  const navItemsSecond: INavItems[] = useMemo(
+    () => [
+      {
+        icon: EarnIcon,
+        title: "NFT",
+        link: "/earn",
+      },
+      {
+        icon: FriendIcon,
+        title: "NFT",
+        link: "/nft3",
+      },
+    ],
+    [],
+  );
 
   return (
-    <div className={"flex items-end w-full h-[107px] z-[10] fixed bottom-0 left-0"}>
-      <div className={"flex bg-black-790 justify-between w-full h-[75px] px-4 rounded-t-xl relative"}>
-        <NavItems items={navItemsFirst}
-                  pathName={pathName}
-        />
+    <div className={"fixed bottom-0 left-0 z-[10] flex h-[107px] w-full items-end"}>
+      <div
+        className={"relative flex h-[75px] w-full justify-between rounded-t-xl bg-black-790 px-4"}
+      >
+        <NavItems items={navItemsFirst} pathName={pathName} />
 
-        <div className={"w-full flex justify-center relative"}>
+        <div className={"relative flex w-full justify-center"}>
           <div
-            className={"bg-black-790 flex items-center justify-center rounded-full absolute -top-[28px] w-[72px] h-[72px]"}>
+            className={
+              "absolute -top-[28px] flex h-[72px] w-[72px] items-center justify-center rounded-full bg-black-790"
+            }
+          >
             <Button
-              className={"rounded-full w-[56px] h-[56px] bg-gradient-button-accent shadow-boneButton absolute top-2.5 z-[10]"}>
+              className={
+                "absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton"
+              }
+            >
               <BoneIcon />
             </Button>
 
-            <div className={"absolute top-[38%] bg-none w-[100px] h-[26px]"} />
+            <div className={"absolute top-[38%] h-[26px] w-[100px] bg-none"} />
 
-            <div className={"absolute top-[-12px] -left-[32px] w-[40px] h-[40px] bg-none rounded-full"}
-                 style={{ boxShadow: "20px 25px #1E1E1E" }}
+            <div
+              className={"absolute -left-[32px] top-[-12px] h-[40px] w-[40px] rounded-full bg-none"}
+              style={{ boxShadow: "20px 25px #1E1E1E" }}
             />
-            <div className={"absolute top-[-12px] -right-[32px] w-[40px] h-[40px] bg-none rounded-full"}
-                 style={{ boxShadow: "-20px 25px #1E1E1E" }}
+            <div
+              className={
+                "absolute -right-[32px] top-[-12px] h-[40px] w-[40px] rounded-full bg-none"
+              }
+              style={{ boxShadow: "-20px 25px #1E1E1E" }}
             />
           </div>
         </div>
 
-        <NavItems items={navItemsSecond}
-                  pathName={pathName}
-        />
+        <NavItems items={navItemsSecond} pathName={pathName} />
       </div>
     </div>
   );

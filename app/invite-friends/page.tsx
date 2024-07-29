@@ -16,8 +16,7 @@ import { Bonus } from "@/widgets/Bonus";
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
 
-interface IInviteFriendsProps {
-}
+interface IInviteFriendsProps {}
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
@@ -33,39 +32,34 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   };
 
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
-      <HeaderWithIcon title={"Invite Friends"}
-                      icon={<PeopleIcon />}
-      />
+      <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
       <InviteBanner />
 
-      <div className={"w-full h-[56px] z-[10]"}>
-        <Button variant={isShowBonus ? "select" : "deepBlue"}
-                className={twMerge(
-                  "text-[18px] font-bold leading-6",
-                  isShowBonus && "border-[2px] border-blue-900",
-                )}
-                onClick={handleToggle}
+      <div className={"z-[10] h-[56px] w-full"}>
+        <Button
+          variant={isShowBonus ? "select" : "deepBlue"}
+          className={twMerge(
+            "text-[18px] font-bold leading-6",
+            isShowBonus && "border-[2px] border-blue-900",
+          )}
+          onClick={handleToggle}
         >
           More bonus
         </Button>
       </div>
 
-      {!isShowBonus && <GuildPlayers title={"Friends"}
-                                     classNameList={"pb-[190px]"}
-      />}
+      {!isShowBonus && <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} />}
       {isShowBonus && <Bonus />}
 
-
-      <ShareAndInvite onShareHandler={onShareHandler}
-                      onCopyHandler={onCopyHandler}
-      />
+      <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
 
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute right-0 bottom-0 z-[1]"} />
+      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
 
       <Navbar />
     </View>

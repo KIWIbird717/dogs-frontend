@@ -9,17 +9,15 @@ interface IOnBoardingFooterProps {
   redirect: () => void;
 }
 
-export const OnBoardingFooter: FC<IOnBoardingFooterProps> = (
-  {
-    step,
-    onPrev,
-    onNext,
-    redirect,
-  },
-) => {
+export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
+  step,
+  onPrev,
+  onNext,
+  redirect,
+}) => {
   return (
-    <div className={"w-full flex flex-col gap-1 pb-3 relative z-[10]"}>
-      <div className={"w-full flex gap-2"}>
+    <div className={"relative z-[10] flex w-full flex-col gap-1 pb-3"}>
+      <div className={"flex w-full gap-2"}>
         <AnimatePresence>
           {step !== 0 && (
             <motion.div
@@ -30,10 +28,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = (
               // className={"w-[calc(37%-4px)]"}
               key="back-button"
             >
-              <Button variant={"noAccent"}
-                      onClick={onPrev}
-
-              >
+              <Button variant={"noAccent"} onClick={onPrev}>
                 Back
               </Button>
             </motion.div>
@@ -41,40 +36,27 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = (
 
           <motion.div
             initial={{
-              opacity: 0, width: step === 0
-                ? "100%"
-                : "calc(63% - 4px)",
+              opacity: 0,
+              width: step === 0 ? "100%" : "calc(63% - 4px)",
             }}
             exit={{
-              opacity: 0, width: step === 0
-                ? "100%"
-                : "calc(63% - 4px)",
+              opacity: 0,
+              width: step === 0 ? "100%" : "calc(63% - 4px)",
             }}
             animate={{
-              opacity: 1, width: step === 0
-                ? "100%"
-                : "calc(63% - 4px)",
+              opacity: 1,
+              width: step === 0 ? "100%" : "calc(63% - 4px)",
             }}
             transition={{ duration: 0.1 }}
-
             key="next-button"
           >
-            <Button variant={"primary"}
-                    onClick={onNext}
-                    className={"w-full"}
-
-            >
+            <Button variant={"primary"} onClick={onNext} className={"w-full"}>
               Continue
             </Button>
           </motion.div>
         </AnimatePresence>
-
       </div>
-      <Button
-        onClick={redirect}
-      >
-        I already know
-      </Button>
+      <Button onClick={redirect}>I already know</Button>
     </div>
   );
 };

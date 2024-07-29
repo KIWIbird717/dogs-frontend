@@ -3,15 +3,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type IUserSlice = {
-    age: number
-    breed: string
-    country: string
+    age: number;
+    breed: string;
+    country: string;
   };
 
   const initialState: IUserSlice = {
     age: 32,
     breed: "Husky",
-    country: "Kazakhstan"
+    country: "Kazakhstan",
   };
 
   export const userSlice = createSlice({
@@ -19,13 +19,13 @@ export namespace UserSlice {
     initialState,
     reducers: {
       setAge: (state, action: PayloadAction<IUserSlice["age"]>) => {
-        state.age = action.payload
+        state.age = action.payload;
       },
       setBreed: (state, action: PayloadAction<IUserSlice["breed"]>) => {
-        state.breed = action.payload
+        state.breed = action.payload;
       },
       setCountry: (state, action: PayloadAction<IUserSlice["country"]>) => {
-        state.country = action.payload
+        state.country = action.payload;
       },
     },
   });

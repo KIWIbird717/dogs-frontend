@@ -6,27 +6,17 @@ import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 
 interface ITaskListProps {
   tasks: ITaskObj[];
-  toggle: ToggleCategoryType
+  toggle: ToggleCategoryType;
 }
 
-export const TaskList: FC<ITaskListProps> = (
-  {
-    tasks,
-    toggle,
-  },
-) => {
+export const TaskList: FC<ITaskListProps> = ({ tasks, toggle }) => {
   return (
-    <div className={"w-full flex flex-col gap-4 z-[10] overflow-y-auto"}>
+    <div className={"z-[10] flex w-full flex-col gap-4 overflow-y-auto"}>
       {toggle === "rewards" && <RewardsBoard />}
 
-      <div className={"w-full flex flex-col gap-4 pb-[110px] overflow-y-auto"}>
-
+      <div className={"flex w-full flex-col gap-4 overflow-y-auto pb-[110px]"}>
         {tasks.map((item, i) => {
-          return <EarnTasksList key={i}
-                                title={item.title}
-                                tasks={item.tasks}
-                                toggle={toggle}
-          />;
+          return <EarnTasksList key={i} title={item.title} tasks={item.tasks} toggle={toggle} />;
         })}
       </div>
     </div>

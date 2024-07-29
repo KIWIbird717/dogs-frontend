@@ -7,18 +7,17 @@ export const useUser = () => {
   const user = useAppSelector((state) => state.user);
   const { age, breed, country } = user as IUserSlice;
 
-
   const onChangeAge = (age: string | number) => {
     dispatch(UserSlice.setAge(Number(age)));
-  }
+  };
 
   const onChangeBreed = (breed: string) => {
     dispatch(UserSlice.setBreed(breed));
-  }
+  };
 
   const onChangeCountry = (country: string) => {
     dispatch(UserSlice.setCountry(country));
-  }
+  };
 
   return {
     age,
@@ -27,6 +26,6 @@ export const useUser = () => {
 
     onChangeAge,
     onChangeBreed,
-    onChangeCountry
+    onChangeCountry,
   };
 };

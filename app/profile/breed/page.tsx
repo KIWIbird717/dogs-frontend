@@ -13,23 +13,26 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { IBreedCountry } from "@/widgets/BreedCountryList";
 
-interface IBreedPageProps {
-}
+interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
   {
     id: "husky",
     value: "Husky",
-  }, {
+  },
+  {
     id: "bulldog",
     value: "Bulldog",
-  }, {
+  },
+  {
     id: "doberman",
     value: "Doberman",
-  }, {
+  },
+  {
     id: "fox_terrie",
     value: "Fox Terrie",
-  }, {
+  },
+  {
     id: "jeck_rassel",
     value: "Jeck Rassel",
   },
@@ -44,25 +47,25 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
   const clearValue = () => setSearchValue("");
 
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen bg-gradient-background relative pt-6 px-4 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden bg-gradient-background px-4 pt-6"
     >
-      <HeaderWithIcon title={"Select Breed"}
-                      icon={<DogIcon />}
-      />
+      <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
 
-      <BreedCountryBlock item={breed}
-                         onClick={handleClick}
-                         items={breeds}
-                         onChange={handleSearch}
-                         value={searchValue}
-                         setClearValue={clearValue}
-                         pageName={"breed"}
+      <BreedCountryBlock
+        item={breed}
+        onClick={handleClick}
+        items={breeds}
+        onChange={handleSearch}
+        value={searchValue}
+        setClearValue={clearValue}
+        pageName={"breed"}
       />
 
       <Navbar />
 
-      <Gradient1 className={"absolute top-0 left-0 z-[1]"} />
+      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
       <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
     </View>
   );

@@ -5,8 +5,7 @@ import { ModalSettings } from "@/widgets/ModalSettings/ModalSettings";
 import { ModalEditAge } from "@/widgets/ModalEditAge/ModalEditAge";
 import { ModalEarn } from "@/widgets/ModalEarn";
 
-interface IModalProviderProps {
-}
+interface IModalProviderProps {}
 
 export const ModalProvider: FC<IModalProviderProps> = () => {
   const [isMounted, setIsMounted] = useState(false);

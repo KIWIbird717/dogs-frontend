@@ -14,31 +14,32 @@ interface INavItemsProps {
   pathName: string;
 }
 
-export const NavItems: FC<INavItemsProps> = (
-  {
-    items,
-    pathName,
-  },
-) => {
-
+export const NavItems: FC<INavItemsProps> = ({ items, pathName }) => {
   return (
     <div className={"flex gap-2"}>
       {items.map((item, index) => {
         const Component = item.icon;
-        return <Link href={item.link}
-                     key={index}
-                     className={"flex flex-col gap-[5px] justify-start pt-3 items-center w-[64px] h-[75px] bg-black-790 rounded-t-xl"}
-        >
-          <div>
-            <Component className={twMerge(pathName === item.link && "[&>path]:fill-blue-900")} />
-          </div>
-          {pathName === item.link && <Typography tag={"span"}
-                                                 className={"text-[13px] font-normal leading-4 text-blue-900"}
+        return (
+          <Link
+            href={item.link}
+            key={index}
+            className={
+              "flex h-[75px] w-[64px] flex-col items-center justify-start gap-[5px] rounded-t-xl bg-black-790 pt-3"
+            }
           >
-            {item.title}
-          </Typography>}
-
-        </Link>;
+            <div>
+              <Component className={twMerge(pathName === item.link && "[&>path]:fill-blue-900")} />
+            </div>
+            {pathName === item.link && (
+              <Typography
+                tag={"span"}
+                className={"text-[13px] font-normal leading-4 text-blue-900"}
+              >
+                {item.title}
+              </Typography>
+            )}
+          </Link>
+        );
       })}
     </div>
   );

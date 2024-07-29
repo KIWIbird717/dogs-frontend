@@ -9,23 +9,11 @@ interface IEnergyBoostProps {
   onMaxBoost: () => void;
 }
 
-export const EnergyBoost: FC<IEnergyBoostProps> = (
-  {
-    boosts,
-    maxBoost,
-    onMaxBoost,
-  },
-) => {
+export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost }) => {
   return (
-    <div className={"w-full flex justify-between"}>
-      <Block icon={<EnergyIcon />}
-             title={`${boosts}/${maxBoost}`}
-             onClick={() => {
-             }} />
-      <Block icon={<RacketIcon />}
-             title={"Boost"}
-             onClick={onMaxBoost}
-      />
+    <div className={"flex w-full justify-between"}>
+      <Block icon={<EnergyIcon />} title={`${boosts}/${maxBoost}`} onClick={() => {}} />
+      <Block icon={<RacketIcon />} title={"Boost"} onClick={onMaxBoost} />
     </div>
   );
 };

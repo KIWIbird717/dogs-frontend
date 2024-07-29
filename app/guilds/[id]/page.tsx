@@ -14,8 +14,7 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 
-interface IGuildPageProps {
-}
+interface IGuildPageProps {}
 
 const guild: IGuild = {
   icon: GuildImage,
@@ -48,35 +47,36 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
   };
 
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
-      <div className={"w-full flex flex-col gap-2 z-[10]"}>
+      <div className={"z-[10] flex w-full flex-col gap-2"}>
         <GuildBanner guildInfo={guild} isBanner={false} isGuildJoined={isGuildJoined} />
 
-        <Button variant={isGuildJoined ? "default" : "deepBlue"}
-                className={twMerge("text-[18px] font-bold leading-6",
-                  isGuildJoined && "border-black-500 border px-2 py-4 text-white-800 ",
-                  !isGuildJoined && "text-white-900",
-                )}
-                onClick={handleToggleGuild}
+        <Button
+          variant={isGuildJoined ? "default" : "deepBlue"}
+          className={twMerge(
+            "text-[18px] font-bold leading-6",
+            isGuildJoined && "border border-black-500 px-2 py-4 text-white-800",
+            !isGuildJoined && "text-white-900",
+          )}
+          onClick={handleToggleGuild}
         >
           {isGuildJoined ? "Leave Guild" : "Join Pack"}
         </Button>
       </div>
 
-      <GuildPlayers title={"Players"}  />
+      <GuildPlayers title={"Players"} />
 
-      {isGuildJoined && <ShareAndInvite onShareHandler={onShareHandler}
-                                        onCopyHandler={onCopyHandler}
-      />}
-
+      {isGuildJoined && (
+        <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
+      )}
 
       <Navbar />
 
-
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute right-0 bottom-[75px] z-[1]"} />
+      <Gradient2 className={"absolute bottom-[75px] right-0 z-[1]"} />
     </View>
   );
 };

@@ -18,9 +18,7 @@ import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
 
-
-interface IEarnPageProps {
-}
+interface IEarnPageProps {}
 
 const dogiYoutube: ITaskObj[] = [
   {
@@ -82,15 +80,16 @@ const tasks: ITaskObj[] = [
         purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
         coin: 25000,
         isClaim: false,
-      },{
-
+      },
+      {
         icon: <NFTIcon />,
         title: "Special Task",
         description: "Post a Story on Instagram",
         purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
         coin: 25000,
         isClaim: true,
-      },{
+      },
+      {
         icon: <YoutubeIcon />,
         title: "Follow Kori our Co-Founder",
         description: "Post a Story on Instagram",
@@ -105,8 +104,8 @@ const tasks: ITaskObj[] = [
         purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
         coin: 25000,
         isClaim: true,
-      },{
-
+      },
+      {
         icon: <NFTIcon />,
         title: "Special Task",
         description: "Post a Story on Instagram",
@@ -115,10 +114,10 @@ const tasks: ITaskObj[] = [
         isClaim: true,
       },
     ],
-  }
+  },
 ];
 
-export type ToggleCategoryType =  "rewards" | "tasks"
+export type ToggleCategoryType = "rewards" | "tasks";
 
 const EarnPage: NextPage<IEarnPageProps> = () => {
   const [toggle, setToggle] = useState<ToggleCategoryType>("rewards");
@@ -126,43 +125,42 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const onSetTasks = () => setToggle("tasks");
 
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <Header />
 
-      <div className={"w-full flex gap-2 h-[48px] z-[10]"}>
-        <Button variant={"default"}
-                className={twMerge(
-                  "border-b border-b-white-800 rounded-none h-full text-[15px] leading-[18px] font-bold",
-                  toggle === "rewards" && "border-b-blue-900",
-                )}
-                onClick={onSetRewards}
+      <div className={"z-[10] flex h-[48px] w-full gap-2"}>
+        <Button
+          variant={"default"}
+          className={twMerge(
+            "h-full rounded-none border-b border-b-white-800 text-[15px] font-bold leading-[18px]",
+            toggle === "rewards" && "border-b-blue-900",
+          )}
+          onClick={onSetRewards}
         >
           Rewards
         </Button>
-        <Button variant={"default"}
-                className={twMerge(
-                  "border-b border-b-white-800 rounded-none h-full text-[15px] leading-[18px] font-bold",
-                  toggle === "tasks" && "border-b-blue-900",
-                )}
-                onClick={onSetTasks}
+        <Button
+          variant={"default"}
+          className={twMerge(
+            "h-full rounded-none border-b border-b-white-800 text-[15px] font-bold leading-[18px]",
+            toggle === "tasks" && "border-b-blue-900",
+          )}
+          onClick={onSetTasks}
         >
           Tasks
         </Button>
       </div>
 
-      {toggle === "rewards" && <TaskList tasks={dogiYoutube}
-                                         toggle={toggle}
-      />}
-      {toggle === "tasks" && <TaskList tasks={tasks}
-                                       toggle={toggle}
-      />}
+      {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
+      {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
 
       <Navbar />
 
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute right-0 bottom-0 z-[1]"} />
+      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
     </View>
   );
 };

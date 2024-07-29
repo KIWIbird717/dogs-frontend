@@ -9,67 +9,57 @@ import { ITask } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import { useModal } from "@/shared/hooks/useModal";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 
-
 interface ITaskProps {
   task: ITask;
   toggle: ToggleCategoryType;
 }
 
-export const Task: FC<ITaskProps> = (
-  {
-    toggle,
-    task,
-  },
-) => {
+export const Task: FC<ITaskProps> = ({ toggle, task }) => {
   const { onOpenModal } = useModal();
   const newFormatCoins = formatNumber(task.coin);
 
   const handleClick = () => {
-    if(!task.isClaim) {
+    if (!task.isClaim) {
       onOpenModal("earn", { task: task });
     }
   };
 
   return (
-    <Button variant={"default"}
-            className={twMerge(
-              "w-full flex items-center h-[96px] gap-3 p-3 bg-black-400 border border-black-300 shadow-buttonNoAccent rounded-xl",
-              task.isClaim && "bg-black-750",
-              toggle === "tasks" && "h-[66px]",
-            )}
-            onClick={handleClick}
+    <Button
+      variant={"default"}
+      className={twMerge(
+        "flex h-[96px] w-full items-center gap-3 rounded-xl border border-black-300 bg-black-400 p-3 shadow-buttonNoAccent",
+        task.isClaim && "bg-black-750",
+        toggle === "tasks" && "h-[66px]",
+      )}
+      onClick={handleClick}
     >
-      <div className={"w-[48px] h-[48px]"}>
-        {task.icon}
-      </div>
+      <div className={"h-[48px] w-[48px]"}>{task.icon}</div>
 
-      <div className={"w-full h-full flex flex-col gap-1"}>
-        <div className={"w-full h-full flex flex-col gap-1"}>
-          <Typography tag={"p"}
-                      className={"text-[17px] leading-6 font-bold text-white-900"}
-          >
+      <div className={"flex h-full w-full flex-col gap-1"}>
+        <div className={"flex h-full w-full flex-col gap-1"}>
+          <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>
             {task.title}
           </Typography>
-          {toggle === "rewards" && <Typography tag={"span"}
-                                               className={"text-white-900"}
-          >
-            {task.description}
-          </Typography>}
+          {toggle === "rewards" && (
+            <Typography tag={"span"} className={"text-white-900"}>
+              {task.description}
+            </Typography>
+          )}
         </div>
-        <div className={"w-full h-full flex gap-1"}>
+        <div className={"flex h-full w-full gap-1"}>
           <div className={"flex items-center gap-1"}>
-            <TotalCoin coin={newFormatCoins}
-                       isPlus
-                       tag={"span"}
-                       size={"small"}
-                       classNameText={"font-bold text-[15px]"}
+            <TotalCoin
+              coin={newFormatCoins}
+              isPlus
+              tag={"span"}
+              size={"small"}
+              classNameText={"font-bold text-[15px]"}
             />
           </div>
 
           <div className={"flex items-center"}>
-            <Typography tag={"span"}
-                        className={"text-white-800 text-[13px] leading-4 font-normal"}
-            >
+            <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
               every 24 hours
             </Typography>
           </div>
@@ -77,15 +67,13 @@ export const Task: FC<ITaskProps> = (
       </div>
 
       <div>
-        {task.isClaim
-          ?
-          <Typography tag={"h3"}
-                      className={"text-black-500"}
-          >
+        {task.isClaim ? (
+          <Typography tag={"h3"} className={"text-black-500"}>
             CLAIM
           </Typography>
-          : <ArrowRightIcon />
-        }
+        ) : (
+          <ArrowRightIcon />
+        )}
       </div>
     </Button>
   );

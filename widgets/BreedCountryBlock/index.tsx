@@ -10,49 +10,41 @@ interface IBreedCountryBlockProps {
   onChange: (value: string) => void;
   setClearValue: () => void;
   value: string;
-  pageName: "country" | "breed"
+  pageName: "country" | "breed";
 }
 
-export const BreedCountryBlock: FC<IBreedCountryBlockProps> = (
-  {
-    items,
-    item,
-    onClick,
-    onChange,
-    value,
-    setClearValue,
-    pageName
-  },
-) => {
-
+export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
+  items,
+  item,
+  onClick,
+  onChange,
+  value,
+  setClearValue,
+  pageName,
+}) => {
   const filteredItems = items.filter((breed) =>
     breed.value.toLowerCase().includes(value.toLowerCase()),
   );
 
   return (
-    <div className={"w-full flex flex-col gap-4 overflow-y-auto z-[10]"}>
+    <div className={"z-[10] flex w-full flex-col gap-4 overflow-y-auto"}>
       <div className={""}>
-        <Input isIcon
-               placeholder={"Search Breed"}
-               value={value}
-               type={"search"}
-               onClear={setClearValue}
-               onChange={(e) => onChange(e.currentTarget.value)}
+        <Input
+          isIcon
+          placeholder={"Search Breed"}
+          value={value}
+          type={"search"}
+          onClear={setClearValue}
+          onChange={(e) => onChange(e.currentTarget.value)}
         />
       </div>
 
-      <div className={"w-full flex flex-col gap-2 overflow-y-scroll pb-[112px]"}>
-        {filteredItems.length > 0
-          ? <BreedCountryList items={filteredItems}
-                              onClick={onClick}
-                              item={item}
-          />
-          : <NotFound title={pageName}
-                      searchValue={value}
-                      onClick={setClearValue}
-
-          />
-        }
+      <div className={"flex w-full flex-col gap-2 overflow-y-scroll pb-[112px]"}>
+        {filteredItems.length > 0 ? (
+          <BreedCountryList items={filteredItems} onClick={onClick} item={item} />
+        ) : (
+          <NotFound title={pageName} searchValue={value} onClick={setClearValue} />
+        )}
       </div>
     </div>
   );

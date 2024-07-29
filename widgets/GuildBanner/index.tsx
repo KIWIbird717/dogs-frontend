@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -21,21 +21,19 @@ interface IGuildBannerProps {
 }
 
 export interface IGuild {
-  icon: typeof GuildImage,
-  name: string,
-  author: string,
-  members: string,
-  totalScore: number
-  link?: string
+  icon: typeof GuildImage;
+  name: string;
+  author: string;
+  members: string;
+  totalScore: number;
+  link?: string;
 }
 
-export const GuildBanner: FC<IGuildBannerProps> = (
-  {
-    guildInfo,
-    isBanner = true,
-    isGuildJoined
-  },
-) => {
+export const GuildBanner: FC<IGuildBannerProps> = ({
+  guildInfo,
+  isBanner = true,
+  isGuildJoined,
+}) => {
   const { push } = useRouter();
   const totalScore = formatNumber(guildInfo.totalScore);
 
@@ -48,51 +46,46 @@ export const GuildBanner: FC<IGuildBannerProps> = (
   return (
     <div
       className={twMerge(
-        "w-full flex flex-col rounded-xl z-[10]",
-        isBanner && "border border-black-400 bg-black-400 shadow-buttonNoAccent p-4 gap-2",
+        "z-[10] flex w-full flex-col rounded-xl",
+        isBanner && "gap-2 border border-black-400 bg-black-400 p-4 shadow-buttonNoAccent",
         !isBanner && "gap-4",
       )}
       onClick={redirectHandler}
     >
-      <div className={"w-full flex items-center gap-2"}>
-        <div className={"w-full flex gap-2"}>
-          <Image src={guildInfo.icon}
-                 alt={"guild"}
-                 className={twMerge(
-                   isBanner ? "w-[80px] h-[80px]" : "w-[56px] h-[56px]",
-                 )}
+      <div className={"flex w-full items-center gap-2"}>
+        <div className={"flex w-full gap-2"}>
+          <Image
+            src={guildInfo.icon}
+            alt={"guild"}
+            className={twMerge(isBanner ? "h-[80px] w-[80px]" : "h-[56px] w-[56px]")}
           />
 
-          <div className={"w-full flex flex-col justify-center gap-1"}>
-            <Typography tag={isBanner ? "h1" : "h2"}
-                        className={twMerge(isBanner ? "font-normal uppercase" : "font-bold")}
+          <div className={"flex w-full flex-col justify-center gap-1"}>
+            <Typography
+              tag={isBanner ? "h1" : "h2"}
+              className={twMerge(isBanner ? "font-normal uppercase" : "font-bold")}
             >
               {guildInfo.name}
             </Typography>
-            <Typography tag={"p"}
-                        className={"font-normal text-[18px] leading-6 text-white-900"}
-            >
+            <Typography tag={"p"} className={"text-[18px] font-normal leading-6 text-white-900"}>
               {guildInfo.author}
             </Typography>
           </div>
         </div>
 
-        {!isBanner && isGuildJoined &&
-          <Button className={"w-[48px] h-[48px] p-3 shadow-buttonNoAccent bg-black-400 border border-black-400"}
+        {!isBanner && isGuildJoined && (
+          <Button
+            className={
+              "h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
+            }
           >
             <SettingsIcon />
-          </Button>}
-
+          </Button>
+        )}
       </div>
-      <div className={"w-full flex gap-2"}>
-        <Block value={totalScore}
-               title={"Total score"}
-               isBanner={isBanner}
-        />
-        <Block value={guildInfo.members}
-               title={"Members"}
-               isBanner={isBanner}
-        />
+      <div className={"flex w-full gap-2"}>
+        <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
+        <Block value={guildInfo.members} title={"Members"} isBanner={isBanner} />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export const store = () => {
   return configureStore({
     reducer: {
       user: UserSlice.userReducer,
-      modal: ModalSlice.modalReducer
+      modal: ModalSlice.modalReducer,
     },
     /**
      * You cant set up more middlewares

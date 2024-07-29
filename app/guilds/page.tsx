@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
@@ -10,13 +10,12 @@ import GuildImage from "@/public/images/guild.png";
 import { Leaderboard } from "@/widgets/Leaderboard";
 import { Navbar } from "@/widgets/Navbar";
 
-import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg"
-import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg"
+import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
+import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
 import { useState } from "react";
 
-interface IGuildsProps {
-}
+interface IGuildsProps {}
 
 const guild: IGuild = {
   icon: GuildImage,
@@ -26,45 +25,35 @@ const guild: IGuild = {
   totalScore: 923132,
 };
 
-
 const Guilds: NextPage<IGuildsProps> = () => {
   const [isGuildJoined, setIsGuildJoined] = useState(true);
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen relative px-4 pt-6 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <Header />
-      <Input isIcon
-             placeholder={"Search Guild"}
-             className={"z-[10]"}
-      />
+      <Input isIcon placeholder={"Search Guild"} className={"z-[10]"} />
 
-      {isGuildJoined
-        ? <GuildBanner guildInfo={guild} />
-        : <div className={"w-full flex gap-2 z-[10]"}>
-            <Button variant={"primary"}
-                    className={"text-[18px] font-bold leading-6 text-white-900"}
-            >
-              Join Guild
-            </Button>
-            <Button variant={"default"}
-                    className={"text-[18px] font-bold leading-6 text-white-900"}
-            >
-              <Link href={"/guilds/create"}>
-                Create Guild
-              </Link>
-            </Button>
+      {isGuildJoined ? (
+        <GuildBanner guildInfo={guild} />
+      ) : (
+        <div className={"z-[10] flex w-full gap-2"}>
+          <Button variant={"primary"} className={"text-[18px] font-bold leading-6 text-white-900"}>
+            Join Guild
+          </Button>
+          <Button variant={"default"} className={"text-[18px] font-bold leading-6 text-white-900"}>
+            <Link href={"/guilds/create"}>Create Guild</Link>
+          </Button>
         </div>
-      }
+      )}
 
       <Leaderboard />
 
       <Navbar />
 
-
       <Gradient1 className={"absolute right-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute left-0 bottom-0 z-[1]"} />
-
+      <Gradient2 className={"absolute bottom-0 left-0 z-[1]"} />
     </View>
   );
 };

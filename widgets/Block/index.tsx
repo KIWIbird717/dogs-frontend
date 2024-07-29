@@ -8,23 +8,16 @@ interface IBlockProps {
   onClick: () => void;
 }
 
-export const Block: FC<IBlockProps> = (
-  {
-    icon,
-    title,
-    onClick,
-  },
-) => {
+export const Block: FC<IBlockProps> = ({ icon, title, onClick }) => {
   return (
-    <Button onClick={onClick}
-            className={"w-fit flex gap-2 py-2 px-3 bg-black-400 rounded-xl border-[2px] border-black-400 shadow-buttonNoAccent"}
+    <Button
+      onClick={onClick}
+      className={
+        "flex w-fit gap-2 rounded-xl border-[2px] border-black-400 bg-black-400 px-3 py-2 shadow-buttonNoAccent"
+      }
     >
-      <div>
-        {icon}
-      </div>
-      <Typography tag={"p"}
-                  className={"text-[17px] font-bold leading-6 text-white-900"}
-      >
+      <div>{icon}</div>
+      <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>
         {title}
       </Typography>
     </Button>

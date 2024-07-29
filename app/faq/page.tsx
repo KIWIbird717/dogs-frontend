@@ -15,17 +15,17 @@ import Gradient3 from "@/public/images/svg/faq/gradient3.svg";
 import Gradient4 from "@/public/images/svg/faq/gradient4.svg";
 import { useRouter } from "next/navigation";
 
-interface IFaqPageProps {
-}
+interface IFaqPageProps {}
 
 const FaqPage: NextPage<IFaqPageProps> = () => {
-  const {push} = useRouter()
-  const onRedirect = () => push("/support")
+  const { push } = useRouter();
+  const onRedirect = () => push("/support");
   return (
-    <View fadeInOnLoad
-          className="w-full flex flex-col gap-6 px-4 h-screen bg-gradient-background relative pt-6 overflow-hidden "
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-6 overflow-hidden bg-gradient-background px-4 pt-6"
     >
-      <div className={"flex flex-col gap-4 z-[10]"}>
+      <div className={"z-[10] flex flex-col gap-4"}>
         <FaqHeader />
         <FaqDescription />
         <Input placeholder={"Search Help"} isIcon />
@@ -33,21 +33,20 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
 
       <AccordionList />
 
-      <Button variant={"primary"}
-              className={"fixed left-4 bottom-[112px] w-[calc(100%-32px)] z-[10]"}
-              onClick={onRedirect}
+      <Button
+        variant={"primary"}
+        className={"fixed bottom-[112px] left-4 z-[10] w-[calc(100%-32px)]"}
+        onClick={onRedirect}
       >
         Send A message
       </Button>
 
       <Navbar />
 
-
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
       <Gradient2 className={"absolute left-0 top-0 z-[1]"} />
       <Gradient3 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient4 className={"absolute left-0 bottom-0 z-[1]"} />
-
+      <Gradient4 className={"absolute bottom-0 left-0 z-[1]"} />
     </View>
   );
 };

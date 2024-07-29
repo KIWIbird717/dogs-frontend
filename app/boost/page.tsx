@@ -12,34 +12,27 @@ import EnergyIcon from "@/public/images/svg/energy.svg";
 import { Block } from "@/widgets/Block";
 import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 
-interface IBoostPageProps {
-}
+interface IBoostPageProps {}
 
 const BoostPage: NextPage<IBoostPageProps> = () => {
-  const {
-    boosts,
-    maxBoost,
-    onMaxBoost,
-  } = useClicker(true);
+  const { boosts, maxBoost, onMaxBoost } = useClicker(true);
 
   return (
-    <View fadeInOnLoad
-          className="flex flex-col gap-4 w-full h-screen bg-gradient-background relative pt-6 px-4 overflow-hidden"
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden bg-gradient-background px-4 pt-6"
     >
-      <HeaderWithIcon title={"Boost"}
+      <HeaderWithIcon
+        title={"Boost"}
         icon={<RacketIcon />}
-                      button={
-                     <Block icon={<EnergyIcon />}
-                            title={`${boosts}/${maxBoost}`}
-                            onClick={() => {}}
-                     />}
+        button={<Block icon={<EnergyIcon />} title={`${boosts}/${maxBoost}`} onClick={() => {}} />}
       />
       <BoostBowl onMaxBoost={onMaxBoost} />
 
       <Navbar />
 
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute right-0 bottom-0 z-[1]"} />
+      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
     </View>
   );
 };

@@ -3,41 +3,38 @@ import { twMerge } from "tailwind-merge";
 import { AnimatePresence, motion } from "framer-motion";
 import { HeadersType } from "@/widgets/onboardingMedia";
 
-
 interface IOnboardingStepsProps {
   step: number;
   headers: HeadersType[];
 }
 
-export const OnboardingSteps: FC<IOnboardingStepsProps> = (
-  {
-    step,
-    headers,
-  },
-) => {
-
+export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) => {
   return (
-    <div className={"flex items-center justify-center self-center w-[116px] h-[36px] relative"}>
+    <div className={"relative flex h-[36px] w-[116px] items-center justify-center self-center"}>
       <AnimatePresence initial={false}>
-        <div className={"flex gap-2 relative z-[4]"}>
+        <div className={"relative z-[4] flex gap-2"}>
           {headers.map((value, index) => {
-            return <motion.div
-              key={value.id}
-              className={twMerge(
-                "bg-black-300 w-[12px] h-[12px] rounded-full",
-                (step >= index) && "bg-white",
-              )}
-              initial={{ scale: 0.5, opacity: 0.5 }}
-              animate={{ scale: 1, opacity: 1, backgroundColor: step >= index ? "#FFFFFF" : "#000000" }}
-              transition={{ duration: 0.3 }}
-            />;
+            return (
+              <motion.div
+                key={value.id}
+                className={twMerge(
+                  "h-[12px] w-[12px] rounded-full bg-black-300",
+                  step >= index && "bg-white",
+                )}
+                initial={{ scale: 0.5, opacity: 0.5 }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  backgroundColor: step >= index ? "#FFFFFF" : "#000000",
+                }}
+                transition={{ duration: 0.3 }}
+              />
+            );
           })}
         </div>
         <motion.div
           style={{ width: `calc(20px * ${step + 1})` }}
-          className={twMerge(
-            "bg-green h-[20px] absolute left-2 rounded-[34px] z-[3]",
-          )}
+          className={twMerge("absolute left-2 z-[3] h-[20px] rounded-[34px] bg-green")}
           initial={{ width: 0 }}
           animate={{ width: `calc(20px * ${step + 1})` }}
           transition={{ duration: 0.3 }}

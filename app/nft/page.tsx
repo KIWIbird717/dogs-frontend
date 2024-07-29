@@ -4,13 +4,14 @@ import { View } from "@/shared/layout/View";
 import { ModalNft } from "@/widgets/ModalNft";
 import { Navbar } from "@/widgets/Navbar";
 
-interface INftPageProps {
-}
+interface INftPageProps {}
 
 const NftPage: NextPage<INftPageProps> = () => {
   return (
-    <View fadeInOnLoad
-          className="flex flex-col justify-center items-center px-[17px] w-full h-screen relative bg-gradient-background">
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col items-center justify-center bg-gradient-background px-[17px]"
+    >
       <DuckBackground isNftPage />
       <ModalNft />
 

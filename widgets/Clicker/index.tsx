@@ -6,18 +6,18 @@ interface IClickerProps {
   onIncrementCoin: () => void;
 }
 
-export const Clicker: FC<IClickerProps> = (
-  {
-    onIncrementCoin,
-  },
-) => {
+export const Clicker: FC<IClickerProps> = ({ onIncrementCoin }) => {
   return (
-    <div className={"w-full flex justify-center"}>
-      <Button onClick={onIncrementCoin}
-              className={"w-[296px] h-[296px] rounded-[52px] bg-gradient-button-accent shadow-buttonSec"}
+    <div className={"flex w-full justify-center"}>
+      <Button
+        onClick={onIncrementCoin}
+        className={"h-[296px] w-[296px] rounded-[52px] bg-gradient-button-accent shadow-buttonSec"}
       >
         <div
-          className={"w-[264px] h-[264px] flex items-center justify-center rounded-[42px] bg-gradient-button-sec"}>
+          className={
+            "flex h-[264px] w-[264px] items-center justify-center rounded-[42px] bg-gradient-button-sec"
+          }
+        >
           <BoneIcon />
         </div>
       </Button>

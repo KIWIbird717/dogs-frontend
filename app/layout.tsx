@@ -1,6 +1,6 @@
 import { ModalProvider } from "@/shared/providers/ModalProvider";
 
-"use client ";
+("use client ");
 
 import { Epilogue } from "next/font/google";
 import "@/public/styles/globals.scss";
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={epilogue.className}>
         <StoreProvider>
           <ModalProvider />
-            {children}
+          {children}
         </StoreProvider>
       </body>
     </html>

@@ -3,17 +3,13 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { Switch } from "@/shared/ui/Switch/switch";
 
 interface ISwitchItemProps {
-  title: string
+  title: string;
 }
 
-export const SwitchItem: FC<ISwitchItemProps> = (
-  {title}
-) => {
+export const SwitchItem: FC<ISwitchItemProps> = ({ title }) => {
   return (
-    <div className={"w-full flex justify-between items-center"}>
-      <Typography tag={"h3"}
-                  className={"font-normal text-white-900"}
-      >
+    <div className={"flex w-full items-center justify-between"}>
+      <Typography tag={"h3"} className={"font-normal text-white-900"}>
         {title}
       </Typography>
       <Switch />
