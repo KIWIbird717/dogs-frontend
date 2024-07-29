@@ -13,7 +13,7 @@ export const useModal = () => {
     }, 200);
   };
 
-  const onOpenModal = (type: ModelType, data: IModalData) => {
+  const onOpenModal = (type: ModelType, data?: IModalData) => {
     dispatch(
       ModalSlice.setOpenModal({
         isOpen: true,

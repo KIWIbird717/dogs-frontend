@@ -2,22 +2,21 @@ import { ChangeEvent, FC, MouseEvent, useState } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { Field } from "@/widgets/Field";
+import { Field, IFieldProps } from "@/widgets/Field";
 import { useUser } from "@/shared/hooks/useUser";
 import { twMerge } from "tailwind-merge";
 
-interface IModalEditAgeProps {
-}
+interface IModalEditAgeProps {}
 
 export const ModalEditAge: FC<IModalEditAgeProps> = () => {
   const { onClose, modalData } = useModal();
   const { isOpen, data, type } = modalData;
   const [isError, setIsError] = useState(false);
-  const {age, onChangeAge} = useUser()
+  const { age, onChangeAge } = useUser();
 
   const isModalOpen = isOpen && type === "editAge";
 
-  const [value, setValue] = useState<string | number>(age)
+  const [value, setValue] = useState<string | number>(age);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -25,66 +24,72 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
     }
   };
 
-  const handleAgeChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleAgeChange: IFieldProps["onChange"] = (event) => {
+    if (typeof event === "string") return;
     const newAge = event.currentTarget.value;
     if (newAge === "" || (/^\d+$/.test(newAge) && parseInt(newAge) <= 80)) {
       setIsError(false);
     } else {
       setIsError(true);
     }
-    setValue(newAge)
+    setValue(newAge);
   };
 
   const onClick = () => {
-    onChangeAge(value)
-    onClose()
-  }
+    onChangeAge(value);
+    onClose();
+  };
 
   return (
     <>
-      {isModalOpen && <div
-        className={"w-full h-full flex flex-col justify-center items-center fixed top-0 bg-[#000]/30 left-0 z-[100]"}
-        onClick={(e) => onCloseHandler(e)}
-      >
-
+      {isModalOpen && (
         <div
-          className={"flex flex-col gap-4 w-[344px] p-4 pb-6 rounded-xl border border-black-300 bg-black-750 backdrop-blur-lg shadow-buttonNoAccent t relative z-[11]"}
+          className={
+            "fixed left-0 top-0 z-[100] flex h-full w-full flex-col items-center justify-center bg-[#000]/30"
+          }
+          onClick={(e) => onCloseHandler(e)}
         >
-          <Button className={"w-fit h-[18px] !p-0 text-[15px] leading-4.5 font-normal"}
-                  onClick={onClose}
+          <div
+            className={
+              "t relative z-[11] flex w-[344px] flex-col gap-4 rounded-xl border border-black-300 bg-black-750 p-4 pb-6 shadow-buttonNoAccent backdrop-blur-lg"
+            }
           >
-            Back to Account
-          </Button>
-
-          <div className={"w-full flex flex-col gap-6"}>
-            <Typography tag={"h2"}
-                        className={"font-normal text-white-900"}
+            <Button
+              className={"leading-4.5 h-[18px] w-fit !p-0 text-[15px] font-normal"}
+              onClick={onClose}
             >
-              Enter your age
-            </Typography>
+              Back to Account
+            </Button>
 
-            <Field label={"Age"}
-                   labelDescription={"from 0 to 80"}
-                   keyForLabel={"age"}
-                   value={value as string}
-                   onChange={handleAgeChange}
-                   isError={isError}
-                   errorText={"Invalid age"}
-                   placeholder={"Age"}
-                   type={"number"}
-            />
+            <div className={"flex w-full flex-col gap-6"}>
+              <Typography tag={"h2"} className={"font-normal text-white-900"}>
+                Enter your age
+              </Typography>
+
+              <Field
+                label={"Age"}
+                labelDescription={"from 0 to 80"}
+                keyForLabel={"age"}
+                value={value as string}
+                onChange={handleAgeChange}
+                isError={isError}
+                errorText={"Invalid age"}
+                placeholder={"Age"}
+                type={"number"}
+              />
+            </div>
+
+            <Button
+              variant={"deepBlue"}
+              disabled={isError}
+              className={twMerge(isError && "opacity-50")}
+              onClick={onClick}
+            >
+              Confirm Age
+            </Button>
           </div>
-
-          <Button variant={"deepBlue"}
-                  disabled={isError}
-                  className={twMerge(isError && "opacity-50")}
-                  onClick={onClick}
-          >
-            Confirm Age
-          </Button>
         </div>
-      </div>
-      }
+      )}
     </>
   );
 };

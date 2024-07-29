@@ -1,55 +1,66 @@
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 
-interface IProfileInfoProps {
-}
+interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
-  const {push} = useRouter()
-  const {age} = useUser()
-  const {onOpenModal} = useModal()
+  const { push } = useRouter();
+  const { age } = useUser();
+  const { onOpenModal } = useModal();
 
-  const onOpenEditAgeModal = () => onOpenModal("editAge", {})
+  const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
 
-  const items = useMemo(() => [
-    {
-      title: "Age",
-      value: age,
-      onClick: onOpenEditAgeModal,
-    }, {
-      title: "Breed",
-      value: "Husky",
-      onClick: () => push("/profile/breed"),
-    }, {
-      title: "Country",
-      value: "Ukraine",
-      onClick: () => push("/profile/country"),
-    },
-  ], [age, onOpenEditAgeModal, push]);
+  const items = useMemo(
+    () => [
+      {
+        title: "Age",
+        value: age,
+        onClick: onOpenEditAgeModal,
+      },
+      {
+        title: "Breed",
+        value: "Husky",
+        onClick: () => push("/profile/breed"),
+      },
+      {
+        title: "Country",
+        value: "Ukraine",
+        onClick: () => push("/profile/country"),
+      },
+    ],
+    [age, onOpenEditAgeModal, push],
+  );
 
   return (
-    <div className={"w-full flex gap-1"}>
+    <div className={"flex w-full gap-1"}>
       {items.map((item, i) => {
-        return <Button key={i}
-                       onClick={item.onClick}
-                       className={"flex flex-col h-full min-h-[62px] gap-1 items-center justify-center w-1/3 rounded-xl py-2 px-3 bg-black-400 border border-black-300"}
-        >
-          <Typography tag={"span"}
-                      className={"font-normal text-[15px] leading-[18px] text-center text-white-800"}
+        return (
+          <Button
+            key={i}
+            onClick={item.onClick}
+            className={
+              "flex h-full min-h-[62px] w-1/3 flex-col items-center justify-center gap-1 rounded-xl border border-black-300 bg-black-400 px-3 py-2"
+            }
           >
-            {item.title}
-          </Typography>
+            <Typography
+              tag={"span"}
+              className={"text-center text-[15px] font-normal leading-[18px] text-white-800"}
+            >
+              {item.title}
+            </Typography>
 
-          <Typography tag={"p"}
-                      className={"text-[17px] leading-6 font-bold text-center text-white-900"}
-          >
-            {item.value}
-          </Typography>
-        </Button>;
+            <Typography
+              tag={"p"}
+              className={"text-center text-[17px] font-bold leading-6 text-white-900"}
+            >
+              {item.value}
+            </Typography>
+          </Button>
+        );
       })}
     </div>
   );

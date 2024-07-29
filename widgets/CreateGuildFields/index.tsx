@@ -1,14 +1,16 @@
 "use client";
 
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
-import { Field } from "@/widgets/Field";
+import { Field, IFieldProps } from "@/widgets/Field";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface ICreateGuildFieldsProps {
-}
+interface ICreateGuildFieldsProps {}
 
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
+  const logger = new Logger("CreateGuildFields");
+
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
   const bones = "0,000";
@@ -21,8 +23,14 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    let selectedFile = e.currentTarget?.files[0];
+  const handleFile: IFieldProps["onChange"] = (e) => {
+    if (typeof e === "string") return;
+    if (!(e as ChangeEvent<HTMLInputElement>).currentTarget.files) {
+      logger.error("[handleFile] e.currentTarget.files is null");
+      return;
+    }
+
+    let selectedFile = (e as any).currentTarget?.files[0];
     const allowedTypes = ["image/png", "image/jpeg"];
     if (!allowedTypes.includes(selectedFile.type)) {
       setIsError(true);
@@ -34,17 +42,21 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
     setAvatar(selectedFile);
   };
 
-  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => setName(e.currentTarget.value);
-  const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => setDescription(e.currentTarget.value);
-  const onChangeLink = (e: ChangeEvent<HTMLInputElement>) => setLink(e.currentTarget.value);
+  const onChangeName: IFieldProps["onChange"] = (e) => {
+    if (typeof e === "string") return;
+    setName(e.currentTarget.value);
+  };
+  const onChangeDescription: IFieldProps["onChange"] = (e) => {
+    if (typeof e === "string") return;
+    setDescription(e.currentTarget.value);
+  };
+  const onChangeLink: IFieldProps["onChange"] = (e) => {
+    if (typeof e === "string") return;
+    setLink(e.currentTarget.value);
+  };
 
   useEffect(() => {
-    if (
-      name.length === 0 ||
-      !avatar ||
-      isError ||
-      !(Number(bones) >= needBalance)
-    ) {
+    if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -52,64 +64,65 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   }, [avatar, isError, name.length]);
 
   return (
-    <div className={"w-full flex flex-col gap-2 z-[10]"}>
-      <Field keyForLabel={"name"}
-             label={"Name Guild"}
-             value={name}
-             onChange={onChangeName}
-             isError={false}
-             placeholder={"Name"}
-             type={"text"}
-             isCorrect={isCorrect}
+    <div className={"z-[10] flex w-full flex-col gap-2"}>
+      <Field
+        keyForLabel={"name"}
+        label={"Name Guild"}
+        value={name}
+        onChange={onChangeName}
+        isError={false}
+        placeholder={"Name"}
+        type={"text"}
+        isCorrect={isCorrect}
       />
 
-      <Field keyForLabel={"description"}
-             label={"Description Guild"}
-             value={description}
-             onChange={onChangeDescription}
-             isError={false}
-             placeholder={"Up to 300 characters"}
-             isTextArea
+      <Field
+        keyForLabel={"description"}
+        label={"Description Guild"}
+        value={description}
+        onChange={onChangeDescription}
+        isError={false}
+        placeholder={"Up to 300 characters"}
+        isTextArea
       />
 
-      <Field keyForLabel={"link"}
-             label={"Link to the Guild"}
-             labelDescription={"Telegram only"}
-             errorText={"Invalid link"}
-             value={link}
-             onChange={onChangeLink}
-             isError={false}
-             placeholder={"Link"}
-             type={"url"}
+      <Field
+        keyForLabel={"link"}
+        label={"Link to the Guild"}
+        labelDescription={"Telegram only"}
+        errorText={"Invalid link"}
+        value={link}
+        onChange={onChangeLink}
+        isError={false}
+        placeholder={"Link"}
+        type={"url"}
       />
-      <Field keyForLabel={"avatar"}
-             label={"Choose avatar for Guild"}
-             labelDescription={"Telegram only"}
-             errorText={errorMessage}
-             onChange={handleFile}
-             isError={isError}
-             type={"file"}
-             inputRef={inputFileRef}
-             value={!!avatar}
+      <Field
+        keyForLabel={"avatar"}
+        label={"Choose avatar for Guild"}
+        labelDescription={"Telegram only"}
+        errorText={errorMessage}
+        onChange={handleFile}
+        isError={isError}
+        type={"file"}
+        inputRef={inputFileRef}
+        value={!!avatar}
       />
 
-      <div className={"w-full flex flex-col gap-4 pt-2"}>
-        <Button variant={"primary"}
-                disabled={isDisabled}
-                className={"text-[18px] font-bold leading-6 text-white-900"}
+      <div className={"flex w-full flex-col gap-4 pt-2"}>
+        <Button
+          variant={"primary"}
+          disabled={isDisabled}
+          className={"text-[18px] font-bold leading-6 text-white-900"}
         >
           Create Guild
         </Button>
 
-        <div className={"w-full flex flex-col items-center gap-1"}>
-          <Typography tag={"span"}
-                      className={"text-white-800"}
-          >
+        <div className={"flex w-full flex-col items-center gap-1"}>
+          <Typography tag={"span"} className={"text-white-800"}>
             You need {needBalance} bones
           </Typography>
-          <Typography tag={"span"}
-                      className={"text-red"}
-          >
+          <Typography tag={"span"} className={"text-red"}>
             Your balance {bones} bones
           </Typography>
         </div>

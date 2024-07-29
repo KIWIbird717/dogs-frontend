@@ -7,26 +7,26 @@ export const useClicker = (isSetInterval?: boolean) => {
   const maxBoost = 500;
 
   const onMaxBoost = () => {
-    setBoosts(maxBoost)
-  }
+    setBoosts(maxBoost);
+  };
 
   const onIncrementCoin = () => {
     if (boosts > 2) {
-      setCoins(prevCoins => prevCoins + 2);
+      setCoins((prevCoins) => prevCoins + 2);
       onDecrementBoost();
     }
   };
 
   const onIncrementBoost = useCallback(() => {
-    setBoosts(prevBoosts => Math.min(prevBoosts + 3, maxBoost));
+    setBoosts((prevBoosts) => Math.min(prevBoosts + 3, maxBoost));
   }, []);
 
   const onDecrementBoost = useCallback(() => {
-    setBoosts(prevBoosts => Math.max(prevBoosts - 2, 0));
+    setBoosts((prevBoosts) => Math.max(prevBoosts - 2, 0));
   }, []);
 
   useEffect(() => {
-    let interval;
+    let interval: NodeJS.Timeout;
 
     if (isSetInterval) {
       interval = setInterval(() => {
