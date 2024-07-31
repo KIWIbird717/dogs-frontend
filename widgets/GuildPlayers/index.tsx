@@ -9,17 +9,25 @@ import { twMerge } from "tailwind-merge";
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
+  players: IUserPlayer
 }
 
-const players = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+export interface IUserPlayer {
+  id: string
+  avatarUrl: string
+  title: string
+  league: string
+  coins: string | number
+  image?: any
+}
 
-export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList }) => {
+export const GuildPlayers: FC<IGuildPlayersProps> = (
+  {
+    title,
+    classNameList,
+    players
+  }
+  ) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string) => {

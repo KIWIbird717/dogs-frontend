@@ -25,8 +25,8 @@ export const Navbar: FC<INavbarProps> = () => {
       },
       {
         icon: StatusIcon,
-        title: "NFT",
-        link: "/nft1",
+        title: "Stats",
+        link: "/leaderboard",
       },
     ],
     [],

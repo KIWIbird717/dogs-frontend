@@ -10,11 +10,19 @@ import { InviteBanner } from "@/widgets/InviteBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { GuildPlayers } from "@/widgets/GuildPlayers";
+import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
 import { Bonus } from "@/widgets/Bonus";
 
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
+
+const players:IUserPlayer = {
+  id: "1",
+  avatarUrl: "",
+  title: "Name",
+  league: "Gold",
+  coins: "2,64",
+};
 
 interface IInviteFriendsProps {}
 
@@ -53,7 +61,11 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
         </Button>
       </div>
 
-      {!isShowBonus && <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} />}
+      {!isShowBonus && <GuildPlayers title={"Friends"}
+                                     classNameList={"pb-[190px]"}
+                                     players={players}
+      />
+      }
       {isShowBonus && <Bonus />}
 
       <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
