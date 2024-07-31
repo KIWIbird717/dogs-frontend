@@ -46,13 +46,22 @@ const players: IUserPlayer[] = [
   },
 ];
 
-const players:IUserPlayer = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+const players: IUserPlayer[] = [
+  {
+    id: "1",
+    avatarUrl: "",
+    title: "Name",
+    league: "Gold",
+    coins: "2,64",
+  },
+  {
+    id: "2",
+    avatarUrl: "",
+    title: "Name",
+    league: "Alligator",
+    coins: "2,64",
+  },
+];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
