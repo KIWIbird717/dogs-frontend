@@ -10,7 +10,7 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: UserSlice.IUserSlice[];
+  players: IUserPlayer[];
 }
 
 export interface IUserPlayer {
@@ -20,8 +20,15 @@ export interface IUserPlayer {
   league: string;
   coins: string | number;
   image?: any;
+  id: string;
+  avatarUrl: string;
+  title: string;
+  league: string;
+  coins: string | number;
+  image?: any;
 }
 
+export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
 export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
   const { push } = useRouter();
 
@@ -30,6 +37,7 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
   };
 
   return (
+    <div className={"z-[10] flex w-full flex-col gap-2 overflow-hidden"}>
     <div className={"z-[10] flex w-full flex-col gap-2 overflow-hidden"}>
       <Typography tag={"h3"}>{title}</Typography>
 

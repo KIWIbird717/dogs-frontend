@@ -16,6 +16,14 @@ import { useGuild } from "@/shared/hooks/useGuild";
 
 interface IGuildPageProps {}
 
+const players:IUserPlayer = {
+  id: "1",
+  avatarUrl: "",
+  title: "Name",
+  league: "Gold",
+  coins: "2,64",
+};
+
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const pathName = usePathname();
 
