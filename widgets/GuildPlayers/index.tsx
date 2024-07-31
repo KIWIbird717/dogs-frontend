@@ -10,7 +10,7 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: IUserPlayer
+  players: IUserPlayer[]
 }
 
 export interface IUserPlayer {

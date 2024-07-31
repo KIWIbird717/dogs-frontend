@@ -19,13 +19,22 @@ import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import IUserSlice = UserSlice.IUserSlice;
 
-const players: IUserPlayer = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+const players: IUserPlayer[] = [
+  {
+    id: "1",
+    avatarUrl: "",
+    title: "Name",
+    league: "Gold",
+    coins: "2,64",
+  },
+  {
+    id: "2",
+    avatarUrl: "",
+    title: "Name",
+    league: "Alligator",
+    coins: "2,64",
+  },
+];
 
 interface IInviteFriendsProps {}
 
