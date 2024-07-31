@@ -14,9 +14,9 @@ interface IGuildPlayerItemProps {
   league: string;
   coins: number | string;
   index: number;
-  id: number | string
+  id: number | string;
   handleRedirect?: (id: number | string) => void;
-  className?: string
+  className?: string;
 }
 
 export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
@@ -27,7 +27,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   index,
   id,
   handleRedirect,
-  className
+  className,
 }) => {
   const numberGuild = index + 1;
   const onClickHandler = () => {
@@ -41,9 +41,8 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
       onClick={onClickHandler}
       className={twMerge(
         "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 px-3 py-2 text-left shadow-buttonNoAccent",
-        className ? className : "bg-black-400"
-      )
-      }
+        className ? className : "bg-black-400",
+      )}
     >
       <div className={"flex w-auto max-w-[261px] items-center gap-2"}>
         <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>

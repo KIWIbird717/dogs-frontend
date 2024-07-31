@@ -9,25 +9,19 @@ import { twMerge } from "tailwind-merge";
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: IUserPlayer[]
+  players: IUserPlayer[];
 }
 
 export interface IUserPlayer {
-  id: string
-  avatarUrl: string
-  title: string
-  league: string
-  coins: string | number
-  image?: any
+  id: string;
+  avatarUrl: string;
+  title: string;
+  league: string;
+  coins: string | number;
+  image?: any;
 }
 
-export const GuildPlayers: FC<IGuildPlayersProps> = (
-  {
-    title,
-    classNameList,
-    players
-  }
-  ) => {
+export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string | number) => {
@@ -35,7 +29,7 @@ export const GuildPlayers: FC<IGuildPlayersProps> = (
   };
 
   return (
-    <div className={"z-[10] flex w-full  flex-col gap-2 overflow-hidden"}>
+    <div className={"z-[10] flex w-full flex-col gap-2 overflow-hidden"}>
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 overflow-y-auto pb-28", classNameList)}>
