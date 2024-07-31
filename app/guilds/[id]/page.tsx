@@ -6,7 +6,7 @@ import { Navbar } from "@/widgets/Navbar";
 import { GuildBanner, IGuild } from "@/widgets/GuildBanner";
 import GuildImage from "@/public/images/guild.png";
 import { Button } from "@/shared/ui/Button/Button";
-import { GuildPlayers } from "@/widgets/GuildPlayers";
+import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
 import { useState } from "react";
@@ -23,6 +23,14 @@ const guild: IGuild = {
   members: "50/100",
   totalScore: 300000,
   link: "/guild/1",
+};
+
+const players:IUserPlayer = {
+  id: "1",
+  avatarUrl: "",
+  title: "Name",
+  league: "Gold",
+  coins: "2,64",
 };
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
@@ -67,7 +75,9 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      <GuildPlayers title={"Players"} />
+      <GuildPlayers title={"Players"}
+                    players={players}
+      />
 
       {isGuildJoined && (
         <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
