@@ -36,6 +36,14 @@ const players: IUserPlayer[] = [
   },
 ];
 
+const players:IUserPlayer = {
+  id: "1",
+  avatarUrl: "",
+  title: "Name",
+  league: "Gold",
+  coins: "2,64",
+};
+
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
   const pathName = usePathname();

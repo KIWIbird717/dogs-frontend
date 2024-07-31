@@ -33,9 +33,7 @@ const players: IUserPlayer[] = [
   },
 ];
 
-
-interface IInviteFriendsProps {
-}
+interface IInviteFriendsProps {}
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
@@ -72,11 +70,9 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
         </Button>
       </div>
 
-      {!isShowBonus && <GuildPlayers title={"Friends"}
-                                     classNameList={"pb-[190px]"}
-                                     players={players}
-      />
-      }
+      {!isShowBonus && (
+        <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} players={players} />
+      )}
       {isShowBonus && <Bonus />}
 
       <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
