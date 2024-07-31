@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: IUserPlayer
+  players: IUserPlayer[]
 }
 
 export interface IUserPlayer {
@@ -39,15 +39,15 @@ export const GuildPlayers: FC<IGuildPlayersProps> = (
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 overflow-y-auto pb-28", classNameList)}>
-        {Array.from(Array(20)).map((_, index) => {
+        {players.map((player, index) => {
           return (
             <GuildPlayerItem
               key={index}
-              id={players.id}
-              title={players.title}
-              league={players.league}
-              avatarUrl={players.avatarUrl}
-              coins={players.coins}
+              id={player.id}
+              title={player.title}
+              league={player.league}
+              avatarUrl={player.avatarUrl}
+              coins={player.coins}
               index={index}
               handleRedirect={handleRedirect}
             />

@@ -1,9 +1,8 @@
-"use client";
+"use client"
 
-import { NextPage } from "next";
-import { View } from "@/shared/layout/View";
-import { Header } from "@/widgets/Header";
-import { Navbar } from "@/widgets/Navbar";
+import { FC, useState } from "react";
+import { CarouselWrapper } from "@/widgets/CarouselWrapper";
+import { GuildPlayers } from "@/widgets/GuildPlayers";
 import BronzeImage from "@/public/images/ranks/bronze.png";
 import SilverImage from "@/public/images/ranks/silver.png";
 import GoldImage from "@/public/images/ranks/gold.png";
@@ -11,21 +10,9 @@ import DiamondImage from "@/public/images/ranks/diamond.png";
 import MasterImage from "@/public/images/ranks/master.png";
 import GangsterImage from "@/public/images/ranks/gangster.png";
 import BossImage from "@/public/images/ranks/boss.png";
-import { IUserPlayer } from "@/widgets/GuildPlayers";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/shared/ui/Carousel";
-import Image from "next/image";
-import { useState } from "react";
-import { CarouselWrapper } from "@/widgets/CarouselWrapper";
+import { IRank } from "@/app/stats/page";
 
-interface ILeaderBoardProps {
-}
-
-export interface IRank {
-  rank: string,
-  value: string
-  description: string
-  image: any,
-  users: IUserPlayer[]
+interface IStatsMainProps {
 }
 
 const ranks: IRank[] = [
@@ -38,7 +25,7 @@ const ranks: IRank[] = [
       {
         id: "1",
         avatarUrl: "",
-        title: "Name",
+        title: "Name Bronse",
         league: "Alligator",
         coins: "2,64",
       },
@@ -181,7 +168,8 @@ const ranks: IRank[] = [
   },
 ];
 
-const LeaderBoard: NextPage<ILeaderBoardProps> = () => {
+
+export const StatsMain: FC<IStatsMainProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handlePrevious = () => {
@@ -192,21 +180,16 @@ const LeaderBoard: NextPage<ILeaderBoardProps> = () => {
     setCurrentSlide((prev) => (prev === ranks.length - 1 ? 0 : prev + 1));
   };
 
-
   return (
-    <View
-      fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
-    >
-      <Header />
-
+    <div className={"w-full flex flex-col gap-4 z-[10]"}>
       <CarouselWrapper handlePrevious={handlePrevious}
                        handleNext={handleNext}
                        ranks={ranks}
       />
 
-      <Navbar />
-    </View>
+      <GuildPlayers title={"Leaderboard Legue"}
+                    players={ranks[currentSlide].users}
+      />
+    </div>
   );
 };
-export default LeaderBoard;
