@@ -16,15 +16,26 @@ import { Bonus } from "@/widgets/Bonus";
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
 
-const players:IUserPlayer = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+const players: IUserPlayer[] = [
+  {
+    id: "1",
+    avatarUrl: "",
+    title: "Name",
+    league: "Gold",
+    coins: "2,64",
+  },
+  {
+    id: "2",
+    avatarUrl: "",
+    title: "Name",
+    league: "Alligator",
+    coins: "2,64",
+  },
+];
 
-interface IInviteFriendsProps {}
+
+interface IInviteFriendsProps {
+}
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);

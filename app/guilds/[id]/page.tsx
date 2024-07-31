@@ -14,7 +14,8 @@ import { twMerge } from "tailwind-merge";
 import { useRouter } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 
-interface IGuildPageProps {}
+interface IGuildPageProps {
+}
 
 const guild: IGuild = {
   icon: GuildImage,
@@ -25,13 +26,22 @@ const guild: IGuild = {
   link: "/guild/1",
 };
 
-const players:IUserPlayer = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+const players: IUserPlayer[] = [
+  {
+    id: "1",
+    avatarUrl: "",
+    title: "Name",
+    league: "Gold",
+    coins: "2,64",
+  },
+  {
+    id: "2",
+    avatarUrl: "",
+    title: "Name",
+    league: "Alligator",
+    coins: "2,64",
+  },
+];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const { push } = useRouter();

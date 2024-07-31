@@ -61,7 +61,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
         <div className={"flex h-full flex-col justify-center gap-1"}>
           <Typography tag={"h3"}>{title}</Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
-            League: {league}
+            League: &nbsp;
             <span className={"text-[15px] font-bold leading-[18px] text-white-900"}>{league}</span>
           </Typography>
         </div>
