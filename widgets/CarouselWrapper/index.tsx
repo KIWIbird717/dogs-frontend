@@ -14,8 +14,8 @@ import {
   CarouselPrevious,
 } from "@/shared/ui/Carousel";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { IRank } from "@/widgets/StatsMain";
+import { IRank } from "@/app/leaderboard/page";
+import { Typography } from "@/shared/ui/Typography/Typography";
 
 interface ICarouselWrapperProps {
   handlePrevious: () => void;
@@ -28,15 +28,6 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
   handlePrevious,
   ranks,
 }) => {
-export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
-  handleNext,
-  handlePrevious,
-  ranks,
-}) => {
-  const { push } = useRouter();
-
-  const handlerRedirect = () => push("stats/1");
-
   return (
     <div className={"h-[403px] w-full"}>
       <Carousel>
@@ -44,44 +35,23 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
           {ranks.map((item, i) => {
             return (
               <CarouselItem key={i} className={"flex flex-col items-center justify-center gap-2"}>
-                <button onClick={handlerRedirect}>
+                <div>
                   <Image
                     src={item.image}
                     alt={`image+${i}`}
                     className={"h-[304px] w-[296px] object-cover"}
                   />
-                </button>
-                <div className={"flex w-full flex-col items-center gap-[11px]"}>
-                  <div className={"flex w-full flex-col justify-center"}>
-                    <Typography tag={"h1"} className={"text-center text-white-900"}>
-                      {item.value}
-                    </Typography>
-                    <Typography
-                      tag={"p"}
-                      className={"text-center text-[17px] font-normal leading-6 text-white-900"}
-                    >
-                      {item.description}
-                    </Typography>
-                  </div>
-
-                  <div
-                    className={"relative h-[8px] w-[296px] rounded-[32px] border border-white-900"}
-                  >
-                    <div
-                      className={
-                        "absolute -bottom-[2px] -left-[2px] z-[10] h-[10px] w-[45%] rounded-[32px] border-none bg-gradient-button-accent"
-                      }
-                    />
-                  </div>
+                </div>
+                <div className={"flex w-full flex-col"}>
+                  <Typography tag={"h1"}>{item.value}</Typography>
                 </div>
               </CarouselItem>
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className={"left-0 top-[40%]"} onClick={handlePrevious} />
-        <CarouselNext className={"right-0 top-[40%]"} onClick={handleNext} />
+        <CarouselPrevious className={"left-0"} onClick={handlePrevious} />
+        <CarouselNext className={"right-0"} onClick={handleNext} />
       </Carousel>
     </div>
   );
 };
-

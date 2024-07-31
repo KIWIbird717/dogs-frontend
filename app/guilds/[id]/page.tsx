@@ -6,7 +6,8 @@ import { Navbar } from "@/widgets/Navbar";
 import { GuildBanner } from "@/widgets/GuildBanner";
 import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
-import { GuildPlayers } from "@/widgets/GuildPlayers";
+import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
+import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
 import { useEffect, useState } from "react";
@@ -18,22 +19,22 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IGuildPageProps {}
 
-const players: IUserPlayer[] = [
-  {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
-  },
-];
+const guild: IGuild = {
+  icon: GuildImage,
+  name: "Tom & Jerry",
+  author: "Nick Name Founder",
+  members: "50/100",
+  totalScore: 300000,
+  link: "/guild/1",
+};
+
+const players: IUserPlayer = {
+  id: "1",
+  avatarUrl: "",
+  title: "Name",
+  league: "Gold",
+  coins: "2,64",
+};
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");

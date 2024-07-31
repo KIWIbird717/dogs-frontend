@@ -10,26 +10,25 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: IUserPlayer[];
+  players: IUserPlayer
 }
 
 export interface IUserPlayer {
-  id: string;
-  avatarUrl: string;
-  title: string;
-  league: string;
-  coins: string | number;
-  image?: any;
-  id: string;
-  avatarUrl: string;
-  title: string;
-  league: string;
-  coins: string | number;
-  image?: any;
+  id: string
+  avatarUrl: string
+  title: string
+  league: string
+  coins: string | number
+  image?: any
 }
 
-export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
-export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
+export const GuildPlayers: FC<IGuildPlayersProps> = (
+  {
+    title,
+    classNameList,
+    players
+  }
+  ) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string | number) => {

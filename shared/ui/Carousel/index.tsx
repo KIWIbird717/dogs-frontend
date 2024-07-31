@@ -183,9 +183,9 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
   ({ className, variant = "outline", size = "icon", onClick, ...props }, ref) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
-    const onScrollPrev: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    const onScrollPrev = () => {
       if (onClick) {
-        onClick(event);
+        onClick();
         scrollPrev();
       } else {
         scrollPrev();
@@ -220,9 +220,9 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
   ({ className, variant = "outline", size = "icon", onClick, ...props }, ref) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();
 
-    const onScrollNext: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    const onScrollNext = () => {
       if (onClick) {
-        onClick(event);
+        onClick();
         scrollNext();
       } else {
         scrollNext();
