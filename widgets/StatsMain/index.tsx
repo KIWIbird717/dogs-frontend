@@ -15,8 +15,7 @@ import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { useUser } from "@/shared/hooks/useUser";
 import { Button } from "@/shared/ui/Button/Button";
 
-interface IStatsMainProps {
-}
+interface IStatsMainProps {}
 
 const ranks: IRank[] = [
   {
@@ -38,7 +37,8 @@ const ranks: IRank[] = [
         title: "Name",
         league: "Alligator",
         coins: "2,64",
-      }, {
+      },
+      {
         id: "1",
         avatarUrl: "",
         title: "Name Bronse",
@@ -51,7 +51,8 @@ const ranks: IRank[] = [
         title: "Name",
         league: "Alligator",
         coins: "2,64",
-      }, {
+      },
+      {
         id: "1",
         avatarUrl: "",
         title: "Name Bronse",
@@ -64,13 +65,15 @@ const ranks: IRank[] = [
         title: "Name",
         league: "Alligator",
         coins: "2,64",
-      }, {
+      },
+      {
         id: "2",
         avatarUrl: "",
         title: "Name",
         league: "Alligator",
         coins: "2,64",
-      }, {
+      },
+      {
         id: "1",
         avatarUrl: "",
         title: "Name Bronse",
@@ -129,7 +132,8 @@ const ranks: IRank[] = [
         coins: "2,64",
       },
     ],
-  }, {
+  },
+  {
     rank: "diamond",
     value: "#1023 diamond",
     description: "333,54m/1B",
@@ -150,7 +154,8 @@ const ranks: IRank[] = [
         coins: "2,64",
       },
     ],
-  }, {
+  },
+  {
     rank: "master",
     value: "#1023 master",
     description: "333,54m/1B",
@@ -171,7 +176,8 @@ const ranks: IRank[] = [
         coins: "2,64",
       },
     ],
-  }, {
+  },
+  {
     rank: "gangster",
     value: "#1023 gangster",
     description: "333,54m/1B",
@@ -192,7 +198,8 @@ const ranks: IRank[] = [
         coins: "2,64",
       },
     ],
-  }, {
+  },
+  {
     rank: "boss",
     value: "#1023 boss",
     description: "333,54m/1B",
@@ -216,7 +223,6 @@ const ranks: IRank[] = [
   },
 ];
 
-
 export const StatsMain: FC<IStatsMainProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -232,19 +238,19 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   const { _id, first_name, guild, balance } = user;
 
   return (
-    <div className={"w-full flex flex-col gap-4 z-[10] overflow-hidden"}>
-      <CarouselWrapper handlePrevious={handlePrevious}
-                       handleNext={handleNext}
-                       ranks={ranks}
-      />
+    <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
+      <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={ranks} />
 
-      <GuildPlayers title={"Leaderboard Legue"}
-                    players={ranks[currentSlide].users}
-                    classNameList={"pb-[190px]"}
+      <GuildPlayers
+        title={"Leaderboard Legue"}
+        players={ranks[currentSlide].users}
+        classNameList={"pb-[190px]"}
       />
 
       <Button
-        className={"fixed bottom-[55px] flex items-start left-0 w-full h-[112px] backdrop-blur-[16px] shadow-buttonNoAccent bg-black-400 border-t border-t-black-300 rounded-xl z-[11]"}
+        className={
+          "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
+        }
       >
         <GuildPlayerItem
           id={_id}
@@ -253,11 +259,9 @@ export const StatsMain: FC<IStatsMainProps> = () => {
           avatarUrl={""}
           coins={balance}
           index={0}
-          className={"border-none shadow-none "}
+          className={"border-none shadow-none"}
         />
       </Button>
-
-
     </div>
   );
 };
