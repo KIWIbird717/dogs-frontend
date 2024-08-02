@@ -6,7 +6,7 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKERHUB_USERNAME: $DOCKER_HUB_USERNAME
   DOCKERHUB_PASSWORD: $DOCKER_HUB_ACCESS_TOKEN
-  DOCKERHUB_REPO: $CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  DOCKERHUB_REPO: $CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME
   DOCKER_COMPOSE_CONTAINER_NAME: $CI_PROJECT_NAME
   SSH_PRIVATE_KEY: $SSH_KEY_DEPLOY
   SERVER_IP: "147.45.225.75"
@@ -41,8 +41,6 @@ deploy:
           exit 1
       fi
       echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-      echo "DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME"
-      echo "DOCKERHUB_REPO: $DOCKERHUB_REPO"
       docker pull "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
       if [ ! -f /root/docker-compose.yml ]; then
           echo "docker-compose.yml not found"
