@@ -40,6 +40,7 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+    - scp ~/.docker/config.json root@$SERVER_IP:/root/.docker/config.json
     - |
       ssh -o LogLevel=QUIET -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$SERVER_IP <<EOL
        set -e
