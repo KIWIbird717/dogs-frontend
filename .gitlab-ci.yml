@@ -37,7 +37,7 @@ deploy:
           echo "Docker could not be found"
           exit 1
       fi
-      docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+      echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
       docker pull "$DOCKERHUB_ORG/$DOCKERHUB_REPO:latest"
       docker-compose -f /root/docker-compose.yml up --no-deps -d "$DOCKER_COMPOSE_CONTAINER_NAME"
       docker system prune -f
