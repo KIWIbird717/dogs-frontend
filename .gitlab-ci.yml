@@ -31,4 +31,4 @@ deploy:
                                     docker-compose -f /path/to/docker-compose.yml up --no-deps -d web && \
                                     docker system prune -f"
   only:
-    - master
+    - production
