@@ -12,12 +12,10 @@ variables:
 services:
   - docker:dind
 
-before_script:
-  - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
-
 build:
   stage: build
   script:
+    - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
     - docker build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest .
     - docker push $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
   only:
@@ -28,12 +26,13 @@ deploy:
   stage: deploy
   script:
     - mkdir -p ~/.ssh
-    - echo -n "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - echo -n $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -H 147.45.225.75 >> ~/.ssh/known_hosts
     - ssh root@147.45.225.75 "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
                                     docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest && \
                                     docker-compose -f /root/docker-compose.yml up --no-deps -d $DOCKER_COMPOSE_CONTAINER_NAME && \
-                                    docker system prune -f"
+                                    docker system prune -f && \
+                                    docker logout"
   only:
     - production
