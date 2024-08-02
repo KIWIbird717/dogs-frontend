@@ -42,13 +42,15 @@ deploy:
       fi
       echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
       docker pull "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+      docker logout
+
       if [ ! -f /root/docker-compose.yml ]; then
           echo "docker-compose.yml not found"
           exit 1
       fi
+
       docker-compose -f /root/docker-compose.yml up --no-deps -d "$DOCKER_COMPOSE_CONTAINER_NAME"
       docker system prune -f
-      docker logout
       EOL
   only:
     - production
