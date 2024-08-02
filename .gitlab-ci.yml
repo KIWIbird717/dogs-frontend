@@ -30,7 +30,7 @@ deploy:
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -H 147.45.225.75 >> ~/.ssh/known_hosts
     - |
-      ssh user@your-server-address << 'EOF'
+      ssh root@147.45.225.75:22 << 'EOF'
       if ! command -v docker &> /dev/null
       then
           echo "Docker could not be found"
