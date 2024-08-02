@@ -29,8 +29,6 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-keyscan -H 147.45.225.75 >> ~/.ssh/known_hosts
-    - echo "First few lines of the key:" && head -n 5 ~/.ssh/id_rsa
-    - echo "Last few lines of the key:" && tail -n 5 ~/.ssh/id_rsa
     - ssh root@147.45.225.75 "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
                                     docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest && \
                                     docker-compose -f /root/docker-compose.yml up --no-deps -d $DOCKER_COMPOSE_CONTAINER_NAME && \
