@@ -41,5 +41,6 @@ deploy:
       docker-compose -f /root/docker-compose.yml up --no-deps -d $DOCKER_COMPOSE_CONTAINER_NAME
       docker system prune -f
       docker logout
-      EOF  only:
+      EOF
+  only:
     - production
