@@ -40,7 +40,8 @@ deploy:
           echo "Docker could not be found"
           exit 1
       fi
-      docker pull "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+      echo "Buiding Docker image - $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+      docker pull $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest
       docker-compose -f /root/docker-compose.yml up --no-deps -d "$DOCKER_COMPOSE_CONTAINER_NAME"
       docker system prune -f
       docker logout
