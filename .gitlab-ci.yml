@@ -1,6 +1,5 @@
 stages:
   - build
-  - push
   - deploy
 
 variables:
