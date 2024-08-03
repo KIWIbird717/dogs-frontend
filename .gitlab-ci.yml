@@ -10,12 +10,6 @@ variables:
   DOCKER_COMPOSE_CONTAINER_NAME: $CI_PROJECT_NAME
   SSH_PRIVATE_KEY: $SSH_KEY_DEPLOY
 
-workflow:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED
-
-
 services:
   - docker:dind
 
