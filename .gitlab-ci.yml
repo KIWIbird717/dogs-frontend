@@ -18,11 +18,15 @@ build:
   script: 
     - docker build --no-cache -t "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest" .
 
-deploy:
-  stage: deploy
+push:
+  stage: build
   script:
     - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
     - docker push "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+
+deploy:
+  stage: deploy
+  script:
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | base64 -d > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
