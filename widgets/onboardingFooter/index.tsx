@@ -5,6 +5,10 @@ import TickIcon from "@/public/images/svg/onboarding/tick.svg";
 import { OnboardingSteps } from "@/widgets/onboardingMedia/entities/Steps";
 import { HeadersType } from "@/widgets/onboardingMedia";
 import { headers } from "next/headers";
+import TickIcon from "@/public/images/svg/onboarding/tick.svg";
+import { OnboardingSteps } from "@/widgets/onboardingMedia/entities/Steps";
+import { HeadersType } from "@/widgets/onboardingMedia";
+import { headers } from "next/headers";
 
 interface IOnBoardingFooterProps {
   step: number;
@@ -53,63 +57,60 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
 
       <div className={"flex flex-col gap-1"}>
         <div className={"flex w-full gap-2"}>
-          {step !== 0 && (
+          <AnimatePresence>
+            {step !== 0 && (
+              <motion.div
+                initial={{ opacity: 0, width: "0px" }}
+                animate={{ opacity: 1, width: "calc(37% - 4px)" }}
+                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, width: "0px" }}
+                // className={"w-[calc(37%-4px)]"}
+                key="back-button"
+              >
+                <Button
+                  variant={"noAccent"}
+                  onClick={onPrev}
+                  className={"text-[18px] font-bold leading-6"}
+                >
+                  Back
+                </Button>
+              </motion.div>
+            )}
+
             <motion.div
-              initial={{ opacity: 0, width: "0px" }}
-              animate={{ opacity: 1, width: "calc(37%)" }}
-              transition={{ duration: 0.2 }}
-              exit={{ opacity: 0, width: "0px" }}
-              // className={"w-[calc(37%-4px)]"}
+              initial={{
+                opacity: 0,
+                width: step === 0 ? "100%" : "calc(63% - 4px)",
+              }}
+              exit={{
+                opacity: 0,
+                width: step === 0 ? "100%" : "calc(63% - 4px)",
+              }}
+              animate={{
+                opacity: 1,
+                width: step === 0 ? "100%" : "calc(63% - 4px)",
+              }}
+              transition={{ duration: 0.1 }}
+              key="next-button"
             >
               <Button
-                variant={"noAccent"}
-                onClick={onPrev}
-                className={"text-[18px] font-bold leading-6"}
+                variant={"primary"}
+                onClick={onNext}
+                className={"w-full text-[18px] font-bold leading-6 text-white-900"}
               >
-                Back
+                {isLastStep ? (
+                  <div className={"flex gap-2"}>
+                    <div>
+                      <TickIcon />
+                    </div>
+                    <div>Finish</div>
+                  </div>
+                ) : (
+                  <div>Continue</div>
+                )}
               </Button>
             </motion.div>
-          )}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              width: step === 0 ? "100%" : "calc(63%)",
-            }}
-            exit={{
-              opacity: 0,
-              width: step === 0 ? "100%" : "calc(63%x)",
-            }}
-            animate={{
-              opacity: 1,
-              width: step === 0 ? "100%" : "calc(63%)",
-            }}
-            transition={{ duration: 0.1 }}
-          >
-            <Button
-              variant={"primary"}
-              onClick={onNext}
-              className={"w-full text-[18px] font-bold leading-6 text-white-900"}
-            >
-              {isLastStep ? (
-                <div className={"flex gap-2"}>
-                  <div>
-                    <TickIcon />
-                  </div>
-                  <div>Finish</div>
-                </div>
-              ) : (
-                <div>Continue</div>
-              )}
-            </Button>
-          </motion.div>
-                  <div>Finish</div>
-                </div>
-              ) : (
-                <div>Continue</div>
-              )}
-            </Button>
-          </motion.div>
+          </AnimatePresence>
         </div>
         <Button
           onClick={redirect}
