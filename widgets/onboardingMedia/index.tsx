@@ -116,7 +116,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
-  const { getMe } = useUser();
+  const { onChangeUser } = useUser();
 
   const redirectToMain = () => push("/main");
 
@@ -137,12 +137,15 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
     (async () => {
       try {
         await UsersService.createUser();
-        await getMe();
+        const { data } = await UsersService.getMe();
+        onChangeUser(data);
+        setUserSS(data);
       } catch (error) {
+        logger.error(error);
         logger.error(error);
       }
     })();
-  }, []);
+  }, [logger, onChangeUser, setUserSS]);
 
   return (
     <>
@@ -150,6 +153,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
         {" "}
         {/*gap-6*/}
         <OnboardingHeader header={headers[step]} step={step} />
+        <AnimatePresence mode={"wait"}>
         <AnimatePresence mode={"wait"}>
           <motion.div
             className={"relative flex justify-center"}
