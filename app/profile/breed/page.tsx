@@ -67,16 +67,15 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
     (async () => {
       try {
         await UsersService.updateUser({
-          breedKey: breedLocal
-        })
+          breedKey: breedLocal,
+        });
 
-        const { data } = await UsersService.getMe()
-        onChangeUser(data)
-
+        const { data } = await UsersService.getMe();
+        onChangeUser(data);
       } catch (error) {
-        logger.error(error)
+        logger.error(error);
       }
-    })()
+    })();
   }, [breedLocal]);
 
   return (
