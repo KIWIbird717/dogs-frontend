@@ -114,8 +114,10 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const { push } = useRouter();
   const [step, setStep] = useState(0);
 
+  const redirectToMain = () => push("/main");
+
   const onNextStep = () => {
-    if (step > 4) return;
+    if (step === 4) redirectToMain();
     if (step >= 0 && step < 4) {
       setStep(step + 1);
     }
@@ -126,7 +128,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
       setStep(step - 1);
     }
   };
-  const redirectToMain = () => push("/main");
 
   return (
     <>

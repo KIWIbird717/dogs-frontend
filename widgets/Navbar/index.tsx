@@ -10,6 +10,7 @@ import BoneIcon from "@/public/images/svg/nav/bone.svg";
 
 import { INavItems, NavItems } from "@/widgets/Navbar/shared/ui/NavItems";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface INavbarProps {}
 
@@ -26,7 +27,7 @@ export const Navbar: FC<INavbarProps> = () => {
       {
         icon: StatusIcon,
         title: "Stats",
-        link: "/currentStats",
+        link: "/stats",
       },
     ],
     [],
@@ -36,13 +37,13 @@ export const Navbar: FC<INavbarProps> = () => {
     () => [
       {
         icon: EarnIcon,
-        title: "NFT",
+        title: "Earn",
         link: "/earn",
       },
       {
         icon: FriendIcon,
-        title: "NFT",
-        link: "/nft3",
+        title: "Friends",
+        link: "/invite-friends",
       },
     ],
     [],
@@ -66,7 +67,9 @@ export const Navbar: FC<INavbarProps> = () => {
                 "absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton"
               }
             >
-              <BoneIcon />
+              <Link href={"/main"}>
+                <BoneIcon />
+              </Link>
             </Button>
 
             <div className={"absolute top-[38%] h-[26px] w-[100px] bg-none"} />

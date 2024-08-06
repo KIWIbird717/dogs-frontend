@@ -92,7 +92,6 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = (
                   : <div>
                     Continue
                   </div>}
-
               </Button>
             </motion.div>
           </AnimatePresence>
