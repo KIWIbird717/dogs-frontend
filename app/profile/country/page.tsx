@@ -14,24 +14,17 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
-import { UsersService } from "@/shared/lib/services/users/users";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface ICountryPageProps {}
 
 export interface IBreedCountry {
-  flag?: string;
-  flag?: string;
+  flag: string;
   iso2: string;
   iso3: string;
   name: string;
 }
 
 const CountryPage: NextPage<ICountryPageProps> = () => {
-  const logger = new Logger("CountryPage");
-
-  const logger = new Logger("CountryPage");
-
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const { onChangeUser, country } = useUser();
@@ -39,6 +32,8 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
 
   useRequest(async () => {
     const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
+
+    setCountries(data.data);
 
     setCountries(data.data);
   }, []);
