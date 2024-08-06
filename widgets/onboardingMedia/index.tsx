@@ -3,98 +3,102 @@
 import { FC, ReactNode, useState } from "react";
 import { OnboardingHeader } from "@/widgets/onboardingHeader";
 import DuckSvg from "@/public/images/svg/duck.svg";
+import OnBoardingImg from "@/public/images/onboarding.png";
+import DuckImg from "@/public/images/duck.png";
 import { OnboardingSteps } from "@/widgets/onboardingMedia/entities/Steps";
 import { OnBoardingFooter } from "@/widgets/onboardingFooter";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image, { StaticImageData } from "next/image";
+import { twMerge } from "tailwind-merge";
 
-interface IOnboardingMediaProps {}
+interface IOnboardingMediaProps {
+}
 
 const headers: HeadersType[] = [
   {
     id: 0,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        How to make coin?
+        Tap an earn coin
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Bite the bone{" "}
-        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>every day</span> and
-        don&apos;t think about your teeth.
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>Increase your score</span>&nbsp;
+        by collecting coins <span className={"text-[28px] font-normal leading-8 text-blue-800"}>with every tap</span>
       </Typography>
     ),
-    image: <DuckSvg />,
+    image: OnBoardingImg,
   },
   {
     id: 1,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Easy
+        Pump up the Bone
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Tap our bone and take you new coin.{" "}
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
-          Do it with us we can do you rich
+         Get the best bone &nbsp;
+        </span>
+        and get 5 times &nbsp;
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
+         more coins
         </span>
       </Typography>
     ),
-    image: <DuckSvg />,
+    image: OnBoardingImg,
   },
   {
     id: 2,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Easy
+        Upgrade your exchange
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Tap our bone and take you new coin.{" "}
-        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
-          Do it with us we can do you rich
+        As you <span className={"text-[28px] font-normal leading-8 text-blue-800"}>level up</span>,
+        you&apos;ll be able to <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
+         improve your coin accumulation
         </span>
       </Typography>
     ),
-    image: <DuckSvg />,
+    image: DuckImg,
   },
   {
     id: 3,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Easy
+        Bring your friends and earn rewards together!
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Tap our bone and take you new coin.{" "}
+        Invite friends and build a team for &nbsp;
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
-          Do it with us we can do you rich
+         maximum bonuses!
         </span>
       </Typography>
     ),
-    image: <DuckSvg />,
+    image: DuckImg,
   },
   {
     id: 4,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Easy
+        Help & Communication
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Tap our bone and take you new coin.{" "}
-        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
-          Do it with us we can do you rich
-        </span>
+        Subscribe to our community & socialize
       </Typography>
     ),
-    image: <DuckSvg />,
+    image: DuckImg,
   },
 ];
 
@@ -102,7 +106,8 @@ export type HeadersType = {
   id: number;
   title: ReactNode;
   description: ReactNode;
-  image: ReactNode;
+  // image: ReactNode | StaticImageData;
+  image: StaticImageData;
 };
 
 export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
@@ -125,7 +130,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
 
   return (
     <>
-      <div className={"z-[10] flex w-full flex-col gap-6"}>
+      <div className={"z-[10] flex w-full flex-col items-center gap-6"}>
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
@@ -135,12 +140,18 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
             exit={{ opacity: 0 }}
             key={step}
           >
-            {headers[step].image}
+            {/*{headers[step].image}*/}
+            <Image src={headers[step].image}
+                   alt={""}
+                   className={twMerge("w-[398px] h-[398px]", step === 4 && "w-[346px] h-[346px]")}
+            />
           </motion.div>
         </AnimatePresence>
-        <OnboardingSteps step={step} headers={headers} />
+
       </div>
+
       <OnBoardingFooter
+        headers={headers}
         step={step}
         onNext={onNextStep}
         onPrev={onPrevStep}
