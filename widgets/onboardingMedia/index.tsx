@@ -129,7 +129,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
-  const {getMe} = useUser()
+  const { getMe } = useUser();
 
   const redirectToMain = () => push("/main");
 
@@ -150,13 +150,12 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   useEffect(() => {
     (async () => {
       try {
-        await UsersService.createUser()
-        await getMe()
+        await UsersService.createUser();
+        await getMe();
       } catch (error) {
-        logger.error(error)
+        logger.error(error);
       }
-
-    })()
+    })();
   }, []);
 
   return (
@@ -164,7 +163,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
       <div className={"z-[10] flex w-full flex-col items-center gap-6"}>
       <div className={"z-[10] flex w-full flex-col items-center gap-6"}>
         <OnboardingHeader header={headers[step]} step={step} />
-        <AnimatePresence mode={"wait"} >
+        <AnimatePresence mode={"wait"}>
           <motion.div
             className={"relative flex justify-center"}
             initial={{ opacity: 0 }}
