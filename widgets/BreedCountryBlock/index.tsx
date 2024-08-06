@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { Input } from "@/shared/ui/Input";
 import { NotFound } from "@/shared/ui/NotFound";
-import { BreedCountryList, IBreedCountry } from "@/widgets/BreedCountryList";
+import { BreedCountryList } from "@/widgets/BreedCountryList";
+import { IBreedCountry } from "@/app/profile/country/page";
 
 interface IBreedCountryBlockProps {
   items: IBreedCountry[];
@@ -23,7 +24,7 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
   pageName,
 }) => {
   const filteredItems = items.filter((breed) =>
-    breed.value.toLowerCase().includes(value.toLowerCase()),
+    breed.name.toLowerCase().includes(value.toLowerCase()),
   );
 
   return (

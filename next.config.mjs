@@ -8,6 +8,13 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "upload.wikimedia.org"
+      }
+    ]
+  }
 };
 
 export default nextConfig;

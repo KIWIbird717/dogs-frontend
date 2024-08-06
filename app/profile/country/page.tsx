@@ -13,42 +13,27 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
-import { IBreedCountry } from "@/widgets/BreedCountryList";
 
-interface ICountryPageProps {}
+interface ICountryPageProps {
+}
 
-const items: IBreedCountry[] = [
-  {
-    id: "kz",
-    value: "Kazakhstan",
-  },
-  {
-    id: "ua",
-    value: "Ukraine",
-  },
-  {
-    id: "uk",
-    value: "United Kingdom",
-  },
-];
+export interface IBreedCountry {
+  flag: string;
+  iso2: string;
+  iso3: string;
+  name: string;
+}
+
 
 const CountryPage: NextPage<ICountryPageProps> = () => {
-  const [countries, setCountries] = useState(items);
+  const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const { onChangeCountry, country } = useUser();
 
   useRequest(async () => {
     const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
-    const countriesWithIcons = countries.map((item) => {
-      const countryData = data.data.find(
-        (country: { name: string }) => country.name === item.value,
-      );
-      return {
-        ...item,
-        flagUrl: countryData.flag,
-      };
-    });
-    setCountries(countriesWithIcons);
+
+    setCountries(data.data);
   }, []);
 
   const handleClick = (breed: string) => onChangeCountry(breed);
