@@ -13,52 +13,40 @@ import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { IBreedCountry } from "../country/page";
-import { UsersService } from "@/shared/lib/services/users/users";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { StatsService } from "@/shared/lib/services/stats/stats";
-import { UsersService } from "@/shared/lib/services/users/users";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { StatsService } from "@/shared/lib/services/stats/stats";
 
 interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
   {
-    name: "The mutt",
-    iso2: "Husky",
-    iso3: "Husky",
-  },
-
-  {
-    name: "The mutt",
-    iso2: "Husky",
-    iso3: "Husky",
-  },
-
-  {
     name: "Husky",
     iso2: "Husky",
     iso3: "Husky",
+    flag: "Husky",
   },
+
   {
     name: "Bulldog",
     iso2: "Bulldog",
     iso3: "Bulldog",
+    flag: "Bulldog",
   },
   {
     name: "Doberman",
     iso2: "Doberman",
     iso3: "Doberman",
+    flag: "Doberman",
   },
   {
     name: "Fox Terrie",
     iso2: "Fox Terrie",
     iso3: "Fox Terrie",
+    flag: "Fox Terrie",
   },
   {
     name: "Jeck Rassel",
     iso2: "Jeck Rassel",
     iso3: "Jeck Rassel",
+    flag: "Jeck Rassel",
   },
 ];
 

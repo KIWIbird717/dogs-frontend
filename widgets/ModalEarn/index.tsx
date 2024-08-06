@@ -17,7 +17,7 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
 
   const isModalOpen = isOpen && type === "earn";
 
-  const coin = formatNumber(data?.task?.coin || 0);
+  const coin = formatNumber(data ? data.task.coin : 0);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {

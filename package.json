@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:local": "next dev -H tg-mini-app.local -p 3000 --experimental-https",
+    "dev:local": "next dev -H tg-mini-app.local -p 3000 --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +19,6 @@
     "@radix-ui/react-switch": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@svgr/webpack": "^8.1.0",
-    "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.7.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
