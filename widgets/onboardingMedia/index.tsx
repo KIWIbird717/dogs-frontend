@@ -133,11 +133,10 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
-  const {onChangeUser} = useUser()
-
   const redirectToMain = () => push("/main");
 
   const onNextStep = () => {
+    if (step === 4) redirectToMain();
     if (step === 4) redirectToMain();
     if (step >= 0 && step < 4) {
       setStep(step + 1);
@@ -149,20 +148,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
       setStep(step - 1);
     }
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await UsersService.createUser()
-        const {data} = await UsersService.getMe()
-        onChangeUser(data)
-        setUserSS(data)
-      } catch (error) {
-        logger.error(error)
-      }
-
-    })()
-  }, [logger, onChangeUser, setUserSS]);
 
   return (
     <>

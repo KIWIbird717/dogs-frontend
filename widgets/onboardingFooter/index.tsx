@@ -105,9 +105,9 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
                     </div>
                     <div>Finish</div>
                   </div>
-                ) : (
-                  <div>Continue</div>
-                )}
+                  : <div>
+                    Continue
+                  </div>}
               </Button>
             </motion.div>
           </AnimatePresence>
