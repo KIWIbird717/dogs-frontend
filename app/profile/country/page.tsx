@@ -16,8 +16,7 @@ import axios from "axios";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface ICountryPageProps {
-}
+interface ICountryPageProps {}
 
 export interface IBreedCountry {
   flag?: string;
@@ -26,15 +25,13 @@ export interface IBreedCountry {
   name: string;
 }
 
-
 const CountryPage: NextPage<ICountryPageProps> = () => {
   const logger = new Logger("CountryPage");
 
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const { onChangeUser, country } = useUser();
-  const [currentCountry, setCurrentCountry] = useState(country)
-
+  const [currentCountry, setCurrentCountry] = useState(country);
 
   useRequest(async () => {
     const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
@@ -50,16 +47,15 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
     (async () => {
       try {
         await UsersService.updateUser({
-          country: currentCountry!
-        })
+          country: currentCountry!,
+        });
 
-        const { data } = await UsersService.getMe()
-        onChangeUser(data)
-
+        const { data } = await UsersService.getMe();
+        onChangeUser(data);
       } catch (error) {
-        logger.error(error)
+        logger.error(error);
       }
-    })()
+    })();
   }, [currentCountry]);
 
   return (
