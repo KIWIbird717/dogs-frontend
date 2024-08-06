@@ -2,9 +2,9 @@ import { FC, MouseEvent } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { Switch } from "@/shared/ui/Switch/switch";
 import { SwitchItem } from "@/widgets/ModalSettings/shared/ui/SwitchItem";
 import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
+import { twMerge } from "tailwind-merge";
 
 interface IModalSettingsProps {}
 
@@ -20,14 +20,17 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
     }
   };
 
+  if (!isModalOpen) {
+    return null;
+  }
+
   return (
-    <>
-      {isModalOpen && (
         <div
-          className={
-            "fixed left-0 top-0 z-[100] flex h-full w-full flex-col items-center justify-center bg-[#000]/30"
-          }
-          onClick={(e) => onCloseHandler(e)}
+          className={twMerge(
+            "hidden fixed left-0 top-0 z-[100] h-full w-full flex-col items-center justify-center bg-[#000]/30",
+            isModalOpen && "flex"
+          )}
+          onClick={onCloseHandler}
         >
           <div
             className={
@@ -70,14 +73,12 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
               </Button>
             </div>
 
-            <div
+            <div onClick={onCloseHandler}
               className={
                 "absolute left-0 top-0 z-[-1] h-full w-full rounded-xl bg-black-750 backdrop-blur-lg"
               }
             />
           </div>
         </div>
-      )}
-    </>
   );
 };

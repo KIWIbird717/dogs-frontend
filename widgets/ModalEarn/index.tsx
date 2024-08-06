@@ -2,7 +2,6 @@
 
 import { FC, MouseEvent } from "react";
 import { useModal } from "@/shared/hooks/useModal";
-import { ITask } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
@@ -10,22 +9,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Field } from "@/widgets/Field";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 
-interface IModalEarnProps {}
+interface IModalEarnProps {
+}
 
 export const ModalEarn: FC<IModalEarnProps> = () => {
   const { onClose, modalData } = useModal();
   const { isOpen, data, type } = modalData;
-  const { task } = data as { task: ITask };
 
   const isModalOpen = isOpen && type === "earn";
+
+  const coin = formatNumber(data?.task?.coin || 0);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
-
-  const coin = formatNumber(task?.coin || 0);
 
   return (
     <AnimatePresence initial={true}>
@@ -34,7 +33,7 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
           className={
             "fixed left-0 top-0 z-[100] flex h-full w-full flex-col items-center justify-end bg-[#000]/30"
           }
-          onClick={(e) => onCloseHandler(e)}
+          onClick={onCloseHandler}
         >
           <motion.div
             initial={{ opacity: 0, y: 464 }}
@@ -56,20 +55,20 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
 
               <div>
                 {/*TODO: Исправить размер на 32х32, когда реальные данные появятся*/}
-                {task.icon}
+                {data?.task.icon}
               </div>
 
               <Typography
                 tag={"p"}
                 className={"text-[32px] font-bold leading-[38px] text-white-900"}
               >
-                {task.title}
+                {data?.task.title}
               </Typography>
               <Typography tag={"h2"} className={"font-normal text-white-900"}>
-                {task.title}
+                {data?.task.title}
               </Typography>
               <Typography tag={"h3"} className={"font-normal text-white-800"}>
-                {task.title}
+                {data?.task.title}
               </Typography>
 
               <div
@@ -102,7 +101,8 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
             <div>
               {/*TODO: Настроить, когда реальные данные появятся*/}
               <Field
-                onChange={() => {}}
+                onChange={() => {
+                }}
                 isError={false}
                 placeholder={"Attach File"}
                 type={"file"}
