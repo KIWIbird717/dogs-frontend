@@ -33,7 +33,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <Header />
-      <Input isIcon placeholder={"Search Guild"} className={"z-[10]"} />
+      <Input isIcon placeholder={"Search Guild"} />
 
       {isGuildJoined ? (
         <GuildBanner guildInfo={guild} />

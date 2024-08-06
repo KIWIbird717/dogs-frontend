@@ -4,12 +4,9 @@ import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import Image from "next/image";
+import { IBreedCountry } from "@/app/profile/country/page";
 
-export interface IBreedCountry {
-  id: string;
-  value: string;
-  flagUrl?: ReactNode;
-}
+
 
 interface IBreedCountryListProps {
   items: IBreedCountry[];
@@ -21,29 +18,29 @@ export const BreedCountryList: FC<IBreedCountryListProps> = ({ items, onClick, i
   return (
     <>
       {items.map((obj, i) => {
-        const isSelected = obj.value === item;
+        const isSelected = obj.name === item;
         const icon = isSelected ? <TickIcon /> : <ArrowRightIcon />;
 
         return (
           <Button
-            key={obj.id}
+            key={obj.name}
             icon={icon}
             variant={"select"}
             isSelected={isSelected}
-            onClick={() => onClick(obj.value)}
+            onClick={() => onClick(obj.name)}
           >
             <div className={"flex items-center gap-3"}>
-              {obj.flagUrl && (
+              {obj.flag && (
                 <Image
-                  src={obj.flagUrl as string}
+                  src={obj.flag as string}
                   width={24}
                   height={24}
-                  alt={`${obj.value}${i}`}
+                  alt={`${obj.name}${i}`}
                   className={"h-full max-h-[24px] w-full max-w-[24px] rounded-full"}
                 />
               )}
               <Typography tag={"p"} className={"text-[18px] font-bold leading-6 text-white-900"}>
-                {obj.value}
+                {obj.name}
               </Typography>
             </div>
           </Button>
