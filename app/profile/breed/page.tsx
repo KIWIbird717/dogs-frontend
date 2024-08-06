@@ -11,30 +11,40 @@ import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
-import { IBreedCountry } from "@/widgets/BreedCountryList";
+import { IBreedCountry } from "../country/page";
 
 interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
   {
-    id: "husky",
-    value: "Husky",
+    name: "Husky",
+    iso2: "Husky",
+    iso3: "Husky",
+    flag: "Husky",
   },
   {
-    id: "bulldog",
-    value: "Bulldog",
+    name: "Bulldog",
+    iso2: "Bulldog",
+    iso3: "Bulldog",
+    flag: "Bulldog",
   },
   {
-    id: "doberman",
-    value: "Doberman",
+    name: "Doberman",
+    iso2: "Doberman",
+    iso3: "Doberman",
+    flag: "Doberman",
   },
   {
-    id: "fox_terrie",
-    value: "Fox Terrie",
+    name: "Fox Terrie",
+    iso2: "Fox Terrie",
+    iso3: "Fox Terrie",
+    flag: "Fox Terrie",
   },
   {
-    id: "jeck_rassel",
-    value: "Jeck Rassel",
+    name: "Jeck Rassel",
+    iso2: "Jeck Rassel",
+    iso3: "Jeck Rassel",
+    flag: "Jeck Rassel",
   },
 ];
 

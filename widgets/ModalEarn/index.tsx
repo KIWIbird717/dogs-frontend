@@ -9,8 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Field } from "@/widgets/Field";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 
-interface IModalEarnProps {
-}
+interface IModalEarnProps {}
 
 export const ModalEarn: FC<IModalEarnProps> = () => {
   const { onClose, modalData } = useModal();
@@ -18,7 +17,7 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
 
   const isModalOpen = isOpen && type === "earn";
 
-  const coin = formatNumber(data?.task?.coin || 0);
+  const coin = formatNumber(data ? data.task.coin : 0);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -101,8 +100,7 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
             <div>
               {/*TODO: Настроить, когда реальные данные появятся*/}
               <Field
-                onChange={() => {
-                }}
+                onChange={() => {}}
                 isError={false}
                 placeholder={"Attach File"}
                 type={"file"}
