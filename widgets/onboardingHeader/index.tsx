@@ -24,7 +24,7 @@ export const OnboardingHeader: FC<IOnboardingHeaderProps> = ({ header, step }) =
       >
         <div>{header.title}</div>
         <div className={"h-[96px]"}>{header.description}</div>
-      </motion.div>
+      </MotionDiv>
     </AnimatePresence>
   );
 };
