@@ -1,6 +1,11 @@
+"use client";
+
 import { FC } from "react";
 import { HeadersType } from "@/widgets/onboardingMedia";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface IOnboardingHeaderProps {
   header: HeadersType;
@@ -10,7 +15,7 @@ interface IOnboardingHeaderProps {
 export const OnboardingHeader: FC<IOnboardingHeaderProps> = ({ header, step }) => {
   return (
     <AnimatePresence mode={"wait"}>
-      <motion.div
+      <MotionDiv
         className={"flex w-full flex-col gap-2"}
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -19,7 +24,7 @@ export const OnboardingHeader: FC<IOnboardingHeaderProps> = ({ header, step }) =
       >
         <div>{header.title}</div>
         <div className={"h-[96px]"}>{header.description}</div>
-      </motion.div>
+      </MotionDiv>
     </AnimatePresence>
   );
 };
