@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { OnboardingHeader } from "@/widgets/onboardingHeader";
 import OnBoardingImg from "@/public/images/onboarding.png";
 import DuckImg from "@/public/images/duck.png";
@@ -10,11 +11,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
-import { UsersService } from "@/shared/lib/services/users/users";
-import { GetMeUserType, useUser } from "@/shared/hooks/useUser";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { useSessionStorage } from "@uidotdev/usehooks";
+import { UsersService } from "@/shared/lib/services/users";
 
+interface IOnboardingMediaProps {}
 interface IOnboardingMediaProps {}
 
 const headers: HeadersType[] = [
@@ -27,6 +26,11 @@ const headers: HeadersType[] = [
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
+          Increase your score
+        </span>
+        &nbsp; by collecting coins{" "}
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>with every tap</span>
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
           Increase your score
         </span>
@@ -47,8 +51,10 @@ const headers: HeadersType[] = [
       <Typography tag={"h1"} className={"text-center text-white-900"}>
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
           Get the best bone &nbsp;
+          Get the best bone &nbsp;
         </span>
         and get 5 times &nbsp;
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>more coins</span>
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>more coins</span>
       </Typography>
     ),
@@ -67,6 +73,9 @@ const headers: HeadersType[] = [
         you&apos;ll be able to{" "}
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
           improve your coin accumulation
+        you&apos;ll be able to{" "}
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>
+          improve your coin accumulation
         </span>
       </Typography>
     ),
@@ -82,6 +91,7 @@ const headers: HeadersType[] = [
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
         Invite friends and build a team for &nbsp;
+        <span className={"text-[28px] font-normal leading-8 text-blue-800"}>maximum bonuses!</span>
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>maximum bonuses!</span>
       </Typography>
     ),
@@ -134,18 +144,8 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        await UsersService.createUser();
-        const { data } = await UsersService.getMe();
-        onChangeUser(data);
-        setUserSS(data);
-      } catch (error) {
-        logger.error(error);
-        logger.error(error);
-      }
-    })();
-  }, [logger, onChangeUser, setUserSS]);
+    // UsersService.createUser()
+  }, []);
 
   return (
     <>
@@ -163,13 +163,10 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
             key={`image-${headers[step].id}`}
           >
             {/*{headers[step].image}*/}
-            {/*<Image*/}
-            {/*  src={headers[step].image}*/}
-            {/*  alt={""}*/}
-            {/*  // className={twMerge("h-[398px] w-[398px]", step === 4 && "h-[346px] w-[346px]")}*/}
-            {/*  className={twMerge("h-[92.58vw] w-[92.58vw]", step === 4 && "h-[80.466vw] w-[80.466vw]")}*/}
-            {/*/>*/}
-
+            <Image
+              src={headers[step].image}
+              alt={""}
+              className={twMerge("h-[398px] w-[398px]", step === 4 && "h-[346px] w-[346px]")}
             <Image
               src={headers[step].image}
               alt={""}

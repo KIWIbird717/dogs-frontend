@@ -6,14 +6,15 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/shared/hooks/useUser";
-import { useUser } from "@/shared/hooks/useUser";
+import useSWR from "swr";
+import { UsersService } from "@/shared/lib/services/users";
 
+interface IModalLoadingProps {}
 interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
   const { push } = useRouter();
-  const { getMe } = useUser();
+  const { data, isLoading, mutate } = useSWR("/users/create", UsersService.getMe);
 
   const defaultOptions = {
     loop: true,
@@ -31,16 +32,14 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь в /users/get-me то осуществляем вход в приложение (страница main)
      * - если есть пользователь не найден переходим на страницу onboarding
      */
+    setTimeout(() => {
+      // if (data) {
+      //   mutate({ ...data, data: { ...data?.data, username: "huh" } });
+      // }
 
-    (async () => {
-      try {
-        await getMe();
-        push("/main");
-      } catch (error) {
-        push("/onboarding");
-      }
-    })();
-  }, [push]);
+      push("/onboarding");
+    }, 2000);
+  }, []);
 
   return (
     <div
