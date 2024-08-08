@@ -3,7 +3,7 @@
  * Omi - Исключение типа
  * Pick - выбор определенного типа
  */
-export namespace ApiTypes {
+export namespace UserApiTypes {
   export type UserDto = {
     age: number;
     first_name: string;
@@ -15,6 +15,11 @@ export namespace ApiTypes {
     earnPerHour: number;
     lastDailyReward: number;
   };
+
+  export type EarnDto = {
+    "earned": number,
+    "touches": number
+  }
 
   export type UpdateUserDto = Partial<UserDto>;
 }

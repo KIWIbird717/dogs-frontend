@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
-import { UsersService } from "@/shared/lib/services/users";
+import { UsersService } from "@/shared/lib/services/users/users";
 
 interface IOnboardingMediaProps {}
 
@@ -128,20 +128,23 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
-    // UsersService.createUser()
+    (async () => {
+      const {data} = await UsersService.createUser()
+      console.log({data});
+    })()
   }, []);
 
   return (
     <>
       <div className={"z-[10] flex w-full flex-col items-center gap-6"}>
         <OnboardingHeader header={headers[step]} step={step} />
-        <AnimatePresence mode={"wait"}>
+        <AnimatePresence mode={"wait"} >
           <motion.div
             className={"relative"}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            key={step}
+            key={`image-${headers[step].id}`}
           >
             {/*{headers[step].image}*/}
             <Image
