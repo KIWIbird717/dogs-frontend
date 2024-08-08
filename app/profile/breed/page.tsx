@@ -54,10 +54,7 @@ const breeds: IBreedCountry[] = [
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeUser, onChangeBreed, breedKey } = useUser();
-  const [breedLocal, setBreedLocal] = useState(breedKey);
-
-  const logger = new Logger("BreedPage");
+  const { onChangeBreed, breedKey } = useUser();
 
   const handleClick = (breed: string) => setBreedLocal(breed);
   const handleSearch = (value: string) => setSearchValue(value);
@@ -86,6 +83,7 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
       <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
 
       <BreedCountryBlock
+        item={breedKey}
         item={breedKey}
         onClick={handleClick}
         items={breeds}

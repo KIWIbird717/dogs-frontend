@@ -1,6 +1,5 @@
 import { serverApi } from "../../axios";
 import { UserApiTypes } from "./types";
-import { GetMeUserType } from "@/shared/hooks/useUser";
 
 export namespace UsersService {
   /**
@@ -13,13 +12,14 @@ export namespace UsersService {
    * GET /users/get-me
    */
   export const getMe = () => {
-    return serverApi.get<GetMeUserType>("/users/get-me");
+    return serverApi.get<any>("/users/get-me");
   };
 
   /**
    * POST /users/create
    */
   export const createUser = () => {
+    return serverApi.post("/users/create");
     return serverApi.post("/users/create");
   };
 
@@ -38,11 +38,12 @@ export namespace UsersService {
       userId: userId,
     });
   };
+  };
 
   /**
    * POST /users/earn
    */
   export const addUseMoney = (dto: UserApiTypes.EarnDto) => {
-    return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/earn", dto);
+    return serverApi.post("/users/earn", dto);
   };
 }

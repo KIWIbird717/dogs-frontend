@@ -3,52 +3,27 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type IUserSlice = {
-    age?: number | null;
-    country?: string | null;
-    guild: string | null,
-    guildName: string | null,
-    guildFounder: string | null,
-    lastDailyReward: number
-    //imageUrl: string
-
-    _id: number;
-    __v: number;
-    balance: number;
+    age: number;
     breedKey: string;
-    earnPerHour: number;
-    first_name: string;
-    lastOnline: Date;
-    level: number;
-    touches: number;
-    username: string;
-    doneTask: any[];
-    friends: any[];
+    country: string;
+    username: string
+    first_name: string,
+    guild: string,
+    balance: number,
+    earnPerHour: number,
+    lastDailyReward: number
   };
 
   const initialState: IUserSlice = {
-    age: null,
-    country: null,
-    guild: null,
-    guildName: null,
-    guildFounder: null,
-    guildName: null,
-    guildFounder: null,
-    lastDailyReward: 0,
-    //imageUrl: string
-
-    _id: 0,
-    __v: 0,
-    balance: 0,
+    age: 32,
     breedKey: "Husky",
-    earnPerHour: 0,
+    country: "Kazakhstan",
     first_name: "Userrr",
-    lastOnline: new Date(),
-    level: 0,
-    touches: 0,
     username: "User",
-    doneTask: [],
-    friends: [],
-    friends: [],
+    balance: 0,
+    earnPerHour: 0,
+    guild: "Dogsss",
+    lastDailyReward: 0
   };
 
   export const userSlice = createSlice({
@@ -58,6 +33,8 @@ export namespace UserSlice {
       setAge: (state, action: PayloadAction<IUserSlice["age"]>) => {
         state.age = action.payload;
       },
+      setBreed: (state, action: PayloadAction<IUserSlice["breedKey"]>) => {
+        state.breedKey = action.payload;
       setBreed: (state, action: PayloadAction<IUserSlice["breedKey"]>) => {
         state.breedKey = action.payload;
       },
