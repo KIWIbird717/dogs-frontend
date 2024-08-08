@@ -20,37 +20,32 @@ const breeds: IBreedCountry[] = [
     name: "Husky",
     iso2: "Husky",
     iso3: "Husky",
-    flag: "Husky",
   },
   {
     name: "Bulldog",
     iso2: "Bulldog",
     iso3: "Bulldog",
-    flag: "Bulldog",
   },
   {
     name: "Doberman",
     iso2: "Doberman",
     iso3: "Doberman",
-    flag: "Doberman",
   },
   {
     name: "Fox Terrie",
     iso2: "Fox Terrie",
     iso3: "Fox Terrie",
-    flag: "Fox Terrie",
   },
   {
     name: "Jeck Rassel",
     iso2: "Jeck Rassel",
     iso3: "Jeck Rassel",
-    flag: "Jeck Rassel",
   },
 ];
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeBreed, breed } = useUser();
+  const { onChangeBreed, breedKey } = useUser();
 
   const handleClick = (breed: string) => onChangeBreed(breed);
   const handleSearch = (value: string) => setSearchValue(value);
@@ -64,7 +59,7 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
       <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
 
       <BreedCountryBlock
-        item={breed}
+        item={breedKey}
         onClick={handleClick}
         items={breeds}
         onChange={handleSearch}

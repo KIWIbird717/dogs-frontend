@@ -5,7 +5,7 @@ import IUserSlice = UserSlice.IUserSlice;
 export const useUser = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  const { age, breed, country } = user as IUserSlice;
+  const { age, breedKey, country } = user as IUserSlice;
 
   const onChangeAge = (age: string | number) => {
     dispatch(UserSlice.setAge(Number(age)));
@@ -21,7 +21,7 @@ export const useUser = () => {
 
   return {
     age,
-    breed,
+    breedKey,
     country,
 
     onChangeAge,

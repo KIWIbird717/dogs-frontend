@@ -16,7 +16,7 @@ export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) =>
           {headers.map((value, index) => {
             return (
               <motion.div
-                key={value.id}
+                key={`steps-${value.id}`}
                 className={twMerge(
                   "h-[12px] w-[12px] rounded-full bg-black-300",
                   step >= index && "bg-white",
@@ -38,6 +38,7 @@ export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) =>
           initial={{ width: 0 }}
           animate={{ width: `calc(20px * ${step + 1})` }}
           transition={{ duration: 0.3 }}
+          key={`step-${step}`}
         />
       </AnimatePresence>
     </div>
