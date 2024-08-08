@@ -3,45 +3,27 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type IUserSlice = {
-    age?: number | null;
-    country?: string | null;
-    guild: string | null,
-    lastDailyReward: number
-    //imageUrl: string
-
-    _id: number
-    __v: number
-    balance: number,
+    age: number;
     breedKey: string;
-    earnPerHour: number,
-    first_name: string,
-    lastOnline: Date
-    level: number
-    touches: number
-    username: string
-    doneTask: any[],
-    friends: any[]
+    country: string;
+    username: string;
+    first_name: string;
+    guild: string;
+    balance: number;
+    earnPerHour: number;
+    lastDailyReward: number;
   };
 
   const initialState: IUserSlice = {
-    age: null,
-    country: null,
-    guild: null,
-    lastDailyReward: 0,
-    //imageUrl: string
-
-    _id: 0,
-    __v: 0,
-    balance: 0,
+    age: 32,
     breedKey: "Husky",
-    earnPerHour: 0,
+    country: "Kazakhstan",
     first_name: "Userrr",
-    lastOnline: new Date(),
-    level: 0,
-    touches: 0,
     username: "User",
-    doneTask: [],
-    friends: []
+    balance: 0,
+    earnPerHour: 0,
+    guild: "Dogsss",
+    lastDailyReward: 0,
   };
 
   export const userSlice = createSlice({
@@ -53,28 +35,26 @@ export namespace UserSlice {
       },
       setBreed: (state, action: PayloadAction<IUserSlice["breedKey"]>) => {
         state.breedKey = action.payload;
-      setBreed: (state, action: PayloadAction<IUserSlice["breedKey"]>) => {
-        state.breedKey = action.payload;
       },
       setCountry: (state, action: PayloadAction<IUserSlice["country"]>) => {
         state.country = action.payload;
       },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
-        state._id = action.payload._id
-        state.__v = action.payload.__v
-        state.balance = action.payload.balance
-        state.breedKey = action.payload.breedKey
-        state.earnPerHour = action.payload.earnPerHour
-        state.first_name = action.payload.first_name
-        state.lastOnline = action.payload.lastOnline
-        state.level = action.payload.level
-        state.touches = action.payload.touches
-        state.username = action.payload.username
-        state.doneTask = action.payload.doneTask
-        state.friends = action.payload.friends
-        state.age = action.payload.age
-        state.country = action.payload.country
-      }
+        state._id = action.payload._id;
+        state.__v = action.payload.__v;
+        state.balance = action.payload.balance;
+        state.breedKey = action.payload.breedKey;
+        state.earnPerHour = action.payload.earnPerHour;
+        state.first_name = action.payload.first_name;
+        state.lastOnline = action.payload.lastOnline;
+        state.level = action.payload.level;
+        state.touches = action.payload.touches;
+        state.username = action.payload.username;
+        state.doneTask = action.payload.doneTask;
+        state.friends = action.payload.friends;
+        state.age = action.payload.age;
+        state.country = action.payload.country;
+      },
     },
   });
 

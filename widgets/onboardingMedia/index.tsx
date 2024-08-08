@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
-import { UsersService } from "@/shared/lib/services/users";
+import { UsersService } from "@/shared/lib/services/users/users";
 
 interface IOnboardingMediaProps {}
 
@@ -144,7 +144,10 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
-    // UsersService.createUser()
+    (async () => {
+      const {data} = await UsersService.createUser()
+      console.log({data});
+    })()
   }, []);
 
   return (

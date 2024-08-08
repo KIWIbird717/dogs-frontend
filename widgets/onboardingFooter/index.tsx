@@ -65,7 +65,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
                 transition={{ duration: 0.2 }}
                 exit={{ opacity: 0, width: "0px" }}
                 // className={"w-[calc(37%-4px)]"}
-                key="back-button"
+                key={`back-button-${step}`}
               >
                 <Button
                   variant={"noAccent"}
@@ -91,7 +91,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
                 width: step === 0 ? "100%" : "calc(63% - 4px)",
               }}
               transition={{ duration: 0.1 }}
-              key="next-button"
+              key={`next-button-${step}`}
             >
               <Button
                 variant={"primary"}

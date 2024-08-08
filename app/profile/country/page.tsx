@@ -6,7 +6,6 @@ import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 import World from "@/public/images/svg/country/world.svg";
 
@@ -14,11 +13,12 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
+import { UsersService } from "@/shared/lib/services/users/users";
 
 interface ICountryPageProps {}
 
 export interface IBreedCountry {
-  flag: string;
+  flag?: string;
   iso2: string;
   iso3: string;
   name: string;
@@ -27,7 +27,7 @@ export interface IBreedCountry {
 const CountryPage: NextPage<ICountryPageProps> = () => {
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeUser, country } = useUser();
+  const { onChangeCountry, country } = useUser();
   const [currentCountry, setCurrentCountry] = useState(country);
 
   useRequest(async () => {
@@ -39,24 +39,16 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   }, []);
 
   const handleClick = (value: string) => setCurrentCountry(value);
-  const handleClick = (value: string) => setCurrentCountry(value);
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await UsersService.updateUser({
-          country: currentCountry!,
-        });
-
-        const { data } = await UsersService.getMe();
-        onChangeUser(data);
-      } catch (error) {
-        logger.error(error);
-      }
-    })();
-  }, [currentCountry]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const {data} = UsersService.updateUser({country: currentCountry})
+  //
+  //     onChangeCountry(data)
+  //   })()
+  // }, [currentCountry, onChangeCountry]);
 
   return (
     <View
@@ -66,7 +58,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
       <HeaderWithIcon title={"Select Country"} icon={<World />} />
 
       <BreedCountryBlock
-        item={currentCountry || "-"}
+        item={currentCountry}
         onClick={handleClick}
         items={countries}
         onChange={handleSearch}

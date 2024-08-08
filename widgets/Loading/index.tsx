@@ -7,14 +7,14 @@ import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
-import { UsersService } from "@/shared/lib/services/users";
+import { UsersService } from "@/shared/lib/services/users/users";
 
+interface IModalLoadingProps {}
 interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
   const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const { push } = useRouter();
-  const { data, isLoading, mutate } = useSWR("/users/create", UsersService.getMe);
 
   const defaultOptions = {
     loop: true,
@@ -27,6 +27,8 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
 
   const { data } = useSWR("/users/create", UsersService.getMe);
 
+  const { data } = useSWR("/users/create", UsersService.getMe);
+
   useEffect(() => {
     /**
      * Проверка авторизации:
@@ -34,14 +36,19 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь в /users/get-me то осуществляем вход в приложение (страница main)
      * - если есть пользователь не найден переходим на страницу onboarding
      */
-    setTimeout(() => {
-      // if (data) {
-      //   mutate({ ...data, data: { ...data?.data, username: "huh" } });
-      // }
 
+    // if (data) {
+    //   mutate({ ...data, data: { ...data?.data, username: "huh" } });
+    // }
+
+    console.log({ data });
+
+    if (data) {
+      push("/main");
+    } else {
       push("/onboarding");
     }
-  }, [data, onChangeUser, push]);
+  }, [data, push]);
 
   return (
     <div
