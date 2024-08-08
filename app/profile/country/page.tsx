@@ -5,7 +5,7 @@ import { View } from "@/shared/layout/View";
 import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 import World from "@/public/images/svg/country/world.svg";
 
@@ -13,12 +13,13 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
+import { UsersService } from "@/shared/lib/services/users/users";
 
 interface ICountryPageProps {
 }
 
 export interface IBreedCountry {
-  flag: string;
+  flag?: string;
   iso2: string;
   iso3: string;
   name: string;
@@ -29,6 +30,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const { onChangeCountry, country } = useUser();
+  const [currentCountry, setCurrentCountry] = useState(country)
 
   useRequest(async () => {
     const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
@@ -36,9 +38,17 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
     setCountries(data.data);
   }, []);
 
-  const handleClick = (breed: string) => onChangeCountry(breed);
+  const handleClick = (value: string) => setCurrentCountry(value);
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const {data} = UsersService.updateUser({country: currentCountry})
+  //
+  //     onChangeCountry(data)
+  //   })()
+  // }, [currentCountry, onChangeCountry]);
 
   return (
     <View
@@ -48,7 +58,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
       <HeaderWithIcon title={"Select Country"} icon={<World />} />
 
       <BreedCountryBlock
-        item={country}
+        item={currentCountry}
         onClick={handleClick}
         items={countries}
         onChange={handleSearch}

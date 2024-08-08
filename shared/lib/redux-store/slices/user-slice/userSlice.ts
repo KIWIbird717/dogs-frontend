@@ -4,14 +4,26 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export namespace UserSlice {
   export type IUserSlice = {
     age: number;
-    breed: string;
+    breedKey: string;
     country: string;
+    username: string
+    first_name: string,
+    guild: string,
+    balance: number,
+    earnPerHour: number,
+    lastDailyReward: number
   };
 
   const initialState: IUserSlice = {
     age: 32,
-    breed: "Husky",
+    breedKey: "Husky",
     country: "Kazakhstan",
+    first_name: "Userrr",
+    username: "User",
+    balance: 0,
+    earnPerHour: 0,
+    guild: "Dogsss",
+    lastDailyReward: 0
   };
 
   export const userSlice = createSlice({
@@ -21,8 +33,8 @@ export namespace UserSlice {
       setAge: (state, action: PayloadAction<IUserSlice["age"]>) => {
         state.age = action.payload;
       },
-      setBreed: (state, action: PayloadAction<IUserSlice["breed"]>) => {
-        state.breed = action.payload;
+      setBreed: (state, action: PayloadAction<IUserSlice["breedKey"]>) => {
+        state.breedKey = action.payload;
       },
       setCountry: (state, action: PayloadAction<IUserSlice["country"]>) => {
         state.country = action.payload;
