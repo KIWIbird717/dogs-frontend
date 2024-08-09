@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { HeadersType } from "@/widgets/onboardingMedia";
 
 interface IOnboardingStepsProps {
@@ -11,7 +11,6 @@ interface IOnboardingStepsProps {
 export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) => {
   return (
     <div className={"relative flex h-[36px] w-[116px] items-center justify-center self-center"}>
-      <AnimatePresence initial={false}>
         <div className={"relative z-[4] flex gap-2"}>
           {headers.map((value, index) => {
             return (
@@ -40,7 +39,6 @@ export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) =>
           transition={{ duration: 0.3 }}
           key={`step-${step}`}
         />
-      </AnimatePresence>
     </div>
   );
 };
