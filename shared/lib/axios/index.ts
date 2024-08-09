@@ -11,11 +11,10 @@ serverApi.interceptors.request.use((config) => {
   if (isServer) return config;
 
   const initData = window.Telegram.WebApp.initData;
-  const parsedTgInitData = parseTgInitData(initData);
 
   if (!initData) return config;
-
-  const serializedInitData = encodeURIComponent(JSON.stringify(parsedTgInitData.user));
+  console.log({ initData });
+  const serializedInitData = initData.split("user=")[1].split("auth_date")[0].slice(0, -1);
   console.log({ serializedInitData });
   config.headers.user = serializedInitData;
   return config;
