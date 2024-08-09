@@ -53,53 +53,48 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
 
       <div className={"flex flex-col gap-1"}>
         <div className={"flex w-full gap-2"}>
-          <AnimatePresence>
-            {step !== 0 && (
-              <motion.div
-                initial={{ opacity: 0, width: "0px" }}
-                animate={{ opacity: 1, width: "calc(37% - 4px)" }}
-                transition={{ duration: 0.2 }}
-                exit={{ opacity: 0, width: "0px" }}
-                // className={"w-[calc(37%-4px)]"}
-                key={`back-button-${step}`}
-              >
-                <Button variant={"noAccent"}
-                        onClick={onPrev}
-                        className={"font-bold text-[18px] leading-6"}
-                >
-                  Back
-                </Button>
-              </motion.div>
-            )}
-
+          {step !== 0 && (
             <motion.div
-              initial={{
-                opacity: 0,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
-              }}
-              exit={{
-                opacity: 0,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
-              }}
-              animate={{
-                opacity: 1,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
-              }}
-              transition={{ duration: 0.1 }}
-              key={`next-button-${step}`}
+              initial={{ opacity: 0, width: "0px" }}
+              animate={{ opacity: 1, width: "calc(37%)" }}
+              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, width: "0px" }}
+              // className={"w-[calc(37%-4px)]"}
             >
-              <Button variant={"primary"}
-                      onClick={onNext}
-                      className={"w-full font-bold text-[18px] leading-6 text-white-900"}
+              <Button
+                variant={"noAccent"}
+                onClick={onPrev}
+                className={"text-[18px] font-bold leading-6"}
               >
-                {isLastStep
-                  ? <div className={"flex gap-2"}>
-                    <div>
-                      <TickIcon />
-                    </div>
-                    <div>
-                      Finish
-                    </div>
+                Back
+              </Button>
+            </motion.div>
+          )}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              width: step === 0 ? "100%" : "calc(63%)",
+            }}
+            exit={{
+              opacity: 0,
+              width: step === 0 ? "100%" : "calc(63%x)",
+            }}
+            animate={{
+              opacity: 1,
+              width: step === 0 ? "100%" : "calc(63%)",
+            }}
+            transition={{ duration: 0.1 }}
+          >
+            <Button
+              variant={"primary"}
+              onClick={onNext}
+              className={"w-full text-[18px] font-bold leading-6 text-white-900"}
+            >
+              {isLastStep ? (
+                <div className={"flex gap-2"}>
+                  <div>
+                    <TickIcon />
                   </div>
                   <div>Finish</div>
                 </div>
