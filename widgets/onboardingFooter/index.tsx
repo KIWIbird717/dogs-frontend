@@ -57,15 +57,13 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
 
       <div className={"flex flex-col gap-1"}>
         <div className={"flex w-full gap-2"}>
-          <AnimatePresence>
             {step !== 0 && (
               <motion.div
                 initial={{ opacity: 0, width: "0px" }}
-                animate={{ opacity: 1, width: "calc(37% - 4px)" }}
+                animate={{ opacity: 1, width: "calc(37%)" }}
                 transition={{ duration: 0.2 }}
                 exit={{ opacity: 0, width: "0px" }}
                 // className={"w-[calc(37%-4px)]"}
-                key={`back-button-${step}`}
               >
                 <Button
                   variant={"noAccent"}
@@ -80,18 +78,17 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
             <motion.div
               initial={{
                 opacity: 0,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
+                width: step === 0 ? "100%" : "calc(63%)",
               }}
               exit={{
                 opacity: 0,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
+                width: step === 0 ? "100%" : "calc(63%x)",
               }}
               animate={{
                 opacity: 1,
-                width: step === 0 ? "100%" : "calc(63% - 4px)",
+                width: step === 0 ? "100%" : "calc(63%)",
               }}
               transition={{ duration: 0.1 }}
-              key={`next-button-${step}`}
             >
               <Button
                 variant={"primary"}
@@ -110,7 +107,6 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
                   </div>}
               </Button>
             </motion.div>
-          </AnimatePresence>
         </div>
         <Button
           onClick={redirect}
