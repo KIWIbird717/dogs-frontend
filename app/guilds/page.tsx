@@ -14,6 +14,7 @@ import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
 import { useState } from "react";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface IGuildsProps {}
 
@@ -26,7 +27,9 @@ const guild: IGuild = {
 };
 
 const Guilds: NextPage<IGuildsProps> = () => {
-  const [isGuildJoined, setIsGuildJoined] = useState(true);
+  const {user} = useUser()
+
+  const [isGuildJoined, setIsGuildJoined] = useState(false);
   return (
     <View
       fadeInOnLoad
@@ -35,7 +38,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Input isIcon placeholder={"Search Guild"} />
 
-      {isGuildJoined ? (
+      {user.guild ? (
         <GuildBanner guildInfo={guild} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
