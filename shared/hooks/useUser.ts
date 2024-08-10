@@ -1,8 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import IUserSlice = UserSlice.IUserSlice;
+import { User } from "lucide-react";
 
 type ExcludePassword = {
+  age: never;
+  country: never;
   guild: never;
   lastDailyReward: never;
 };

@@ -4,26 +4,44 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export namespace UserSlice {
   export type IUserSlice = {
     age: number;
-    breedKey: string;
     country: string;
-    username: string;
-    first_name: string;
-    guild: string;
-    balance: number;
-    earnPerHour: number;
+    guild: string | null;
     lastDailyReward: number;
+    //imageUrl: string
+
+    _id: number;
+    __v: number;
+    balance: number;
+    breedKey: string;
+    earnPerHour: number;
+    first_name: string;
+    lastOnline: Date;
+    level: number;
+    touches: number;
+    username: string;
+    doneTask: any[];
+    friends: any[];
   };
 
   const initialState: IUserSlice = {
-    age: 32,
-    breedKey: "Husky",
-    country: "Kazakhstan",
-    first_name: "Userrr",
-    username: "User",
-    balance: 0,
-    earnPerHour: 0,
-    guild: "Dogsss",
+    age: 0,
+    country: "none",
+    guild: null,
     lastDailyReward: 0,
+    //imageUrl: string
+
+    _id: 0,
+    __v: 0,
+    balance: 0,
+    breedKey: "Husky",
+    earnPerHour: 0,
+    first_name: "Userrr",
+    lastOnline: new Date(),
+    level: 0,
+    touches: 0,
+    username: "User",
+    doneTask: [],
+    friends: [],
   };
 
   export const userSlice = createSlice({
@@ -52,12 +70,11 @@ export namespace UserSlice {
         state.username = action.payload.username;
         state.doneTask = action.payload.doneTask;
         state.friends = action.payload.friends;
-        state.age = action.payload.age;
-        state.country = action.payload.country;
       },
     },
   });
 
+  export const { setAge, setBreed, setCountry, setUser } = userSlice.actions;
   export const { setAge, setBreed, setCountry, setUser } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;

@@ -16,6 +16,13 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
   const logger = new Logger("MainPage");
   const { onIncrementCoin, maxBoost, boosts, coins, onMaxBoost } = useClicker(true);
 
+  useEffect(() => {
+    (async () => {
+      const { data } = UsersService.getMe()
+      console.log({data});
+    })()
+  }, []);
+
   return (
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
       <Header />
