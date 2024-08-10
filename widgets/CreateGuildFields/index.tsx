@@ -6,9 +6,6 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { serverApi } from "@/shared/lib/axios";
-import { useUser } from "@/shared/hooks/useUser";
-import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
-import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface ICreateGuildFieldsProps {}
 
@@ -30,13 +27,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [joinMethod, setJoinMethod] = useState<JoinMethod>(JoinMethod.OPEN);
-
-  const onToggleJoinMethod = () => {
-    if (joinMethod === "open") {
-      setJoinMethod(JoinMethod.BYLINK);
-    } else setJoinMethod(JoinMethod.OPEN);
-  };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -73,8 +63,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   useEffect(() => {
     // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
     if (name.length === 0 || !avatar || isError) {
-    // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
-    if (name.length === 0 || !avatar || isError) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -82,19 +70,36 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   }, [avatar, isError, name.length]);
 
   const onSubmit = async () => {
+    // variant 1
     const formData = new FormData();
     if (avatar) {
-      formData.append("image", avatar);
-      formData.append("name", name);
-      formData.append("joinMethod", joinMethod);
+      formData.append(`avatar`, avatar);
     }
 
     try {
       // TODO: Нужно исправить
-      const { data } = await serverApi.post(`/guilds/create`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const { data } = await serverApi.post(
+        `/guilds/create`,
+        {
+          image: formData,
+          name: name,
         },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+
+    // variant 2
+    try {
+      // TODO: Нужно исправить
+      const { data } = await serverApi.post(`/guilds/create`, {
+        image: avatar,
+        name: name,
       });
     } catch (error) {
       logger.error(error);
@@ -151,7 +156,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
 
       <div className={"flex w-full flex-col gap-4 pt-2"}>
         <Button
-          onClick={onSubmit}
           onClick={onSubmit}
           variant={"primary"}
           disabled={isDisabled}

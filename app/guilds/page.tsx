@@ -12,14 +12,13 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUser } from "@/shared/hooks/useUser";
-import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildsProps {}
 
 const Guilds: NextPage<IGuildsProps> = () => {
-  const { user } = useUser();
+  const {user} = useUser()
 
   const [isGuildJoined, setIsGuildJoined] = useState(false);
   return (
@@ -30,6 +29,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
+      {user.guild ? (
       {user.guild ? (
         <GuildBanner guildInfo={guild} />
       ) : (
