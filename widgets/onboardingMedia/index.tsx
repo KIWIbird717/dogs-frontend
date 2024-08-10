@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
-import { useUser } from "@/shared/hooks/useUser";
+import { GetMeUserType, useUser } from "@/shared/hooks/useUser";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useSessionStorage } from "@uidotdev/usehooks";
 
@@ -126,7 +126,7 @@ export type HeadersType = {
 
 export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const { push } = useRouter();
-  const [userLS, setUserST] = useSessionStorage("user", null);
+  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
@@ -153,14 +153,14 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
       try {
         await UsersService.createUser()
         const {data} = await UsersService.getMe()
-        onChangeUser(data.data)
-        setUserST(data.data)
+        onChangeUser(data)
+        setUserSS(data)
       } catch (error) {
         logger.error(error)
       }
 
     })()
-  }, [logger, onChangeUser, setUserST]);
+  }, [logger, onChangeUser, setUserSS]);
 
   return (
     <>

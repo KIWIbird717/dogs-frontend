@@ -1,5 +1,6 @@
 import { serverApi } from "../../axios";
 import { UserApiTypes } from "./types";
+import { GetMeUserType } from "@/shared/hooks/useUser";
 
 export namespace UsersService {
   /**
@@ -12,7 +13,7 @@ export namespace UsersService {
    * GET /users/get-me
    */
   export const getMe = () => {
-    return serverApi.get<any>("/users/get-me");
+    return serverApi.get<GetMeUserType>("/users/get-me");
   };
 
   /**

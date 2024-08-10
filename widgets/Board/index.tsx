@@ -3,7 +3,6 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
-import { useUser } from "@/shared/hooks/useUser";
 
 interface IBoardProps {}
 
@@ -22,7 +21,6 @@ export const Board: FC<IBoardProps> = () => {
       >
         <Typography tag={"p"} className={"text-[15px] font-bold leading-[18px] text-white-900"}>
           Level {level}
-          Level {level}
         </Typography>
 
         <ProgressBar page={"main"} />
@@ -37,6 +35,7 @@ export const Board: FC<IBoardProps> = () => {
           Pack
         </Typography>
         <Typography tag={"h4"} className={"text-[18px] font-normal leading-[18px] text-blue-800"}>
+          {guild || "null"}
           {guild || "null"}
         </Typography>
       </Button>

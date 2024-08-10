@@ -42,7 +42,6 @@ export const useUser = () => {
     breedKey,
     country,
     user,
-    user,
 
     onChangeAge,
     onChangeBreed,
