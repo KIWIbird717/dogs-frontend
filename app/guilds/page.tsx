@@ -12,34 +12,15 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
+import { useState } from "react";
 import { useUser } from "@/shared/hooks/useUser";
-import { useGuild } from "@/shared/hooks/useGuild";
-import { useEffect } from "react";
-import { GuildsService } from "@/shared/lib/services/guilds/guilds";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IGuildsProps {}
 
 const Guilds: NextPage<IGuildsProps> = () => {
-  const logger = new Logger("GuildsPage");
   const { user } = useUser();
 
-  const { guild, isLoading, myGuildId, setIsLoading, setGuild } = useGuild();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await GuildsService.getGuild(myGuildId!);
-        setGuild(data);
-      } catch (error) {
-        logger.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
-
+  const [isGuildJoined, setIsGuildJoined] = useState(false);
   return (
     <View
       fadeInOnLoad
@@ -48,8 +29,8 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
-      {user.guild && !isLoading ? (
-        <GuildBanner guildInfo={guild!} />
+      {user.guild ? (
+        <GuildBanner guildInfo={guild} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
           <Button
