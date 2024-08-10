@@ -5,8 +5,10 @@ import { Field, IFieldProps } from "@/widgets/Field";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { serverApi } from "@/shared/lib/axios";
 
-interface ICreateGuildFieldsProps {}
+interface ICreateGuildFieldsProps {
+}
 
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
@@ -22,6 +24,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
+
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -56,12 +59,52 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   };
 
   useEffect(() => {
-    if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
+    // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
+    if (name.length === 0 || !avatar || isError) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
   }, [avatar, isError, name.length]);
+
+  const onSubmit = async () => {
+    // variant 1
+    const formData = new FormData();
+    if (avatar) {
+      formData.append(`avatar`, avatar);
+    }
+
+    try {
+      // TODO: Нужно исправить
+      const { data } = await serverApi.post(`/guilds/create`,
+        {
+          image: formData,
+          name: name
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+
+    } catch (error) {
+      logger.error(error);
+    }
+
+    // variant 2
+    try {
+      // TODO: Нужно исправить
+      const { data } = await serverApi.post(`/guilds/create`,
+        {
+          image: avatar,
+          name: name
+        });
+    } catch (error) {
+      logger.error(error);
+    }
+
+  };
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-2"}>
@@ -111,6 +154,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
 
       <div className={"flex w-full flex-col gap-4 pt-2"}>
         <Button
+          onClick={onSubmit}
           variant={"primary"}
           disabled={isDisabled}
           className={"text-[18px] font-bold leading-6 text-white-900"}
