@@ -1,6 +1,16 @@
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import IUserSlice = UserSlice.IUserSlice;
+import { User } from "lucide-react";
+
+type ExcludePassword = {
+  age: never;
+  country: never
+  guild: never
+  lastDailyReward: never
+  };
+
+export type GetMeUserType = IUserSlice & ExcludePassword;
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +29,10 @@ export const useUser = () => {
     dispatch(UserSlice.setCountry(country));
   };
 
+  const onChangeUser = (user: GetMeUserType) => {
+    dispatch(UserSlice.setUser(user))
+  }
+
   return {
     age,
     breedKey,
@@ -27,5 +41,6 @@ export const useUser = () => {
     onChangeAge,
     onChangeBreed,
     onChangeCountry,
+    onChangeUser
   };
 };
