@@ -9,7 +9,8 @@ interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { age } = useUser();
+  const { age, user } = useUser();
+  const {breedKey} = user
   const { onOpenModal } = useModal();
 
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
@@ -23,7 +24,7 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
       },
       {
         title: "Breed",
-        value: "Husky",
+        value: breedKey,
         onClick: () => push("/profile/breed"),
       },
       {

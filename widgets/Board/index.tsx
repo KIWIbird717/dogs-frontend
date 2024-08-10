@@ -2,11 +2,15 @@ import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface IBoardProps {}
 
 export const Board: FC<IBoardProps> = () => {
   const { push } = useRouter();
+  const {user} = useUser()
+  const {level, guild} = user
+
   return (
     <div className={"flex w-full rounded-xl"}>
       <div
@@ -15,7 +19,7 @@ export const Board: FC<IBoardProps> = () => {
         }
       >
         <Typography tag={"p"} className={"text-[15px] font-bold leading-[18px] text-white-900"}>
-          Level 1
+          Level {level}
         </Typography>
 
         <div className={"relative h-[8px] w-full rounded-[32px] border border-black-300"}>
@@ -32,7 +36,7 @@ export const Board: FC<IBoardProps> = () => {
           Pack
         </Typography>
         <Typography tag={"h4"} className={"text-[18px] font-normal leading-[18px] text-blue-800"}>
-          Tom & Jerry
+          {guild || "null"}
         </Typography>
       </Button>
     </div>
