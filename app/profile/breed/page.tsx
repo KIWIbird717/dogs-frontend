@@ -7,6 +7,7 @@ import DogIcon from "@/public/images/svg/breed/dog.svg";
 import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
 import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
@@ -15,10 +16,19 @@ import { IBreedCountry } from "../country/page";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { StatsService } from "@/shared/lib/services/stats/stats";
+import { UsersService } from "@/shared/lib/services/users/users";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { StatsService } from "@/shared/lib/services/stats/stats";
 
 interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
+  {
+    name: "The mutt",
+    iso2: "Husky",
+    iso3: "Husky",
+  },
+
   {
     name: "The mutt",
     iso2: "Husky",
@@ -54,8 +64,12 @@ const breeds: IBreedCountry[] = [
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeBreed, breedKey } = useUser();
+  const { onChangeUser, onChangeBreed, breedKey } = useUser();
+  const [breedLocal, setBreedLocal] = useState(breedKey);
 
+  const logger = new Logger("BreedPage");
+
+  const handleClick = (breed: string) => setBreedLocal(breed);
   const handleClick = (breed: string) => setBreedLocal(breed);
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");

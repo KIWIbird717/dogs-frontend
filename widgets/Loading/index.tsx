@@ -8,13 +8,13 @@ import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import { UsersService } from "@/shared/lib/services/users/users";
-import { useUser } from "@/shared/hooks/useUser";
+import { GetMeUserType, useUser } from "@/shared/hooks/useUser";
 import { useSessionStorage } from "@uidotdev/usehooks";
 
 interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
-  const [userST, setUserST] = useSessionStorage("user", null);
+  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const { push } = useRouter();
   const { onChangeUser } = useUser();
 
@@ -39,12 +39,12 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
 
     if (data) {
       onChangeUser(data.data);
-      setUserST(data.data);
+      setUserSS(data.data);
       push("/main");
     } else {
       push("/onboarding");
     }
-  }, [data, onChangeUser, push, setUserST]);
+  }, [data, onChangeUser, push]);
 
   return (
     <div

@@ -6,11 +6,12 @@ import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 
 interface IProfileInfoProps {}
+interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { user } = useUser();
-  const { breedKey, age, country } = user;
+  const { age, user } = useUser();
+  const { breedKey } = user;
   const { onOpenModal } = useModal();
 
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
@@ -24,6 +25,7 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
       },
       {
         title: "Breed",
+        value: breedKey,
         value: breedKey,
         onClick: () => push("/profile/breed"),
       },

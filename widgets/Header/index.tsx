@@ -12,8 +12,12 @@ import SettingsIcon from "@/public/images/svg/settings.svg";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
+import { useUser } from "@/shared/hooks/useUser";
 
-interface IHeaderProps {}
+interface IHeaderProps {
+}
+interface IHeaderProps {
+}
 
 export const Header: FC<IHeaderProps> = () => {
   const { onOpenModal } = useModal();
@@ -21,8 +25,8 @@ export const Header: FC<IHeaderProps> = () => {
   const redirectToFaq = () => push("/faq");
   const redirectToProfile = () => push("/profile");
 
-  const { user } = useUser();
-  const { first_name, guildName } = user;
+  const {user} = useUser()
+  const {first_name, guild} = user
 
   const onOpenSettings = () => {
     onOpenModal("settings");
@@ -30,7 +34,12 @@ export const Header: FC<IHeaderProps> = () => {
 
   return (
     <div className={"z-[10] flex h-[48px] w-full gap-4"}>
-      <div className={"flex w-[56%] justify-between gap-2"} onClick={redirectToProfile}>
+      <div className={"flex w-[56%] justify-between gap-2"}
+           onClick={redirectToProfile}
+      >
+      <div className={"flex w-[56%] justify-between gap-2"}
+           onClick={redirectToProfile}
+      >
         <div className={"relative"}>
           <div className={"h-[48px] w-[48px]"}>
             <Image
@@ -49,16 +58,17 @@ export const Header: FC<IHeaderProps> = () => {
           />
         </div>
 
-        <div className={"flex w-full flex-col"}>
+        <div className={"flex flex-col w-full"}>
+        <div className={"flex flex-col w-full"}>
           <Typography
             tag={"p"}
             className={"line-clamp-1 text-[18px] font-bold leading-6 text-white-900"}
           >
             {first_name}
+            {first_name}
           </Typography>
           <Typography tag={"h4"} className={"font-portico font-normal text-blue-800"}>
-            {guildName || "-"}
-            {guildName || "-"}
+            {guild || "null"}
           </Typography>
         </div>
       </div>
