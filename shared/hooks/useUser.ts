@@ -8,7 +8,7 @@ type ExcludePassword = {
   country: never
   guild: never
   lastDailyReward: never
-  };
+};
 
 export type GetMeUserType = IUserSlice & ExcludePassword;
 
@@ -37,6 +37,7 @@ export const useUser = () => {
     age,
     breedKey,
     country,
+    user,
 
     onChangeAge,
     onChangeBreed,
