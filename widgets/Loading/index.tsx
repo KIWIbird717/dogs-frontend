@@ -8,12 +8,16 @@ import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import { UsersService } from "@/shared/lib/services/users/users";
+import { useUser } from "@/shared/hooks/useUser";
+import { useSessionStorage } from "@uidotdev/usehooks";
 
 interface IModalLoadingProps {
 }
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
+  const [userST, setUserST] = useSessionStorage("user", null);
   const { push } = useRouter();
+  const {onChangeUser} = useUser()
 
   const defaultOptions = {
     loop: true,
@@ -35,18 +39,14 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь не найден переходим на страницу onboarding
      */
 
-    // if (data) {
-    //   mutate({ ...data, data: { ...data?.data, username: "huh" } });
-    // }
-
-    console.log({data});
-
     if (data) {
+      onChangeUser(data.data)
+      setUserST(data.data)
       push("/main");
     } else {
       push("/onboarding");
     }
-  }, [data, push]);
+  }, [data, onChangeUser, push, setUserST]);
 
   return (
     <div
