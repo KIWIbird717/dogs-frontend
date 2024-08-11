@@ -4,15 +4,14 @@ import IStatsSlice = StatsSlice.IStatsSlice;
 
 export const useStats = () => {
   const dispatch = useAppDispatch();
-  const { dailyUsers, online, totalUsers, totalTouches } = useAppSelector((state) => state.stats);
+  const { dailyUsers, online, totalPlayers } = useAppSelector((state) => state.stats);
 
   const onChangeStats = (stats: IStatsSlice) => {
     dispatch(
       StatsSlice.setAllUserStats({
         dailyUsers: stats.dailyUsers,
         online: stats.online,
-        totalUsers: stats.totalUsers,
-        totalTouches: stats.totalTouches,
+        totalPlayers: stats.totalPlayers,
       }),
     );
   };
@@ -20,8 +19,7 @@ export const useStats = () => {
   return {
     dailyUsers,
     online,
-    totalUsers,
-    totalTouches,
+    totalPlayers,
     onChangeStats,
   };
 };

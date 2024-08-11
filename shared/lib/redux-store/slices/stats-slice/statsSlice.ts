@@ -6,11 +6,13 @@ export namespace StatsSlice {
   export type IStatsSlice = {
     dailyUsers: GetMeUserType[];
     online: GetMeUserType[];
+    totalPlayers?: number;
   };
 
   const initialState: IStatsSlice = {
     dailyUsers: [],
     online: [],
+    totalPlayers: 0,
   };
 
   export const statsSlice = createSlice({
@@ -20,11 +22,12 @@ export namespace StatsSlice {
       setAllUserStats: (state, action: PayloadAction<IStatsSlice>) => {
         state.online = action.payload.online;
         state.dailyUsers = action.payload.dailyUsers;
+        state.totalPlayers = action.payload.totalPlayers;
       },
     },
   });
 
   export const { setAllUserStats } = statsSlice.actions;
-  export const userReducer = statsSlice.reducer;
+  export const statsReducer = statsSlice.reducer;
   export type Type = IStatsSlice;
 }

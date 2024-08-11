@@ -3,6 +3,7 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 
 const persistConfig = {
   key: "root",
