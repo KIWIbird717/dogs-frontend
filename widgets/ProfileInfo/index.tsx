@@ -5,12 +5,13 @@ import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 
-interface IProfileInfoProps {}
+interface IProfileInfoProps {
+}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { age, user } = useUser();
-  const {breedKey} = user
+  const {  user } = useUser();
+  const { breedKey, age, country } = user;
   const { onOpenModal } = useModal();
 
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
@@ -19,7 +20,7 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
     () => [
       {
         title: "Age",
-        value: age,
+        value: age ? age : "-",
         onClick: onOpenEditAgeModal,
       },
       {
@@ -29,11 +30,11 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
       },
       {
         title: "Country",
-        value: "Ukraine",
+        value: country ? country : "-",
         onClick: () => push("/profile/country"),
       },
     ],
-    [age, onOpenEditAgeModal, push],
+    [age, breedKey, onOpenEditAgeModal, push],
   );
 
   return (

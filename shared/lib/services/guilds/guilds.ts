@@ -43,5 +43,4 @@ export namespace GuildsService {
   export const searchGuild = (dto: GuildsApiTypes.SearchGuild) => {
     return serverApi.post<any>(`/guilds/leave`);
   };
-
 }

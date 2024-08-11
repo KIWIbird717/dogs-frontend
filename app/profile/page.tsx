@@ -12,6 +12,8 @@ import { StatsInfo } from "@/widgets/StatsInfo";
 
 import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/profile/gradient/gradient2.svg";
+import useSWR from "swr";
+import { StatsService } from "@/shared/lib/services/stats/stats";
 
 interface IProfilePageProps {}
 
@@ -33,6 +35,8 @@ const statics = [
 const ProfilePage: NextPage<IProfilePageProps> = () => {
   const { coins } = useClicker(false);
 
+  const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
+  
   return (
     <View
       fadeInOnLoad
