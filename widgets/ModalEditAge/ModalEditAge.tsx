@@ -1,22 +1,27 @@
-import { ChangeEvent, FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Field, IFieldProps } from "@/widgets/Field";
 import { useUser } from "@/shared/hooks/useUser";
 import { twMerge } from "tailwind-merge";
+import { UsersService } from "@/shared/lib/services/users/users";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface IModalEditAgeProps {}
+interface IModalEditAgeProps {
+}
 
 export const ModalEditAge: FC<IModalEditAgeProps> = () => {
+  const logger = new Logger("ModalEditAge");
+
   const { onClose, modalData } = useModal();
   const { isOpen, data, type } = modalData;
   const [isError, setIsError] = useState(false);
-  const { age, onChangeAge } = useUser();
+  const { age, onChangeUser, onChangeAge } = useUser();
 
   const isModalOpen = isOpen && type === "editAge";
 
-  const [value, setValue] = useState<string | number>(age);
+  const [localAge, setLocalAge] = useState<string | number | null | undefined>(age);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -32,13 +37,25 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
     } else {
       setIsError(true);
     }
-    setValue(newAge);
+    setLocalAge(newAge);
   };
 
-  const onClick = () => {
-    onChangeAge(value);
-    onClose();
-  };
+
+  const onSubmit = async () => {
+    try {
+      await UsersService.updateUser({
+        age: Number(localAge),
+      });
+
+      const { data } = await UsersService.getMe();
+      onChangeUser(data);
+
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      onClose();
+    }
+  }
 
   return (
     <>
@@ -70,7 +87,7 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
                 label={"Age"}
                 labelDescription={"from 0 to 80"}
                 keyForLabel={"age"}
-                value={value as string}
+                value={localAge as string}
                 onChange={handleAgeChange}
                 isError={isError}
                 errorText={"Invalid age"}
@@ -83,7 +100,7 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
               variant={"deepBlue"}
               disabled={isError}
               className={twMerge(isError && "opacity-50")}
-              onClick={onClick}
+              onClick={onSubmit}
             >
               Confirm Age
             </Button>
