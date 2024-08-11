@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { serverApi } from "@/shared/lib/axios";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface ICreateGuildFieldsProps {}
 
