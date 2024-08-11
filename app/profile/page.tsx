@@ -10,52 +10,30 @@ import { StatsInfo } from "@/widgets/StatsInfo";
 
 import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/profile/gradient/gradient2.svg";
+import useSWR from "swr";
 import { StatsService } from "@/shared/lib/services/stats/stats";
-import { useEffect, useMemo } from "react";
-import { useStats } from "@/shared/hooks/useStats";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IProfilePageProps {}
 
+const statics = [
+  {
+    title: "Total Players",
+    value: 323000234,
+  },
+  {
+    title: "Dayly Users",
+    value: 69000,
+  },
+  {
+    title: "Online Players",
+    value: 100234,
+  },
+];
+
 const ProfilePage: NextPage<IProfilePageProps> = () => {
-  const logger = new Logger("ProfilePage");
+  const { coins } = useClicker(false);
 
-  const { onChangeStats, online, dailyUsers, totalUsers, totalTouches } = useStats();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await StatsService.getAllUsersStats();
-        onChangeStats({
-          totalUsers: data.totalUsers,
-          online: data.online,
-          dailyUsers: data.dailyUsers,
-          totalTouches: data.totalTouches,
-        });
-      } catch (error) {
-        logger.error(error);
-      } finally {
-      }
-    })();
-  }, []);
-
-  const statics = useMemo(
-    () => [
-      {
-        title: "Total Players",
-        value: totalUsers || 0,
-      },
-      {
-        title: "Dayly Users",
-        value: dailyUsers,
-      },
-      {
-        title: "Online Players",
-        value: online,
-      },
-    ],
-    [dailyUsers, online, totalUsers],
-  );
+  const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
 
   return (
     <View

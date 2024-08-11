@@ -10,8 +10,8 @@ interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { age, user } = useUser();
-  const { breedKey } = user;
+  const { user } = useUser();
+  const { breedKey, age, country } = user;
   const { onOpenModal } = useModal();
 
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
@@ -20,6 +20,7 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
     () => [
       {
         title: "Age",
+        value: age ? age : "-",
         value: age ? age : "-",
         onClick: onOpenEditAgeModal,
       },
@@ -32,9 +33,11 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
       {
         title: "Country",
         value: country ? country : "-",
+        value: country ? country : "-",
         onClick: () => push("/profile/country"),
       },
     ],
+    [age, breedKey, onOpenEditAgeModal, push],
     [age, breedKey, onOpenEditAgeModal, push],
   );
 
