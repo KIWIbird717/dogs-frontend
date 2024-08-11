@@ -12,31 +12,53 @@ import { StatsInfo } from "@/widgets/StatsInfo";
 
 import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/profile/gradient/gradient2.svg";
-import useSWR from "swr";
 import { StatsService } from "@/shared/lib/services/stats/stats";
+import { useEffect, useMemo } from "react";
+import { useStats } from "@/shared/hooks/useStats";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IProfilePageProps {}
 
-const statics = [
-  {
-    title: "Total Players",
-    value: 323000234,
-  },
-  {
-    title: "Dayly Users",
-    value: 69000,
-  },
-  {
-    title: "Online Players",
-    value: 100234,
-  },
-];
+
 
 const ProfilePage: NextPage<IProfilePageProps> = () => {
+  const logger = new Logger("ProfilePage");
   const { coins } = useClicker(false);
 
-  const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
-  
+  const {onChangeStats, online, dailyUsers, totalPlayers} = useStats()
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const {data} = await StatsService.getAllUsersStats()
+        onChangeStats({
+          totalPlayers: data.totalPlayers,
+          online: data.online!,
+          dailyUsers: data.online!
+        })
+      } catch (error) {
+        logger.error(error)
+      } finally {
+
+      }
+    })()
+  }, []);
+
+  const statics = useMemo(() =>[
+    {
+      title: "Total Players",
+      value: totalPlayers || 0,
+    },
+    {
+      title: "Dayly Users",
+      value: dailyUsers?.length,
+    },
+    {
+      title: "Online Players",
+      value: online?.length,
+    },
+  ], [dailyUsers?.length, online?.length, totalPlayers] )
+
   return (
     <View
       fadeInOnLoad

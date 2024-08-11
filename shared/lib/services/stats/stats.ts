@@ -1,5 +1,6 @@
 import { serverApi } from "../../axios";
 import { StatsApiTypes } from "@/shared/lib/services/stats/types";
+import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 
 export namespace StatsService {
   /**
@@ -20,7 +21,7 @@ export namespace StatsService {
    * GET /stats/all-users-stats
    */
   export const getAllUsersStats = () => {
-    return serverApi.get<any>(`/stats/all-users-stats`);
+    return serverApi.get<StatsSlice.IStatsSlice>(`/stats/all-users-stats`);
   };
 
 }
