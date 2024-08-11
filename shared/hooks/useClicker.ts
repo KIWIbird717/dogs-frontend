@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 export const useClicker = (isSetInterval?: boolean) => {
-  const [coins, setCoins] = useState(27139454);
+  const { balance } = useAppSelector((state) => state.user);
+
+  const [coins, setCoins] = useState(balance);
 
   const [boosts, setBoosts] = useState(200);
   const maxBoost = 500;
