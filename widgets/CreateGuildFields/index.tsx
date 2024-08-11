@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { serverApi } from "@/shared/lib/axios";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface ICreateGuildFieldsProps {
 }
@@ -13,12 +14,11 @@ interface ICreateGuildFieldsProps {
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
-  const { user } = useUser();
-  const { push } = useRouter();
+  const {user} = useUser()
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
-  const bones = user.balance;
+  const bones = user.balance
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [avatar, setAvatar] = useState<File>();

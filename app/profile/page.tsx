@@ -21,14 +21,14 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
   const logger = new Logger("ProfilePage");
   const { coins } = useClicker(false);
 
-  const { onChangeStats, online, dailyUsers, totalPlayers } = useStats();
+  const { onChangeStats, online, dailyUsers, totalUsers } = useStats();
 
   useEffect(() => {
     (async () => {
       try {
         const { data } = await StatsService.getAllUsersStats();
         onChangeStats({
-          totalPlayers: data.totalPlayers,
+          totalUsers: data.totalUsers,
           online: data.online!,
           dailyUsers: data.online!,
         });
@@ -43,7 +43,7 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
     () => [
       {
         title: "Total Players",
-        value: totalPlayers || 0,
+        value: totalUsers || 0,
       },
       {
         title: "Dayly Users",
@@ -54,7 +54,7 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
         value: online?.length,
       },
     ],
-    [dailyUsers?.length, online?.length, totalPlayers],
+    [dailyUsers?.length, online?.length, totalUsers],
   );
 
   return (
