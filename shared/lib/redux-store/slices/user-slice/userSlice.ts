@@ -3,8 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type IUserSlice = {
-    age: number;
-    country: string;
+    age?: number | null;
+    country?: string | null;
     guild: string | null;
     lastDailyReward: number;
     //imageUrl: string
@@ -24,8 +24,8 @@ export namespace UserSlice {
   };
 
   const initialState: IUserSlice = {
-    age: 0,
-    country: "none",
+    age: null,
+    country: null,
     guild: null,
     lastDailyReward: 0,
     //imageUrl: string
@@ -70,6 +70,8 @@ export namespace UserSlice {
         state.username = action.payload.username;
         state.doneTask = action.payload.doneTask;
         state.friends = action.payload.friends;
+        state.age = action.payload.age;
+        state.country = action.payload.country;
       },
     },
   });

@@ -14,6 +14,7 @@ import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
 import { UsersService } from "@/shared/lib/services/users/users";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface ICountryPageProps {}
 
@@ -25,9 +26,11 @@ export interface IBreedCountry {
 }
 
 const CountryPage: NextPage<ICountryPageProps> = () => {
+  const logger = new Logger("CountryPage");
+
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeCountry, country } = useUser();
+  const { onChangeUser, country } = useUser();
   const [currentCountry, setCurrentCountry] = useState(country);
 
   useRequest(async () => {
@@ -42,13 +45,20 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const {data} = UsersService.updateUser({country: currentCountry})
-  //
-  //     onChangeCountry(data)
-  //   })()
-  // }, [currentCountry, onChangeCountry]);
+  useEffect(() => {
+    (async () => {
+      try {
+        await UsersService.updateUser({
+          country: currentCountry!,
+        });
+
+        const { data } = await UsersService.getMe();
+        onChangeUser(data);
+      } catch (error) {
+        logger.error(error);
+      }
+    })();
+  }, [currentCountry]);
 
   return (
     <View
@@ -58,7 +68,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
       <HeaderWithIcon title={"Select Country"} icon={<World />} />
 
       <BreedCountryBlock
-        item={currentCountry}
+        item={currentCountry || "-"}
         onClick={handleClick}
         items={countries}
         onChange={handleSearch}
