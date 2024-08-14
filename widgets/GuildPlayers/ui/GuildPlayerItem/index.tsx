@@ -6,6 +6,7 @@ import AvatarImage from "@/public/images/avatar.png";
 import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
+import { twMerge } from "tailwind-merge";
 
 interface IGuildPlayerItemProps {
   avatarUrl: string;
@@ -13,8 +14,9 @@ interface IGuildPlayerItemProps {
   league: string;
   coins: number | string;
   index: number;
-  id: string;
-  handleRedirect: (id: string) => void;
+  id: number | string
+  handleRedirect?: (id: number | string) => void;
+  className?: string
 }
 
 export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
@@ -25,15 +27,22 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   index,
   id,
   handleRedirect,
+  className
 }) => {
   const numberGuild = index + 1;
-  const onClickHandler = () => handleRedirect(id);
+  const onClickHandler = () => {
+    if (handleRedirect) {
+      handleRedirect(id);
+    }
+  };
 
   return (
     <Button
       onClick={onClickHandler}
-      className={
-        "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 bg-black-400 px-3 py-2 text-left shadow-buttonNoAccent"
+      className={twMerge(
+        "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 px-3 py-2 text-left shadow-buttonNoAccent",
+        className ? className : "bg-black-400"
+      )
       }
     >
       <div className={"flex w-auto max-w-[261px] items-center gap-2"}>
