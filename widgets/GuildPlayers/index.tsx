@@ -30,12 +30,12 @@ export const GuildPlayers: FC<IGuildPlayersProps> = (
   ) => {
   const { push } = useRouter();
 
-  const handleRedirect = (id: string) => {
+  const handleRedirect = (id: string | number) => {
     // push(`/guilds/${id}`)
   };
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2 overflow-y-auto"}>
+    <div className={"z-[10] flex w-full  flex-col gap-2 overflow-hidden"}>
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 overflow-y-auto pb-28", classNameList)}>
