@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { twMerge } from "tailwind-merge";
-import { getNumeralSuffix } from "@/shared/lib/utils/getNumeralSuffix";
+import { twMerge } from "tailwind-merge";
 
 interface IGuildPlayerItemProps {
   avatarUrl: string;
@@ -36,10 +36,11 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
       handleRedirect(id);
     }
   };
-
-  const numeral = useMemo(() => {
-    return getNumeralSuffix(coins);
-  }, [coins]);
+  const onClickHandler = () => {
+    if (handleRedirect) {
+      handleRedirect(id);
+    }
+  };
 
   return (
     <Button

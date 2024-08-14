@@ -1,4 +1,5 @@
 "use client";
+"use client";
 
 import { FC, useEffect, useMemo, useState } from "react";
 import { CarouselWrapper } from "@/widgets/CarouselWrapper";
@@ -10,6 +11,10 @@ import DiamondImage from "@/public/images/ranks/diamond.png";
 import MasterImage from "@/public/images/ranks/master.png";
 import GangsterImage from "@/public/images/ranks/gangster.png";
 import BossImage from "@/public/images/ranks/boss.png";
+import { IRank } from "@/app/stats/page";
+import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
+import { useUser } from "@/shared/hooks/useUser";
+import { Button } from "@/shared/ui/Button/Button";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { useUser } from "@/shared/hooks/useUser";
 import { Button } from "@/shared/ui/Button/Button";
@@ -28,6 +33,169 @@ const ranks: IRank[] = [
   {
     rank: "bronze",
     image: BronzeImage,
+    users: [
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "1",
+        avatarUrl: "",
+        title: "Name Bronse",
+        league: "Alligator",
+        coins: "2,64",
+      },
+      {
+        id: "2",
+        avatarUrl: "",
+        title: "Name",
+        league: "Alligator",
+        coins: "2,64",
+      },
+    ],
   },
   {
     rank: "silver",
@@ -68,26 +236,10 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   };
 
   const { user } = useUser();
-  const { _id, guildName } = user;
+  const { _id, first_name, guild, balance } = user;
 
-  const currentUser = useMemo(() => {
-    const index = usersByLevel.findIndex((user) => user._id === _id);
-    return index !== -1 ? { ...usersByLevel[index], serialNumber: index + 1 } : null;
-  }, [_id, usersByLevel]);
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await StatsService.getStatsUsersByLevel({
-        start: 0,
-        pagination: 50,
-        level: currentSlide + 1,
-      });
-
-      setUsersByLevel(data);
-    })();
-  }, [currentSlide]);
-
-  const currentRank = useMemo(() => ranks[currentSlide].rank, [currentSlide]);
+  const { user } = useUser();
+  const { _id, first_name, guild, balance } = user;
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
