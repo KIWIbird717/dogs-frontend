@@ -16,13 +16,9 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
   const { user } = useUser();
-  const { user } = useUser();
-  const { user } = useUser();
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
-  const bones = user.balance;
-  const bones = user.balance;
   const bones = user.balance;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -32,6 +28,13 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [joinMethod, setJoinMethod] = useState<"open" | "bylink">("open");
+
+  const onToggleJoinMethod = () => {
+    if (joinMethod === "open") {
+      setJoinMethod("bylink");
+    } else setJoinMethod("open");
+  };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -77,10 +80,9 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const onSubmit = async () => {
     const formData = new FormData();
     if (avatar) {
-      formData.append(`image`, avatar);
-      formData.append("originalname", avatar.name);
-      formData.append("joinMethod", "open");
+      formData.append("image", avatar);
       formData.append("name", "Guild name");
+      formData.append("joinMethod", "open");
     }
 
     try {
