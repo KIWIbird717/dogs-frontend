@@ -28,7 +28,6 @@ push:
   only:
     - production
 
-
 deploy:
   stage: deploy
   script:
