@@ -23,7 +23,7 @@ export const Header: FC<IHeaderProps> = () => {
   const redirectToProfile = () => push("/profile");
 
   const {user} = useUser()
-  const {first_name, guild} = user
+  const {first_name, guildName} = user
 
   const onOpenSettings = () => {
     onOpenModal("settings");
@@ -60,7 +60,7 @@ export const Header: FC<IHeaderProps> = () => {
             {first_name}
           </Typography>
           <Typography tag={"h4"} className={"font-portico font-normal text-blue-800"}>
-            {guild || "null"}
+            {guildName || "-"}
           </Typography>
         </div>
       </div>

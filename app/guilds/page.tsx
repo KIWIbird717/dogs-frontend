@@ -4,33 +4,49 @@ import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Header } from "@/widgets/Header";
 import { Input } from "@/shared/ui/Input";
-import { GuildBanner, IGuild } from "@/widgets/GuildBanner";
+import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
-import GuildImage from "@/public/images/guild.png";
 import { Leaderboard } from "@/widgets/Leaderboard";
 import { Navbar } from "@/widgets/Navbar";
 
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useUser } from "@/shared/hooks/useUser";
+import { useGuild } from "@/shared/hooks/useGuild";
+import { useEffect } from "react";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IGuildsProps {}
 
-const guild: IGuild = {
-  icon: GuildImage,
-  name: "TOM & JERRY",
-  author: "Nick Name Founder",
-  members: "50/100",
-  totalScore: 923132,
-};
 
 const Guilds: NextPage<IGuildsProps> = () => {
+  const logger = new Logger("GuildsPage");
   const {user} = useUser()
 
-  const [isGuildJoined, setIsGuildJoined] = useState(false);
+  const {
+    guild,
+    isLoading,
+    myGuildId,
+    setIsLoading,
+    setGuild
+  } = useGuild()
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await GuildsService.getGuild(myGuildId!);
+        setGuild(data);
+      } catch (error) {
+        logger.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <View
       fadeInOnLoad
@@ -39,8 +55,8 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Input isIcon placeholder={"Search Guild"} />
 
-      {user.guild ? (
-        <GuildBanner guildInfo={guild} />
+      {user.guild && !isLoading ? (
+        <GuildBanner guildInfo={guild!} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
           <Button variant={"primary"} className={"text-[18px] font-bold leading-6 text-white-900"}>

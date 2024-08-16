@@ -6,18 +6,14 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
-import useSWR from "swr";
-import { UsersService } from "@/shared/lib/services/users/users";
-import { GetMeUserType, useUser } from "@/shared/hooks/useUser";
-import { useSessionStorage } from "@uidotdev/usehooks";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface IModalLoadingProps {
 }
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
-  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const { push } = useRouter();
-  const {onChangeUser} = useUser()
+  const {getMe} = useUser()
 
   const defaultOptions = {
     loop: true,
@@ -28,9 +24,6 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
     },
   };
 
-  const { data } = useSWR("/users/create", UsersService.getMe);
-
-
   useEffect(() => {
     /**
      * Проверка авторизации:
@@ -39,14 +32,16 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь не найден переходим на страницу onboarding
      */
 
-    if (data) {
-      onChangeUser(data.data)
-      setUserSS(data.data)
-      push("/main");
-    } else {
-      push("/onboarding");
-    }
-  }, [data, onChangeUser, push]);
+    (async () => {
+      try {
+        await getMe()
+        push("/main");
+      } catch (error) {
+        push("/onboarding");
+      }
+    })()
+
+  }, [push]);
 
   return (
     <div

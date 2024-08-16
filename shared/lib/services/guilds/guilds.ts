@@ -12,7 +12,25 @@ export interface IGuildResponse {
   name: string,
   _id: string,
   guildBalance: null | number
+  image: string
 }
+
+type ExcludeMembers = {
+  members: never
+};
+
+export type GetGuildType = IGuildResponse & ExcludeMembers;
+
+export type GuildResponseWithMembersType = {
+  membersCount: number
+  members: {
+    balance: number
+    first_name: string
+    level: number
+    role: string
+    username: string
+  }[];
+} & GetGuildType
 
 export namespace GuildsService {
   /**
@@ -30,14 +48,14 @@ export namespace GuildsService {
       start,
       pagination,
     });
-  }
+  };
 
   /**
    * GET /guilds/get-guilds
    */
   export const getGuild = (id: string) => {
-    return serverApi.post<IGuildResponse>(`/guilds/get`, {
-     id
+    return serverApi.post<GuildResponseWithMembersType>(`/guilds/get`, {
+      id,
     });
   };
 

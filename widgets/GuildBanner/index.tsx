@@ -10,10 +10,10 @@ import { twMerge } from "tailwind-merge";
 import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { GuildResponseWithMembersType, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildBannerProps {
-  guildInfo: IGuildResponse;
+  guildInfo: GuildResponseWithMembersType;
   isGuildJoined?: boolean;
 
   // для страницы /guilds - должен быть true,
@@ -56,7 +56,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
           <Image
-            src={GuildImage}
+            src={GuildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
             alt={"guild"}
             className={twMerge(isBanner ? "h-[80px] w-[80px]" : "h-[56px] w-[56px]")}
           />
@@ -86,7 +86,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       </div>
       <div className={"flex w-full gap-2"}>
         <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
-        <Block value={guildInfo.members} title={"Members"} isBanner={isBanner} />
+        <Block value={guildInfo.membersCount || guildInfo.members} title={"Members"} isBanner={isBanner} />
       </div>
     </div>
   );

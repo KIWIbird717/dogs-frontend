@@ -113,11 +113,10 @@ export type HeadersType = {
 
 export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const { push } = useRouter();
-  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
-  const {onChangeUser} = useUser()
+  const {getMe} = useUser()
 
   const redirectToMain = () => push("/main");
 
@@ -138,15 +137,13 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
     (async () => {
       try {
         await UsersService.createUser()
-        const {data} = await UsersService.getMe()
-        onChangeUser(data)
-        setUserSS(data)
+        await getMe()
       } catch (error) {
         logger.error(error)
       }
 
     })()
-  }, [logger, onChangeUser, setUserSS]);
+  }, []);
 
   return (
     <>
