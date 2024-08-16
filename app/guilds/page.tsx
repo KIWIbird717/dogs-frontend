@@ -49,7 +49,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
-      {user.guild && !isLoading ? (
+      {guild && !isLoading ? (
         <GuildBanner guildInfo={guild!} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
