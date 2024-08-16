@@ -5,10 +5,10 @@ export namespace UserSlice {
   export type IUserSlice = {
     age?: number | null;
     country?: string | null;
-    guild: string | null;
-    guildName: string | null;
-    guildFounder: string | null;
-    lastDailyReward: number;
+    guild: string | null,
+    guildName: string | null,
+    guildFounder: string | null,
+    lastDailyReward: number
     //imageUrl: string
 
     _id: number;
@@ -31,6 +31,8 @@ export namespace UserSlice {
     guild: null,
     guildName: null,
     guildFounder: null,
+    guildName: null,
+    guildFounder: null,
     lastDailyReward: 0,
     //imageUrl: string
 
@@ -45,6 +47,7 @@ export namespace UserSlice {
     touches: 0,
     username: "User",
     doneTask: [],
+    friends: [],
     friends: [],
   };
 
@@ -64,13 +67,24 @@ export namespace UserSlice {
       setGuildName: (state, action: PayloadAction<IUserSlice["guildName"]>) => {
         state.guildName = action.payload;
       },
-      setBalance: (state, action: PayloadAction<IUserSlice["balance"]>) => {
-        state.balance = action.payload;
-      },
-      setLevel: (state, action: PayloadAction<IUserSlice["level"]>) => {
-        state.level = action.payload;
-      },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
+        state._id = action.payload._id;
+        state.__v = action.payload.__v;
+        state.balance = action.payload.balance;
+        state.breedKey = action.payload.breedKey;
+        state.earnPerHour = action.payload.earnPerHour;
+        state.first_name = action.payload.first_name;
+        state.lastOnline = action.payload.lastOnline;
+        state.level = action.payload.level;
+        state.touches = action.payload.touches;
+        state.username = action.payload.username;
+        state.doneTask = action.payload.doneTask;
+        state.friends = action.payload.friends;
+        state.age = action.payload.age;
+        state.country = action.payload.country;
+        state.guild = action.payload.guild;
+        state.guildFounder = action.payload.guildFounder;
+      },
         state._id = action.payload._id;
         state.__v = action.payload.__v;
         state.balance = action.payload.balance;
@@ -91,8 +105,7 @@ export namespace UserSlice {
     },
   });
 
-  export const { setAge, setLevel, setBalance, setGuildName, setBreed, setCountry, setUser } =
-    userSlice.actions;
+  export const { setAge, setGuildName, setBreed, setCountry, setUser } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

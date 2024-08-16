@@ -7,6 +7,7 @@ import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
+import { useUser } from "@/shared/hooks/useUser";
 
 interface IModalLoadingProps {}
 

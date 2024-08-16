@@ -4,6 +4,9 @@ import IUserSlice = UserSlice.IUserSlice;
 import { useSessionStorage } from "@uidotdev/usehooks";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useSessionStorage } from "@uidotdev/usehooks";
+import { UsersService } from "@/shared/lib/services/users/users";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 type ExcludePassword = {
   lastDailyReward: never;
@@ -13,6 +16,8 @@ export type GetMeUserType = IUserSlice & ExcludePassword;
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
+  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
+
   const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
 
   const user = useAppSelector((state) => state.user);
@@ -34,7 +39,7 @@ export const useUser = () => {
     dispatch(UserSlice.setUser(user));
   };
 
-  const onChangeGuildName = (guildName: string | null) => {
+  const onChangeGuildName = (guildName: string) => {
     dispatch(UserSlice.setGuildName(guildName));
   };
 

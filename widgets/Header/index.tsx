@@ -58,6 +58,7 @@ export const Header: FC<IHeaderProps> = () => {
           </Typography>
           <Typography tag={"h4"} className={"font-portico font-normal text-blue-800"}>
             {guildName || "-"}
+            {guildName || "-"}
           </Typography>
         </div>
       </div>

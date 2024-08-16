@@ -10,10 +10,7 @@ interface IBoardProps {}
 export const Board: FC<IBoardProps> = () => {
   const { push } = useRouter();
   const { user } = useUser();
-  const { level, guildName, balance } = user;
-
-  const onRedirectStats = () => push("/stats");
-  const onRedirectGuilds = () => push("/guilds");
+  const { level, guildName } = user;
 
   return (
     <div className={"flex w-full rounded-xl"}>
@@ -39,6 +36,7 @@ export const Board: FC<IBoardProps> = () => {
           Pack
         </Typography>
         <Typography tag={"h4"} className={"text-[18px] font-normal leading-[18px] text-blue-800"}>
+          {guildName || "-"}
           {guildName || "-"}
         </Typography>
       </Button>

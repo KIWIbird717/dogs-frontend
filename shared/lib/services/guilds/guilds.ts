@@ -9,23 +9,30 @@ export enum JoinMethod {
 }
 
 export interface IGuildResponse {
-  joinMethod: JoinMethod;
-  members: number;
-  name: string;
-  _id: string;
-  guildBalance: null | number;
-  image: string;
+  joinMethod: JoinMethod,
+  members: number,
+  name: string,
+  _id: string,
+  guildBalance: null | number
+  image: string
 }
 
-export type GuildResponseWithMembersType = {
-  joinMethod: JoinMethod;
-  name: string;
-  _id: string;
-  guildBalance: null | number;
-  image: string;
-  membersCount: number;
-  members: IUserSlice[];
+type ExcludeMembers = {
+  members: never
 };
+
+export type GetGuildType = IGuildResponse & ExcludeMembers;
+
+export type GuildResponseWithMembersType = {
+  membersCount: number
+  members: {
+    balance: number
+    first_name: string
+    level: number
+    role: string
+    username: string
+  }[];
+} & GetGuildType
 
 export namespace GuildsService {
   /**
@@ -44,11 +51,14 @@ export namespace GuildsService {
       pagination,
     });
   };
+  };
 
   /**
    * GET /guilds/get-guilds
    */
   export const getGuild = (id: string) => {
+    return serverApi.post<GuildResponseWithMembersType>(`/guilds/get`, {
+      id,
     return serverApi.post<GuildResponseWithMembersType>(`/guilds/get`, {
       id,
     });

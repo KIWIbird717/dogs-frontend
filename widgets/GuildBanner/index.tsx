@@ -8,10 +8,10 @@ import { twMerge } from "tailwind-merge";
 import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { GuildResponseWithMembersType } from "@/shared/lib/services/guilds/guilds";
+import { GuildResponseWithMembersType, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildBannerProps {
-  guild: GuildResponseWithMembersType;
+  guildInfo: GuildResponseWithMembersType;
   isGuildJoined?: boolean;
   guildImage: any;
   // для страницы /guilds - должен быть true,
@@ -47,8 +47,8 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
     >
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
-          <img
-            src={guildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
+          <Image
+            src={GuildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
@@ -80,7 +80,11 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       </div>
       <div className={"flex w-full gap-2"}>
         <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
-        <Block value={members} title={"Members"} isBanner={isBanner} />
+        <Block
+          value={guildInfo.membersCount || guildInfo.members}
+          title={"Members"}
+          isBanner={isBanner}
+        />
       </div>
     </div>
   );
