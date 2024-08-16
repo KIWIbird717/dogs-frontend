@@ -11,25 +11,22 @@ interface ICheckbox {
   joinMethod: JoinMethod;
 }
 
-
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & ICheckbox
 >(({ className, ...props }, ref) => {
-  const {joinMethod} = props
+  const { joinMethod } = props;
 
   return (
     <CheckboxPrimitive.Root
       ref={ref}
       className={cn(
-        "peer h-8 w-8 shrink-0 rounded-xl border border-[#4D4A65] shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-none data-[state=checked]:border-white",
+        "focus-visible:ring-ring peer h-8 w-8 shrink-0 rounded-xl border border-[#4D4A65] bg-none shadow focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-white",
         className,
       )}
       {...props}
     >
-      <div
-        className={cn("w-full h-full flex items-center justify-center")}
-      >
+      <div className={cn("flex h-full w-full items-center justify-center")}>
         <TickIcon className={twMerge(joinMethod === "bylink" && "[&>path]:fill-white-900")} />
       </div>
     </CheckboxPrimitive.Root>
