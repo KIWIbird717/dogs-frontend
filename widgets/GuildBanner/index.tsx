@@ -8,10 +8,10 @@ import { twMerge } from "tailwind-merge";
 import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { GuildResponseWithMembersType, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { IGuildResponse } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildBannerProps {
-  guildInfo: GuildResponseWithMembersType;
+  guildInfo: IGuildResponse;
   isGuildJoined?: boolean;
   guildImage: any;
   // для страницы /guilds - должен быть true,
@@ -26,11 +26,13 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
   guildImage,
 }) => {
   const { push } = useRouter();
-  const totalScore = formatNumber(guild.guildBalance || 0);
+  const totalScore = formatNumber(guildInfo.guildBalance || 0);
+  const totalScore = formatNumber(guildInfo.guildBalance || 0);
 
   const redirectHandler = () => {
     if (isBanner) {
-      push(`/guilds/${guild._id}`);
+      push(`/guilds/${guildInfo._id}`);
+      push(`/guilds/${guildInfo._id}`);
     }
   };
 
@@ -48,7 +50,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
           <Image
-            src={GuildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
+            src={GuildImage}
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
@@ -63,6 +65,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
               {guild.name}
             </Typography>
             <Typography tag={"p"} className={"text-[18px] font-normal leading-6 text-white-900"}>
+              {"Author"}
               {"Author"}
             </Typography>
           </div>
@@ -80,6 +83,11 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       </div>
       <div className={"flex w-full gap-2"}>
         <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
+        <Block
+          value={guildInfo.membersCount || guildInfo.members}
+          title={"Members"}
+          isBanner={isBanner}
+        />
         <Block
           value={guildInfo.membersCount || guildInfo.members}
           title={"Members"}

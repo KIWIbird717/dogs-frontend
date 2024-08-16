@@ -1,12 +1,44 @@
 import { serverApi } from "../../axios";
 import { GuildsApiTypes } from "./types";
 
+export enum JoinMethod {
+  OPEN = "open",
+  BYLINK = "bylink"
+}
+
+export interface IGuildResponse {
+  joinMethod: JoinMethod,
+  members: number,
+  name: string,
+  _id: string,
+  guildBalance: null | number
+}
+
 export namespace GuildsService {
   /**
    * GET /guilds/image
    */
   export const getGuildsImage = (fileImageId: string) => {
     return serverApi.get<any>(`/guilds/image?filename=${fileImageId}`);
+  };
+
+  /**
+   * GET /guilds/get-guilds
+   */
+  export const getGuilds = (start: number, pagination: number) => {
+    return serverApi.post<IGuildResponse[]>(`/guilds/get-guilds`, {
+      start,
+      pagination,
+    });
+  }
+
+  /**
+   * GET /guilds/get-guilds
+   */
+  export const getGuild = (id: string) => {
+    return serverApi.post<IGuildResponse>(`/guilds/get`, {
+     id
+    });
   };
 
   /**

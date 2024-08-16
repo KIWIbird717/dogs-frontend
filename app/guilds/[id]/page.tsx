@@ -9,42 +9,50 @@ import { Button } from "@/shared/ui/Button/Button";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
-import { useEffect } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { usePathname } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
-import { GuildsService } from "@/shared/lib/services/guilds/guilds";
+import { GuildsService, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { useGuild } from "@/shared/hooks/useGuild";
 
 interface IGuildPageProps {}
 
-const players:IUserPlayer = {
-  id: "1",
-  avatarUrl: "",
-  title: "Name",
-  league: "Gold",
-  coins: "2,64",
-};
+const players: IUserPlayer[] = [
+  {
+    id: "1",
+    avatarUrl: "",
+    title: "Name",
+    league: "Gold",
+    coins: "2,64",
+  },
+  {
+    id: "2",
+    avatarUrl: "",
+    title: "Name",
+    league: "Alligator",
+    coins: "2,64",
+  },
+];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
+
+  const guildId = useParams() as { id: string };
   const pathName = usePathname();
+  const [guild, setGuild] = useState<IGuildResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { push } = useRouter();
+  const [isGuildJoined, setIsGuildJoined] = useState(false);
 
-  const {
-    isLoading,
-    guildId,
-    isMyGuild,
-    guild,
-    setIsLoading,
-    setGuild,
-    handleToggleGuild,
-  } = useGuild()
-
+  const { isLoading, guildId, isMyGuild, guild, setIsLoading, setGuild, handleToggleGuild } =
+    useGuild();
 
   const onCopyHandler = () => {
+    if (guild) {
+      navigator.clipboard.writeText(pathName as string);
+    }
+
     if (guild) {
       navigator.clipboard.writeText(pathName as string);
     }
@@ -60,7 +68,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     (async () => {
       try {
         setIsLoading(true);
-        const { data } = await GuildsService.getGuild(guildId);
+        const { data } = await GuildsService.getGuild(guildId.id);
         setGuild(data);
       } catch (error) {
         logger.error(error);
@@ -69,18 +77,17 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       }
     })();
   }, []);
-
-
   return (
     <View
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <div className={"z-[10] flex w-full flex-col gap-2"}>
-        {isLoading
-          ? "Загрузка"
-          : <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isMyGuild} />
-        }
+        {isLoading ? (
+          "Загрузка"
+        ) : (
+          <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isGuildJoined} />
+        )}
 
         <Button
           variant={isMyGuild ? "default" : "deepBlue"}
@@ -99,7 +106,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      {!isLoading && guild?.members && <GuildPlayers title={"Players"} players={guild.members} />}
+      <GuildPlayers title={"Players"} players={players} />
 
       {isMyGuild && (
       {isMyGuild && (

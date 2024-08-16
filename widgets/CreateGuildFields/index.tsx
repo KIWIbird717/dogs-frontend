@@ -8,6 +8,7 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { serverApi } from "@/shared/lib/axios";
 import { useUser } from "@/shared/hooks/useUser";
 import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
+import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface ICreateGuildFieldsProps {}
 
@@ -29,6 +30,13 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [joinMethod, setJoinMethod] = useState<JoinMethod>(JoinMethod.OPEN);
+
+  const onToggleJoinMethod = () => {
+    if (joinMethod === "open") {
+      setJoinMethod(JoinMethod.BYLINK);
+    } else setJoinMethod(JoinMethod.OPEN);
+  };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -76,10 +84,9 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const onSubmit = async () => {
     const formData = new FormData();
     if (avatar) {
-      formData.append(`image`, avatar);
-      formData.append("originalname", avatar.name);
-      formData.append("joinMethod", "open");
-      formData.append("name", "Guild name");
+      formData.append("image", avatar);
+      formData.append("name", name);
+      formData.append("joinMethod", joinMethod);
     }
 
     try {
