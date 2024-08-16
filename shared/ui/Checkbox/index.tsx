@@ -5,10 +5,9 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cn } from "@/shared/lib/utils/cn";
 import TickIcon from "@/public/images/svg/guild/create/tick.svg";
 import { twMerge } from "tailwind-merge";
-import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface ICheckbox {
-  joinMethod: JoinMethod;
+  joinMethod: "open" | "bylink";
 }
 
 const Checkbox = React.forwardRef<
