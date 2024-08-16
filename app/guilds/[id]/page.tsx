@@ -3,18 +3,18 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
-import { GuildBanner, IGuild } from "@/widgets/GuildBanner";
-import GuildImage from "@/public/images/guild.png";
+import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
-import { GuildsService, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useGuild } from "@/shared/hooks/useGuild";
 
 interface IGuildPageProps {
 }
@@ -55,22 +55,18 @@ const players: IUserPlayer[] = [
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
-
-  const guildId = useParams() as { id: string };
   const pathName = usePathname();
-  const [guild, setGuild] = useState<IGuildResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const { push } = useRouter();
-  const [isGuildJoined, setIsGuildJoined] = useState(false);
 
-  const handleToggleGuild = () => {
-    if (isGuildJoined) {
-      setIsGuildJoined(false);
-      push("/guilds");
-    } else {
-      setIsGuildJoined(true);
-    }
-  };
+  const {
+    isLoading,
+    guildId,
+    isMyGuild,
+    guild,
+    setIsLoading,
+    setGuild,
+    handleToggleGuild,
+  } = useGuild()
+
 
   const onCopyHandler = () => {
     if (guild) {
@@ -89,7 +85,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     (async () => {
       try {
         setIsLoading(true);
-        const { data } = await GuildsService.getGuild(guildId.id);
+        const { data } = await GuildsService.getGuild(guildId);
         setGuild(data);
       } catch (error) {
         logger.error(error);
@@ -98,6 +94,8 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       }
     })();
   }, []);
+
+
   return (
     <View
       fadeInOnLoad
@@ -106,19 +104,19 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       <div className={"z-[10] flex w-full flex-col gap-2"}>
         {isLoading
           ? "Загрузка"
-          : <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isGuildJoined} />
+          : <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isMyGuild} />
         }
 
         <Button
-          variant={isGuildJoined ? "default" : "deepBlue"}
+          variant={isMyGuild ? "default" : "deepBlue"}
           className={twMerge(
             "text-[18px] font-bold leading-6",
-            isGuildJoined && "border border-black-500 px-2 py-4 text-white-800",
-            !isGuildJoined && "text-white-900",
+            isMyGuild && "border border-black-500 px-2 py-4 text-white-800",
+            !isMyGuild && "text-white-900",
           )}
           onClick={handleToggleGuild}
         >
-          {isGuildJoined ? "Leave Guild" : "Join Pack"}
+          {isMyGuild ? "Leave Guild" : "Join Pack"}
         </Button>
       </div>
 
@@ -126,7 +124,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
                     players={players}
       />
 
-      {isGuildJoined && (
+      {isMyGuild && (
         <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
       )}
 

@@ -113,7 +113,6 @@ export type HeadersType = {
 
 export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const { push } = useRouter();
-  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
 
