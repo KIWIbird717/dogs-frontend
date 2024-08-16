@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 interface IBlockProps {
   title: string;
-  value: string;
+  value: string | number;
   isBanner?: boolean;
 }
 

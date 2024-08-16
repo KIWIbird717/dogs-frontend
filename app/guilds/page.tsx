@@ -13,8 +13,9 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/shared/hooks/useUser";
+import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildsProps {}
 

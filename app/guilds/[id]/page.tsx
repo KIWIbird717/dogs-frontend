@@ -9,22 +9,15 @@ import { Button } from "@/shared/ui/Button/Button";
 import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
+import { GuildsService, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IGuildPageProps {
 }
-
-const guild: IGuild = {
-  icon: GuildImage,
-  name: "Tom & Jerry",
-  author: "Nick Name Founder",
-  members: "50/100",
-  totalScore: 300000,
-  link: "/guild/1",
-};
 
 const players: IUserPlayer[] = [
   {
@@ -44,6 +37,12 @@ const players: IUserPlayer[] = [
 ];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
+  const logger = new Logger("GuildPage");
+
+  const guildId = useParams() as { id: string };
+  const pathName = usePathname();
+  const [guild, setGuild] = useState<IGuildResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { push } = useRouter();
   const [isGuildJoined, setIsGuildJoined] = useState(false);
 
@@ -57,20 +56,41 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
   };
 
   const onCopyHandler = () => {
-    navigator.clipboard.writeText(guild.link as string);
+    if (guild) {
+      navigator.clipboard.writeText(pathName as string);
+    }
+
   };
 
   const onShareHandler = () => {
-    navigator.share({ text: guild.link as string });
+    if (guild) {
+      navigator.share({ text: pathName as string });
+    }
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await GuildsService.getGuild(guildId.id);
+        setGuild(data);
+      } catch (error) {
+        logger.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
   return (
     <View
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <div className={"z-[10] flex w-full flex-col gap-2"}>
-        <GuildBanner guildInfo={guild} isBanner={false} isGuildJoined={isGuildJoined} />
+        {isLoading
+          ? "Загрузка"
+          : <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isGuildJoined} />
+        }
 
         <Button
           variant={isGuildJoined ? "default" : "deepBlue"}
