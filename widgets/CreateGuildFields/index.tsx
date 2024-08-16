@@ -16,11 +16,9 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
   const { user } = useUser();
-  const { user } = useUser();
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
-  const bones = user.balance;
   const bones = user.balance;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
