@@ -23,9 +23,8 @@ interface IProfilePageProps {}
 
 const ProfilePage: NextPage<IProfilePageProps> = () => {
   const logger = new Logger("ProfilePage");
-  const { coins } = useClicker(false);
 
-  const {onChangeStats, online, dailyUsers, totalUsers} = useStats()
+  const {onChangeStats, online, dailyUsers, totalUsers, totalTouches} = useStats()
 
   useEffect(() => {
     (async () => {
@@ -33,8 +32,9 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
         const {data} = await StatsService.getAllUsersStats()
         onChangeStats({
           totalUsers: data.totalUsers,
-          online: data.online!,
-          dailyUsers: data.online!
+          online: data.online,
+          dailyUsers: data.dailyUsers,
+          totalTouches: data.totalTouches
         })
       } catch (error) {
         logger.error(error)
@@ -51,13 +51,13 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
     },
     {
       title: "Dayly Users",
-      value: dailyUsers?.length,
+      value: dailyUsers,
     },
     {
       title: "Online Players",
-      value: online?.length,
+      value: online,
     },
-  ], [dailyUsers?.length, online?.length, totalUsers] )
+  ], [dailyUsers, online, totalUsers] )
 
   return (
     <View
@@ -75,7 +75,7 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
       <div className={"relative z-[10] w-full flex-col pt-6"}>
         <div className={"absolute left-0 top-0 h-[1px] w-full bg-gradient-border"} />
 
-        <StatsInfo value={coins} title={"Total Touches:"} isIcon />
+        <StatsInfo value={totalTouches || 0} title={"Total Touches:"} isIcon />
 
         <div className={"flex w-full flex-col gap-10 pt-6"}>
           {statics.map((item, i) => {
