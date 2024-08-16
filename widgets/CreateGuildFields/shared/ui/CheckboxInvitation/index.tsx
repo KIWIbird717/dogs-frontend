@@ -2,10 +2,11 @@ import { FC } from "react";
 import { Checkbox } from "@/shared/ui/Checkbox";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { twMerge } from "tailwind-merge";
+import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface ICheckboxInvitationProps {
   onToggleJoinMethod: () => void
-  joinMethod: "open" | "bylink"
+  joinMethod: JoinMethod
 }
 
 export const CheckboxInvitation: FC<ICheckboxInvitationProps> = (

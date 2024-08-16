@@ -6,12 +6,13 @@ import GuildImage from "@/public/images/guild.png";
 import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
+import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildItemProps {
   avatarUrl: string;
   title: string;
-  description: string;
-  members: string;
+  joinMethod: JoinMethod;
+  members: number;
   coins: number | string;
   index: number;
   id: string;
@@ -21,7 +22,7 @@ interface IGuildItemProps {
 export const GuildItem: FC<IGuildItemProps> = ({
   avatarUrl,
   members,
-  description,
+  joinMethod,
   title,
   coins,
   index,
@@ -60,7 +61,7 @@ export const GuildItem: FC<IGuildItemProps> = ({
         <div className={"flex h-full flex-col justify-center gap-1"}>
           <Typography tag={"h3"}>{title}</Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
-            {description}
+            {joinMethod === "bylink" ? "By invitation only" : "Free"}
           </Typography>
         </div>
 
