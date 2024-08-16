@@ -18,50 +18,9 @@ import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useGuild } from "@/shared/hooks/useGuild";
 
-interface IGuildPageProps {}
+interface IGuildPageProps {
+}
 
-const guild: IGuild = {
-  icon: GuildImage,
-  name: "Tom & Jerry",
-  author: "Nick Name Founder",
-  members: "50/100",
-  totalScore: 300000,
-  link: "/guild/1",
-};
-
-const players: IUserPlayer[] = [
-  {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
-  },
-];
-
-const players: IUserPlayer[] = [
-  {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
-  },
-];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
@@ -75,7 +34,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     setIsLoading,
     setGuild,
     handleToggleGuild,
-  } = useGuild()
+  } = useGuild();
 
 
   const onCopyHandler = () => {
@@ -106,7 +65,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [guildId]);
 
 
   return (
@@ -137,7 +96,9 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      <GuildPlayers title={"Players"} players={players} />
+      {guild?.members && <GuildPlayers title={"Players"}
+                                       players={guild.members}
+      />}
 
       {isMyGuild && (
       {isMyGuild && (
