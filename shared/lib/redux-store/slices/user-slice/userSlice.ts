@@ -6,6 +6,8 @@ export namespace UserSlice {
     age?: number | null;
     country?: string | null;
     guild: string | null;
+    guildName: string | null;
+    guildFounder: string | null;
     lastDailyReward: number;
     //imageUrl: string
 
@@ -27,6 +29,8 @@ export namespace UserSlice {
     age: null,
     country: null,
     guild: null,
+    guildName: null,
+    guildFounder: null,
     lastDailyReward: 0,
     //imageUrl: string
 
@@ -41,6 +45,7 @@ export namespace UserSlice {
     touches: 0,
     username: "User",
     doneTask: [],
+    friends: [],
     friends: [],
   };
 
@@ -57,6 +62,9 @@ export namespace UserSlice {
       setCountry: (state, action: PayloadAction<IUserSlice["country"]>) => {
         state.country = action.payload;
       },
+      setGuildName: (state, action: PayloadAction<IUserSlice["guildName"]>) => {
+        state.guildName = action.payload;
+      },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
         state._id = action.payload._id;
         state.__v = action.payload.__v;
@@ -72,12 +80,13 @@ export namespace UserSlice {
         state.friends = action.payload.friends;
         state.age = action.payload.age;
         state.country = action.payload.country;
+        state.guild = action.payload.guild;
+        state.guildFounder = action.payload.guildFounder;
       },
     },
   });
 
-  export const { setAge, setBreed, setCountry, setUser } = userSlice.actions;
-  export const { setAge, setBreed, setCountry, setUser } = userSlice.actions;
+  export const { setAge, setGuildName, setBreed, setCountry, setUser } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }
