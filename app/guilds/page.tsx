@@ -55,7 +55,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       <Header />
       <Input isIcon placeholder={"Search Guild"} />
 
-      {user.guild && !isLoading ? (
+      {guild && !isLoading ? (
         <GuildBanner guildInfo={guild!} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>

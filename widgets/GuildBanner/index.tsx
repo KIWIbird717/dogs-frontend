@@ -1,16 +1,18 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import Image from "next/image";
 import { Block } from "@/widgets/GuildBanner/ui/Block";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
-import GuildImage from "@/public/images/guild.png";
+import DefaultGuildImg from "@/public/images/guild.png";
 import { twMerge } from "tailwind-merge";
 import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { GuildResponseWithMembersType, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { GuildResponseWithMembersType, GuildsService, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { useGuild } from "@/shared/hooks/useGuild";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IGuildBannerProps {
   guildInfo: GuildResponseWithMembersType;
@@ -21,28 +23,32 @@ interface IGuildBannerProps {
   isBanner?: boolean;
 }
 
-export interface IGuild {
-  icon: typeof GuildImage;
-  name: string;
-  author: string;
-  members: string;
-  totalScore: number;
-  link?: string;
-}
+export const GuildBanner: FC<IGuildBannerProps> = (
+  {
+    guildInfo,
+    isBanner = true,
+    isGuildJoined,
+  },
+) => {
+  const logger = new Logger("GuildBanner");
 
-export const GuildBanner: FC<IGuildBannerProps> = ({
-  guildInfo,
-  isBanner = true,
-  isGuildJoined,
-}) => {
   const { push } = useRouter();
   const totalScore = formatNumber(guildInfo.guildBalance || 0);
+  const { getImageOfGuild, guildImage, guild } = useGuild();
 
   const redirectHandler = () => {
     if (isBanner) {
       push(`/guilds/${guildInfo._id}`);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      if (guild) {
+        await getImageOfGuild(guild.image);
+      }
+    })();
+  }, []);
 
   return (
     <div
@@ -55,9 +61,11 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
     >
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
-          <Image
-            src={GuildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
+          <img
+            src={guildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
             alt={"guild"}
+            width={isBanner ? 80 : 56}
+            height={isBanner ? 80 : 56}
             className={twMerge(isBanner ? "h-[80px] w-[80px]" : "h-[56px] w-[56px]")}
           />
 

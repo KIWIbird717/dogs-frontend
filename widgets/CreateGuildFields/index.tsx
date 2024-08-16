@@ -9,6 +9,7 @@ import { serverApi } from "@/shared/lib/axios";
 import { useUser } from "@/shared/hooks/useUser";
 import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
 import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
+import { useRouter } from "next/navigation";
 
 interface ICreateGuildFieldsProps {}
 
@@ -16,6 +17,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
   const { user } = useUser();
+  const {push} = useRouter()
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
@@ -92,6 +94,8 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      push("/guilds")
     } catch (error) {
       logger.error(error);
     }
