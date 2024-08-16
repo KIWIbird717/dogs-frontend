@@ -19,39 +19,6 @@ import { useGuild } from "@/shared/hooks/useGuild";
 interface IGuildPageProps {
 }
 
-const players: IUserPlayer[] = [
-  {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
-  },
-];
-
-const players: IUserPlayer[] = [
-  {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
-  },
-];
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const logger = new Logger("GuildPage");
@@ -65,7 +32,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     setIsLoading,
     setGuild,
     handleToggleGuild,
-  } = useGuild()
+  } = useGuild();
 
 
   const onCopyHandler = () => {
@@ -93,7 +60,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [guildId]);
 
 
   return (
@@ -120,9 +87,9 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      <GuildPlayers title={"Players"}
-                    players={players}
-      />
+      {guild?.members && <GuildPlayers title={"Players"}
+                                       players={guild.members}
+      />}
 
       {isMyGuild && (
         <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />

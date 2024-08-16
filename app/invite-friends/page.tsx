@@ -15,21 +15,21 @@ import { Bonus } from "@/widgets/Bonus";
 
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
+import { GuildMembersType } from "@/shared/lib/services/guilds/guilds";
 
-const players: IUserPlayer[] = [
+const players: GuildMembersType[] = [
   {
-    id: "1",
-    avatarUrl: "",
-    title: "Name",
-    league: "Gold",
-    coins: "2,64",
-  },
-  {
-    id: "2",
-    avatarUrl: "",
-    title: "Name",
-    league: "Alligator",
-    coins: "2,64",
+    balance: 0,
+    first_name: "Bot",
+    level: 1,
+    role: "founder",
+    username: "bot",
+  },{
+    balance: 0,
+    first_name: "bot1",
+    level: 1,
+    role: "founder",
+    username: "bot1",
   },
 ];
 

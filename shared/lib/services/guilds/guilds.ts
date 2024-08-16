@@ -21,15 +21,17 @@ type ExcludeMembers = {
 
 export type GetGuildType = IGuildResponse & ExcludeMembers;
 
+export type GuildMembersType =  {
+  balance: number
+  first_name: string
+  level: number
+  role: string
+  username: string
+}
+
 export type GuildResponseWithMembersType = {
   membersCount: number
-  members: {
-    balance: number
-    first_name: string
-    level: number
-    role: string
-    username: string
-  }[];
+  members: GuildMembersType[];
 } & GetGuildType
 
 export namespace GuildsService {

@@ -5,11 +5,12 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { useRouter } from "next/navigation";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { twMerge } from "tailwind-merge";
+import { GuildMembersType } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: IUserPlayer[];
+  players: GuildMembersType[];
 }
 
 export interface IUserPlayer {
@@ -37,11 +38,11 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
           return (
             <GuildPlayerItem
               key={index}
-              id={player.id}
-              title={player.title}
-              league={player.league}
-              avatarUrl={player.avatarUrl}
-              coins={player.coins}
+              id={index}
+              title={player.first_name}
+              league={player.role}
+              avatarUrl={""}
+              coins={player.balance}
               index={index}
               handleRedirect={handleRedirect}
             />
