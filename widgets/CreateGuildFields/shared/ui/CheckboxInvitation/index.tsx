@@ -5,9 +5,13 @@ import { twMerge } from "tailwind-merge";
 
 interface ICheckboxInvitationProps {
   onToggleJoinMethod: () => void;
-  joinMethod: "open" | "bylink";
+  joinMethod: JoinMethod;
 }
 
+export const CheckboxInvitation: FC<ICheckboxInvitationProps> = ({
+  onToggleJoinMethod,
+  joinMethod,
+}) => {
 export const CheckboxInvitation: FC<ICheckboxInvitationProps> = ({
   onToggleJoinMethod,
   joinMethod,
@@ -15,11 +19,19 @@ export const CheckboxInvitation: FC<ICheckboxInvitationProps> = ({
   return (
     <div className="flex items-center gap-2">
       <Checkbox id="terms1" onClick={onToggleJoinMethod} joinMethod={joinMethod} />
+    <div className="flex items-center gap-2">
+      <Checkbox id="terms1" onClick={onToggleJoinMethod} joinMethod={joinMethod} />
       <div className="grid gap-1.5 leading-none">
         <label
           htmlFor="terms1"
           className="peer-disabled:cursor-not-allowed peer-disabled:opacity-30"
         >
+          <Typography
+            tag={"p"}
+            className={twMerge(
+              "text-[16px] font-medium leading-6 text-[#4D4A65]",
+              joinMethod === "bylink" && "text-white-900",
+            )}
           <Typography
             tag={"p"}
             className={twMerge(
@@ -34,3 +46,4 @@ export const CheckboxInvitation: FC<ICheckboxInvitationProps> = ({
     </div>
   );
 };
+
