@@ -10,15 +10,18 @@ import { useUser } from "@/shared/hooks/useUser";
 import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
 
 interface ICreateGuildFieldsProps {}
+interface ICreateGuildFieldsProps {}
 
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
   const { user } = useUser();
   const { user } = useUser();
+  const { user } = useUser();
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
+  const bones = user.balance;
   const bones = user.balance;
   const bones = user.balance;
   const [name, setName] = useState("");
@@ -29,13 +32,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [joinMethod, setJoinMethod] = useState<"open" | "bylink">("open");
-
-  const onToggleJoinMethod = () => {
-    if (joinMethod === "open") {
-      setJoinMethod("bylink");
-    } else setJoinMethod("open");
-  };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -81,24 +77,19 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const onSubmit = async () => {
     const formData = new FormData();
     if (avatar) {
-      formData.append(`avatar`, avatar);
+      formData.append(`image`, avatar);
+      formData.append("originalname", avatar.name);
+      formData.append("joinMethod", "open");
+      formData.append("name", "Guild name");
     }
 
     try {
       // TODO: Нужно исправить
-      const { data } = await serverApi.post(
-        `/guilds/create`,
-        {
-          image: formData,
-          name: name,
-          joinMethod: joinMethod,
+      const { data } = await serverApi.post(`/guilds/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
+      });
     } catch (error) {
       logger.error(error);
     }
@@ -150,6 +141,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
         value={!!avatar}
       />
 
+      <CheckboxInvitation joinMethod={joinMethod} onToggleJoinMethod={onToggleJoinMethod} />
       <CheckboxInvitation joinMethod={joinMethod} onToggleJoinMethod={onToggleJoinMethod} />
 
       <div className={"flex w-full flex-col gap-4 pt-2"}>
