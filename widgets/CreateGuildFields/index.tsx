@@ -7,6 +7,7 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { serverApi } from "@/shared/lib/axios";
 import { useUser } from "@/shared/hooks/useUser";
+import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
 
 interface ICreateGuildFieldsProps {}
 
@@ -28,6 +29,13 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [joinMethod, setJoinMethod] = useState<"open" | "bylink">("open");
+
+  const onToggleJoinMethod = () => {
+    if (joinMethod === "open") {
+      setJoinMethod("bylink");
+    } else setJoinMethod("open");
+  };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
@@ -71,7 +79,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   }, [avatar, isError, name.length]);
 
   const onSubmit = async () => {
-    // variant 1
     const formData = new FormData();
     if (avatar) {
       formData.append(`avatar`, avatar);
@@ -84,6 +91,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
         {
           image: formData,
           name: name,
+          joinMethod: joinMethod,
         },
         {
           headers: {
@@ -91,17 +99,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
           },
         },
       );
-    } catch (error) {
-      logger.error(error);
-    }
-
-    // variant 2
-    try {
-      // TODO: Нужно исправить
-      const { data } = await serverApi.post(`/guilds/create`, {
-        image: avatar,
-        name: name,
-      });
     } catch (error) {
       logger.error(error);
     }
