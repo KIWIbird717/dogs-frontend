@@ -9,31 +9,32 @@ import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { GuildResponseWithMembersType } from "@/shared/lib/services/guilds/guilds";
-import { useGuild } from "@/shared/hooks/useGuild";
 
 interface IGuildBannerProps {
-  guildInfo: GuildResponseWithMembersType;
+  guild: GuildResponseWithMembersType;
   isGuildJoined?: boolean;
-
+  guildImage: any;
   // для страницы /guilds - должен быть true,
   // Для страницы /guilds/id  - должен быть false,
   isBanner?: boolean;
+  getImageOfGuild: (imageName: string) => Promise<void>
 }
 
 export const GuildBanner: FC<IGuildBannerProps> = (
   {
-    guildInfo,
+    guild,
     isBanner = true,
     isGuildJoined,
+    guildImage,
+    getImageOfGuild
   },
 ) => {
   const { push } = useRouter();
-  const totalScore = formatNumber(guildInfo.guildBalance || 0);
-  const { getImageOfGuild, guildImage, guild } = useGuild();
+  const totalScore = formatNumber(guild.guildBalance || 0);
 
   const redirectHandler = () => {
     if (isBanner) {
-      push(`/guilds/${guildInfo._id}`);
+      push(`/guilds/${guild._id}`);
     }
   };
 
@@ -44,6 +45,8 @@ export const GuildBanner: FC<IGuildBannerProps> = (
       }
     })();
   }, []);
+
+  const members = guild.membersCount || guild.members.length
 
   return (
     <div
@@ -69,7 +72,7 @@ export const GuildBanner: FC<IGuildBannerProps> = (
               tag={isBanner ? "h1" : "h2"}
               className={twMerge(isBanner ? "font-normal uppercase" : "font-bold")}
             >
-              {guildInfo.name}
+              {guild.name}
             </Typography>
             <Typography tag={"p"} className={"text-[18px] font-normal leading-6 text-white-900"}>
               {"Author"}
@@ -88,8 +91,14 @@ export const GuildBanner: FC<IGuildBannerProps> = (
         )}
       </div>
       <div className={"flex w-full gap-2"}>
-        <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
-        <Block value={guildInfo.membersCount || guildInfo.members} title={"Members"} isBanner={isBanner} />
+        <Block value={totalScore}
+               title={"Total score"}
+               isBanner={isBanner}
+        />
+        <Block value={members}
+               title={"Members"}
+               isBanner={isBanner}
+        />
       </div>
     </div>
   );

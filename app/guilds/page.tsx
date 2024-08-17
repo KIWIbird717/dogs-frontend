@@ -29,11 +29,13 @@ const Guilds: NextPage<IGuildsProps> = () => {
     myGuildId,
     inputValue,
     FoundOrFetchedGuilds: guilds,
+    guildImage,
 
     setIsLoading,
     setGuild,
     setGuilds,
     setFoundGuilds,
+    getImageOfGuild,
     handleRandomJoinGuild,
     onChangeValueDebounce,
   } = useGuild();
@@ -69,17 +71,17 @@ const Guilds: NextPage<IGuildsProps> = () => {
             start: 0,
             pagination: 50,
           });
-          setFoundGuilds(data)
+          setFoundGuilds(data);
         } catch (error) {
           logger.error(error);
-          setFoundGuilds([])
+          setFoundGuilds([]);
         }
       })();
     }
 
   }, [inputValue]);
 
-  console.log({guilds});
+  console.log({ guilds });
 
 
   return (
@@ -88,10 +90,15 @@ const Guilds: NextPage<IGuildsProps> = () => {
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <Header />
-      <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
+      <Search value={inputValue || ""}
+              onChange={onChangeValueDebounce}
+      />
 
       {guild && !isLoading ? (
-        <GuildBanner guildInfo={guild!} />
+        <GuildBanner guild={guild!}
+                     guildImage={guildImage}
+                     getImageOfGuild={getImageOfGuild}
+        />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
           <Button onClick={handleRandomJoinGuild}
