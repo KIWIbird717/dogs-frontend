@@ -6,8 +6,7 @@ import { Navbar } from "@/widgets/Navbar";
 import { GuildBanner } from "@/widgets/GuildBanner";
 import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
-import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
-import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
+import { GuildPlayers } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
 import { useEffect } from "react";
@@ -36,12 +35,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     handleToggleGuild,
   } = useGuild();
 
-
   const onCopyHandler = () => {
-    if (guild) {
-      navigator.clipboard.writeText(pathName as string);
-    }
-
     if (guild) {
       navigator.clipboard.writeText(pathName as string);
     }
@@ -66,7 +60,6 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       }
     })();
   }, [guildId]);
-
 
   return (
     <View
@@ -96,8 +89,8 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      {guild?.members && <GuildPlayers title={"Players"}
-                                       players={guild.members}
+      {!isLoading && guild?.members && <GuildPlayers title={"Players"}
+                                                     players={guild.members}
       />}
 
       {isMyGuild && (

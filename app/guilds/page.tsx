@@ -13,19 +13,35 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
-import { useUser } from "@/shared/hooks/useUser";
 import { useGuild } from "@/shared/hooks/useGuild";
 import { useEffect } from "react";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useRouter } from "next/navigation";
 
 interface IGuildsProps {}
 
 const Guilds: NextPage<IGuildsProps> = () => {
   const logger = new Logger("GuildsPage");
-  const { user } = useUser();
+  const { push } = useRouter();
 
-  const { guild, isLoading, myGuildId, setIsLoading, setGuild } = useGuild();
+  const {
+    guild,
+    guilds,
+    isLoading,
+    myGuildId,
+    setIsLoading,
+    setGuild,
+    setGuilds,
+    handleJoinGuild,
+  } = useGuild();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await GuildsService.getGuilds(0, 50);
+      setGuilds(data);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -39,7 +55,18 @@ const Guilds: NextPage<IGuildsProps> = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [myGuildId]);
+
+  const handleRandomJoinGuild = async () => {
+    try {
+      const filteredGuilds = guilds.filter((item) => item.joinMethod === "open");
+      const randomGuild = filteredGuilds[Math.floor(Math.random() * filteredGuilds.length)];
+
+      await handleJoinGuild(randomGuild._id);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <View

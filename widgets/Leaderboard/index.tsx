@@ -1,11 +1,16 @@
 "use client";
 
 import { FC } from "react";
+import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { GuildItem } from "@/widgets/Leaderboard/ui/GuildItem";
 import { useRouter } from "next/navigation";
 import { IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import { IGuildResponse } from "@/shared/lib/services/guilds/guilds";
 
+interface ILeaderboardProps {
+  guilds: IGuildResponse[];
+}
 interface ILeaderboardProps {
   guilds: IGuildResponse[];
 }
@@ -29,6 +34,7 @@ export const Leaderboard: FC<ILeaderboardProps> = ({ guilds }) => {
               id={guild._id}
               title={guild.name}
               joinMethod={guild.joinMethod}
+              avatarUrl={""}
               avatarUrl={""}
               members={guild.members}
               coins={guild.guildBalance || 0}
