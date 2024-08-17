@@ -12,26 +12,37 @@ import { Navbar } from "@/widgets/Navbar";
 import Gradient1 from "@/public/images/svg/guild/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/guild/gradient/gradient2.svg";
 import Link from "next/link";
-import { useUser } from "@/shared/hooks/useUser";
 import { useGuild } from "@/shared/hooks/useGuild";
 import { useEffect } from "react";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useRouter } from "next/navigation";
 
-interface IGuildsProps {}
-
+interface IGuildsProps {
+}
 
 const Guilds: NextPage<IGuildsProps> = () => {
   const logger = new Logger("GuildsPage");
-  const {user} = useUser()
+  const { push } = useRouter();
 
   const {
     guild,
+    guilds,
     isLoading,
     myGuildId,
     setIsLoading,
-    setGuild
-  } = useGuild()
+    setGuild,
+    setGuilds,
+    handleJoinGuild,
+  } = useGuild();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await GuildsService.getGuilds(0, 50);
+      setGuilds(data);
+    })();
+  }, []);
+
 
   useEffect(() => {
     (async () => {
@@ -45,7 +56,18 @@ const Guilds: NextPage<IGuildsProps> = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [myGuildId]);
+
+  const handleRandomJoinGuild = async () => {
+    try {
+      const filteredGuilds = guilds.filter(item => item.joinMethod === "open");
+      const randomGuild = filteredGuilds[Math.floor(Math.random() * filteredGuilds.length)];
+
+      await handleJoinGuild(randomGuild._id);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <View
@@ -59,7 +81,10 @@ const Guilds: NextPage<IGuildsProps> = () => {
         <GuildBanner guildInfo={guild!} />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
-          <Button variant={"primary"} className={"text-[18px] font-bold leading-6 text-white-900"}>
+          <Button onClick={handleRandomJoinGuild}
+                  variant={"primary"}
+                  className={"text-[18px] font-bold leading-6 text-white-900"}
+          >
             Join Guild
           </Button>
           <Button variant={"default"} className={"text-[18px] font-bold leading-6 text-white-900"}>
@@ -68,7 +93,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
         </div>
       )}
 
-      <Leaderboard />
+      <Leaderboard guilds={guilds} />
 
       <Navbar />
 
