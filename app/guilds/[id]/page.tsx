@@ -13,8 +13,6 @@ import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
-import { GuildsService } from "@/shared/lib/services/guilds/guilds";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useGuild } from "@/shared/hooks/useGuild";
 
 interface IGuildPageProps {
@@ -22,7 +20,6 @@ interface IGuildPageProps {
 
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
-  const logger = new Logger("GuildPage");
   const pathName = usePathname();
 
   const {
@@ -30,9 +27,12 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     guildId,
     isMyGuild,
     guild,
+    guildImage,
     setIsLoading,
     setGuild,
+    getImageOfGuild,
     handleToggleGuild,
+    handleFetchGuildById,
   } = useGuild();
 
   const onCopyHandler = () => {
@@ -49,15 +49,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await GuildsService.getGuild(guildId);
-        setGuild(data);
-      } catch (error) {
-        logger.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      await handleFetchGuildById(guildId)
     })();
   }, [guildId]);
 
@@ -69,7 +61,12 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       <div className={"z-[10] flex w-full flex-col gap-2"}>
         {isLoading
           ? "Загрузка"
-          : <GuildBanner guildInfo={guild!} isBanner={false} isGuildJoined={isMyGuild} />
+          : <GuildBanner guild={guild!}
+                         isBanner={false}
+                         isGuildJoined={isMyGuild}
+                         guildImage={guildImage}
+                         getImageOfGuild={getImageOfGuild}
+          />
         }
 
         <Button

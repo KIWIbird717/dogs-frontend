@@ -15,12 +15,6 @@ export interface IGuildResponse {
   image: string;
 }
 
-type ExcludeMembers = {
-  members: never;
-};
-
-export type GetGuildType = IGuildResponse & ExcludeMembers;
-
 export type GuildMembersType = {
   balance: number;
   first_name: string;
@@ -30,9 +24,14 @@ export type GuildMembersType = {
 };
 
 export type GuildResponseWithMembersType = {
+  joinMethod: JoinMethod;
+  name: string;
+  _id: string;
+  guildBalance: null | number;
+  image: string;
   membersCount: number;
   members: GuildMembersType[];
-} & GetGuildType;
+};
 
 export namespace GuildsService {
   /**

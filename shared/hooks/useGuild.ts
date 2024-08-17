@@ -26,10 +26,23 @@ export const useGuild = () => {
 
   const isMyGuild = myGuildId === guildId.id;
 
+  const handleFetchGuildById = async (guildId: string) => {
+    try {
+      setIsLoading(true);
+      const { data } = await GuildsService.getGuild(guildId);
+      setGuild(data);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const handleJoinGuild = async (guildId: string) => {
     try {
       await GuildsService.joinGuild(guildId);
       await getMe();
+      await handleFetchGuildById(guildId)
     } catch (error) {
       logger.error(error);
     }
@@ -91,6 +104,7 @@ export const useGuild = () => {
     getImageOfGuild,
     handleJoinGuild,
     handleRandomJoinGuild,
+    handleFetchGuildById,
     onChangeValueDebounce
   };
 };
