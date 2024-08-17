@@ -17,7 +17,6 @@ interface IGuildBannerProps {
   // для страницы /guilds - должен быть true,
   // Для страницы /guilds/id  - должен быть false,
   isBanner?: boolean;
-  getImageOfGuild: (imageName: string) => Promise<void>
 }
 
 export const GuildBanner: FC<IGuildBannerProps> = (
@@ -26,7 +25,6 @@ export const GuildBanner: FC<IGuildBannerProps> = (
     isBanner = true,
     isGuildJoined,
     guildImage,
-    getImageOfGuild
   },
 ) => {
   const { push } = useRouter();
@@ -37,14 +35,6 @@ export const GuildBanner: FC<IGuildBannerProps> = (
       push(`/guilds/${guild._id}`);
     }
   };
-
-  useEffect(() => {
-    (async () => {
-      if (guild) {
-        await getImageOfGuild(guild.image);
-      }
-    })();
-  }, []);
 
   const members = guild.membersCount || guild.members.length
 

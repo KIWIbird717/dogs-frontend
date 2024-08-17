@@ -35,7 +35,7 @@ export const useUser = () => {
     dispatch(UserSlice.setUser(user))
   }
 
-  const onChangeGuildName = (guildName: string) => {
+  const onChangeGuildName = (guildName: string | null) => {
     dispatch(UserSlice.setGuildName(guildName))
   }
 

@@ -64,7 +64,6 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
                          isBanner={false}
                          isGuildJoined={isMyGuild}
                          guildImage={guildImage}
-                         getImageOfGuild={getImageOfGuild}
           />
         }
 

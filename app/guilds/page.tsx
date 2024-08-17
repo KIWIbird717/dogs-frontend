@@ -31,13 +31,11 @@ const Guilds: NextPage<IGuildsProps> = () => {
     FoundOrFetchedGuilds: guilds,
     guildImage,
 
-    setIsLoading,
-    setGuild,
     setGuilds,
     setFoundGuilds,
-    getImageOfGuild,
     handleRandomJoinGuild,
     onChangeValueDebounce,
+    handleFetchGuildById
   } = useGuild();
 
   useEffect(() => {
@@ -50,15 +48,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await GuildsService.getGuild(myGuildId!);
-        setGuild(data);
-      } catch (error) {
-        logger.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      await handleFetchGuildById(myGuildId!)
     })();
   }, [myGuildId]);
 
@@ -81,9 +71,6 @@ const Guilds: NextPage<IGuildsProps> = () => {
 
   }, [inputValue]);
 
-  console.log({ guilds });
-
-
   return (
     <View
       fadeInOnLoad
@@ -97,7 +84,6 @@ const Guilds: NextPage<IGuildsProps> = () => {
       {guild && !isLoading ? (
         <GuildBanner guild={guild!}
                      guildImage={guildImage}
-                     getImageOfGuild={getImageOfGuild}
         />
       ) : (
         <div className={"z-[10] flex w-full gap-2"}>
