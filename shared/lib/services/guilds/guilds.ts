@@ -93,6 +93,10 @@ export namespace GuildsService {
    * POST /guilds/search
    */
   export const searchGuild = (dto: GuildsApiTypes.SearchGuild) => {
-    return serverApi.post<any>(`/guilds/leave`);
+    return serverApi.post<any>(`/guilds/search`, {
+      name: dto.name,
+      start: dto.start,
+      pagination: dto.pagination,
+    });
   };
 }

@@ -11,7 +11,7 @@ export namespace GuildsApiTypes {
 
 
   export type SearchGuild = {
-    name: "string",
+    name: string,
     start: number,
     pagination: number
   }

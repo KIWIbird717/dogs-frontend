@@ -3,7 +3,6 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Header } from "@/widgets/Header";
-import { Input } from "@/shared/ui/Input";
 import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import { Leaderboard } from "@/widgets/Leaderboard";
@@ -16,24 +15,27 @@ import { useGuild } from "@/shared/hooks/useGuild";
 import { useEffect } from "react";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { useRouter } from "next/navigation";
+import { Search } from "@/widgets/Search";
 
 interface IGuildsProps {
 }
 
 const Guilds: NextPage<IGuildsProps> = () => {
   const logger = new Logger("GuildsPage");
-  const { push } = useRouter();
 
   const {
     guild,
-    guilds,
     isLoading,
     myGuildId,
+    inputValue,
+    FoundOrFetchedGuilds: guilds,
+
     setIsLoading,
     setGuild,
     setGuilds,
-    handleJoinGuild,
+    setFoundGuilds,
+    handleRandomJoinGuild,
+    onChangeValueDebounce,
   } = useGuild();
 
   useEffect(() => {
@@ -58,16 +60,27 @@ const Guilds: NextPage<IGuildsProps> = () => {
     })();
   }, [myGuildId]);
 
-  const handleRandomJoinGuild = async () => {
-    try {
-      const filteredGuilds = guilds.filter(item => item.joinMethod === "open");
-      const randomGuild = filteredGuilds[Math.floor(Math.random() * filteredGuilds.length)];
-
-      await handleJoinGuild(randomGuild._id);
-    } catch (error) {
-      logger.error(error);
+  useEffect(() => {
+    if (inputValue) {
+      (async () => {
+        try {
+          const { data } = await GuildsService.searchGuild({
+            name: inputValue,
+            start: 0,
+            pagination: 50,
+          });
+          setFoundGuilds(data)
+        } catch (error) {
+          logger.error(error);
+          setFoundGuilds([])
+        }
+      })();
     }
-  };
+
+  }, [inputValue]);
+
+  console.log({guilds});
+
 
   return (
     <View
@@ -75,7 +88,7 @@ const Guilds: NextPage<IGuildsProps> = () => {
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <Header />
-      <Input isIcon placeholder={"Search Guild"} />
+      <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
       {guild && !isLoading ? (
         <GuildBanner guildInfo={guild!} />
