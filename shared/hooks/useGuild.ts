@@ -15,13 +15,13 @@ export const useGuild = () => {
   const [guild, setGuild] = useState<GuildResponseWithMembersType | null>(null);
   const [foundGuilds, setFoundGuilds] = useState<IGuildResponse[]>([]);
 
-  const [guildImage, setGuildImage] = useState<any>();
+  const [guildImage, setGuildImage] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [inputValue, setInputValue] = useState<null | string>(null);
 
   const FoundOrFetchedGuilds = inputValue ? foundGuilds : guilds;
 
-  const { user, getMe } = useUser();
+  const { user, getMe, onChangeGuildName } = useUser();
   const { guild: myGuildId } = user;
 
   const isMyGuild = myGuildId === guildId.id;
@@ -31,6 +31,7 @@ export const useGuild = () => {
       setIsLoading(true);
       const { data } = await GuildsService.getGuild(guildId);
       setGuild(data);
+      await getImageOfGuild(data.image);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -53,6 +54,7 @@ export const useGuild = () => {
       try {
         await GuildsService.leaveGuild();
         await getMe();
+        onChangeGuildName(null)
         push("/guilds");
       } catch (error) {
         logger.error(error);
@@ -64,7 +66,7 @@ export const useGuild = () => {
 
   const getImageOfGuild = async (imageName: string) => {
     try {
-      const { data } = await GuildsService.getGuildsImage(imageName);
+      const data = await GuildsService.getGuildsImage(imageName);
       setGuildImage(data);
     } catch (error) {
       logger.error(error);
@@ -83,7 +85,6 @@ export const useGuild = () => {
   };
 
   const onChangeValueDebounce = useDebounce(setInputValue, 350);
-
 
   return {
     guilds,
