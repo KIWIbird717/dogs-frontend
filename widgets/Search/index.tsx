@@ -14,8 +14,6 @@ export const Search: FC<ISearchProps> = ({ value, onChange }) => {
     setSearchValue(e.currentTarget.value);
   };
 
-  console.log({ searchValue });
-
   return (
     <Input
       value={searchValue || ""}
