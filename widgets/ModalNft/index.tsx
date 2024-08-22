@@ -26,14 +26,14 @@ export const ModalNft: FC<IModalNftProps> = () => {
             </Typography>
           </div>
 
-          <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>
+          <Typography tag={"p"} className={"text-[20px] font-bold leading-6 text-white-900"}>
             We apologize, but the{" "}
-            <Link href={"/main"} className={"text-[17px] font-bold leading-6 text-blue-900"}>
+            <Link href={"/main"} className={"text-[20px] font-bold leading-6 text-blue-900"}>
               NFT
             </Link>{" "}
             is <br />
             currently{" "}
-            <Link href={"/main"} className={"text-[17px] font-bold leading-6 text-blue-900"}>
+            <Link href={"/main"} className={"text-[20px] font-bold leading-6 text-blue-900"}>
               in development.
             </Link>
           </Typography>
