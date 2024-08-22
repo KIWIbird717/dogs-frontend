@@ -4,12 +4,10 @@ import { FC, ReactNode, useMemo } from "react";
 import EnergyIcon from "@/public/images/svg/boost/energy.svg";
 import BatteryIcon from "@/public/images/svg/boost/battery.svg";
 import TapIcon from "@/public/images/svg/boost/tap.svg";
-import EnergyBlueIcon from "@/public/images/svg/boost/energy-blue.svg";
 import RechargingIcon from "@/public/images/svg/boost/recharging.svg";
 import ReloadIcon from "@/public/images/svg/boost/reload.svg";
 import { BoostBowlItem } from "@/widgets/BoostBowlItem";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { useClicker } from "@/shared/hooks/useClicker";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;

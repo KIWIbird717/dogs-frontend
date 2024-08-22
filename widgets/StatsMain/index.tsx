@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CarouselWrapper } from "@/widgets/CarouselWrapper";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import BronzeImage from "@/public/images/ranks/bronze.png";
@@ -14,8 +14,10 @@ import { IRank } from "@/app/stats/page";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { useUser } from "@/shared/hooks/useUser";
 import { Button } from "@/shared/ui/Button/Button";
+import { StatsService } from "@/shared/lib/services/stats/stats";
 
-interface IStatsMainProps {}
+interface IStatsMainProps {
+}
 
 const ranks: IRank[] = [
   {
@@ -30,7 +32,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -51,7 +53,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -72,7 +74,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -93,7 +95,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -114,7 +116,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -135,7 +137,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -156,7 +158,7 @@ const ranks: IRank[] = [
         level: 1,
         role: "founder",
         username: "bot",
-      },{
+      }, {
         balance: 0,
         first_name: "bot1",
         level: 1,
@@ -179,7 +181,19 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   };
 
   const { user } = useUser();
-  const { _id, first_name, guild, balance } = user;
+  const { _id, first_name, guild, balance, guildName } = user;
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await StatsService.getStatsUsersByLevel({
+        start: 0,
+        pagination: 50,
+        level: 1,
+      });
+
+      console.log({ data });
+    })();
+  }, []);
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
@@ -199,7 +213,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         <GuildPlayerItem
           id={_id}
           title={first_name}
-          league={guild!}
+          league={guildName!}
           avatarUrl={""}
           coins={balance}
           index={0}

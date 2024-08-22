@@ -6,8 +6,6 @@ import { Header } from "@/widgets/Header";
 import { Navbar } from "@/widgets/Navbar";
 import { Board } from "@/widgets/Board";
 import { ProfileInfo } from "@/widgets/ProfileInfo";
-
-import { useClicker } from "@/shared/hooks/useClicker";
 import { StatsInfo } from "@/widgets/StatsInfo";
 
 import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";

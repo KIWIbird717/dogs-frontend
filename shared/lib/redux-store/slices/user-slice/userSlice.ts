@@ -64,6 +64,12 @@ export namespace UserSlice {
       setGuildName: (state, action: PayloadAction<IUserSlice["guildName"]>) => {
         state.guildName = action.payload;
       },
+      setBalance: (state, action: PayloadAction<IUserSlice["balance"]>) => {
+        state.balance = action.payload
+      },
+      setLevel: (state, action: PayloadAction<IUserSlice["level"]>) => {
+        state.level = action.payload
+      },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
         state._id = action.payload._id;
         state.__v = action.payload.__v;
@@ -85,7 +91,7 @@ export namespace UserSlice {
     },
   });
 
-  export const { setAge, setGuildName, setBreed, setCountry, setUser } = userSlice.actions;
+  export const { setAge, setLevel, setBalance, setGuildName, setBreed, setCountry, setUser } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

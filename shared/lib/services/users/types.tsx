@@ -22,4 +22,9 @@ export namespace UserApiTypes {
   }
 
   export type UpdateUserDto = Partial<UserDto>;
+
+  export type ResponseEarnDto = {
+    balance: number
+    level: number
+  }
 }

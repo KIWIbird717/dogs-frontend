@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import AvatarImage from "@/public/images/avatar.png";
 import Image from "next/image";
@@ -35,6 +35,8 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
       handleRedirect(id);
     }
   };
+
+  const number = useMemo(() => Number(coins) < 1000000 ? "K" : "M", [coins])
 
   return (
     <Button
@@ -76,7 +78,11 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
       </div>
 
       <div className={"flex h-full min-w-[89px] items-center gap-2"}>
-        <TotalCoin coin={coins as number} tag={"h4"} size={"middle"} info={"M"} />
+        <TotalCoin coin={coins as number}
+                   tag={"h4"}
+                   size={"middle"}
+                   info={number}
+        />
       </div>
     </Button>
   );

@@ -1,13 +1,12 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { Header } from "@/widgets/Header";
 import { Board } from "@/widgets/Board";
 import { StatsInfo } from "../StatsInfo";
 import { Clicker } from "@/widgets/Clicker";
 import { EnergyBoost } from "@/widgets/EnergyBoost";
 import { useClicker } from "@/shared/hooks/useClicker";
-import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
@@ -34,7 +33,9 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
         }
       })();
     }
-  }, []);
+  }, [guild]);
+  
+  const currentBalance = useMemo(() => user.balance + coins, [coins, user.balance])
 
   return (
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
@@ -44,7 +45,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
         <div className={"flex w-full flex-col gap-8"}>
           <div className={"flex w-full flex-col gap-6"}>
             <Board />
-            <StatsInfo value={coins} isIcon />
+            <StatsInfo value={currentBalance} isIcon />
           </div>
 
           <Clicker onIncrementCoin={onIncrementCoin} />
