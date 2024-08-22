@@ -11,13 +11,13 @@ interface IOnboardingStepsProps {
 export const OnboardingSteps: FC<IOnboardingStepsProps> = ({ step, headers }) => {
   return (
     <div className={"relative flex h-[36px] w-[116px] items-center justify-center self-center"}>
-        <div className={"relative z-[4] flex gap-2"}>
+        <div className={"relative z-[4] flex gap-3"}>
           {headers.map((value, index) => {
             return (
               <motion.div
                 key={`steps-${value.id}`}
                 className={twMerge(
-                  "h-[12px] w-[12px] rounded-full bg-black-300",
+                  "h-[8px] w-[8px] rounded-full bg-black-300",
                   step >= index && "bg-white",
                 )}
                 initial={{ scale: 0.5, opacity: 0.5 }}
