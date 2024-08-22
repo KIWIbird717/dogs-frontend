@@ -1,7 +1,7 @@
 "use client";
 "use client";
 
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CarouselWrapper } from "@/widgets/CarouselWrapper";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import BronzeImage from "@/public/images/ranks/bronze.png";
@@ -15,13 +15,9 @@ import { IRank } from "@/app/stats/page";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { useUser } from "@/shared/hooks/useUser";
 import { Button } from "@/shared/ui/Button/Button";
+import { StatsService } from "@/shared/lib/services/stats/stats";
 
 interface IStatsMainProps {}
-
-export interface IRank {
-  rank: string;
-  image: any;
-}
 
 const ranks: IRank[] = [
   {
@@ -179,7 +175,19 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   };
 
   const { user } = useUser();
-  const { _id, first_name, guild, balance } = user;
+  const { _id, first_name, guild, balance, guildName } = user;
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await StatsService.getStatsUsersByLevel({
+        start: 0,
+        pagination: 50,
+        level: 1,
+      });
+
+      console.log({ data });
+    })();
+  }, []);
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
@@ -199,7 +207,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         <GuildPlayerItem
           id={_id}
           title={first_name}
-          league={guild!}
+          league={guildName!}
           avatarUrl={""}
           coins={balance}
           index={0}

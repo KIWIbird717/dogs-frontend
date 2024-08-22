@@ -7,7 +7,6 @@ import { StatsInfo } from "../StatsInfo";
 import { Clicker } from "@/widgets/Clicker";
 import { EnergyBoost } from "@/widgets/EnergyBoost";
 import { useClicker } from "@/shared/hooks/useClicker";
-import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
@@ -32,7 +31,9 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
         }
       })();
     }
-  }, []);
+  }, [guild]);
+  
+  const currentBalance = useMemo(() => user.balance + coins, [coins, user.balance])
 
   return (
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>

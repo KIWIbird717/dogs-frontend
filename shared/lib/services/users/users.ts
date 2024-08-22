@@ -45,6 +45,6 @@ export namespace UsersService {
    * POST /users/earn
    */
   export const addUseMoney = (dto: UserApiTypes.EarnDto) => {
-    return serverApi.post("/users/earn", dto);
+    return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/earn", dto);
   };
 }
