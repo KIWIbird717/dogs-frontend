@@ -42,7 +42,7 @@ export const Task: FC<ITaskProps> = ({ toggle, task }) => {
             {task.title}
           </Typography>
           {toggle === "rewards" && (
-            <Typography tag={"span"} className={"text-white-900"}>
+            <Typography tag={"span"} className={"text-[13px] text-white-900 leading-4 font-normal"}>
               {task.description}
             </Typography>
           )}

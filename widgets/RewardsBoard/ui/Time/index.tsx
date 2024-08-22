@@ -8,9 +8,13 @@ export const Time: FC<ITimeProps> = () => {
   return (
     <div className={"flex w-fit gap-2"}>
       <div className={"flex w-full items-center justify-end"}>
-        <Typography tag={"span"} className={"text-right text-white-800"}>
+        <Typography tag={"span"}
+                    className={"text-[13px] text-right text-white-800 leading-4 font-normal"}
+        >
           Available at <br />
-          <Typography tag={"span"} className={"text-right text-white-900"}>
+          <Typography tag={"span"}
+                      className={"text-[13px] text-right text-white-900"}
+          >
             9:21:31
           </Typography>
         </Typography>
