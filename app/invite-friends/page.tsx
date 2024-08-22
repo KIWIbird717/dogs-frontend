@@ -66,7 +66,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
           )}
           onClick={handleToggle}
         >
-          More bonus
+          More Bonus
         </Button>
       </div>
 

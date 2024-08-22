@@ -11,11 +11,15 @@ export const Board: FC<IBoardProps> = () => {
   const {user} = useUser()
   const {level,  guildName} = user
 
+  const onRedirectStats = () => push("/stats")
+  const onRedirectGuilds = () => push("/guilds")
+
   return (
     <div className={"flex w-full rounded-xl"}>
-      <div
+      <Button
+        onClick={onRedirectStats}
         className={
-          "flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-2 rounded-l-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
+          "flex h-full min-h-[62px] w-1/2 rounded-r-none flex-col items-center justify-center gap-2 rounded-l-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
         }
       >
         <Typography tag={"p"} className={"text-[15px] font-bold leading-[18px] text-white-900"}>
@@ -25,9 +29,9 @@ export const Board: FC<IBoardProps> = () => {
         <div className={"relative h-[8px] w-full rounded-[32px] border border-black-300"}>
           <div className={"absolute left-0 top-0 h-full w-[33%] bg-gradient-loading"} />
         </div>
-      </div>
+      </Button>
       <Button
-        onClick={() => push("/guilds")}
+        onClick={onRedirectGuilds}
         className={
           "flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-1 rounded-l-none rounded-r-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
         }

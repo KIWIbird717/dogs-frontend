@@ -19,8 +19,6 @@ export const Search: FC<ISearchProps> = (
     setSearchValue(e.currentTarget.value);
   };
 
-  console.log({searchValue});
-
   return (
     <Input value={searchValue || ""}
            isIcon
