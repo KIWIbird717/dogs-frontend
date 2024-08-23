@@ -20,7 +20,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
   const {push} = useRouter()
 
   const logger = new Logger("MainPage");
-  const { onIncrementCoin, maxBoost, boosts, coins, onMaxBoost } = useClicker(true);
+  const { clickEffects, handleClick, maxBoost, boosts, earned, onMaxBoost } = useClicker(true);
   const { user, onChangeGuildName } = useUser();
   const { guild } = user;
 
@@ -39,7 +39,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     }
   }, [guild]);
   
-  const currentBalance = useMemo(() => user.balance + coins, [coins, user.balance])
+  const currentBalance = useMemo(() => user.balance + earned, [earned, user.balance])
 
   return (
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
@@ -56,7 +56,9 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker onIncrementCoin={onIncrementCoin} />
+          <Clicker handleClick={handleClick}
+                   clickEffects={clickEffects}
+          />
         </div>
 
         <EnergyBoost boosts={boosts} maxBoost={maxBoost} onMaxBoost={onMaxBoost} />

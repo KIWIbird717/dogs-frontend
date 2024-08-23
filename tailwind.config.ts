@@ -74,6 +74,7 @@ const config: Config = {
         DEFAULT: "var(--white-default)",
         900: "var(--white-900)",
         800: "var(--white-800)",
+        100: "var(--white-100)",
       },
       black: {
         DEFAULT: "var(--black-default)",
