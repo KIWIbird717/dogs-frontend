@@ -1,22 +1,36 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { Button } from "@/shared/ui/Button/Button";
-import BoneIcon from "@/public/images/svg/boneBig.svg";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { ClickEffect } from "@/shared/hooks/useClicker";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Level20 from "@/public/images/bowls/level20.png";
+import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
+
+const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 
 interface IClickerProps {
   handleClick: (event: MouseEvent) => void;
   clickEffects: ClickEffect[];
+  level: number
 }
 
 export const Clicker: FC<IClickerProps> = (
   {
     handleClick,
     clickEffects,
+    level
   },
 ) => {
+  const [image, setImage] = useState(Level20)
+  
+  useEffect(() => {
+    const bowl = setBowlsByLevel(level)
+    setImage(bowl)
+  }, [level])
+  
   return (
     <div className={"flex w-full justify-center"}>
       <Button onClick={handleClick}
@@ -27,10 +41,13 @@ export const Clicker: FC<IClickerProps> = (
             "relative flex h-[264px] w-[264px] items-center justify-center rounded-[42px] bg-gradient-button-sec"
           }
         >
-          <BoneIcon />
+          <Image src={image}
+                 alt={`bowl-${level}`}
+                 className={"object-cover"}
+          />
           <AnimatePresence>
             {clickEffects.map((effect) => (
-              <motion.div
+              <MotionDiv
                 key={effect.id}
                 initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 0, y: -200 }}
@@ -47,7 +64,7 @@ export const Clicker: FC<IClickerProps> = (
                 >
                   +2
                 </Typography>
-              </motion.div>
+              </MotionDiv>
             ))}
           </AnimatePresence>
         </div>

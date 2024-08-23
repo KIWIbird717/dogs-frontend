@@ -106,6 +106,13 @@ export const useClicker = (isSetInterval?: boolean) => {
     [onIncrementEarn],
   );
 
+  const onMaxBoost = () => {
+    setState((prevState) => ({
+      ...prevState,
+      boosts: maxBoost,
+    }));
+  };
+
   return {
     boosts: state.boosts,
     maxBoost,
@@ -114,5 +121,6 @@ export const useClicker = (isSetInterval?: boolean) => {
 
     onIncrementEarn,
     handleClick,
+    onMaxBoost
   };
 };
