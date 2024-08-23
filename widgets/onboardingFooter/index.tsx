@@ -24,8 +24,9 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
   const isLastStep = step === 4;
 
   return (
-    <div className={"relative z-[10] flex w-full flex-col gap-10 pb-3"}>
-      <div className={"flex w-full flex-col gap-[22px]"}>
+    /*gap-[30px]*/
+    <div className={"relative z-[10] flex w-full flex-col gap-[6.9768vw] pb-3"}>
+      <div className={"flex w-full flex-col gap-[3.0233vw]"}>{/*gap-[13px]*/}
         {isLastStep && (
           <Button
             variant={"default"}
@@ -78,7 +79,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
             <Button
               variant={"primary"}
               onClick={onNext}
-              className={"w-full text-[18px] font-bold leading-6 text-white-900"}
+              className={"w-full text-[18px] font-bold leading-6 text-white-900 "}
             >
               {isLastStep ? (
                 <div className={"flex gap-2"}>
@@ -93,7 +94,9 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
             </Button>
           </motion.div>
         </div>
-        <Button onClick={redirect}>I already know</Button>
+        <Button onClick={redirect}
+                // className={"h-[13.024vw]"}
+        >I already know</Button>
       </div>
     </div>
   );

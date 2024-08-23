@@ -146,21 +146,31 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
 
   return (
     <>
-      <div className={"z-[10] flex w-full flex-col items-center gap-6"}>
+      <div className={"z-[10] flex w-full flex-col items-center gap-[5.582vw]"}> {/*gap-6*/}
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            className={"relative"}
+            className={"relative flex justify-center "}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             key={`image-${headers[step].id}`}
           >
             {/*{headers[step].image}*/}
+            {/*<Image*/}
+            {/*  src={headers[step].image}*/}
+            {/*  alt={""}*/}
+            {/*  // className={twMerge("h-[398px] w-[398px]", step === 4 && "h-[346px] w-[346px]")}*/}
+            {/*  className={twMerge("h-[92.58vw] w-[92.58vw]", step === 4 && "h-[80.466vw] w-[80.466vw]")}*/}
+            {/*/>*/}
+
             <Image
               src={headers[step].image}
               alt={""}
-              className={twMerge("h-[398px] w-[398px]", step === 4 && "h-[346px] w-[346px]")}
+              layout="responsive"
+              width={100}
+              height={100}
+              className={twMerge("max-w-full max-h-full", step === 4 && "max-w-[346px] max-h-[346px]")}
             />
           </motion.div>
         </AnimatePresence>
