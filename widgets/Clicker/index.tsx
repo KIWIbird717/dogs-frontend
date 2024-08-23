@@ -34,16 +34,19 @@ export const Clicker: FC<IClickerProps> = (
   return (
     <div className={"flex w-full justify-center"}>
       <Button onClick={handleClick}
-              className={"h-[296px] w-[296px] rounded-[52px] bg-gradient-button-accent shadow-buttonSec"}
+              className={"w-full h-full max-h-[296px] max-w-[296px] p-4 rounded-[52px] bg-gradient-button-accent shadow-buttonSec"} /*h-[296px] w-[296px]*/
       >
         <div
           className={
-            "relative flex h-[264px] w-[264px] items-center justify-center rounded-[42px] bg-gradient-button-sec"
+            "relative flex w-full h-full items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
           }
         >
           <Image src={image}
                  alt={`bowl-${level}`}
-                 className={"object-cover"}
+                 className={"object-cover max-w-full max-h-full"}
+                 layout="responsive"
+                 width={100}
+                 height={100}
           />
           <AnimatePresence>
             {clickEffects.map((effect) => (
