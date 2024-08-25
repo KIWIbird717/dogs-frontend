@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { twMerge } from "tailwind-merge";
+import { getNumeralSuffix } from "@/shared/lib/utils/getNumeralSuffix";
 
 interface IGuildPlayerItemProps {
   avatarUrl: string;
@@ -37,7 +38,9 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
     }
   };
 
-  const number = useMemo(() => (Number(coins) < 1000000 ? "K" : "M"), [coins]);
+  const numeral = useMemo(() => {
+    return getNumeralSuffix(coins);
+  }, [coins]);
 
   return (
     <Button
@@ -72,14 +75,14 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
         <div className={"flex h-full flex-col justify-center gap-1"}>
           <Typography tag={"h3"}>{title}</Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
-            League: &nbsp;
+            Pack: &nbsp;
             <span className={"text-[15px] font-bold leading-[18px] text-white-900"}>{league}</span>
           </Typography>
         </div>
       </div>
 
       <div className={"flex h-full min-w-[89px] items-center gap-2"}>
-        <TotalCoin coin={coins as number} tag={"h4"} size={"middle"} info={number} />
+        <TotalCoin coin={coins as number} tag={"h4"} size={"middle"} info={numeral} />
       </div>
     </Button>
   );

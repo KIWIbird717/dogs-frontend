@@ -1,6 +1,7 @@
 import { serverApi } from "../../axios";
 import { StatsApiTypes } from "@/shared/lib/services/stats/types";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
 export namespace StatsService {
   /**
@@ -14,8 +15,8 @@ export namespace StatsService {
    * GET /stats/users-by-level
    */
   export const getStatsUsersByLevel = (dto: StatsApiTypes.UsersByLevelDto) => {
-    return serverApi.get<any>(
-      `/stats/users-by-level?level=${dto.level}&pagination=${dto.pagination}&start=${dto.start}&balance=${dto.balance}`,
+    return serverApi.get<UserSlice.IUserSlice[]>(
+      `/stats/users-by-level?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
     );
   };
 

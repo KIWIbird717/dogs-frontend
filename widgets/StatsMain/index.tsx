@@ -1,7 +1,7 @@
 "use client";
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { CarouselWrapper } from "@/widgets/CarouselWrapper";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import BronzeImage from "@/public/images/ranks/bronze.png";
@@ -11,154 +11,50 @@ import DiamondImage from "@/public/images/ranks/diamond.png";
 import MasterImage from "@/public/images/ranks/master.png";
 import GangsterImage from "@/public/images/ranks/gangster.png";
 import BossImage from "@/public/images/ranks/boss.png";
-import { IRank } from "@/app/stats/page";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { useUser } from "@/shared/hooks/useUser";
 import { Button } from "@/shared/ui/Button/Button";
 import { StatsService } from "@/shared/lib/services/stats/stats";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { Progress } from "@/widgets/StatsMain/entities/Progress";
 
 interface IStatsMainProps {}
+
+export interface IRank {
+  rank: string;
+  value: string;
+  description: string;
+  image: any;
+}
 
 const ranks: IRank[] = [
   {
     rank: "bronze",
     image: BronzeImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "silver",
     image: SilverImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "gold",
     image: GoldImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "diamond",
     image: DiamondImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "master",
     image: MasterImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "gangster",
     image: GangsterImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
   {
     rank: "boss",
     image: BossImage,
-    users: [
-      {
-        balance: 0,
-        first_name: "Bot",
-        level: 1,
-        role: "founder",
-        username: "bot",
-      },
-      {
-        balance: 0,
-        first_name: "bot1",
-        level: 1,
-        role: "founder",
-        username: "bot1",
-      },
-    ],
   },
 ];
 
@@ -175,45 +71,59 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   };
 
   const { user } = useUser();
-  const { _id, first_name, guild, balance, guildName } = user;
+  const { _id, guildName } = user;
+
+  const currentUser = useMemo(() => {
+    const index = usersByLevel.findIndex((user) => user._id === _id);
+    return index !== -1 ? { ...usersByLevel[index], serialNumber: index + 1 } : null;
+  }, [_id, usersByLevel]);
+
+  console.log({ currentUser });
 
   useEffect(() => {
     (async () => {
       const { data } = await StatsService.getStatsUsersByLevel({
         start: 0,
         pagination: 50,
-        level: 1,
+        level: currentSlide + 1,
       });
 
-      console.log({ data });
+      setUsersByLevel(data);
     })();
-  }, []);
+  }, [currentSlide]);
+
+  const currentRank = useMemo(() => ranks[currentSlide].rank, [currentSlide]);
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
-      <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={ranks} />
+      <div className={"flex flex-col gap-2 pb-2"}>
+        <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={ranks} />
+        <Progress currentRank={currentRank} serialNumber={currentUser?.serialNumber || 0} />
+      </div>
 
       <GuildPlayers
         title={"Leaderboard Legue"}
-        players={ranks[currentSlide].users}
+        players={usersByLevel}
         classNameList={"pb-[190px]"}
       />
 
-      <Button
-        className={
-          "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
-        }
-      >
-        <GuildPlayerItem
-          id={_id}
-          title={first_name}
-          league={guildName!}
-          avatarUrl={""}
-          coins={balance}
-          index={0}
-          className={"border-none shadow-none"}
-        />
-      </Button>
+      {currentUser && (
+        <Button
+          className={
+            "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
+          }
+        >
+          <GuildPlayerItem
+            id={currentUser._id}
+            title={currentUser.first_name}
+            league={currentUser ? guildName! : ""}
+            avatarUrl={""}
+            coins={currentUser.balance}
+            index={0}
+            className={"border-none shadow-none"}
+          />
+        </Button>
+      )}
     </div>
   );
 };
