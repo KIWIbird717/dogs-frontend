@@ -3,13 +3,15 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
+import { ProgressBar } from "@/shared/ui/ProgressBar";
 
 interface IBoardProps {}
 
 export const Board: FC<IBoardProps> = () => {
   const { push } = useRouter();
   const {user} = useUser()
-  const {level,  guildName} = user
+  const {level,  guildName, balance} = user
+
 
   const onRedirectStats = () => push("/stats")
   const onRedirectGuilds = () => push("/guilds")
@@ -26,9 +28,8 @@ export const Board: FC<IBoardProps> = () => {
           Level {level}
         </Typography>
 
-        <div className={"relative h-[8px] w-full rounded-[32px] border border-black-300"}>
-          <div className={"absolute left-0 top-0 h-full w-[33%] bg-gradient-loading"} />
-        </div>
+        <ProgressBar page={"main"} />
+
       </Button>
       <Button
         onClick={onRedirectGuilds}

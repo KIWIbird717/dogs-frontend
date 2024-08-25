@@ -2,22 +2,12 @@ import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Header } from "@/widgets/Header";
 import { Navbar } from "@/widgets/Navbar";
-import { IUserPlayer } from "@/widgets/GuildPlayers";
 import { StatsMain } from "@/widgets/StatsMain";
 
 import Gradient1 from "@/public/images/svg/leaderboard/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/leaderboard/gradient/gradient2.svg";
-import { GuildMembersType } from "@/shared/lib/services/guilds/guilds";
 
 interface IStatsProps {}
-
-export interface IRank {
-  rank: string;
-  value: string;
-  description: string;
-  image: any;
-  users: GuildMembersType[];
-}
 
 const Stats: NextPage<IStatsProps> = () => {
   return (
