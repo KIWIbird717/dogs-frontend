@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
 import { GuildBanner } from "@/widgets/GuildBanner";
-import { GuildBanner } from "@/widgets/GuildBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.svg";
@@ -70,24 +69,19 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
         <Button
           variant={isMyGuild ? "default" : "deepBlue"}
-          variant={isMyGuild ? "default" : "deepBlue"}
           className={twMerge(
             "text-[18px] font-bold leading-6",
-            isMyGuild && "border border-black-500 px-2 py-4 text-white-800",
-            !isMyGuild && "text-white-900",
             isMyGuild && "border border-black-500 px-2 py-4 text-white-800",
             !isMyGuild && "text-white-900",
           )}
           onClick={handleToggleGuild}
         >
           {isMyGuild ? "Leave Guild" : "Join Pack"}
-          {isMyGuild ? "Leave Guild" : "Join Pack"}
         </Button>
       </div>
 
       {!isLoading && guild?.members && <GuildPlayers title={"Players"} players={guild.members} />}
 
-      {isMyGuild && (
       {isMyGuild && (
         <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
       )}

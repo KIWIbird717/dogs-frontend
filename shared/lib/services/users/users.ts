@@ -21,7 +21,6 @@ export namespace UsersService {
    */
   export const createUser = () => {
     return serverApi.post("/users/create");
-    return serverApi.post("/users/create");
   };
 
   /**
@@ -38,7 +37,6 @@ export namespace UsersService {
     return serverApi.post("/users/add-friend", {
       userId: userId,
     });
-  };
   };
 
   /**

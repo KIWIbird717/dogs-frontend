@@ -33,7 +33,6 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
             "fixed left-0 top-0 z-[100] flex h-full w-full flex-col items-center justify-end bg-[#000]/30"
           }
           onClick={onCloseHandler}
-          onClick={onCloseHandler}
         >
           <motion.div
             initial={{ opacity: 0, y: 464 }}
@@ -56,7 +55,6 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
               <div>
                 {/*TODO: Исправить размер на 32х32, когда реальные данные появятся*/}
                 {data?.task.icon}
-                {data?.task.icon}
               </div>
 
               <Typography
@@ -64,14 +62,11 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
                 className={"text-[32px] font-bold leading-[38px] text-white-900"}
               >
                 {data?.task.title}
-                {data?.task.title}
               </Typography>
               <Typography tag={"h2"} className={"font-normal text-white-900"}>
                 {data?.task.title}
-                {data?.task.title}
               </Typography>
               <Typography tag={"h3"} className={"font-normal text-white-800"}>
-                {data?.task.title}
                 {data?.task.title}
               </Typography>
 

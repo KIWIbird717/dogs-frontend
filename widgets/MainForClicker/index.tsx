@@ -10,15 +10,15 @@ import { useClicker } from "@/shared/hooks/useClicker";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
+import { useRouter } from "next/navigation";
 
-interface IMainForClickerProps {}
 interface IMainForClickerProps {}
 
 export const MainForClicker: FC<IMainForClickerProps> = () => {
   const { push } = useRouter();
 
   const logger = new Logger("MainPage");
-  const { onIncrementCoin, maxBoost, boosts, coins, onMaxBoost } = useClicker(true);
+  const { clickEffects, handleClick, maxBoost, boosts, earned, onMaxBoost } = useClicker(true);
   const { user, onChangeGuildName } = useUser();
   const { guild } = user;
 
@@ -26,8 +26,6 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     if (guild) {
       (async () => {
         try {
-          const { data } = await GuildsService.getGuild(guild!);
-          onChangeGuildName(data.name);
           const { data } = await GuildsService.getGuild(guild!);
           onChangeGuildName(data.name);
         } catch (error) {
@@ -55,7 +53,6 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker handleClick={handleClick} clickEffects={clickEffects} level={user.level} />
           <Clicker handleClick={handleClick} clickEffects={clickEffects} level={user.level} />
         </div>
 

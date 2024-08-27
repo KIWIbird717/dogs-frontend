@@ -46,7 +46,6 @@ export namespace UserSlice {
     username: "User",
     doneTask: [],
     friends: [],
-    friends: [],
   };
 
   export const userSlice = createSlice({

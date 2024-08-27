@@ -12,7 +12,6 @@ import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 import { useRouter } from "next/navigation";
 
 interface ICreateGuildFieldsProps {}
-interface ICreateGuildFieldsProps {}
 
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
@@ -31,12 +30,12 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [joinMethod, setJoinMethod] = useState<"open" | "bylink">("open");
+  const [joinMethod, setJoinMethod] = useState<JoinMethod>(JoinMethod.OPEN);
 
   const onToggleJoinMethod = () => {
     if (joinMethod === "open") {
-      setJoinMethod("bylink");
-    } else setJoinMethod("open");
+      setJoinMethod(JoinMethod.BYLINK);
+    } else setJoinMethod(JoinMethod.OPEN);
   };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
@@ -84,8 +83,8 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
     const formData = new FormData();
     if (avatar) {
       formData.append("image", avatar);
-      formData.append("name", "Guild name");
-      formData.append("joinMethod", "open");
+      formData.append("name", name);
+      formData.append("joinMethod", joinMethod);
     }
 
     try {
@@ -148,7 +147,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
         value={!!avatar}
       />
 
-      <CheckboxInvitation joinMethod={joinMethod} onToggleJoinMethod={onToggleJoinMethod} />
       <CheckboxInvitation joinMethod={joinMethod} onToggleJoinMethod={onToggleJoinMethod} />
 
       <div className={"flex w-full flex-col gap-4 pt-2"}>

@@ -1,65 +1,71 @@
-import { useCallback, useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
+export interface ClickEffect {
+  id: number;
+  x: number;
+  y: number;
+}
+
+// Основной хук, который используется для обработки кликов и накопления "монет"
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
 
-  const [earned, setEarned] = useState(0);
-  const [touches, setTouches] = useState(0);
-  const [boosts, setBoosts] = useState(200);
+  // Локальное состояние для хранения заработанных монет, количества кликов и доступных бустов
+  const [state, setState] = useState({
+    earned: 0,
+    touches: 0,
+    boosts: 480,
+  });
+
+  // Состояние для хранения эффекта кликов
+  const [clickEffects, setClickEffects] = useState<ClickEffect[]>([]);
+
+  // Максимальное количество бустов
   const maxBoost = 500;
 
-  const onTouchesInc = () => setTouches(touches + 1);
-
-  const onMaxBoost = () => {
-    setBoosts(maxBoost);
-  };
-
-  const onEarnReset = () => {
-    setEarned(0);
-    setTouches(0);
-  };
-
+  // Функция для увеличения заработанных монет и уменьшения количества бустов
   const onIncrementEarn = async () => {
-    if (boosts > 2) {
-      setEarned((prevCoins) => prevCoins + 2);
-      onTouchesInc();
-      onDecrementBoost();
+    if (state.boosts > 2) {
+      setState((prevState) => ({
+        ...prevState,
+        earned: prevState.earned + 2,
+        touches: prevState.touches + 1,
+        boosts: prevState.boosts - 2,
+      }));
 
-      await debouncedSendEarned(earned + 2, touches + 1);
+      await debouncedSendEarned(state.earned + 2, state.touches + 1);
     }
   };
 
+  // Функция для отправки заработанных монет на сервер
   const sendCoins = async (newCoins: number, touches: number) => {
     try {
       const { data } = await UsersService.addUseMoney({
-        touches: touches,
+        touches,
         earned: newCoins,
       });
 
+      // Обновление баланса и уровня пользователя на основе ответа сервера
       dispatch(UserSlice.setBalance(data.balance));
       dispatch(UserSlice.setLevel(data.level));
-      onEarnReset();
+
+      // Сброс локального состояния, но сохранение текущего уровня бустов
+      setState({ earned: 0, touches: 0, boosts: state.boosts });
     } catch (error) {
       logger.error(error);
     }
   };
 
+  // Дебаунс для ограничения частоты отправки данных на сервер
   const debouncedSendEarned = useCallback(debounce(sendCoins, 4000), []);
 
-  const onIncrementBoost = useCallback(() => {
-    setBoosts((prevBoosts) => Math.min(prevBoosts + 3, maxBoost));
-  }, []);
-
-  const onDecrementBoost = useCallback(() => {
-    setBoosts((prevBoosts) => Math.max(prevBoosts - 2, 0));
-  }, []);
-
+  // Использование эффекта для автоматического увеличения бустов с интервалом, если isSetInterval = true
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
@@ -89,11 +95,9 @@ export const useClicker = (isSetInterval?: boolean) => {
       setClickEffects((prev) => [...prev, newEffect]);
 
       await onIncrementEarn(); // Увеличение заработанных монет
-      await onIncrementEarn(); // Увеличение заработанных монет
 
       // Удаление эффекта клика через 1 секунду
       setTimeout(() => {
-        setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
         setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
       }, 1000);
     },

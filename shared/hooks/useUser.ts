@@ -15,8 +15,6 @@ export const useUser = () => {
   const dispatch = useAppDispatch();
   const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
 
-  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
-
   const user = useAppSelector((state) => state.user);
   const { age, breedKey, country } = user as IUserSlice;
 

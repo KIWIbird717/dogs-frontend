@@ -22,7 +22,7 @@ const headers: HeadersType[] = [
     id: 0,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Tap an earn coin Tap an earn coin
+        Tap an earn coin
       </Typography>
     ),
     description: (
@@ -35,13 +35,12 @@ const headers: HeadersType[] = [
       </Typography>
     ),
     image: OnBoardingImg,
-    image: OnBoardingImg,
   },
   {
     id: 1,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Pump up the Bone Pump up the Bone
+        Pump up the Bone
       </Typography>
     ),
     description: (
@@ -54,13 +53,12 @@ const headers: HeadersType[] = [
       </Typography>
     ),
     image: OnBoardingImg,
-    image: OnBoardingImg,
   },
   {
     id: 2,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Upgrade your exchange Upgrade your exchange
+        Upgrade your exchange
       </Typography>
     ),
     description: (
@@ -73,13 +71,12 @@ const headers: HeadersType[] = [
       </Typography>
     ),
     image: DuckImg,
-    image: DuckImg,
   },
   {
     id: 3,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Bring your friends and earn rewards together! Bring your friends and earn rewards together!
+        Bring your friends and earn rewards together!
       </Typography>
     ),
     description: (
@@ -89,21 +86,19 @@ const headers: HeadersType[] = [
       </Typography>
     ),
     image: DuckImg,
-    image: DuckImg,
   },
   {
     id: 4,
     title: (
       <Typography tag={"p"} className={"text-center text-white-800"}>
-        Help & Communication Help & Communication
+        Help & Communication
       </Typography>
     ),
     description: (
       <Typography tag={"h1"} className={"text-center text-white-900"}>
-        Subscribe to our community & socialize Subscribe to our community & socialize
+        Subscribe to our community & socialize
       </Typography>
     ),
-    image: DuckImg,
     image: DuckImg,
   },
 ];
@@ -112,8 +107,6 @@ export type HeadersType = {
   id: number;
   title: ReactNode;
   description: ReactNode;
-  // image: ReactNode | StaticImageData;
-  image: StaticImageData;
   // image: ReactNode | StaticImageData;
   image: StaticImageData;
 };
@@ -128,7 +121,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   const redirectToMain = () => push("/main");
 
   const onNextStep = () => {
-    if (step === 4) redirectToMain();
     if (step === 4) redirectToMain();
     if (step >= 0 && step < 4) {
       setStep(step + 1);
@@ -190,7 +182,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
       </div>
 
       <OnBoardingFooter
-        headers={headers}
         headers={headers}
         step={step}
         onNext={onNextStep}

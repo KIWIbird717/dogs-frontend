@@ -5,10 +5,6 @@ import TickIcon from "@/public/images/svg/onboarding/tick.svg";
 import { OnboardingSteps } from "@/widgets/onboardingMedia/entities/Steps";
 import { HeadersType } from "@/widgets/onboardingMedia";
 import { headers } from "next/headers";
-import TickIcon from "@/public/images/svg/onboarding/tick.svg";
-import { OnboardingSteps } from "@/widgets/onboardingMedia/entities/Steps";
-import { HeadersType } from "@/widgets/onboardingMedia";
-import { headers } from "next/headers";
 
 interface IOnBoardingFooterProps {
   step: number;
@@ -16,17 +12,8 @@ interface IOnBoardingFooterProps {
   onPrev: () => void;
   redirect: () => void;
   headers: HeadersType[];
-  headers: HeadersType[];
 }
 
-export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
-  step,
-  onPrev,
-  onNext,
-  redirect,
-  headers,
-}) => {
-  const isLastStep = step === 4;
 export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
   step,
   onPrev,
@@ -51,20 +38,7 @@ export const OnBoardingFooter: FC<IOnBoardingFooterProps> = ({
             Go to community
           </Button>
         )}
-      <div className={"flex w-full flex-col gap-[22px]"}>
-        {isLastStep && (
-          <Button
-            variant={"default"}
-            className={
-              "h-[56px] border-[2px] border-blue-900 text-[18px] font-bold leading-6 text-white-900"
-            }
-          >
-            Go to community
-          </Button>
-        )}
 
-        <OnboardingSteps step={step} headers={headers} />
-      </div>
         <OnboardingSteps step={step} headers={headers} />
       </div>
 

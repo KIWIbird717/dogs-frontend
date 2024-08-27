@@ -14,14 +14,12 @@ interface IGuildBannerProps {
   guild: GuildResponseWithMembersType;
   isGuildJoined?: boolean;
   guildImage: any;
-  guildImage: any;
   // для страницы /guilds - должен быть true,
   // Для страницы /guilds/id  - должен быть false,
   isBanner?: boolean;
 }
 
 export const GuildBanner: FC<IGuildBannerProps> = ({
-  guild,
   guild,
   isBanner = true,
   isGuildJoined,
@@ -54,8 +52,6 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
-            width={isBanner ? 80 : 56}
-            height={isBanner ? 80 : 56}
             className={twMerge(isBanner ? "h-[80px] w-[80px]" : "h-[56px] w-[56px]")}
           />
 
@@ -65,10 +61,8 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
               className={twMerge(isBanner ? "font-normal uppercase" : "font-bold")}
             >
               {guild.name}
-              {guild.name}
             </Typography>
             <Typography tag={"p"} className={"text-[18px] font-normal leading-6 text-white-900"}>
-              {"Author"}
               {"Author"}
             </Typography>
           </div>

@@ -19,8 +19,6 @@ export const Board: FC<IBoardProps> = () => {
     <div className={"flex w-full rounded-xl"}>
       <Button
         onClick={onRedirectStats}
-      <Button
-        onClick={onRedirectStats}
         className={
           "flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-2 rounded-l-xl rounded-r-none border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
         }
@@ -32,7 +30,6 @@ export const Board: FC<IBoardProps> = () => {
         <ProgressBar page={"main"} />
       </Button>
       <Button
-        onClick={onRedirectGuilds}
         onClick={onRedirectGuilds}
         className={
           "flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-1 rounded-l-none rounded-r-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"

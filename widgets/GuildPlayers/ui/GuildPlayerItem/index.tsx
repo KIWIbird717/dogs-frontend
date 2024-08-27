@@ -1,7 +1,6 @@
 "use client";
 
 import { FC, useMemo } from "react";
-import { FC, useMemo } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import AvatarImage from "@/public/images/avatar.png";
 import Image from "next/image";
