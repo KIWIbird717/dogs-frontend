@@ -21,52 +21,36 @@ interface IStatsMainProps {}
 
 export interface IRank {
   rank: string;
-  value: string;
-  description: string;
   image: any;
 }
 
 const ranks: IRank[] = [
   {
     rank: "bronze",
-    value: "#1023 Bronze",
-    description: "333,54m/1B",
     image: BronzeImage,
   },
   {
     rank: "silver",
-    value: "#1023 Silver",
-    description: "333,54m/1B",
     image: SilverImage,
   },
   {
     rank: "gold",
-    value: "#1023 Gold",
-    description: "333,54m/1B",
     image: GoldImage,
   },
   {
     rank: "diamond",
-    value: "#1023 diamond",
-    description: "333,54m/1B",
     image: DiamondImage,
   },
   {
     rank: "master",
-    value: "#1023 master",
-    description: "333,54m/1B",
     image: MasterImage,
   },
   {
     rank: "gangster",
-    value: "#1023 gangster",
-    description: "333,54m/1B",
     image: GangsterImage,
   },
   {
     rank: "boss",
-    value: "#1023 boss",
-    description: "333,54m/1B",
     image: BossImage,
   },
 ];
@@ -90,8 +74,6 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     const index = usersByLevel.findIndex((user) => user._id === _id);
     return index !== -1 ? { ...usersByLevel[index], serialNumber: index + 1 } : null;
   }, [_id, usersByLevel]);
-
-  console.log({ currentUser });
 
   useEffect(() => {
     (async () => {
