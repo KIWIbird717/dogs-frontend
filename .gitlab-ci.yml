@@ -1,0 +1,76 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKERHUB_USERNAME: $DOCKER_HUB_USERNAME
+  DOCKERHUB_PASSWORD: $DOCKER_HUB_ACCESS_TOKEN
+  DOCKERHUB_REPO: $CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  DOCKER_COMPOSE_CONTAINER_NAME: $CI_PROJECT_NAME
+  SSH_PRIVATE_KEY: $SSH_KEY_DEPLOY
+  SERVER_IP: "147.45.225.75"
+
+services:
+  - docker:dind
+
+before_script:
+  - echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+
+build:
+  stage: build
+  script:
+  script:
+    - docker build --no-cache -t "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest" .
+
+deploy:
+  stage: deploy
+  script:
+    - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+    - docker push "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+  only:
+    - production
+
+deploy:
+  stage: deploy
+  script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+    - |
+      ssh -o LogLevel=QUIET -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$SERVER_IP <<EOL
+       set -e
+       if ! command -v docker &> /dev/null; then
+           echo "Docker could not be found"
+           exit 1
+       fi
+       echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+       echo "DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME"
+       echo "DOCKERHUB_REPO: $DOCKERHUB_REPO"
+       docker pull "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+       docker logout
+      ssh -o LogLevel=QUIET -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$SERVER_IP <<EOL
+       set -e
+       if ! command -v docker &> /dev/null; then
+           echo "Docker could not be found"
+           exit 1
+       fi
+       echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+       docker pull "$DOCKERHUB_USERNAME/$DOCKERHUB_REPO:latest"
+       docker logout
+
+       if [ ! -f /root/docker-compose.yml ]; then
+           echo "docker-compose.yml not found"
+           exit 1
+       fi
+       if [ ! -f /root/docker-compose.yml ]; then
+           echo "docker-compose.yml not found"
+           exit 1
+       fi
+
+       docker-compose -f /root/docker-compose.yml up --no-deps -d "$DOCKER_COMPOSE_CONTAINER_NAME"
+       docker system prune -f
+  only:
+    - master
+
