@@ -40,7 +40,8 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
-  }, {
+  },
+  {
     age: null,
     country: null,
     guild: null,
