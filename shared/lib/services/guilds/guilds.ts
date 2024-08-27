@@ -17,7 +17,6 @@ export interface IGuildResponse {
   image: string;
 }
 
-
 export type GuildResponseWithMembersType = {
   joinMethod: JoinMethod;
   name: string;
