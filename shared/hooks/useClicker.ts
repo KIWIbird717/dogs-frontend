@@ -89,9 +89,11 @@ export const useClicker = (isSetInterval?: boolean) => {
       setClickEffects((prev) => [...prev, newEffect]);
 
       await onIncrementEarn(); // Увеличение заработанных монет
+      await onIncrementEarn(); // Увеличение заработанных монет
 
       // Удаление эффекта клика через 1 секунду
       setTimeout(() => {
+        setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
         setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
       }, 1000);
     },
@@ -108,10 +110,11 @@ export const useClicker = (isSetInterval?: boolean) => {
   return {
     boosts: state.boosts,
     maxBoost,
-    coins: earned,
-    onIncrementCoin: onIncrementEarn,
-    onIncrementBoost,
-    onDecrementBoost,
+    earned: state.earned,
+    clickEffects,
+
+    onIncrementEarn,
+    handleClick,
     onMaxBoost,
   };
 };

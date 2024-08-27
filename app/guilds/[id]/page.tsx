@@ -15,9 +15,7 @@ import { usePathname } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 import { useGuild } from "@/shared/hooks/useGuild";
 
-interface IGuildPageProps {
-}
-
+interface IGuildPageProps {}
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
   const pathName = usePathname();
@@ -49,7 +47,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
   useEffect(() => {
     (async () => {
-      await handleFetchGuildById(guildId)
+      await handleFetchGuildById(guildId);
     })();
   }, [guildId]);
 
@@ -59,14 +57,16 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <div className={"z-[10] flex w-full flex-col gap-2"}>
-        {isLoading
-          ? "Загрузка"
-          : <GuildBanner guild={guild!}
-                         isBanner={false}
-                         isGuildJoined={isMyGuild}
-                         guildImage={guildImage}
+        {isLoading ? (
+          "Загрузка"
+        ) : (
+          <GuildBanner
+            guild={guild!}
+            isBanner={false}
+            isGuildJoined={isMyGuild}
+            guildImage={guildImage}
           />
-        }
+        )}
 
         <Button
           variant={isMyGuild ? "default" : "deepBlue"}
@@ -85,9 +85,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
         </Button>
       </div>
 
-      {!isLoading && guild?.members && <GuildPlayers title={"Players"}
-                                                     players={guild.members}
-      />}
+      {!isLoading && guild?.members && <GuildPlayers title={"Players"} players={guild.members} />}
 
       {isMyGuild && (
       {isMyGuild && (
