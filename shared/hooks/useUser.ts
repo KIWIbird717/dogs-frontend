@@ -6,13 +6,12 @@ import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 type ExcludePassword = {
-  lastDailyReward: never
+  lastDailyReward: never;
 };
 
 export type GetMeUserType = IUserSlice & ExcludePassword;
 
 export const useUser = () => {
-
   const dispatch = useAppDispatch();
   const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
 
@@ -32,23 +31,22 @@ export const useUser = () => {
   };
 
   const onChangeUser = (user: GetMeUserType) => {
-    dispatch(UserSlice.setUser(user))
-  }
+    dispatch(UserSlice.setUser(user));
+  };
 
   const onChangeGuildName = (guildName: string | null) => {
-    dispatch(UserSlice.setGuildName(guildName))
-  }
+    dispatch(UserSlice.setGuildName(guildName));
+  };
 
   const getMe = async () => {
     try {
-      const {data} = await UsersService.getMe()
-      onChangeUser(data)
-      setUserSS(data)
+      const { data } = await UsersService.getMe();
+      onChangeUser(data);
+      setUserSS(data);
 
-      return data
-    } catch (error) {
-    }
-  }
+      return data;
+    } catch (error) {}
+  };
 
   return {
     age,
@@ -61,6 +59,6 @@ export const useUser = () => {
     onChangeCountry,
     onChangeGuildName,
     onChangeUser,
-    getMe
+    getMe,
   };
 };

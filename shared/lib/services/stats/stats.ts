@@ -15,7 +15,9 @@ export namespace StatsService {
    * GET /stats/users-by-level
    */
   export const getStatsUsersByLevel = (dto: StatsApiTypes.UsersByLevelDto) => {
-    return serverApi.get<UserSlice.IUserSlice[]>(`/stats/users-by-level?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,);
+    return serverApi.get<UserSlice.IUserSlice[]>(
+      `/stats/users-by-level?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
+    );
   };
 
   /**
@@ -24,5 +26,4 @@ export namespace StatsService {
   export const getAllUsersStats = () => {
     return serverApi.get<StatsSlice.IStatsSlice>(`/stats/all-users-stats`);
   };
-
 }

@@ -8,12 +8,11 @@ import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
 
-interface IModalLoadingProps {
-}
+interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
   const { push } = useRouter();
-  const {getMe} = useUser()
+  const { getMe } = useUser();
 
   const defaultOptions = {
     loop: true,
@@ -34,13 +33,12 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
 
     (async () => {
       try {
-        await getMe()
+        await getMe();
         push("/main");
       } catch (error) {
         push("/onboarding");
       }
-    })()
-
+    })();
   }, [push]);
 
   return (

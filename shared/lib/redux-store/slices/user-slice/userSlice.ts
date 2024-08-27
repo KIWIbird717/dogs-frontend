@@ -5,24 +5,24 @@ export namespace UserSlice {
   export type IUserSlice = {
     age?: number | null;
     country?: string | null;
-    guild: string | null,
-    guildName: string | null,
-    guildFounder: string | null,
-    lastDailyReward: number
+    guild: string | null;
+    guildName: string | null;
+    guildFounder: string | null;
+    lastDailyReward: number;
     //imageUrl: string
 
-    _id: number
-    __v: number
-    balance: number,
+    _id: number;
+    __v: number;
+    balance: number;
     breedKey: string;
-    earnPerHour: number,
-    first_name: string,
-    lastOnline: Date
-    level: number
-    touches: number
-    username: string
-    doneTask: any[],
-    friends: any[]
+    earnPerHour: number;
+    first_name: string;
+    lastOnline: Date;
+    level: number;
+    touches: number;
+    username: string;
+    doneTask: any[];
+    friends: any[];
   };
 
   const initialState: IUserSlice = {
@@ -65,10 +65,10 @@ export namespace UserSlice {
         state.guildName = action.payload;
       },
       setBalance: (state, action: PayloadAction<IUserSlice["balance"]>) => {
-        state.balance = action.payload
+        state.balance = action.payload;
       },
       setLevel: (state, action: PayloadAction<IUserSlice["level"]>) => {
-        state.level = action.payload
+        state.level = action.payload;
       },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
         state._id = action.payload._id;
@@ -91,7 +91,8 @@ export namespace UserSlice {
     },
   });
 
-  export const { setAge, setLevel, setBalance, setGuildName, setBreed, setCountry, setUser } = userSlice.actions;
+  export const { setAge, setLevel, setBalance, setGuildName, setBreed, setCountry, setUser } =
+    userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

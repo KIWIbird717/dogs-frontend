@@ -4,11 +4,9 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import BoneIcon from "@/public/images/svg/bone.svg";
 import Link from "next/link";
 
-interface IModalNftProps {
-}
+interface IModalNftProps {}
 
 export const ModalNft: FC<IModalNftProps> = () => {
-
   return (
     <div
       className={
@@ -57,12 +55,8 @@ export const ModalNft: FC<IModalNftProps> = () => {
         </div>
       </div>
 
-      <Button variant={"primary"}
-              className={"text-[18px] font-bold leading-6 text-white-900"}
-      >
-        <Link href={"/main"}>
-          More
-        </Link>
+      <Button variant={"primary"} className={"text-[18px] font-bold leading-6 text-white-900"}>
+        <Link href={"/main"}>More</Link>
       </Button>
 
       <div

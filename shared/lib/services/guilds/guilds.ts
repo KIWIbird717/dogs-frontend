@@ -3,35 +3,35 @@ import { GuildsApiTypes } from "./types";
 
 export enum JoinMethod {
   OPEN = "open",
-  BYLINK = "bylink"
+  BYLINK = "bylink",
 }
 
 export interface IGuildResponse {
-  joinMethod: JoinMethod,
-  members: number,
-  name: string,
-  _id: string,
-  guildBalance: null | number
-  image: string
+  joinMethod: JoinMethod;
+  members: number;
+  name: string;
+  _id: string;
+  guildBalance: null | number;
+  image: string;
 }
 
-export type GuildMembersType =  {
-  balance: number
-  first_name: string
-  level: number
-  role: string
-  username: string
-}
+export type GuildMembersType = {
+  balance: number;
+  first_name: string;
+  level: number;
+  role: string;
+  username: string;
+};
 
 export type GuildResponseWithMembersType = {
-  joinMethod: JoinMethod,
-  name: string,
-  _id: string,
-  guildBalance: null | number
-  image: string
-  membersCount: number
+  joinMethod: JoinMethod;
+  name: string;
+  _id: string;
+  guildBalance: null | number;
+  image: string;
+  membersCount: number;
   members: GuildMembersType[];
-}
+};
 
 export namespace GuildsService {
   /**

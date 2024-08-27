@@ -10,7 +10,7 @@ const Onboarding: NextPage<IOnboardingProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col justify-between gap-[6.512vw] bg-gradient-background px-4 pt-6 overflow-hidden" /*gap-7*/
+      className="relative flex h-screen w-full flex-col justify-between gap-[6.512vw] overflow-hidden bg-gradient-background px-4 pt-6" /*gap-7*/
     >
       <OnboardingMedia />
 

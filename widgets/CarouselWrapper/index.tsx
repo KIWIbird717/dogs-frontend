@@ -1,5 +1,11 @@
 import { FC } from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/shared/ui/Carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/shared/ui/Carousel";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { IRank } from "@/widgets/StatsMain";

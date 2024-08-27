@@ -10,43 +10,40 @@ import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
-
 interface IClickerProps {
   handleClick: (event: MouseEvent) => void;
   clickEffects: ClickEffect[];
-  level: number
+  level: number;
 }
 
-export const Clicker: FC<IClickerProps> = (
-  {
-    handleClick,
-    clickEffects,
-    level
-  },
-) => {
-  const [image, setImage] = useState(Level20)
-  
+export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level }) => {
+  const [image, setImage] = useState(Level20);
+
   useEffect(() => {
-    const bowl = setBowlsByLevel(level)
-    setImage(bowl)
-  }, [level])
-  
+    const bowl = setBowlsByLevel(level);
+    setImage(bowl);
+  }, [level]);
+
   return (
     <div className={"flex w-full justify-center"}>
-      <Button onClick={handleClick}
-              className={"w-full h-full max-h-[296px] max-w-[296px] p-4 rounded-[52px] bg-gradient-button-accent shadow-buttonSec"} /*h-[296px] w-[296px]*/
+      <Button
+        onClick={handleClick}
+        className={
+          "h-full max-h-[296px] w-full max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
+        } /*h-[296px] w-[296px]*/
       >
         <div
           className={
-            "relative flex w-full h-full items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
+            "relative flex h-full w-full items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
           }
         >
-          <Image src={image}
-                 alt={`bowl-${level}`}
-                 className={"object-cover max-w-full max-h-full"}
-                 layout="responsive"
-                 width={100}
-                 height={100}
+          <Image
+            src={image}
+            alt={`bowl-${level}`}
+            className={"max-h-full max-w-full object-cover"}
+            layout="responsive"
+            width={100}
+            height={100}
           />
           <AnimatePresence>
             {clickEffects.map((effect) => (
@@ -56,15 +53,13 @@ export const Clicker: FC<IClickerProps> = (
                 animate={{ opacity: 0, y: -200 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1 }}
-                className="absolute text-white text-center text-[28px] font-normal pointer-events-none rounded-xl border-[6px] border-black-400 bg-white-100 backdrop-blur-xl"
+                className="pointer-events-none absolute rounded-xl border-[6px] border-black-400 bg-white-100 text-center text-[28px] font-normal text-white backdrop-blur-xl"
                 style={{
                   left: effect.x - 40,
                   top: effect.y,
                 }}
               >
-                <Typography tag={"h1"}
-                            className={"text-[28px] leading-8 font-normal"}
-                >
+                <Typography tag={"h1"} className={"text-[28px] font-normal leading-8"}>
                   +2
                 </Typography>
               </MotionDiv>

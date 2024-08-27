@@ -17,14 +17,14 @@ export namespace UserApiTypes {
   };
 
   export type EarnDto = {
-    "earned": number,
-    "touches": number
-  }
+    earned: number;
+    touches: number;
+  };
 
   export type UpdateUserDto = Partial<UserDto>;
 
   export type ResponseEarnDto = {
-    balance: number
-    level: number
-  }
+    balance: number;
+    level: number;
+  };
 }

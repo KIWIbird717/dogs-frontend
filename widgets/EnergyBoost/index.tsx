@@ -11,9 +11,9 @@ interface IEnergyBoostProps {
 }
 
 export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost }) => {
-  const {push} = useRouter()
+  const { push } = useRouter();
 
-  const redirectToBoost = () => push("/boost")
+  const redirectToBoost = () => push("/boost");
 
   return (
     <div className={"flex w-full justify-between"}>

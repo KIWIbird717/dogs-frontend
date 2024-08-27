@@ -17,8 +17,7 @@ import { StatsService } from "@/shared/lib/services/stats/stats";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { Progress } from "@/widgets/StatsMain/entities/Progress";
 
-interface IStatsMainProps {
-}
+interface IStatsMainProps {}
 
 export interface IRank {
   rank: string;
@@ -74,7 +73,7 @@ const ranks: IRank[] = [
 
 export const StatsMain: FC<IStatsMainProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [usersByLevel, setUsersByLevel] = useState<UserSlice.IUserSlice[]>([])
+  const [usersByLevel, setUsersByLevel] = useState<UserSlice.IUserSlice[]>([]);
 
   const handlePrevious = () => {
     setCurrentSlide((prev) => (prev === 0 ? ranks.length - 1 : prev - 1));
@@ -92,7 +91,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     return index !== -1 ? { ...usersByLevel[index], serialNumber: index + 1 } : null;
   }, [_id, usersByLevel]);
 
-  console.log({currentUser});
+  console.log({ currentUser });
 
   useEffect(() => {
     (async () => {
@@ -102,11 +101,11 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         level: currentSlide + 1,
       });
 
-      setUsersByLevel(data)
+      setUsersByLevel(data);
     })();
   }, [currentSlide]);
-  
-  const currentRank = useMemo(() => ranks[currentSlide].rank ,[currentSlide])
+
+  const currentRank = useMemo(() => ranks[currentSlide].rank, [currentSlide]);
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
@@ -121,21 +120,23 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         classNameList={"pb-[190px]"}
       />
 
-      {currentUser && <Button
-        className={
-          "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
-        }
-      >
-        <GuildPlayerItem
-          id={currentUser._id}
-          title={currentUser.first_name}
-          league={currentUser ? guildName! : ""}
-          avatarUrl={""}
-          coins={currentUser.balance}
-          index={0}
-          className={"border-none shadow-none"}
-        />
-      </Button>}
+      {currentUser && (
+        <Button
+          className={
+            "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
+          }
+        >
+          <GuildPlayerItem
+            id={currentUser._id}
+            title={currentUser.first_name}
+            league={currentUser ? guildName! : ""}
+            avatarUrl={""}
+            coins={currentUser.balance}
+            index={0}
+            className={"border-none shadow-none"}
+          />
+        </Button>
+      )}
     </div>
   );
 };

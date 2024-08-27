@@ -5,14 +5,13 @@
  */
 export namespace GuildsApiTypes {
   export type GuildDto = {
-    image: any //TODO: узнать type image
-    name: string
+    image: any; //TODO: узнать type image
+    name: string;
   };
 
-
   export type SearchGuild = {
-    name: string,
-    start: number,
-    pagination: number
-  }
+    name: string;
+    start: number;
+    pagination: number;
+  };
 }

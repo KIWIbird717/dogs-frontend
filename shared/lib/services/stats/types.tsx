@@ -5,9 +5,9 @@
  */
 export namespace StatsApiTypes {
   export type UsersByLevelDto = {
-    level: number,
-    pagination: number,
-    start: number,
-    balance?: number
+    level: number;
+    pagination: number;
+    start: number;
+    balance?: number;
   };
 }

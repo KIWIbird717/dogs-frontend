@@ -11,10 +11,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "upload.wikimedia.org"
-      }
-    ]
-  }
+        hostname: "upload.wikimedia.org",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

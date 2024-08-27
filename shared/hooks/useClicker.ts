@@ -94,13 +94,11 @@ export const useClicker = (isSetInterval?: boolean) => {
       const newEffect: ClickEffect = { id: Date.now(), x, y };
       setClickEffects((prev) => [...prev, newEffect]);
 
-      await onIncrementEarn();  // Увеличение заработанных монет
+      await onIncrementEarn(); // Увеличение заработанных монет
 
       // Удаление эффекта клика через 1 секунду
       setTimeout(() => {
-        setClickEffects((prev) =>
-          prev.filter((effect) => effect.id !== newEffect.id),
-        );
+        setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
       }, 1000);
     },
     [onIncrementEarn],
@@ -121,6 +119,6 @@ export const useClicker = (isSetInterval?: boolean) => {
 
     onIncrementEarn,
     handleClick,
-    onMaxBoost
+    onMaxBoost,
   };
 };

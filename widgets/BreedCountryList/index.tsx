@@ -6,8 +6,6 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import Image from "next/image";
 import { IBreedCountry } from "@/app/profile/country/page";
 
-
-
 interface IBreedCountryListProps {
   items: IBreedCountry[];
   item: string;

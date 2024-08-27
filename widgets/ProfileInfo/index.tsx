@@ -5,12 +5,11 @@ import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 
-interface IProfileInfoProps {
-}
+interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const {  user } = useUser();
+  const { user } = useUser();
   const { breedKey, age, country } = user;
   const { onOpenModal } = useModal();
 

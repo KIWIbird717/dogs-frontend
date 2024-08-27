@@ -17,7 +17,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
   const { user } = useUser();
-  const {push} = useRouter()
+  const { push } = useRouter();
 
   const inputFileRef = useRef<any>(null);
   const needBalance = 500;
@@ -95,7 +95,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
         },
       });
 
-      push("/guilds")
+      push("/guilds");
     } catch (error) {
       logger.error(error);
     }

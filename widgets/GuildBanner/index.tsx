@@ -19,14 +19,12 @@ interface IGuildBannerProps {
   isBanner?: boolean;
 }
 
-export const GuildBanner: FC<IGuildBannerProps> = (
-  {
-    guild,
-    isBanner = true,
-    isGuildJoined,
-    guildImage,
-  },
-) => {
+export const GuildBanner: FC<IGuildBannerProps> = ({
+  guild,
+  isBanner = true,
+  isGuildJoined,
+  guildImage,
+}) => {
   const { push } = useRouter();
   const totalScore = formatNumber(guild.guildBalance || 0);
 
@@ -36,7 +34,7 @@ export const GuildBanner: FC<IGuildBannerProps> = (
     }
   };
 
-  const members = guild.membersCount || guild.members.length
+  const members = guild.membersCount || guild.members.length;
 
   return (
     <div
@@ -81,14 +79,8 @@ export const GuildBanner: FC<IGuildBannerProps> = (
         )}
       </div>
       <div className={"flex w-full gap-2"}>
-        <Block value={totalScore}
-               title={"Total score"}
-               isBanner={isBanner}
-        />
-        <Block value={members}
-               title={"Members"}
-               isBanner={isBanner}
-        />
+        <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
+        <Block value={members} title={"Members"} isBanner={isBanner} />
       </div>
     </div>
   );

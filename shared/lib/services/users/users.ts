@@ -20,7 +20,7 @@ export namespace UsersService {
    * POST /users/create
    */
   export const createUser = () => {
-    return serverApi.post("/users/create")
+    return serverApi.post("/users/create");
   };
 
   /**
@@ -37,12 +37,12 @@ export namespace UsersService {
     return serverApi.post("/users/add-friend", {
       userId: userId,
     });
-  }
+  };
 
   /**
    * POST /users/earn
    */
   export const addUseMoney = (dto: UserApiTypes.EarnDto) => {
     return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/earn", dto);
-  }
+  };
 }

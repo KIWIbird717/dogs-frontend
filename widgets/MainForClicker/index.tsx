@@ -12,11 +12,10 @@ import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 
-interface IMainForClickerProps {
-}
+interface IMainForClickerProps {}
 
 export const MainForClicker: FC<IMainForClickerProps> = () => {
-  const {push} = useRouter()
+  const { push } = useRouter();
 
   const logger = new Logger("MainPage");
   const { clickEffects, handleClick, maxBoost, boosts, earned, onMaxBoost } = useClicker(true);
@@ -27,18 +26,17 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     if (guild) {
       (async () => {
         try {
-          const {data} = await GuildsService.getGuild(guild!);
-          onChangeGuildName(data.name)
+          const { data } = await GuildsService.getGuild(guild!);
+          onChangeGuildName(data.name);
         } catch (error) {
           logger.error(error);
         } finally {
-
         }
       })();
     }
   }, [guild]);
-  
-  const currentBalance = useMemo(() => user.balance + earned, [earned, user.balance])
+
+  const currentBalance = useMemo(() => user.balance + earned, [earned, user.balance]);
 
   return (
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
@@ -55,10 +53,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker handleClick={handleClick}
-                   clickEffects={clickEffects}
-                   level={user.level}
-          />
+          <Clicker handleClick={handleClick} clickEffects={clickEffects} level={user.level} />
         </div>
 
         <EnergyBoost boosts={boosts} maxBoost={maxBoost} onMaxBoost={onMaxBoost} />

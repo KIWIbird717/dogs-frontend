@@ -4,7 +4,7 @@ import { BonusItem } from "@/widgets/BonusList/entities/BonusItem";
 import MonsterIcon from "@/public/images/monster.png";
 
 interface IBonusListProps {
-  isStats?: boolean
+  isStats?: boolean;
 }
 
 const bonusList: IBonusList[] = [
@@ -65,13 +65,9 @@ export interface IBonusList {
   coinPremium: number;
 }
 
-export const BonusList: FC<IBonusListProps> = (
-  {
-    isStats = false
-  }
-) => {
+export const BonusList: FC<IBonusListProps> = ({ isStats = false }) => {
   return (
-    <div className={"flex w-full flex-col gap-3 overflow-y-auto z-[10]"}>
+    <div className={"z-[10] flex w-full flex-col gap-3 overflow-y-auto"}>
       <Header />
 
       <div className={"flex w-full flex-col gap-2 overflow-y-auto pb-[190px]"}>

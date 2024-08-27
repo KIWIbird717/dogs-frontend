@@ -10,9 +10,7 @@ interface ILeaderboardProps {
   guilds: IGuildResponse[];
 }
 
-export const Leaderboard: FC<ILeaderboardProps> = (
-  { guilds },
-) => {
+export const Leaderboard: FC<ILeaderboardProps> = ({ guilds }) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string) => {

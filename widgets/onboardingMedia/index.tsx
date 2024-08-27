@@ -146,11 +146,13 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
 
   return (
     <>
-      <div className={"z-[10] flex w-full flex-col items-center gap-[5.582vw]"}> {/*gap-6*/}
+      <div className={"z-[10] flex w-full flex-col items-center gap-[5.582vw]"}>
+        {" "}
+        {/*gap-6*/}
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            className={"relative flex justify-center "}
+            className={"relative flex justify-center"}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -170,7 +172,10 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
               layout="responsive"
               width={100}
               height={100}
-              className={twMerge("max-w-full max-h-full", step === 4 && "max-w-[346px] max-h-[346px]")}
+              className={twMerge(
+                "max-h-full max-w-full",
+                step === 4 && "max-h-[346px] max-w-[346px]",
+              )}
             />
           </motion.div>
         </AnimatePresence>

@@ -12,9 +12,11 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
   //   storeRef.current = store();
   // }
 
-  return <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      {children}
-    </PersistGate>
-  </Provider>;
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
+  );
 }

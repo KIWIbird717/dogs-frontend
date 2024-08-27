@@ -6,16 +6,11 @@ import { getNumeralSuffix } from "@/shared/lib/utils/getNumeralSuffix";
 
 interface IProgressProps {
   currentRank: string;
-  serialNumber: number
+  serialNumber: number;
 }
 
-export const Progress: FC<IProgressProps> = (
-  {
-    currentRank,
-    serialNumber
-  }
-) => {
-  const {  nextLevelBalance, balance } = useProgressBar();
+export const Progress: FC<IProgressProps> = ({ currentRank, serialNumber }) => {
+  const { nextLevelBalance, balance } = useProgressBar();
 
   const numeral = useMemo(() => getNumeralSuffix(balance).toLowerCase(), [balance]);
   const nextNumeral = useMemo(() => getNumeralSuffix(nextLevelBalance), [nextLevelBalance]);
@@ -30,7 +25,9 @@ export const Progress: FC<IProgressProps> = (
           tag={"p"}
           className={"text-center text-[17px] font-normal leading-6 text-white-900"}
         >
-          {balance}{numeral}/{nextLevelBalance}{nextNumeral}
+          {balance}
+          {numeral}/{nextLevelBalance}
+          {nextNumeral}
         </Typography>
       </div>
 

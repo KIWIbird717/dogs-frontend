@@ -9,26 +9,20 @@ import { twMerge } from "tailwind-merge";
 
 interface IBonusItemProps {
   item: IBonusList;
-  index: number
+  index: number;
 }
 
-export const BonusItem: FC<IBonusItemProps> = (
-  {
-    item,
-    index
-  }
-) => {
+export const BonusItem: FC<IBonusItemProps> = ({ item, index }) => {
   const coinForFriend = formatNumber(item.coinForFriend);
   const coinPremium = formatNumber(item.coinPremium);
 
   return (
     <Button
       className={twMerge(
-        "flex h-[64px] w-full items-center gap-2 rounded-xl border  px-3 py-2",
+        "flex h-[64px] w-full items-center gap-2 rounded-xl border px-3 py-2",
         index === 0 && "border-blue-800 bg-black-400",
         index !== 0 && "border-black-300 bg-black-800",
-      )
-      }
+      )}
     >
       <div className={"flex h-full w-[37%] items-center gap-2"}>
         <div>

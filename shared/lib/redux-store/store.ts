@@ -6,26 +6,25 @@ import { persistReducer, persistStore } from "redux-persist";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: storage,
-  whitelist: ['user']
+  whitelist: ["user"],
 };
 
 const persistedUserReducer = persistReducer(persistConfig, UserSlice.userReducer);
 
-
 export const store = configureStore({
-    reducer: {
-      user: persistedUserReducer,
-      modal: ModalSlice.modalReducer,
-      stats: StatsSlice.statsReducer,
-    },
-    /**
-     * You cant set up more middlewares
-     * Check instruction: @see https://redux-toolkit.js.org/api/serializabilityMiddleware
-     */
-    middleware: (gDM) => gDM({ serializableCheck: false }),
-  })
+  reducer: {
+    user: persistedUserReducer,
+    modal: ModalSlice.modalReducer,
+    stats: StatsSlice.statsReducer,
+  },
+  /**
+   * You cant set up more middlewares
+   * Check instruction: @see https://redux-toolkit.js.org/api/serializabilityMiddleware
+   */
+  middleware: (gDM) => gDM({ serializableCheck: false }),
+});
 
 export const persistor = persistStore(store);
 

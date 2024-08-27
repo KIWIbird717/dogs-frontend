@@ -8,8 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface IModalEditAgeProps {
-}
+interface IModalEditAgeProps {}
 
 export const ModalEditAge: FC<IModalEditAgeProps> = () => {
   const logger = new Logger("ModalEditAge");
@@ -40,7 +39,6 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
     setLocalAge(newAge);
   };
 
-
   const onSubmit = async () => {
     try {
       await UsersService.updateUser({
@@ -49,13 +47,12 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
 
       const { data } = await UsersService.getMe();
       onChangeUser(data);
-
     } catch (error) {
       logger.error(error);
     } finally {
       onClose();
     }
-  }
+  };
 
   return (
     <>

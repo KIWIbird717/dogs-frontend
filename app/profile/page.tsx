@@ -17,45 +17,45 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IProfilePageProps {}
 
-
-
 const ProfilePage: NextPage<IProfilePageProps> = () => {
   const logger = new Logger("ProfilePage");
 
-  const {onChangeStats, online, dailyUsers, totalUsers, totalTouches} = useStats()
+  const { onChangeStats, online, dailyUsers, totalUsers, totalTouches } = useStats();
 
   useEffect(() => {
     (async () => {
       try {
-        const {data} = await StatsService.getAllUsersStats()
+        const { data } = await StatsService.getAllUsersStats();
         onChangeStats({
           totalUsers: data.totalUsers,
           online: data.online,
           dailyUsers: data.dailyUsers,
-          totalTouches: data.totalTouches
-        })
+          totalTouches: data.totalTouches,
+        });
       } catch (error) {
-        logger.error(error)
+        logger.error(error);
       } finally {
-
       }
-    })()
+    })();
   }, []);
 
-  const statics = useMemo(() =>[
-    {
-      title: "Total Players",
-      value: totalUsers || 0,
-    },
-    {
-      title: "Dayly Users",
-      value: dailyUsers,
-    },
-    {
-      title: "Online Players",
-      value: online,
-    },
-  ], [dailyUsers, online, totalUsers] )
+  const statics = useMemo(
+    () => [
+      {
+        title: "Total Players",
+        value: totalUsers || 0,
+      },
+      {
+        title: "Dayly Users",
+        value: dailyUsers,
+      },
+      {
+        title: "Online Players",
+        value: online,
+      },
+    ],
+    [dailyUsers, online, totalUsers],
+  );
 
   return (
     <View

@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { GuildResponseWithMembersType, GuildsService, IGuildResponse } from "@/shared/lib/services/guilds/guilds";
+import {
+  GuildResponseWithMembersType,
+  GuildsService,
+  IGuildResponse,
+} from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
 import { useParams, useRouter } from "next/navigation";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
@@ -37,13 +41,13 @@ export const useGuild = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const handleJoinGuild = async (guildId: string) => {
     try {
       await GuildsService.joinGuild(guildId);
       await getMe();
-      await handleFetchGuildById(guildId)
+      await handleFetchGuildById(guildId);
     } catch (error) {
       logger.error(error);
     }
@@ -54,7 +58,7 @@ export const useGuild = () => {
       try {
         await GuildsService.leaveGuild();
         await getMe();
-        onChangeGuildName(null)
+        onChangeGuildName(null);
         push("/guilds");
       } catch (error) {
         logger.error(error);
@@ -75,7 +79,7 @@ export const useGuild = () => {
 
   const handleRandomJoinGuild = async () => {
     try {
-      const filteredGuilds = guilds.filter(item => item.joinMethod === "open");
+      const filteredGuilds = guilds.filter((item) => item.joinMethod === "open");
       const randomGuild = filteredGuilds[Math.floor(Math.random() * filteredGuilds.length)];
 
       await handleJoinGuild(randomGuild._id);
@@ -106,6 +110,6 @@ export const useGuild = () => {
     handleJoinGuild,
     handleRandomJoinGuild,
     handleFetchGuildById,
-    onChangeValueDebounce
+    onChangeValueDebounce,
   };
 };

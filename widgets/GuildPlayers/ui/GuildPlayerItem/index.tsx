@@ -38,8 +38,8 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   };
 
   const numeral = useMemo(() => {
-    return getNumeralSuffix(coins)
-  }, [coins])
+    return getNumeralSuffix(coins);
+  }, [coins]);
 
   return (
     <Button
@@ -81,11 +81,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
       </div>
 
       <div className={"flex h-full min-w-[89px] items-center gap-2"}>
-        <TotalCoin coin={coins as number}
-                   tag={"h4"}
-                   size={"middle"}
-                   info={numeral}
-        />
+        <TotalCoin coin={coins as number} tag={"h4"} size={"middle"} info={numeral} />
       </div>
     </Button>
   );

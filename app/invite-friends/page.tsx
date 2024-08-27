@@ -24,7 +24,8 @@ const players: GuildMembersType[] = [
     level: 1,
     role: "founder",
     username: "bot",
-  },{
+  },
+  {
     balance: 0,
     first_name: "bot1",
     level: 1,
