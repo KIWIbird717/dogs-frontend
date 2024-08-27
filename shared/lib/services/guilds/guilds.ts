@@ -1,5 +1,7 @@
 import { serverApi } from "../../axios";
 import { GuildsApiTypes } from "./types";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import IUserSlice = UserSlice.IUserSlice;
 
 export enum JoinMethod {
   OPEN = "open",
@@ -15,13 +17,6 @@ export interface IGuildResponse {
   image: string;
 }
 
-export type GuildMembersType = {
-  balance: number;
-  first_name: string;
-  level: number;
-  role: string;
-  username: string;
-};
 
 export type GuildResponseWithMembersType = {
   joinMethod: JoinMethod;
@@ -30,7 +25,7 @@ export type GuildResponseWithMembersType = {
   guildBalance: null | number;
   image: string;
   membersCount: number;
-  members: GuildMembersType[];
+  members: IUserSlice[];
 };
 
 export namespace GuildsService {

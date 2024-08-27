@@ -10,28 +10,58 @@ import { InviteBanner } from "@/widgets/InviteBanner";
 import { Button } from "@/shared/ui/Button/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
-import { GuildPlayers, IUserPlayer } from "@/widgets/GuildPlayers";
+import { GuildPlayers } from "@/widgets/GuildPlayers";
 import { Bonus } from "@/widgets/Bonus";
 
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
-import { GuildMembersType } from "@/shared/lib/services/guilds/guilds";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import IUserSlice = UserSlice.IUserSlice;
 
-const players: GuildMembersType[] = [
+const players: IUserSlice[] = [
   {
+    age: null,
+    country: null,
+    guild: null,
+    guildName: null,
+    guildFounder: null,
+    lastDailyReward: 0,
+    //imageUrl: string
+
+    _id: 0,
+    __v: 0,
     balance: 0,
-    first_name: "Bot",
-    level: 1,
-    role: "founder",
-    username: "bot",
+    breedKey: "Husky",
+    earnPerHour: 0,
+    first_name: "Bot1",
+    lastOnline: new Date(),
+    level: 0,
+    touches: 0,
+    username: "bot2",
+    doneTask: [],
+    friends: [],
   },
   {
+    age: null,
+    country: null,
+    guild: null,
+    guildName: null,
+    guildFounder: null,
+    lastDailyReward: 0,
+    //imageUrl: string
+
+    _id: 0,
+    __v: 0,
     balance: 0,
-    first_name: "bot1",
-    level: 1,
-    role: "founder",
-    username: "bot1",
+    breedKey: "Husky",
+    earnPerHour: 0,
+    first_name: "Bot2",
+    lastOnline: new Date(),
+    level: 0,
+    touches: 0,
+    username: "bot2",
+    doneTask: [],
+    friends: [],
   },
 ];
 

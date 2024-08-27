@@ -22,8 +22,6 @@ interface IStatsMainProps {}
 
 export interface IRank {
   rank: string;
-  value: string;
-  description: string;
   image: any;
 }
 
@@ -77,8 +75,6 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     const index = usersByLevel.findIndex((user) => user._id === _id);
     return index !== -1 ? { ...usersByLevel[index], serialNumber: index + 1 } : null;
   }, [_id, usersByLevel]);
-
-  console.log({ currentUser });
 
   useEffect(() => {
     (async () => {
