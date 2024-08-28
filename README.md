@@ -31,7 +31,7 @@ npm install
 Это понадобится для запуска приложения в окне Telegram webapp. В telegram webapp нельзя вставить ссылку, которая не использует **https** протокол.
 
 - Данные для регистрации через **корпоративный аккаунт cyno** ngrok [Ngrok login](https://dashboard.ngrok.com/login)
-  | email | password |
+  | email                | password             |
   |----------------------|----------------------|
   | development@xono.one | rephy8-fybDij-nazgas |
 - _Опционально._ Может потребоваться процедура установки ngrok на устройство и авторизация в акаунт, про авторизацию в ngrok через терминал можно узнать тут: [Setup & Installation](https://dashboard.ngrok.com/get-started/setup/macos)
