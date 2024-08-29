@@ -17,8 +17,10 @@ import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
+import { Typography } from "@/shared/ui/Typography/Typography";
 
-interface IEarnPageProps {}
+interface IEarnPageProps {
+}
 
 const dogiYoutube: ITaskObj[] = [
   {
@@ -140,7 +142,11 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
           )}
           onClick={onSetRewards}
         >
-          Rewards
+          <Typography tag={"span"}
+                      className={"text-[15px] leading-[18px] font-bold text-white-900"}
+          >
+            Rewards
+          </Typography>
         </Button>
         <Button
           variant={"default"}
@@ -150,7 +156,11 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
           )}
           onClick={onSetTasks}
         >
-          Tasks
+          <Typography tag={"span"}
+                      className={"text-[15px] leading-[18px] font-bold text-white-900"}
+          >
+            Tasks
+          </Typography>
         </Button>
       </div>
 

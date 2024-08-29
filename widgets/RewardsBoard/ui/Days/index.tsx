@@ -20,7 +20,7 @@ export const Days: FC<IDaysProps> = () => {
               <TickIcon className={twMerge(index > 2 && "[&>path]:fill-black-400")} />
             </div>
             <div className={"flex h-full max-h-[12px] items-center justify-center bg-black-400"}>
-              <Typography tag={"p"} className={"text-center text-[8px] font-medium leading-[10px]"}>
+              <Typography tag={"p"} className={"text-center text-white-900 text-[8px] font-medium leading-[10px]"}>
                 Day {index + 1}
               </Typography>
             </div>
