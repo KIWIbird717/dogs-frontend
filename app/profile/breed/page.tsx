@@ -6,7 +6,7 @@ import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 import DogIcon from "@/public/images/svg/breed/dog.svg";
 import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
@@ -14,9 +14,9 @@ import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { IBreedCountry } from "../country/page";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { StatsService } from "@/shared/lib/services/stats/stats";
 
-interface IBreedPageProps {}
+interface IBreedPageProps {
+}
 
 const breeds: IBreedCountry[] = [
   {
@@ -59,24 +59,22 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
 
   const logger = new Logger("BreedPage");
 
-  const handleClick = (breed: string) => setBreedLocal(breed);
+  const handleChangeBreed = async (breed: string) => {
+    setBreedLocal(breed);
+
+    try {
+      await UsersService.updateUser({
+        breedKey: breed,
+      });
+
+      const { data } = await UsersService.getMe();
+      onChangeUser(data);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
-
-  useEffect(() => {
-    (async () => {
-      try {
-        await UsersService.updateUser({
-          breedKey: breedLocal,
-        });
-
-        const { data } = await UsersService.getMe();
-        onChangeUser(data);
-      } catch (error) {
-        logger.error(error);
-      }
-    })();
-  }, [breedLocal]);
 
   return (
     <View
@@ -86,8 +84,8 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
       <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
 
       <BreedCountryBlock
-        item={breedKey}
-        onClick={handleClick}
+        item={breedLocal}
+        onClick={handleChangeBreed}
         items={breeds}
         onChange={handleSearch}
         value={searchValue}
