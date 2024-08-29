@@ -49,7 +49,7 @@ const players: IUserSlice[] = [
     lastDailyReward: 0,
     //imageUrl: string
 
-    _id: 0,
+    _id: 1,
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -61,7 +61,7 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
-  },
+  }
 ];
 
 interface IInviteFriendsProps {}
@@ -82,29 +82,31 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
+      className="relative flex h-screen w-full flex-col gap-4 overflow-y-hidden px-4 pt-6"
     >
       <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
-      <InviteBanner />
+      <div className={"w-full h-full flex flex-col gap-4 overflow-y-auto"}>
+        <InviteBanner />
 
-      <div className={"z-[10] h-[56px] w-full"}>
-        <Button
-          variant={isShowBonus ? "select" : "deepBlue"}
-          className={twMerge(
-            "text-[18px] font-bold leading-6",
-            isShowBonus && "border-[2px] border-blue-900",
-          )}
-          onClick={handleToggle}
-        >
-          More Bonus
-        </Button>
+        <div className={"z-[10] h-[56px] w-full"}>
+          <Button
+            variant={isShowBonus ? "select" : "deepBlue"}
+            className={twMerge(
+              "text-[18px] font-bold leading-6",
+              isShowBonus && "border-[2px] border-blue-900",
+            )}
+            onClick={handleToggle}
+          >
+            More Bonus
+          </Button>
+        </div>
+
+        {!isShowBonus && (
+          <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} players={players} />
+        )}
+        {isShowBonus && <Bonus />}
       </div>
-
-      {!isShowBonus && (
-        <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} players={players} />
-      )}
-      {isShowBonus && <Bonus />}
 
       <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
 

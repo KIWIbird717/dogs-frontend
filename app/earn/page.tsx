@@ -164,8 +164,10 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
         </Button>
       </div>
 
-      {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
-      {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
+      <div className={"flex flex-col h-full overflow-y-auto"}>
+        {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
+        {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
+      </div>
 
       <Navbar />
 

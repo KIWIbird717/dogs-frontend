@@ -6,7 +6,7 @@ interface IBonusProps {}
 
 export const Bonus: FC<IBonusProps> = () => {
   return (
-    <div className={"z-[10] flex w-full flex-col gap-6 overflow-y-auto"}>
+    <div className={"z-[10] flex w-full flex-col gap-6"}>
       <Header />
       <BonusList />
     </div>

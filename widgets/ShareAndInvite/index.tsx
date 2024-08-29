@@ -9,7 +9,7 @@ interface IShareAndInviteProps {
 
 export const ShareAndInvite: FC<IShareAndInviteProps> = ({ onShareHandler, onCopyHandler }) => {
   return (
-    <div className={"absolute bottom-[116px] left-4 z-[10] flex w-[calc(100%-32px)] gap-2"}>
+    <div className={"fixed bottom-[116px] left-4 z-[10] flex w-[calc(100%-32px)] gap-2"}>
       <Button
         variant={"deepBlue"}
         className={"text-[18px] font-bold leading-6 text-white-900"}

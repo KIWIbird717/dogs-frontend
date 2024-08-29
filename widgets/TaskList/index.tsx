@@ -11,10 +11,10 @@ interface ITaskListProps {
 
 export const TaskList: FC<ITaskListProps> = ({ tasks, toggle }) => {
   return (
-    <div className={"z-[10] flex w-full flex-col gap-4 overflow-y-auto"}>
+    <div className={"z-[10] flex w-full flex-col gap-4"}>
       {toggle === "rewards" && <RewardsBoard />}
 
-      <div className={"flex w-full flex-col gap-4 overflow-y-auto pb-[110px]"}>
+      <div className={"flex w-full flex-col gap-4 pb-[110px]"}>
         {tasks.map((item, i) => {
           return <EarnTasksList key={i} title={item.title} tasks={item.tasks} toggle={toggle} />;
         })}

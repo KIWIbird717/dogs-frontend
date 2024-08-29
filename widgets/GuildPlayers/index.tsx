@@ -30,10 +30,10 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
   };
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2 overflow-hidden"}>
+    <div className={"z-[10] flex w-full flex-col gap-2"}>
       <Typography tag={"h3"}>{title}</Typography>
 
-      <div className={twMerge("flex w-full flex-col gap-2 overflow-y-auto pb-28", classNameList)}>
+      <div className={twMerge("flex w-full flex-col gap-2 pb-28", classNameList)}>
         {players.map((player, index) => {
           return (
             <GuildPlayerItem
