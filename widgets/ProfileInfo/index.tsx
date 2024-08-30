@@ -4,6 +4,7 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
+import { useCountries } from "@/shared/hooks/useCountries";
 
 interface IProfileInfoProps {}
 
@@ -12,6 +13,8 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { user } = useUser();
   const { breedKey, age, country } = user;
   const { onOpenModal } = useModal();
+  const { currentCountryName } = useCountries();
+
 
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
 
@@ -29,11 +32,11 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
       },
       {
         title: "Country",
-        value: country ? country : "-",
+        value: country ? currentCountryName : "-",
         onClick: () => push("/profile/country"),
       },
     ],
-    [age, breedKey, onOpenEditAgeModal, push],
+    [age, breedKey, country, currentCountryName, push],
   );
 
   return (

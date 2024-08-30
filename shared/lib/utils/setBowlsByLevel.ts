@@ -43,5 +43,5 @@ const levelImages = [
 ];
 
 export const setBowlsByLevel = (level: number) => {
-  return levelImages[level - 1] || Level20;
+  return levelImages[level - 1] || Level1;
 };
