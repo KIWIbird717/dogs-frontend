@@ -71,8 +71,9 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   };
 
   useEffect(() => {
+    if (name.length === 0 || description.length === 0 || !avatar || isError) {
     // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
-    if (name.length === 0 || !avatar || isError) {
+    // if (name.length === 0 || !avatar || isError) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -82,14 +83,15 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const onSubmit = async () => {
     const formData = new FormData();
     if (avatar) {
-      formData.append("image", avatar);
       formData.append("name", name);
+      formData.append("image", avatar);
+      formData.append("description", description);
+      formData.append("link", link);
       formData.append("joinMethod", joinMethod);
     }
 
     try {
-      // TODO: Нужно исправить
-      const { data } = await serverApi.post(`/guilds/create`, formData, {
+      await serverApi.post(`/guilds/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -102,7 +104,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   };
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2"}>
+    <div className={"z-[10] flex w-full flex-col gap-2 pb-[100px]"}>
       <Field
         keyForLabel={"name"}
         label={"Name Guild"}

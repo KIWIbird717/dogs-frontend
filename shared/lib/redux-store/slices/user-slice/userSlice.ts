@@ -34,6 +34,8 @@ export namespace UserSlice {
     username: string;
     doneTask: any[];
     friends: any[];
+
+    currentBoost: number
   };
 
   const initialState: IUserSlice = {
@@ -66,6 +68,8 @@ export namespace UserSlice {
     username: "User",
     doneTask: [],
     friends: [],
+
+    currentBoost: 100
   };
 
   export const userSlice = createSlice({
@@ -89,6 +93,9 @@ export namespace UserSlice {
       },
       setLevel: (state, action: PayloadAction<IUserSlice["level"]>) => {
         state.level = action.payload;
+      },
+      setCurrentBoost: (state, action: PayloadAction<IUserSlice["currentBoost"]>) => {
+        state.currentBoost = action.payload;
       },
       setUser: (state, action: PayloadAction<IUserSlice>) => {
         state._id = action.payload._id;
@@ -117,7 +124,16 @@ export namespace UserSlice {
     },
   });
 
-  export const { setAge, setLevel, setBalance, setGuildName, setBreed, setCountry, setUser } =
+  export const {
+    setAge,
+    setLevel,
+    setBalance,
+    setGuildName,
+    setBreed,
+    setCountry,
+    setUser,
+    setCurrentBoost
+  } =
     userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
