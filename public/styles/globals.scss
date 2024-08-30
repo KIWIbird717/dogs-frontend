@@ -10,31 +10,30 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
-  --blue-default: #4100CC;
-  --blue-900: #6857FD;
-  --blue-800: #1E90FF;
+  --blue-default: #4100cc;
+  --blue-900: #6857fd;
+  --blue-800: #1e90ff;
 
-
-  --white-default: #FFFFFF;
-  --white-900: #FCFCFC;
-  --white-800: #B0B0B0;
+  --white-default: #ffffff;
+  --white-900: #fcfcfc;
+  --white-800: #b0b0b0;
   --white-100: rgba(255, 255, 255, 0.01);
 
   --black-default: #000000;
   --black-900: #030303;
   --black-800: rgba(17, 17, 17, 0.67);
-  --black-790: #1E1E1E;
+  --black-790: #1e1e1e;
   --black-750: rgba(17, 17, 17, 0.16);
   --black-700: #222137;
-  --black-650: #2D2D2D;
+  --black-650: #2d2d2d;
   --black-600: #2e2e2e;
   --black-500: #383838;
   --black-400: rgba(120, 120, 128, 0.16);
-  --black-300: #4F4F4F;
+  --black-300: #4f4f4f;
 
-  --green-default: #32CD32;
+  --green-default: #32cd32;
 
-  --red-default: #FF4500;
+  --red-default: #ff4500;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,8 +47,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   //background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-  background: linear-gradient(180deg, #1C1C1C 50%, #2E2E2E 103.67%);
-
+  background: linear-gradient(180deg, #1c1c1c 50%, #2e2e2e 103.67%);
 }
 
 h1 {

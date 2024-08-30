@@ -4,7 +4,6 @@ import { useSessionStorage } from "@uidotdev/usehooks";
 import { UsersService } from "@/shared/lib/services/users/users";
 import IUserSlice = UserSlice.IUserSlice;
 
-
 export const useUser = () => {
   const dispatch = useAppDispatch();
   const [userSS, setUserSS] = useSessionStorage<IUserSlice | null>("user", null);
@@ -33,11 +32,11 @@ export const useUser = () => {
   };
 
   const getMe = async () => {
-      const { data } = await UsersService.getMe();
-      onChangeUser(data);
-      setUserSS(data);
+    const { data } = await UsersService.getMe();
+    onChangeUser(data);
+    setUserSS(data);
 
-      return data;
+    return data;
   };
 
   return {

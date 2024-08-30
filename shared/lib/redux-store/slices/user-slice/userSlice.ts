@@ -3,24 +3,24 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
   export type LastDailyRewardType = {
-    date: Date,
-    value: number,
-    _id: string
-  }
+    date: Date;
+    value: number;
+    _id: string;
+  };
 
   export type IUserSlice = {
     age?: number | null;
     country?: string | null;
     guild: string | null;
     guildName: string | null;
-    energyLimit: number
-    friendBonusTaken: Date
+    energyLimit: number;
+    friendBonusTaken: Date;
     //imageUrl: string
-    lastDailyReward: LastDailyRewardType
-    rechargeMultiplication: number,
-    tapBotExpired: Date
-    tapMultiplication: number
-    telegram_id: number
+    lastDailyReward: LastDailyRewardType;
+    rechargeMultiplication: number;
+    tapBotExpired: Date;
+    tapMultiplication: number;
+    telegram_id: number;
 
     _id: number;
     __v: number;
@@ -35,7 +35,7 @@ export namespace UserSlice {
     doneTask: any[];
     friends: any[];
 
-    currentBoost: number
+    currentBoost: number;
   };
 
   const initialState: IUserSlice = {
@@ -46,7 +46,7 @@ export namespace UserSlice {
     lastDailyReward: {
       date: new Date(),
       value: 0,
-      _id: "0"
+      _id: "0",
     },
     //imageUrl: string
     energyLimit: 0,
@@ -69,7 +69,7 @@ export namespace UserSlice {
     doneTask: [],
     friends: [],
 
-    currentBoost: 100
+    currentBoost: 100,
   };
 
   export const userSlice = createSlice({
@@ -132,9 +132,8 @@ export namespace UserSlice {
     setBreed,
     setCountry,
     setUser,
-    setCurrentBoost
-  } =
-    userSlice.actions;
+    setCurrentBoost,
+  } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;
 }

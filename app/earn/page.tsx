@@ -17,10 +17,8 @@ import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
-import { Typography } from "@/shared/ui/Typography/Typography";
 
-interface IEarnPageProps {
-}
+interface IEarnPageProps {}
 
 const dogiYoutube: ITaskObj[] = [
   {
@@ -142,11 +140,7 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
           )}
           onClick={onSetRewards}
         >
-          <Typography tag={"span"}
-                      className={"text-[15px] leading-[18px] font-bold text-white-900"}
-          >
-            Rewards
-          </Typography>
+          Rewards
         </Button>
         <Button
           variant={"default"}
@@ -156,18 +150,12 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
           )}
           onClick={onSetTasks}
         >
-          <Typography tag={"span"}
-                      className={"text-[15px] leading-[18px] font-bold text-white-900"}
-          >
-            Tasks
-          </Typography>
+          Tasks
         </Button>
       </div>
 
-      <div className={"flex flex-col h-full overflow-y-auto"}>
-        {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
-        {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
-      </div>
+      {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
+      {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
 
       <Navbar />
 

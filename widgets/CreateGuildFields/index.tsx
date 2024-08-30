@@ -72,8 +72,8 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
 
   useEffect(() => {
     if (name.length === 0 || description.length === 0 || !avatar || isError) {
-    // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
-    // if (name.length === 0 || !avatar || isError) {
+      // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
+      // if (name.length === 0 || !avatar || isError) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);

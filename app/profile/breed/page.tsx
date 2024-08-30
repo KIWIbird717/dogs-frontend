@@ -15,8 +15,7 @@ import { IBreedCountry } from "../country/page";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface IBreedPageProps {
-}
+interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
   {

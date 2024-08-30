@@ -15,7 +15,8 @@ interface IMainForClickerProps {}
 
 export const MainForClicker: FC<IMainForClickerProps> = () => {
   const logger = new Logger("MainPage");
-  const { clickEffects, handleClick, tabValue, maxBoost, boosts, earned, onMaxBoost } = useClicker(true);
+  const { clickEffects, handleClick, tabValue, maxBoost, boosts, earned, onMaxBoost } =
+    useClicker(true);
   const { user, onChangeGuildName } = useUser();
   const { guild, level } = user;
 
@@ -50,7 +51,12 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker handleClick={handleClick} clickEffects={clickEffects} level={level}  tabValue={tabValue} />
+          <Clicker
+            handleClick={handleClick}
+            clickEffects={clickEffects}
+            level={level}
+            tabValue={tabValue}
+          />
         </div>
 
         <EnergyBoost boosts={boosts} maxBoost={maxBoost} onMaxBoost={onMaxBoost} />
