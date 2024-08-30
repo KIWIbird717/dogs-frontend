@@ -37,7 +37,7 @@ const players: IUserSlice[] = [
     tapMultiplication: 0,
     telegram_id: 0,
     //imageUrl: string
-
+currentBoost: 0,
     _id: 0,
     __v: 0,
     balance: 0,
@@ -55,6 +55,7 @@ const players: IUserSlice[] = [
     country: null,
     guild: null,
     guildName: null,
+    currentBoost: 0,
     lastDailyReward: {
       date: new Date(),
       value: 0,
