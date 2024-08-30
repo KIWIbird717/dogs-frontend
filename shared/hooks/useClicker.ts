@@ -21,6 +21,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   } | null>("lastBoostTime", null);
 
   const { energyLimit, currentBoost } = useAppSelector((state) => state.user);
+  const tabValue = 1
 
   const [state, setState] = useState({
     earned: 0,
@@ -66,7 +67,7 @@ export const useClicker = (isSetInterval?: boolean) => {
       dispatch(UserSlice.setBalance(data.balance));
       dispatch(UserSlice.setLevel(data.level));
       // TODO: добавить, когда исправят на беке
-      // dispatch(UserSlice.setLevel(data.serverEnergy));
+      // dispatch(UserSlice.setCurrentBoost(data.serverEnergy));
       setState({ earned: 0, touches: 0 });
       setDateNow([]);
     } catch (error) {
@@ -78,7 +79,7 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const onIncrementEarn = useCallback(async (dateNowValue: number) => {
     if (currentBoost > 2) {
-      const newEarned = state.earned + 1;
+      const newEarned = state.earned + tabValue;
       const newTouches = state.touches + 1;
 
       setState({ earned: newEarned, touches: newTouches });
@@ -126,6 +127,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   return {
     boosts: currentBoost,
     maxBoost,
+    tabValue,
     earned: state.earned,
     clickEffects,
     onIncrementEarn,

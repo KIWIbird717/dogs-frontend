@@ -14,9 +14,10 @@ interface IClickerProps {
   handleClick: (event: MouseEvent) => void;
   clickEffects: ClickEffect[];
   level: number;
+  tabValue: number
 }
 
-export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level }) => {
+export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, tabValue }) => {
   const [image, setImage] = useState(Level1);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level })
                 }}
               >
                 <Typography tag={"h1"} className={"text-[28px] font-normal leading-8"}>
-                  +2
+                  +{tabValue}
                 </Typography>
               </MotionDiv>
             ))}
