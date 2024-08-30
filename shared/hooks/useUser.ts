@@ -1,19 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import IUserSlice = UserSlice.IUserSlice;
 import { useSessionStorage } from "@uidotdev/usehooks";
 import { UsersService } from "@/shared/lib/services/users/users";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
+import IUserSlice = UserSlice.IUserSlice;
 
-type ExcludePassword = {
-  lastDailyReward: never;
-};
-
-export type GetMeUserType = IUserSlice & ExcludePassword;
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
-  const [userSS, setUserSS] = useSessionStorage<GetMeUserType | null>("user", null);
+  const [userSS, setUserSS] = useSessionStorage<IUserSlice | null>("user", null);
 
   const user = useAppSelector((state) => state.user);
   const { age, breedKey, country } = user as IUserSlice;
@@ -30,7 +24,7 @@ export const useUser = () => {
     dispatch(UserSlice.setCountry(country));
   };
 
-  const onChangeUser = (user: GetMeUserType) => {
+  const onChangeUser = (user: IUserSlice) => {
     dispatch(UserSlice.setUser(user));
   };
 
@@ -39,13 +33,11 @@ export const useUser = () => {
   };
 
   const getMe = async () => {
-    try {
       const { data } = await UsersService.getMe();
       onChangeUser(data);
       setUserSS(data);
 
       return data;
-    } catch (error) {}
   };
 
   return {

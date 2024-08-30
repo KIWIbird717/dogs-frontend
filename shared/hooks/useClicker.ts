@@ -4,6 +4,7 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { number } from "prop-types";
 
 export interface ClickEffect {
   id: number;
@@ -25,30 +26,32 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   // Состояние для хранения эффекта кликов
   const [clickEffects, setClickEffects] = useState<ClickEffect[]>([]);
+  const [dateNow, setDateNow] = useState<number[]>([]);
 
   // Максимальное количество бустов
   const maxBoost = 500;
 
   // Функция для увеличения заработанных монет и уменьшения количества бустов
-  const onIncrementEarn = async () => {
+  const onIncrementEarn = async (dateNowValue: number) => {
     if (state.boosts > 2) {
       setState((prevState) => ({
         ...prevState,
-        earned: prevState.earned + 2,
+        earned: prevState.earned + 1,
         touches: prevState.touches + 1,
         boosts: prevState.boosts - 2,
       }));
 
-      await debouncedSendEarned(state.earned + 2, state.touches + 1);
+      await debouncedSendEarned(dateNowValue, state.touches + 1);
     }
   };
 
   // Функция для отправки заработанных монет на сервер
-  const sendCoins = async (newCoins: number, touches: number) => {
+  const sendCoins = async (clickEffectValue: number, touches: number) => {
     try {
+      console.log({clickEffectValue});
       const { data } = await UsersService.addUseMoney({
-        touches,
-        earned: newCoins,
+        startTimestamp: new Date(clickEffectValue),
+        taps: touches,
       });
 
       // Обновление баланса и уровня пользователя на основе ответа сервера
@@ -57,6 +60,7 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       // Сброс локального состояния, но сохранение текущего уровня бустов
       setState({ earned: 0, touches: 0, boosts: state.boosts });
+      setDateNow([])
     } catch (error) {
       logger.error(error);
     }
@@ -92,16 +96,19 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       // Создание нового эффекта клика с уникальным id
       const newEffect: ClickEffect = { id: Date.now(), x, y };
+      console.log({newEffect});
+      setDateNow((prev) => [...prev, newEffect.id]);
+
       setClickEffects((prev) => [...prev, newEffect]);
 
-      await onIncrementEarn(); // Увеличение заработанных монет
+      await onIncrementEarn(dateNow[0]); // Увеличение заработанных монет
 
       // Удаление эффекта клика через 1 секунду
       setTimeout(() => {
         setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
       }, 1000);
     },
-    [onIncrementEarn],
+    [dateNow, onIncrementEarn],
   );
 
   const onMaxBoost = () => {

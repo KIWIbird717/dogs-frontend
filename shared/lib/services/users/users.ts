@@ -1,8 +1,10 @@
 import { serverApi } from "../../axios";
 import { UserApiTypes } from "./types";
-import { GetMeUserType } from "@/shared/hooks/useUser";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import IUserSlice = UserSlice.IUserSlice;
 
 export namespace UsersService {
+
   /**
    * GET /users/get-user
    */
@@ -13,7 +15,7 @@ export namespace UsersService {
    * GET /users/get-me
    */
   export const getMe = () => {
-    return serverApi.get<GetMeUserType>("/users/get-me");
+    return serverApi.get<IUserSlice>("/users/get-me");
   };
 
   /**
@@ -43,6 +45,6 @@ export namespace UsersService {
    * POST /users/earn
    */
   export const addUseMoney = (dto: UserApiTypes.EarnDto) => {
-    return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/earn", dto);
+    return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/tap", dto);
   };
 }

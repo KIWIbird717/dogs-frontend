@@ -17,8 +17,8 @@ export namespace UserApiTypes {
   };
 
   export type EarnDto = {
-    earned: number;
-    touches: number;
+    startTimestamp: Date;
+    taps: number;
   };
 
   export type UpdateUserDto = Partial<UserDto>;

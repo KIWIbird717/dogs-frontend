@@ -11,9 +11,8 @@ import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
-import { GetMeUserType, useUser } from "@/shared/hooks/useUser";
+import { useUser } from "@/shared/hooks/useUser";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { useSessionStorage } from "@uidotdev/usehooks";
 
 interface IOnboardingMediaProps {}
 

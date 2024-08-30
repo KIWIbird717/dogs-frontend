@@ -16,7 +16,8 @@ import axios from "axios";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 
-interface ICountryPageProps {}
+interface ICountryPageProps {
+}
 
 export interface IBreedCountry {
   flag?: string;
@@ -39,24 +40,38 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
     setCountries(data.data);
   }, []);
 
-  const handleClick = (value: string) => setCurrentCountry(value);
+  const handleChangeCountry = async (countryValue: string) => {
+    setCurrentCountry(countryValue);
+
+    try {
+      await UsersService.updateUser({
+        country: countryValue,
+      });
+
+      const { data } = await UsersService.getMe();
+      onChangeUser(data);
+    } catch (error) {
+      logger.error(error);
+    }
+
+  };
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await UsersService.updateUser({
-          country: currentCountry!,
-        });
-
-        const { data } = await UsersService.getMe();
-        onChangeUser(data);
-      } catch (error) {
-        logger.error(error);
-      }
-    })();
-  }, [currentCountry]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await UsersService.updateUser({
+  //         country: currentCountry!,
+  //       });
+  //
+  //       const { data } = await UsersService.getMe();
+  //       onChangeUser(data);
+  //     } catch (error) {
+  //       logger.error(error);
+  //     }
+  //   })();
+  // }, [currentCountry]);
 
   return (
     <View
@@ -67,7 +82,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
 
       <BreedCountryBlock
         item={currentCountry || "-"}
-        onClick={handleClick}
+        onClick={handleChangeCountry}
         items={countries}
         onChange={handleSearch}
         value={searchValue}

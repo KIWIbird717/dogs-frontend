@@ -2,14 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export namespace UserSlice {
+  export type LastDailyRewardType = {
+    date: Date,
+    value: number,
+    _id: string
+  }
+
   export type IUserSlice = {
     age?: number | null;
     country?: string | null;
     guild: string | null;
     guildName: string | null;
-    guildFounder: string | null;
-    lastDailyReward: number;
+    energyLimit: number
+    friendBonusTaken: Date
     //imageUrl: string
+    lastDailyReward: LastDailyRewardType
+    rechargeMultiplication: number,
+    tapBotExpired: Date
+    tapMultiplication: number
+    telegram_id: number
 
     _id: number;
     __v: number;
@@ -30,9 +41,18 @@ export namespace UserSlice {
     country: null,
     guild: null,
     guildName: null,
-    guildFounder: null,
-    lastDailyReward: 0,
+    lastDailyReward: {
+      date: new Date(),
+      value: 0,
+      _id: "0"
+    },
     //imageUrl: string
+    energyLimit: 0,
+    friendBonusTaken: new Date(),
+    rechargeMultiplication: 0,
+    tapBotExpired: new Date(),
+    tapMultiplication: 0,
+    telegram_id: 0,
 
     _id: 0,
     __v: 0,
@@ -86,7 +106,13 @@ export namespace UserSlice {
         state.age = action.payload.age;
         state.country = action.payload.country;
         state.guild = action.payload.guild;
-        state.guildFounder = action.payload.guildFounder;
+        state.energyLimit = action.payload.energyLimit;
+        state.friendBonusTaken = action.payload.friendBonusTaken;
+        state.lastDailyReward = action.payload.lastDailyReward;
+        state.rechargeMultiplication = action.payload.rechargeMultiplication;
+        state.tapBotExpired = action.payload.tapBotExpired;
+        state.tapMultiplication = action.payload.tapMultiplication;
+        state.telegram_id = action.payload.telegram_id;
       },
     },
   });

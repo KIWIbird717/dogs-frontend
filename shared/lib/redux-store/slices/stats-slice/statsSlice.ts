@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { GetMeUserType } from "@/shared/hooks/useUser";
 
 export namespace StatsSlice {
   export type IStatsSlice = {

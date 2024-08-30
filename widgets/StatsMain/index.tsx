@@ -68,6 +68,9 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   };
 
   const { user } = useUser();
+
+  console.log({user});
+
   const { _id, guildName } = user;
 
   const currentUser = useMemo(() => {
@@ -90,7 +93,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   const currentRank = useMemo(() => ranks[currentSlide].rank, [currentSlide]);
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-4 overflow-hidden"}>
+    <div className={"z-[10] flex w-full flex-col gap-4"}>
       <div className={"flex flex-col gap-2 pb-2"}>
         <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={ranks} />
         <Progress currentRank={currentRank} serialNumber={currentUser?.serialNumber || 0} />

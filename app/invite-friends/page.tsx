@@ -24,8 +24,18 @@ const players: IUserSlice[] = [
     country: null,
     guild: null,
     guildName: null,
-    guildFounder: null,
-    lastDailyReward: 0,
+    lastDailyReward: {
+      date: new Date(),
+      value: 0,
+      _id: "0"
+    },
+    //imageUrl: string
+    energyLimit: 0,
+    friendBonusTaken: new Date(),
+    rechargeMultiplication: 0,
+    tapBotExpired: new Date(),
+    tapMultiplication: 0,
+    telegram_id: 0,
     //imageUrl: string
 
     _id: 0,
@@ -45,8 +55,18 @@ const players: IUserSlice[] = [
     country: null,
     guild: null,
     guildName: null,
-    guildFounder: null,
-    lastDailyReward: 0,
+    lastDailyReward: {
+      date: new Date(),
+      value: 0,
+      _id: "0"
+    },
+    //imageUrl: string
+    energyLimit: 0,
+    friendBonusTaken: new Date(),
+    rechargeMultiplication: 0,
+    tapBotExpired: new Date(),
+    tapMultiplication: 0,
+    telegram_id: 0,
     //imageUrl: string
 
     _id: 1,
