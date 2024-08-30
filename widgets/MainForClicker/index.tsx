@@ -20,7 +20,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
   const logger = new Logger("MainPage");
   const { clickEffects, handleClick, maxBoost, boosts, earned, onMaxBoost } = useClicker(true);
   const { user, onChangeGuildName } = useUser();
-  const { guild } = user;
+  const { guild, level } = user;
 
   useEffect(() => {
     if (guild) {
@@ -53,7 +53,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker handleClick={handleClick} clickEffects={clickEffects} level={user.level} />
+          <Clicker handleClick={handleClick} clickEffects={clickEffects} level={level} />
         </div>
 
         <EnergyBoost boosts={boosts} maxBoost={maxBoost} onMaxBoost={onMaxBoost} />

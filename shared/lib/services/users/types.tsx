@@ -26,5 +26,6 @@ export namespace UserApiTypes {
   export type ResponseEarnDto = {
     balance: number;
     level: number;
+    serverEnergy: number
   };
 }

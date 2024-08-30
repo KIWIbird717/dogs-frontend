@@ -65,6 +65,8 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       dispatch(UserSlice.setBalance(data.balance));
       dispatch(UserSlice.setLevel(data.level));
+      // TODO: добавить, когда исправят на беке
+      // dispatch(UserSlice.setLevel(data.serverEnergy));
       setState({ earned: 0, touches: 0 });
       setDateNow([]);
     } catch (error) {

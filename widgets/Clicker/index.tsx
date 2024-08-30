@@ -5,7 +5,7 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { ClickEffect } from "@/shared/hooks/useClicker";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import Level20 from "@/public/images/bowls/level20.png";
+import Level1 from "@/public/images/bowls/level1.png";
 import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
@@ -17,7 +17,7 @@ interface IClickerProps {
 }
 
 export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level }) => {
-  const [image, setImage] = useState(Level20);
+  const [image, setImage] = useState(Level1);
 
   useEffect(() => {
     const bowl = setBowlsByLevel(level);
