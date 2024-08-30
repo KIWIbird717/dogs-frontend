@@ -25,7 +25,7 @@ export const BreedCountryList: FC<IBreedCountryListProps> = ({ items, onClick, i
             icon={icon}
             variant={"select"}
             isSelected={isSelected}
-            onClick={() => onClick(obj.name)}
+            onClick={() => onClick(obj.iso2.toUpperCase())}
           >
             <div className={"flex items-center gap-3"}>
               {obj.flag && (

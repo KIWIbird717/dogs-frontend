@@ -32,7 +32,8 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   const [countries, setCountries] = useState<IBreedCountry[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const { onChangeUser, country } = useUser();
-  const [currentCountry, setCurrentCountry] = useState(country);
+  const [currentCountryISO2, setCurrentCountryISO2] = useState(country);
+  const [currentCountryName, setCurrentCountryName] = useState<string | null>(null);
 
   useRequest(async () => {
     const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
@@ -40,12 +41,19 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
     setCountries(data.data);
   }, []);
 
-  const handleChangeCountry = async (countryValue: string) => {
-    setCurrentCountry(countryValue);
+  useEffect(() => {
+    const newCountry = countries.find((obj) => obj.iso2 === currentCountryISO2);
+    if (newCountry) {
+      setCurrentCountryName(newCountry.name);
+    }
+  }, [countries, currentCountryISO2]);
+
+  const handleChangeCountry = async (countryISO2: string) => {
+    setCurrentCountryISO2(countryISO2);
 
     try {
       await UsersService.updateUser({
-        country: countryValue,
+        country: countryISO2,
       });
 
       const { data } = await UsersService.getMe();
@@ -58,21 +66,6 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       await UsersService.updateUser({
-  //         country: currentCountry!,
-  //       });
-  //
-  //       const { data } = await UsersService.getMe();
-  //       onChangeUser(data);
-  //     } catch (error) {
-  //       logger.error(error);
-  //     }
-  //   })();
-  // }, [currentCountry]);
-
   return (
     <View
       fadeInOnLoad
@@ -81,7 +74,7 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
       <HeaderWithIcon title={"Select Country"} icon={<World />} />
 
       <BreedCountryBlock
-        item={currentCountry || "-"}
+        item={currentCountryName || "-"}
         onClick={handleChangeCountry}
         items={countries}
         onChange={handleSearch}

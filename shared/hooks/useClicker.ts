@@ -72,7 +72,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     }
   };
 
-  const debouncedSendEarned = useCallback(debounce(sendCoins, 4000), [sendCoins]);
+  const debouncedSendEarned = useCallback(debounce(sendCoins, 4000), []);
 
   const onIncrementEarn = useCallback(async (dateNowValue: number) => {
     if (currentBoost > 2) {
@@ -115,7 +115,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     setTimeout(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
     }, 1000);
-  }, [dateNow]);
+  }, [dateNow, onIncrementEarn]);
 
   const onMaxBoost = useCallback(() => {
     setState((prevState) => ({ ...prevState, boosts: maxBoost }));
