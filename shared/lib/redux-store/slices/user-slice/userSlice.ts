@@ -22,7 +22,7 @@ export namespace UserSlice {
     tapMultiplication: number;
     telegram_id: number;
 
-    _id: number;
+    _id: string;
     __v: number;
     balance: number;
     breedKey: string;
@@ -36,6 +36,12 @@ export namespace UserSlice {
     friends: any[];
 
     currentBoost: number;
+
+    lastTap: Date | null;
+    eneryTankLeft: number | null;
+    rechargeEnergy: number | null;
+    turboBonusLeft: number | null;
+    turboBoostExpired: Date | null;
   };
 
   const initialState: IUserSlice = {
@@ -56,7 +62,7 @@ export namespace UserSlice {
     tapMultiplication: 0,
     telegram_id: 0,
 
-    _id: 0,
+    _id: "0",
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -70,6 +76,12 @@ export namespace UserSlice {
     friends: [],
 
     currentBoost: 100,
+
+    lastTap: null,
+    eneryTankLeft: null,
+    rechargeEnergy: null,
+    turboBonusLeft: null,
+    turboBoostExpired: null,
   };
 
   export const userSlice = createSlice({
@@ -120,6 +132,15 @@ export namespace UserSlice {
         state.tapBotExpired = action.payload.tapBotExpired;
         state.tapMultiplication = action.payload.tapMultiplication;
         state.telegram_id = action.payload.telegram_id;
+
+        state.lastTap = action.payload.lastTap;
+        state.eneryTankLeft = action.payload.eneryTankLeft;
+        state.rechargeEnergy = action.payload.rechargeEnergy;
+        state.turboBonusLeft = action.payload.turboBonusLeft;
+        state.turboBoostExpired = action.payload.turboBoostExpired;
+      },
+      updateUser: (state, action: PayloadAction<Partial<IUserSlice>>) => {
+        Object.assign(state, action.payload);
       },
     },
   });
@@ -133,6 +154,7 @@ export namespace UserSlice {
     setCountry,
     setUser,
     setCurrentBoost,
+    updateUser,
   } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;

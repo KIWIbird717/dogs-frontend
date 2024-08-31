@@ -20,8 +20,13 @@ export const useClicker = (isSetInterval?: boolean) => {
     time: string;
   } | null>("lastBoostTime", null);
 
-  const { energyLimit, currentBoost } = useAppSelector((state) => state.user);
-  const tabValue = 1;
+  const { energyLimit, currentBoost, turboBoostExpired } = useAppSelector((state) => state.user);
+
+  console.log({ turboBoostExpired });
+  const isTurboAvailable =
+    turboBoostExpired && new Date().getTime() < new Date(turboBoostExpired).getTime();
+
+  const tabValue = isTurboAvailable ? 5 : 1;
 
   const [state, setState] = useState({
     earned: 0,
@@ -112,6 +117,7 @@ export const useClicker = (isSetInterval?: boolean) => {
       const { left, top } = currentTarget.getBoundingClientRect();
       const x = clientX - left;
       const y = clientY - top;
+
       const newEffect: ClickEffect = { id: Date.now(), x, y };
 
       setDateNow((prev) => [...prev, newEffect.id]);

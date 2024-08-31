@@ -46,4 +46,10 @@ export namespace UsersService {
   export const addUseMoney = (dto: UserApiTypes.EarnDto) => {
     return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/tap", dto);
   };
+
+  export const boost = (boostName: UserApiTypes.BoostName) => {
+    return serverApi.post<UserApiTypes.BoostResponse>("/users/boost", {
+      boostName,
+    });
+  };
 }

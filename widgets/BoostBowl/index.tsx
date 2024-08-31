@@ -8,6 +8,10 @@ import RechargingIcon from "@/public/images/svg/boost/recharging.svg";
 import ReloadIcon from "@/public/images/svg/boost/reload.svg";
 import { BoostBowlItem } from "@/widgets/BoostBowlItem";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { UsersService } from "@/shared/lib/services/users/users";
+import { UserApiTypes } from "@/shared/lib/services/users/types";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
@@ -24,27 +28,43 @@ export type BoostBowlItemType = {
 };
 
 export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
+  const user = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [
       {
         icon: <EnergyIcon />,
         title: "Turbo",
-        description: "3/3 available",
-        onClick: onMaxBoost,
+        description: `${user.turboBonusLeft}/3 available`,
+        onClick: async () => {
+          if (!user.turboBonusLeft) return;
+          dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
+          // temp value
+          dispatch(
+            UserSlice.updateUser({
+              turboBoostExpired: new Date(new Date().getTime() + 0.5 * 60 * 60 * 1000),
+            }),
+          );
+          const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
+
+          dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+        },
       },
       {
         icon: <BatteryIcon />,
         title: "Full Tank",
         description: "3/3 in day",
         disabled: maxBoost === boosts,
-        onClick: () => {},
+        onClick: () => {
+          if (maxBoost === boosts) return;
+          onMaxBoost();
+          UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+        },
       },
     ],
-    [boosts, maxBoost, onMaxBoost],
+    [boosts, maxBoost, onMaxBoost, user.turboBonusLeft],
   );
-
-  console.log({ isTrue: maxBoost === boosts });
-  console.log({ boosts, maxBoost });
 
   const secondBowlItems: BoostBowlItemType[] = useMemo(
     () => [
@@ -52,25 +72,33 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         icon: <TapIcon />,
         title: "Multitap",
         description: "1 Tap 20 Energy",
-        onClick: () => {},
+        onClick: () => {
+          UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+        },
       },
       {
         icon: <BatteryIcon />,
         title: "Energy Limit",
         description: "800 000 Bone",
-        onClick: () => {},
+        onClick: () => {
+          UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+        },
       },
       {
         icon: <RechargingIcon />,
         title: "Recharning Speed",
         description: "5 Energy",
-        onClick: () => {},
+        onClick: () => {
+          UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+        },
       },
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
         description: "100 000 Bone in 4 hours",
-        onClick: () => {},
+        onClick: () => {
+          UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+        },
       },
     ],
     [],

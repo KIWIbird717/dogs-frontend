@@ -28,4 +28,25 @@ export namespace UserApiTypes {
     level: number;
     serverEnergy: number;
   };
+
+  export enum BoostName {
+    TURBO = "TURBO",
+    FULL_TANK = "FULL_TANK",
+    MULTITAP = "MULTITAP",
+    ENERY_LIMIT = "ENERY_LIMIT",
+    RECHARGE_SPEED = "RECHARGE_SPEED",
+    TAP_BOT = "TAP_BOT",
+  }
+
+  export type BoostResponse = {
+    boost: keyof typeof BoostName;
+    TURBO: Date;
+    turboBonusLeft: number;
+    FULL_TANK: boolean;
+    tankBonusLeft: number;
+    MULTITAP: number;
+    ENERY_LIMIT: number;
+    RECHAGE_SPEED: number;
+    TAP_BOT: Date;
+  };
 }

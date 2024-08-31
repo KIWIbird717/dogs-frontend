@@ -7,12 +7,18 @@ import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
+import { useTelegram } from "@/shared/hooks/useTelegram";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
   const { push } = useRouter();
   const { getMe } = useUser();
+  const telegram = useTelegram();
+  const logger = new Logger("ModalLoading");
+
+  logger.debug(telegram);
 
   const defaultOptions = {
     loop: true,
