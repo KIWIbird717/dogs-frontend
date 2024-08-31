@@ -10,7 +10,6 @@ import { useClicker } from "@/shared/hooks/useClicker";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
-import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 
 interface IMainForClickerProps {}
@@ -22,7 +21,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
   const { user, onChangeGuildName } = useUser();
   const { guild, level } = user;
 
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
   useEffect(() => {
     if (guild) {

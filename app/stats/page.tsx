@@ -11,7 +11,7 @@ interface IStatsProps {}
 
 const Stats: NextPage<IStatsProps> = () => {
   return (
-    <View fadeInOnLoad className="relative flex h-screen w-full flex-col gap-4 px-4 pt-6">
+    <View fadeInOnLoad className="relative flex overflow-x-hidden h-screen w-full flex-col gap-4 px-4 pt-6">
       <Header />
       <StatsMain />
 

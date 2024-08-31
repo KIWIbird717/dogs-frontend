@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type ModelType = "settings" | "editAge" | "earn";
+export type ModelType = "settings" | "editAge" | "earn" | "boosts"
 
 export interface ITaskObj {
   title: string;
@@ -16,8 +16,18 @@ export interface ITask {
   isClaim?: boolean;
 }
 
+export interface IBoost {
+  icon: ReactNode;
+  title: string
+  info: string,
+  description: string
+  price?: number
+  buttonTitle: string
+}
+
 export interface IModalData {
-  task: ITask;
+  task?: ITask;
+  boost: IBoost;
 }
 
 export interface IModelSlice {

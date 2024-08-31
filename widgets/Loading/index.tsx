@@ -59,7 +59,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
             <BoneIcon />
           </div>
           <div>
-            <Typography tag={"h2"} className={"font-epilogue font-normal"}>
+            <Typography tag={"h2"} className={"font-epilogue font-normal text-white-900"}>
               DOGS
             </Typography>
           </div>
