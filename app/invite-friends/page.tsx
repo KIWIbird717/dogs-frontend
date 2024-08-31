@@ -38,7 +38,7 @@ const players: IUserSlice[] = [
     telegram_id: 0,
     //imageUrl: string
     currentBoost: 0,
-    _id: 0,
+    _id: "0",
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -50,6 +50,11 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
+    lastTap: null,
+    eneryTankLeft: null,
+    rechargeEnergy: null,
+    turboBonusLeft: null,
+    turboBoostExpired: null,
   },
   {
     age: null,
@@ -70,8 +75,7 @@ const players: IUserSlice[] = [
     tapMultiplication: 0,
     telegram_id: 0,
     //imageUrl: string
-
-    _id: 1,
+    _id: "1",
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -83,6 +87,11 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
+    lastTap: null,
+    eneryTankLeft: null,
+    rechargeEnergy: null,
+    turboBonusLeft: null,
+    turboBoostExpired: null,
   },
 ];
 
