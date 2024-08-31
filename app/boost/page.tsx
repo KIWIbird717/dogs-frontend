@@ -15,7 +15,7 @@ import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 interface IBoostPageProps {}
 
 const BoostPage: NextPage<IBoostPageProps> = () => {
-  const { boosts, maxBoost, onMaxBoost } = useClicker(true);
+  const { boosts, maxBoost, onMaxBoost,  } = useClicker(true);
 
   return (
     <View
@@ -27,7 +27,7 @@ const BoostPage: NextPage<IBoostPageProps> = () => {
         icon={<RacketIcon />}
         button={<Block icon={<EnergyIcon />} title={`${boosts}/${maxBoost}`} onClick={() => {}} />}
       />
-      <BoostBowl onMaxBoost={onMaxBoost} />
+      <BoostBowl onMaxBoost={onMaxBoost} boosts={boosts} maxBoost={maxBoost} />
 
       <Navbar />
 
