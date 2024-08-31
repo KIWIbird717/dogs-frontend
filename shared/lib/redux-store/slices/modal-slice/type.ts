@@ -27,7 +27,7 @@ export interface IBoost {
 
 export interface IModalData {
   task?: ITask;
-  boost: IBoost;
+  boost?: IBoost;
 }
 
 export interface IModelSlice {
