@@ -7,13 +7,14 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
 import { AnimatePresence, motion } from "framer-motion";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
+import { useUser } from "@/shared/hooks/useUser";
 
-interface IModalBoostsProps {
-
-}
+interface IModalBoostsProps {}
 
 export const ModalBoosts: FC<IModalBoostsProps> = () => {
   const { onClose, modalData } = useModal();
+  const {user} = useUser()
+  const {balance} = user
   const { isOpen, data, type } = modalData;
 
   const isModalOpen = isOpen && type === "boosts";
@@ -25,6 +26,8 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
       onClose();
     }
   };
+
+  const disabled = balance < data?.boost?.price!
 
   return (
     <AnimatePresence initial={true}>
@@ -67,9 +70,9 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
               <Typography tag={"h2"} className={"font-normal text-white-900"}>
                 {data?.boost?.info}
               </Typography>
-              <Typography tag={"h3"} className={"font-normal text-white-800"}>
-                {data?.boost?.description}
-              </Typography>
+              {data?.boost?.description && <Typography tag={"h3"} className={"font-normal text-white-800"}>
+                {data.boost.description}
+              </Typography>}
 
               {data?.boost?.price! && <div
                 className={
@@ -92,16 +95,14 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
               }
             </div>
             <div>
-              <Button
+              <Button disabled={disabled}
                 variant={"deepBlue"}
                 className={"text-[18px] font-bold leading-6 text-white-900"}
+                onClick={data?.boost?.onClick}
               >
                 {data?.boost?.buttonTitle}
               </Button>
             </div>
-
-            {/*<div*/}
-            {/*  className={"w-full h-full absolute left-0 top-0  rounded-xl z-[-1]"} />*/}
           </motion.div>
         </div>
       )}
