@@ -12,6 +12,10 @@ import { UsersService } from "@/shared/lib/services/users/users";
 import { UserApiTypes } from "@/shared/lib/services/users/types";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { useModal } from "@/shared/hooks/useModal";
+import { IBoost } from "@/shared/lib/redux-store/slices/modal-slice/type";
+import BoostImg  from "@/public/images/svg/modal/boosts/boost.svg"
+import RechargingImg  from "@/public/images/svg/modal/boosts/recharging.svg"
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
@@ -27,9 +31,47 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
+const boostsInfo: IBoost[] = [
+  {
+    icon: <BoostImg />,
+    title: "Turbo Bowl",
+    info: "Uses left 3/3",
+    description: "Your tap gives you a lot more coins than you think.",
+    buttonTitle: "Choose Free",
+  },
+  {
+    icon: <BoostImg />,
+    title: "",
+    info: "",
+    description: "",
+    buttonTitle: "",
+  }, {
+    icon: <BoostImg />,
+    title: "",
+    info: "",
+    description: "",
+    buttonTitle: "",
+  }, {
+    icon: <BoostImg />,
+    title: "",
+    info: "",
+    description: "",
+    buttonTitle: "",
+  },
+  {
+    icon: <RechargingImg />,
+    title: "Recharging Speed",
+    info: "5 energy",
+    description: "Your tap gives you a lot more coins than you think.",
+    price: 25000,
+    buttonTitle: "Pay Boost",
+  },
+]
+
 export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
+  const {onOpenModal} = useModal()
 
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [
@@ -38,6 +80,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Turbo",
         description: `${user.turboBonusLeft}/3 available`,
         onClick: async () => {
+          onOpenModal("boosts", {boost: boostsInfo[0]})
           if (!user.turboBonusLeft) return;
           dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
           // temp value
@@ -89,6 +132,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Recharning Speed",
         description: "5 Energy",
         onClick: () => {
+          onOpenModal("boosts", {boost: boostsInfo[4]})
           UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
         },
       },
