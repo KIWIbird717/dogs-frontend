@@ -31,47 +31,49 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
-const boostsInfo: IBoost[] = [
-  {
-    icon: <BoostImg />,
-    title: "Turbo Bowl",
-    info: "Uses left 3/3",
-    description: "Your tap gives you a lot more coins than you think.",
-    buttonTitle: "Choose Free",
-  },
-  {
-    icon: <BoostImg />,
-    title: "",
-    info: "",
-    description: "",
-    buttonTitle: "",
-  }, {
-    icon: <BoostImg />,
-    title: "",
-    info: "",
-    description: "",
-    buttonTitle: "",
-  }, {
-    icon: <BoostImg />,
-    title: "",
-    info: "",
-    description: "",
-    buttonTitle: "",
-  },
-  {
-    icon: <RechargingImg />,
-    title: "Recharging Speed",
-    info: "5 energy",
-    description: "Your tap gives you a lot more coins than you think.",
-    price: 25000,
-    buttonTitle: "Pay Boost",
-  },
-]
+
 
 export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const {onOpenModal} = useModal()
+
+  const boostsInfo: IBoost[] = useMemo(() => [
+    {
+      icon: <BoostImg />,
+      title: "Turbo Bowl",
+      info: `Uses left ${user.turboBonusLeft}/3`,
+      description: "Your tap gives you a lot more coins than you think.",
+      buttonTitle: "Choose Free",
+    },
+    {
+      icon: <BoostImg />,
+      title: "",
+      info: "",
+      description: "",
+      buttonTitle: "",
+    }, {
+      icon: <BoostImg />,
+      title: "",
+      info: "",
+      description: "",
+      buttonTitle: "",
+    }, {
+      icon: <BoostImg />,
+      title: "",
+      info: "",
+      description: "",
+      buttonTitle: "",
+    },
+    {
+      icon: <RechargingImg />,
+      title: "Recharging Speed",
+      info: "5 energy",
+      description: "Your tap gives you a lot more coins than you think.",
+      price: 25000,
+      buttonTitle: "Pay Boost",
+    },
+  ], [user.turboBonusLeft])
 
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [
