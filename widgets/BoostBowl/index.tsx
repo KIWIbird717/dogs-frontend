@@ -79,7 +79,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
       {
         icon: <BatteryIcon />,
         title: "Energy Limit",
-        description: "800 000 Bone",
+        description: "800 000 Coin",
         onClick: () => {
           UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
         },
@@ -95,7 +95,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
-        description: "100 000 Bone in 4 hours",
+        description: "100 000 Coin in 4 hours",
         onClick: () => {
           UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
         },
