@@ -21,7 +21,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   } | null>("lastBoostTime", null);
 
   const { energyLimit, currentBoost } = useAppSelector((state) => state.user);
-  const tabValue = 1
+  const tabValue = 1;
 
   const [state, setState] = useState({
     earned: 0,
@@ -77,18 +77,21 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const debouncedSendEarned = useCallback(debounce(sendCoins, 4000), []);
 
-  const onIncrementEarn = useCallback(async (dateNowValue: number) => {
-    if (currentBoost > 2) {
-      const newEarned = state.earned + tabValue;
-      const newTouches = state.touches + 1;
+  const onIncrementEarn = useCallback(
+    async (dateNowValue: number) => {
+      if (currentBoost > 2) {
+        const newEarned = state.earned + tabValue;
+        const newTouches = state.touches + 1;
 
-      setState({ earned: newEarned, touches: newTouches });
-      setBoostsLS({ time: Date.now().toString(), boost: currentBoost - 2 });
-      dispatch(UserSlice.setCurrentBoost(currentBoost - 2));
+        setState({ earned: newEarned, touches: newTouches });
+        setBoostsLS({ time: Date.now().toString(), boost: currentBoost - 2 });
+        dispatch(UserSlice.setCurrentBoost(currentBoost - 2));
 
-      await debouncedSendEarned(dateNowValue, newTouches);
-    }
-  }, [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned]);
+        await debouncedSendEarned(dateNowValue, newTouches);
+      }
+    },
+    [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned],
+  );
 
   useEffect(() => {
     if (!isSetInterval || currentBoost >= maxBoost) return;
@@ -103,22 +106,25 @@ export const useClicker = (isSetInterval?: boolean) => {
     return () => clearInterval(interval);
   }, [isSetInterval, currentBoost, maxBoost, dispatch, setBoostsLS]);
 
-  const handleClick = useCallback(async (event: MouseEvent) => {
-    const { clientX, clientY, currentTarget } = event;
-    const { left, top } = currentTarget.getBoundingClientRect();
-    const x = clientX - left;
-    const y = clientY - top;
-    const newEffect: ClickEffect = { id: Date.now(), x, y };
+  const handleClick = useCallback(
+    async (event: MouseEvent) => {
+      const { clientX, clientY, currentTarget } = event;
+      const { left, top } = currentTarget.getBoundingClientRect();
+      const x = clientX - left;
+      const y = clientY - top;
+      const newEffect: ClickEffect = { id: Date.now(), x, y };
 
-    setDateNow((prev) => [...prev, newEffect.id]);
-    setClickEffects((prev) => [...prev, newEffect]);
+      setDateNow((prev) => [...prev, newEffect.id]);
+      setClickEffects((prev) => [...prev, newEffect]);
 
-    await onIncrementEarn(dateNow[0]);
+      await onIncrementEarn(dateNow[0]);
 
-    setTimeout(() => {
-      setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
-    }, 1000);
-  }, [dateNow, onIncrementEarn]);
+      setTimeout(() => {
+        setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
+      }, 1000);
+    },
+    [dateNow, onIncrementEarn],
+  );
 
   const onMaxBoost = useCallback(() => {
     setState((prevState) => ({ ...prevState, boosts: maxBoost }));

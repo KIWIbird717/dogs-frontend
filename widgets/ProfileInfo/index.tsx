@@ -15,7 +15,6 @@ export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { onOpenModal } = useModal();
   const { currentCountryName } = useCountries();
 
-
   const onOpenEditAgeModal = useCallback(() => onOpenModal("editAge"), [onOpenModal]);
 
   const items = useMemo(

@@ -153,7 +153,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            className="relative flex justify-center max-w-full max-h-full"
+            className="relative flex max-h-full max-w-full justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

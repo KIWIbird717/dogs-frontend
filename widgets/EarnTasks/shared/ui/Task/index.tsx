@@ -39,17 +39,26 @@ export const Task: FC<ITaskProps> = ({ toggle, task }) => {
 
         <div className={"flex h-full flex-col gap-1 overflow-hidden"}>
           <div className={"flex h-full flex-col gap-1"}>
-            <Typography tag={"p"}
-                        className={"text-[17px] font-bold leading-6 text-white-900 overflow-hidden text-ellipsis whitespace-nowrap"}>
+            <Typography
+              tag={"p"}
+              className={
+                "overflow-hidden text-ellipsis whitespace-nowrap text-[17px] font-bold leading-6 text-white-900"
+              }
+            >
               {task.title}
             </Typography>
             {toggle === "rewards" && (
-              <Typography tag={"span"} className={"text-[15px] font-normal leading-4 text-white-900 overflow-hidden text-ellipsis whitespace-nowrap"}>
+              <Typography
+                tag={"span"}
+                className={
+                  "overflow-hidden text-ellipsis whitespace-nowrap text-[15px] font-normal leading-4 text-white-900"
+                }
+              >
                 {task.description}
               </Typography>
             )}
           </div>
-          <div className={"flex h-full gap-1 "}>
+          <div className={"flex h-full gap-1"}>
             <div className={"flex items-center gap-1"}>
               <TotalCoin
                 coin={newFormatCoins}
@@ -61,7 +70,10 @@ export const Task: FC<ITaskProps> = ({ toggle, task }) => {
             </div>
 
             <div className={"flex items-center"}>
-              <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800 "}>
+              <Typography
+                tag={"span"}
+                className={"text-[13px] font-normal leading-4 text-white-800"}
+              >
                 every 24 hours
               </Typography>
             </div>

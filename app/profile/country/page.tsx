@@ -11,8 +11,7 @@ import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { useCountries } from "@/shared/hooks/useCountries";
 
-interface ICountryPageProps {
-}
+interface ICountryPageProps {}
 
 export interface IBreedCountry {
   flag?: string;
@@ -22,7 +21,14 @@ export interface IBreedCountry {
 }
 
 const CountryPage: NextPage<ICountryPageProps> = () => {
-  const { currentCountryName, countries, handleChangeCountry, handleSearch, searchValue, clearValue } = useCountries();
+  const {
+    currentCountryName,
+    countries,
+    handleChangeCountry,
+    handleSearch,
+    searchValue,
+    clearValue,
+  } = useCountries();
 
   return (
     <View

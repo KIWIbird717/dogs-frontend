@@ -11,8 +11,8 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
-  boosts: number
-  maxBoost: number
+  boosts: number;
+  maxBoost: number;
 }
 
 export type BoostBowlItemType = {
@@ -23,14 +23,7 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
-export const BoostBowl: FC<IBoostBowlProps> = (
-  {
-    onMaxBoost,
-    maxBoost,
-    boosts
-  }
-) => {
-  
+export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [
       {
@@ -50,8 +43,8 @@ export const BoostBowl: FC<IBoostBowlProps> = (
     [boosts, maxBoost, onMaxBoost],
   );
 
-  console.log({isTrue: maxBoost === boosts});
-  console.log({boosts, maxBoost});
+  console.log({ isTrue: maxBoost === boosts });
+  console.log({ boosts, maxBoost });
 
   const secondBowlItems: BoostBowlItemType[] = useMemo(
     () => [
@@ -92,11 +85,14 @@ export const BoostBowl: FC<IBoostBowlProps> = (
 
         <div className={"flex w-full flex-col gap-2"}>
           {firstBowlItems.map((item, i) => {
-            return <BoostBowlItem key={i}
-                                  item={item}
-                                  disabled={item.disabled || false}
-                                  onClick={item.onClick}
-            />;
+            return (
+              <BoostBowlItem
+                key={i}
+                item={item}
+                disabled={item.disabled || false}
+                onClick={item.onClick}
+              />
+            );
           })}
         </div>
       </div>

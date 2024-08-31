@@ -8,9 +8,7 @@ import dynamic from "next/dynamic";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
-
-interface IModalSettingsProps {
-}
+interface IModalSettingsProps {}
 
 export const ModalSettings: FC<IModalSettingsProps> = () => {
   const {
@@ -24,8 +22,6 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
   } = useModalSettings();
 
   const containerHeight = isOpenLanguage ? 212 : 346;
-
-
 
   return (
     <AnimatePresence>

@@ -4,7 +4,6 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 import IUserSlice = UserSlice.IUserSlice;
 
 export namespace UsersService {
-
   /**
    * GET /users/get-user
    */

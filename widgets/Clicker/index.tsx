@@ -14,7 +14,7 @@ interface IClickerProps {
   handleClick: (event: MouseEvent) => void;
   clickEffects: ClickEffect[];
   level: number;
-  tabValue: number
+  tabValue: number;
 }
 
 export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, tabValue }) => {
