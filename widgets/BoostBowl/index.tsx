@@ -3,6 +3,7 @@
 import { FC, ReactNode, useMemo } from "react";
 import EnergyIcon from "@/public/images/svg/boost/energy.svg";
 import BatteryIcon from "@/public/images/svg/boost/battery.svg";
+import EnergyLimitIcon from "@/public/images/svg/boost/energy-limit.svg";
 import TapIcon from "@/public/images/svg/boost/tap.svg";
 import RechargingIcon from "@/public/images/svg/boost/recharging.svg";
 import ReloadIcon from "@/public/images/svg/boost/reload.svg";
@@ -14,8 +15,13 @@ import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { useModal } from "@/shared/hooks/useModal";
 import { IBoost } from "@/shared/lib/redux-store/slices/modal-slice/type";
-import BoostImg  from "@/public/images/svg/modal/boosts/boost.svg"
-import RechargingImg  from "@/public/images/svg/modal/boosts/recharging.svg"
+
+import BoostImg from "@/public/images/svg/modal/boosts/boost.svg";
+import RechargingImg from "@/public/images/svg/modal/boosts/recharging.svg";
+import FullTankImg from "@/public/images/svg/modal/boosts/full-tank.svg";
+import MultiTapImg from "@/public/images/svg/modal/boosts/multi-tap.svg";
+import EnergyLimitImg from "@/public/images/svg/modal/boosts/energy-limit.svg";
+import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
@@ -32,11 +38,10 @@ export type BoostBowlItemType = {
 };
 
 
-
 export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
-  const {onOpenModal} = useModal()
+  const { onOpenModal } = useModal();
 
   const boostsInfo: IBoost[] = useMemo(() => [
     {
@@ -45,25 +50,48 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
       info: `Uses left ${user.turboBonusLeft}/3`,
       description: "Your tap gives you a lot more coins than you think.",
       buttonTitle: "Choose Free",
+      onClick: async () => {
+        if (!user.turboBonusLeft) return;
+        dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
+        // temp value
+        dispatch(
+          UserSlice.updateUser({
+            turboBoostExpired: new Date(new Date().getTime() + 0.5 * 60 * 60 * 1000),
+          }),
+        );
+        const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
+
+        dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+      },
     },
     {
-      icon: <BoostImg />,
-      title: "",
-      info: "",
-      description: "",
-      buttonTitle: "",
-    }, {
-      icon: <BoostImg />,
-      title: "",
-      info: "",
-      description: "",
-      buttonTitle: "",
-    }, {
-      icon: <BoostImg />,
-      title: "",
-      info: "",
-      description: "",
-      buttonTitle: "",
+      icon: <FullTankImg />,
+      title: "FullTank",
+      info: `${user.eneryTankLeft}/3 in day`,
+      buttonTitle: "Choose Free",
+      onClick: async () => {
+        if (maxBoost === boosts) return;
+        onMaxBoost();
+        await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+      },
+    },
+    {
+      icon: <MultiTapImg />,
+      title: "Multitap",
+      info: "1 tap 20 energy",
+      buttonTitle: "Buy",
+      onClick: async () => {
+        await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+      },
+    },
+    {
+      icon: <EnergyLimitImg />,
+      title: "Energy Limit",
+      info: "800 000 coin",
+      buttonTitle: "Buy",
+      onClick: async () => {
+        await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+      },
     },
     {
       icon: <RechargingImg />,
@@ -71,9 +99,21 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
       info: "5 energy",
       description: "Your tap gives you a lot more coins than you think.",
       price: 25000,
-      buttonTitle: "Pay Boost",
+      buttonTitle: "Buy",
+      onClick: async () => {
+        await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+      }
     },
-  ], [user.turboBonusLeft])
+    {
+      icon: <TapBotImg />,
+      title: "Tap Bot",
+      info: "100 000 Coin in 4 hours",
+      buttonTitle: "Buy",
+      onClick: async () => {
+        await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+      }
+    },
+  ], [boosts, maxBoost, onMaxBoost, user.eneryTankLeft, user.turboBonusLeft]);
 
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [
@@ -82,18 +122,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Turbo",
         description: `${user.turboBonusLeft}/3 available`,
         onClick: async () => {
-          onOpenModal("boosts", {boost: boostsInfo[0]})
           if (!user.turboBonusLeft) return;
-          dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
-          // temp value
-          dispatch(
-            UserSlice.updateUser({
-              turboBoostExpired: new Date(new Date().getTime() + 0.5 * 60 * 60 * 1000),
-            }),
-          );
-          const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
-
-          dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+          onOpenModal("boosts", { boost: boostsInfo[0] });
         },
       },
       {
@@ -103,8 +133,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         disabled: maxBoost === boosts,
         onClick: () => {
           if (maxBoost === boosts) return;
-          onMaxBoost();
-          UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+          onOpenModal("boosts", { boost: boostsInfo[1] });
         },
       },
     ],
@@ -118,15 +147,15 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Multitap",
         description: "1 Tap 20 Energy",
         onClick: () => {
-          UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+          onOpenModal("boosts", { boost: boostsInfo[2] });
         },
       },
       {
-        icon: <BatteryIcon />,
+        icon: <EnergyLimitIcon />,
         title: "Energy Limit",
         description: "800 000 Coin",
         onClick: () => {
-          UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+          onOpenModal("boosts", { boost: boostsInfo[3] });
         },
       },
       {
@@ -134,8 +163,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Recharning Speed",
         description: "5 Energy",
         onClick: () => {
-          onOpenModal("boosts", {boost: boostsInfo[4]})
-          UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+          onOpenModal("boosts", { boost: boostsInfo[4] });
         },
       },
       {
@@ -143,11 +171,11 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Tap Bot",
         description: "100 000 Coin in 4 hours",
         onClick: () => {
-          UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+          onOpenModal("boosts", { boost: boostsInfo[5] });
         },
       },
     ],
-    [],
+    [boostsInfo],
   );
 
   return (

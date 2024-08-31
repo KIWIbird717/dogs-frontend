@@ -20,9 +20,10 @@ export interface IBoost {
   icon: ReactNode;
   title: string
   info: string,
-  description: string
+  description?: string
   price?: number
   buttonTitle: string
+  onClick: () => Promise<void>
 }
 
 export interface IModalData {
