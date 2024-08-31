@@ -27,7 +27,7 @@ const players: IUserSlice[] = [
     lastDailyReward: {
       date: new Date(),
       value: 0,
-      _id: "0"
+      _id: "0",
     },
     //imageUrl: string
     energyLimit: 0,
@@ -37,7 +37,7 @@ const players: IUserSlice[] = [
     tapMultiplication: 0,
     telegram_id: 0,
     //imageUrl: string
-currentBoost: 0,
+    currentBoost: 0,
     _id: 0,
     __v: 0,
     balance: 0,
@@ -50,7 +50,8 @@ currentBoost: 0,
     username: "bot2",
     doneTask: [],
     friends: [],
-  }, {
+  },
+  {
     age: null,
     country: null,
     guild: null,
@@ -59,7 +60,7 @@ currentBoost: 0,
     lastDailyReward: {
       date: new Date(),
       value: 0,
-      _id: "0"
+      _id: "0",
     },
     //imageUrl: string
     energyLimit: 0,
@@ -82,7 +83,7 @@ currentBoost: 0,
     username: "bot2",
     doneTask: [],
     friends: [],
-  }
+  },
 ];
 
 interface IInviteFriendsProps {}
@@ -107,7 +108,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
     >
       <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
-      <div className={"w-full h-full flex flex-col gap-4 overflow-y-auto"}>
+      <div className={"flex h-full w-full flex-col gap-4 overflow-y-auto"}>
         <InviteBanner />
 
         <div className={"z-[10] h-[56px] w-full"}>

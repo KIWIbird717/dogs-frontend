@@ -69,7 +69,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
 
   const { user } = useUser();
 
-  console.log({user});
+  console.log({ user });
 
   const { _id, guildName } = user;
 

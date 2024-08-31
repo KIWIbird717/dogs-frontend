@@ -15,7 +15,7 @@ import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 interface IBoostPageProps {}
 
 const BoostPage: NextPage<IBoostPageProps> = () => {
-  const { boosts, maxBoost, onMaxBoost,  } = useClicker(true);
+  const { boosts, maxBoost, onMaxBoost } = useClicker(true);
 
   return (
     <View
