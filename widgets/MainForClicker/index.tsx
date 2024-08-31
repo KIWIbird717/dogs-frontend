@@ -44,8 +44,6 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
       <Header />
 
-      <Button onClick={() => push("/onboarding")}>sss</Button>
-
       <div className={"flex h-full flex-col justify-between gap-8"}>
         <div className={"flex w-full flex-col gap-8"}>
           <div className={"flex w-full flex-col gap-6"}>

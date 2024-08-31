@@ -12,7 +12,7 @@ const MainPage: NextPage<IMainPageProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-[21px] bg-gradient-accent-center pt-6"
+      className="relative flex h-screen overflow-hidden w-full flex-col gap-[21px] bg-gradient-accent-center pt-6"
     >
       <Gradient1 className={"absolute top-0"} />
       <Gradient2 className={"absolute -bottom-[100px] z-[1]"} />

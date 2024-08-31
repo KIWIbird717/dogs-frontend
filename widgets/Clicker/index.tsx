@@ -26,16 +26,16 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
   }, [level]);
 
   return (
-    <div className={"flex w-full justify-center"}>
+    <div className={"flex w-full h-full justify-center"}>
       <Button
         onClick={handleClick}
         className={
-          "h-full max-h-[296px] w-full max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
+          "max-h-[296px] max-w-[296px] h-fit  w-fit rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
         } /*h-[296px] w-[296px]*/
       >
         <div
           className={
-            "relative flex h-full w-full items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
+            "relative flex max-h-[264px] max-w-[264px]  items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
           }
         >
           <Image
