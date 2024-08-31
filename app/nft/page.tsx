@@ -10,7 +10,7 @@ const NftPage: NextPage<INftPageProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col items-center justify-center bg-gradient-background px-[17px]"
+      className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-background px-[17px]"
     >
       <DuckBackground isNftPage />
       <ModalNft />

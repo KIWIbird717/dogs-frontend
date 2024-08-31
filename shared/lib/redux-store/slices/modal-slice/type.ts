@@ -16,8 +16,17 @@ export interface ITask {
   isClaim?: boolean;
 }
 
+export interface IBoost {
+  title: string
+  info: string,
+  description: string
+  price?: number
+  buttonTitle: string
+}
+
 export interface IModalData {
   task: ITask;
+  boost: IBoost;
 }
 
 export interface IModelSlice {

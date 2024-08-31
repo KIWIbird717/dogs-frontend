@@ -38,7 +38,12 @@ const players: IUserSlice[] = [
     telegram_id: 0,
     //imageUrl: string
     currentBoost: 0,
-    _id: 0,
+    eneryTankLeft: 0,
+    lastTap: new Date(),
+    rechargeEnergy: null,
+    turboBonusLeft: null,
+    turboBoostExpired: null,
+    _id: "0",
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -71,7 +76,12 @@ const players: IUserSlice[] = [
     telegram_id: 0,
     //imageUrl: string
 
-    _id: 1,
+    eneryTankLeft: 0,
+    lastTap: new Date(),
+    rechargeEnergy: null,
+    turboBonusLeft: null,
+    turboBoostExpired: null,
+    _id: "1",
     __v: 0,
     balance: 0,
     breedKey: "Husky",
@@ -104,7 +114,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-y-hidden px-4 pt-6"
+      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
       <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
