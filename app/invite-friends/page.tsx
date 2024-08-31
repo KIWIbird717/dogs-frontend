@@ -55,11 +55,6 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
-    lastTap: null,
-    eneryTankLeft: null,
-    rechargeEnergy: null,
-    turboBonusLeft: null,
-    turboBoostExpired: null,
   },
   {
     age: null,
@@ -98,11 +93,6 @@ const players: IUserSlice[] = [
     username: "bot2",
     doneTask: [],
     friends: [],
-    lastTap: null,
-    eneryTankLeft: null,
-    rechargeEnergy: null,
-    turboBonusLeft: null,
-    turboBoostExpired: null,
   },
 ];
 
