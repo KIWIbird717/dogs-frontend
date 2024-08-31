@@ -2,7 +2,10 @@
 
 import { FC, ReactNode, useEffect, useState } from "react";
 import { OnboardingHeader } from "@/widgets/onboardingHeader";
-import OnBoardingImg from "@/public/images/onboarding.png";
+import OnboardingImg1 from "@/public/images/onboarding/onboarding1.png";
+import OnboardingImg2 from "@/public/images/onboarding/onboarding1.png";
+import OnboardingImg3 from "@/public/images/onboarding/onboarding3.png";
+import OnboardingImg4 from "@/public/images/onboarding/onboarding4.png";
 import DuckImg from "@/public/images/duck.png";
 import { OnBoardingFooter } from "@/widgets/onboardingFooter";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -33,7 +36,7 @@ const headers: HeadersType[] = [
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>with every tap</span>
       </Typography>
     ),
-    image: OnBoardingImg,
+    image: OnboardingImg1,
   },
   {
     id: 1,
@@ -51,7 +54,7 @@ const headers: HeadersType[] = [
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>more coins</span>
       </Typography>
     ),
-    image: OnBoardingImg,
+    image: OnboardingImg2,
   },
   {
     id: 2,
@@ -69,7 +72,7 @@ const headers: HeadersType[] = [
         </span>
       </Typography>
     ),
-    image: DuckImg,
+    image: OnboardingImg3,
   },
   {
     id: 3,
@@ -84,7 +87,7 @@ const headers: HeadersType[] = [
         <span className={"text-[28px] font-normal leading-8 text-blue-800"}>maximum bonuses!</span>
       </Typography>
     ),
-    image: DuckImg,
+    image: OnboardingImg4,
   },
   {
     id: 4,
@@ -146,12 +149,11 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   return (
     <>
       <div className={"z-[10] flex w-full flex-col items-center gap-[5.582vw]"}>
-        {" "}
         {/*gap-6*/}
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
-            className={"relative flex justify-center"}
+            className="relative flex justify-center max-w-full max-h-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -172,7 +174,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
               width={100}
               height={100}
               className={twMerge(
-                "max-h-full max-w-full",
+                "max-h-[398px] max-w-[398px]",
                 step === 4 && "max-h-[346px] max-w-[346px]",
               )}
             />
