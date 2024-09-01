@@ -62,7 +62,7 @@ export namespace UsersService {
   /**
    * GET /users/bonus/daily
    */
-  export const useBonusDaily = () => {
+  export const setBonusDaily = () => {
     return serverApi.post("/users/bonus/daily");
   };
 }
