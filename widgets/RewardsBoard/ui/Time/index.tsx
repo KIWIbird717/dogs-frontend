@@ -6,27 +6,30 @@ import { UserApiTypes } from "@/shared/lib/services/users/types";
 
 interface ITimeProps {
   onToggleDisabled: (disabled: boolean) => void;
-  daily: UserApiTypes.DailyRewardResponse | null;
+  timeStamp: number;
   titleCompleted: ReactNode
   titleUnCompleted: ReactNode,
+  key: string
 }
 
 export const Time: FC<ITimeProps> = (
   {
     titleCompleted,
-    daily,
+    timeStamp,
+    key,
     onToggleDisabled,
-    titleUnCompleted
-  }
+    titleUnCompleted,
+  },
 ) => {
   return (
     <div className={"flex w-fit gap-2"}>
       <div className={"flex w-full items-center justify-end"}>
         <CountDownWrapper onToggleDisabled={onToggleDisabled}
-                          daily={daily}
+                          key={key}
                           titleCompleted={titleCompleted}
                           titleUnCompleted={titleUnCompleted}
                           className={"text-[13px] leading-4 font-normal text-right"}
+                          timeStamp={timeStamp}
         />
       </div>
       <div className={"flex items-center"}>

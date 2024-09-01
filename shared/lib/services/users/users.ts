@@ -60,9 +60,22 @@ export namespace UsersService {
     return serverApi.get<UserApiTypes.DailyRewardResponse>("/users/bonus/daily");
   };
   /**
-   * GET /users/bonus/daily
+   * POST /users/bonus/daily
    */
   export const setBonusDaily = () => {
     return serverApi.post("/users/bonus/daily");
+  };
+
+  /**
+   * GET /users/bonus/friend
+   */
+  export const getBonusFriend = () => {
+    return serverApi.get<UserApiTypes.BonusFriendResponse>("/users/bonus/friend");
+  };
+  /**
+   * POST /users/bonus/friend
+   */
+  export const setBonusFriend = () => {
+    return serverApi.post("/users/bonus/friend");
   };
 }
