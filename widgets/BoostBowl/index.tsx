@@ -37,83 +37,89 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
-
 export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const { onOpenModal } = useModal();
 
-  const boostsInfo: IBoost[] = useMemo(() => [
-    {
-      icon: <BoostImg />,
-      title: "Turbo Bowl",
-      info: `Uses left ${user.turboBonusLeft}/3`,
-      description: "Your tap gives you a lot more coins than you think.",
-      buttonTitle: "Choose Free",
-      onClick: async () => {
-        if (!user.turboBonusLeft) return;
-        dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
-        // temp value
-        dispatch(
-          UserSlice.updateUser({
-            turboBoostExpired: new Date(new Date().getTime() + 0.5 * 60 * 60 * 1000),
-          }),
-        );
-        const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
+  const boostsInfo: IBoost[] = useMemo(
+    () => [
+      {
+        icon: <BoostImg />,
+        title: "Turbo Bowl",
+        info: `Uses left ${user.turboBonusLeft}/3`,
+        description: "Your tap gives you a lot more coins than you think.",
+        buttonTitle: "Choose Free",
+        onClick: async () => {
+          if (!user.turboBonusLeft) return;
+          dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
+          // temp value
+          dispatch(
+            UserSlice.updateUser({
+              turboBoostExpired: new Date(new Date().getTime() + 0.5 * 60 * 60 * 1000),
+            }),
+          );
+          const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
 
-        dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+          dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+        },
       },
-    },
-    {
-      icon: <FullTankImg />,
-      title: "FullTank",
-      info: `${user.eneryTankLeft}/3 in day`,
-      buttonTitle: "Choose Free",
-      onClick: async () => {
-        if (maxBoost === boosts) return;
-        onMaxBoost();
-        await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+      {
+        icon: <FullTankImg />,
+        title: "FullTank",
+        info: `${user.eneryTankLeft}/3 in day`,
+        buttonTitle: "Choose Free",
+        price: 25000,
+        onClick: async () => {
+          if (maxBoost === boosts) return;
+          onMaxBoost();
+          await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+        },
       },
-    },
-    {
-      icon: <MultiTapImg />,
-      title: "Multitap",
-      info: "1 tap 20 energy",
-      buttonTitle: "Buy",
-      onClick: async () => {
-        await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+      {
+        icon: <MultiTapImg />,
+        title: "Multitap",
+        info: "1 tap 20 energy",
+        buttonTitle: "Buy",
+        price: 25000,
+        onClick: async () => {
+          await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+        },
       },
-    },
-    {
-      icon: <EnergyLimitImg />,
-      title: "Energy Limit",
-      info: "800 000 coin",
-      buttonTitle: "Buy",
-      onClick: async () => {
-        await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+      {
+        icon: <EnergyLimitImg />,
+        title: "Energy Limit",
+        info: "800 000 coin",
+        buttonTitle: "Buy",
+        price: 25000,
+        onClick: async () => {
+          await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+        },
       },
-    },
-    {
-      icon: <RechargingImg />,
-      title: "Recharging Speed",
-      info: "5 energy",
-      description: "Your tap gives you a lot more coins than you think.",
-      price: 25000,
-      buttonTitle: "Buy",
-      onClick: async () => {
-        await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
-      }
-    },
-    {
-      icon: <TapBotImg />,
-      title: "Tap Bot",
-      info: "100 000 Coin in 4 hours",
-      buttonTitle: "Buy",
-      onClick: async () => {
-        await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
-      }
-    },
-  ], [boosts, maxBoost, onMaxBoost, user.eneryTankLeft, user.turboBonusLeft]);
+      {
+        icon: <RechargingImg />,
+        title: "Recharging Speed",
+        info: "5 energy",
+        description: "Your tap gives you a lot more coins than you think.",
+        price: 25000,
+        buttonTitle: "Buy",
+        onClick: async () => {
+          await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+        },
+      },
+      {
+        icon: <TapBotImg />,
+        title: "Tap Bot",
+        info: "100 000 Coin in 4 hours",
+        buttonTitle: "Buy",
+        price: 25000,
+        onClick: async () => {
+          await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+        },
+      },
+    ],
+    [boosts, maxBoost, onMaxBoost, user.eneryTankLeft, user.turboBonusLeft],
+  );
 
   const firstBowlItems: BoostBowlItemType[] = useMemo(
     () => [

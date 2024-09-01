@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useState } from "react";
+import { FC, MouseEvent, TouchEvent, TouchEventHandler, useEffect, useState } from "react";
 import { Button } from "@/shared/ui/Button/Button";
 import { AnimatePresence } from "framer-motion";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -11,7 +11,7 @@ import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface IClickerProps {
-  handleClick: (event: MouseEvent) => void;
+  handleClick: TouchEventHandler<HTMLButtonElement>;
   clickEffects: ClickEffect[];
   level: number;
   tabValue: number;
@@ -26,16 +26,17 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
   }, [level]);
 
   return (
-    <div className={"flex w-full h-full justify-center"}>
+    <div className={"flex h-full w-full justify-center"}>
       <Button
-        onClick={handleClick}
+        // onClick={handleClick}
+        onTouchStart={handleClick}
         className={
-          "max-h-[296px] max-w-[296px] h-fit  w-fit rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
+          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
         } /*h-[296px] w-[296px]*/
       >
         <div
           className={
-            "relative flex max-h-[264px] max-w-[264px]  items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
+            "relative flex max-h-[264px] max-w-[264px] items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
           }
         >
           <Image

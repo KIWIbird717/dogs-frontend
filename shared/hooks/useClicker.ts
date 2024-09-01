@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { MouseEvent, TouchEvent, useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
@@ -22,7 +22,6 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const { energyLimit, currentBoost, turboBoostExpired } = useAppSelector((state) => state.user);
 
-  console.log({ turboBoostExpired });
   const isTurboAvailable =
     turboBoostExpired && new Date().getTime() < new Date(turboBoostExpired).getTime();
 
@@ -112,18 +111,24 @@ export const useClicker = (isSetInterval?: boolean) => {
   }, [isSetInterval, currentBoost, maxBoost, dispatch, setBoostsLS]);
 
   const handleClick = useCallback(
-    async (event: MouseEvent) => {
-      const { clientX, clientY, currentTarget } = event;
-      const { left, top } = currentTarget.getBoundingClientRect();
-      const x = clientX - left;
-      const y = clientY - top;
+    async (event: TouchEvent) => {
+      let newEffect: ClickEffect;
 
-      const newEffect: ClickEffect = { id: Date.now(), x, y };
+      Array.from({ length: event.touches.length }).map(async (_, index) => {
+        const { currentTarget } = event;
+        const { clientX, clientY } = event.touches.item(index);
+        const { left, top } = currentTarget.getBoundingClientRect();
 
-      setDateNow((prev) => [...prev, newEffect.id]);
-      setClickEffects((prev) => [...prev, newEffect]);
+        const x = clientX - left;
+        const y = clientY - top;
 
-      await onIncrementEarn(dateNow[0]);
+        newEffect = { id: Date.now(), x, y };
+
+        setDateNow((prev) => [...prev, newEffect.id]);
+        setClickEffects((prev) => [...prev, newEffect]);
+
+        await onIncrementEarn(dateNow[0]);
+      });
 
       setTimeout(() => {
         setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
