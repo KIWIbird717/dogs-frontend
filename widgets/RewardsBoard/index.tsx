@@ -12,7 +12,7 @@ interface IRewardsBoardProps {
 export const RewardsBoard: FC<IRewardsBoardProps> = () => {
   const {
     daily,
-    claimDailyReward,
+    onClaimDailyReward,
     isDisabled,
     onToggleDisabled
   } = useDailyReward()
@@ -28,7 +28,8 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
         <Time titleUnCompleted={<>Available <br/> at</>}
               titleCompleted={<>Available <br/> at <br/> NOW</>}
               onToggleDisabled={onToggleDisabled}
-              daily={daily}
+              timeStamp={daily?.timestamp!}
+              key={String(daily?.nextLevel)}
         />
       </div>
 
@@ -38,12 +39,13 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
         variant={"primary"}
         disabled={isDisabled}
         className={"h-[48px] flex gap-1 items-center"}
-        onClick={claimDailyReward}
+        onClick={onClaimDailyReward}
       >
-        <CountDownWrapper daily={daily}
+        <CountDownWrapper timeStamp={daily?.timestamp!}
                           onToggleDisabled={onToggleDisabled}
                           titleCompleted={"Claim"}
                           titleUnCompleted={"Claim at"}
+                          key={String(daily?.nextLevel)}
         />
       </Button>
     </div>

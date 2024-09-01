@@ -6,10 +6,11 @@ import { twMerge } from "tailwind-merge";
 
 interface ICountDownWrapperProps {
   onToggleDisabled: (disabled: boolean) => void;
-  daily: UserApiTypes.DailyRewardResponse | null;
+  timeStamp: number;
   titleCompleted: ReactNode,
   titleUnCompleted: ReactNode,
   className?: string
+  key: string
 }
 
 type IRendererCountDown = {
@@ -22,10 +23,11 @@ type IRendererCountDown = {
 export const CountDownWrapper: FC<ICountDownWrapperProps> = (
   {
     onToggleDisabled,
-    daily,
+    timeStamp,
     titleUnCompleted,
     titleCompleted,
-    className
+    className,
+    key
   },
 ) => {
   const renderer = ({ hours, minutes, seconds, completed }: IRendererCountDown) => {
@@ -50,10 +52,10 @@ export const CountDownWrapper: FC<ICountDownWrapperProps> = (
 
   return (
     <Countdown
-      date={Date.now() + daily?.timestamp!}
+      date={Date.now() + timeStamp}
       renderer={renderer}
       className={"!text-[18px] !font-bold !leading-6 !text-white-900"}
-      key={daily?.currentLevel}
+      key={key}
     />
   );
 };

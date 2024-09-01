@@ -3,30 +3,30 @@ import { UserApiTypes } from "@/shared/lib/services/users/types";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 
-export const useDailyReward = () => {
-  const [daily, setDaily] = useState<UserApiTypes.DailyRewardResponse | null>(null);
+export const useBonusFriend = () => {
+  const [bonus, setBonus] = useState<UserApiTypes.BonusFriendResponse | null>(null);
   const [isDisabled, setIsDisabled] = useState(false);
-  const logger = new Logger("useDailyReward");
+  const logger = new Logger("useBonusFriend");
 
-  useEffect(() => {
-    (async () => {
-      await getDailyReward();
-    })();
-  }, []);
-
-  const getDailyReward = async () => {
+  const getBonusFriend = async () => {
     try {
-      const { data } = await UsersService.getBonusDaily();
-      setDaily(data);
+      const { data } = await UsersService.getBonusFriend();
+      setBonus(data);
     } catch (error) {
       logger.error(error);
     }
   };
 
-  const onClaimDailyReward = async () => {
+  useEffect(() => {
+    (async () => {
+      await getBonusFriend();
+    })();
+  }, []);
+
+  const onClaimBonusFriend = async () => {
     try {
-      await UsersService.setBonusDaily();
-      await getDailyReward();
+      await UsersService.setBonusFriend();
+      await getBonusFriend();
     } catch (error) {
       logger.error(error);
     }
@@ -35,11 +35,11 @@ export const useDailyReward = () => {
   const onToggleDisabled = (disabled: boolean) => setIsDisabled(disabled);
 
   return {
-    daily,
+    bonus,
     isDisabled,
 
-    getDailyReward,
-    onClaimDailyReward,
+    getBonusFriend,
+    onClaimBonusFriend,
     onToggleDisabled
   }
 }

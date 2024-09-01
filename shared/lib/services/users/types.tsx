@@ -57,4 +57,10 @@ export namespace UserApiTypes {
     nextLevel: number
     timestamp: number
   }
+
+  export type BonusFriendResponse = {
+    nextUsage: Date,
+    amount: 0
+
+  }
 }
