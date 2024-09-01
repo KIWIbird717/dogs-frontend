@@ -27,11 +27,10 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
 
   return (
     <div className={"flex h-full w-full justify-center"}>
-      <Button
-        // onClick={handleClick}
-        onTouchStart={handleClick}
+      <button
+        onTouchEnd={handleClick}
         className={
-          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
+          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec transition-all duration-[10ms] active:scale-95"
         } /*h-[296px] w-[296px]*/
       >
         <div
@@ -68,7 +67,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
             ))}
           </AnimatePresence>
         </div>
-      </Button>
+      </button>
     </div>
   );
 };

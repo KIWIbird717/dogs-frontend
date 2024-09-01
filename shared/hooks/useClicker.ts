@@ -114,9 +114,10 @@ export const useClicker = (isSetInterval?: boolean) => {
     async (event: TouchEvent) => {
       let newEffect: ClickEffect;
 
-      Array.from({ length: event.touches.length }).map(async (_, index) => {
+      console.log(event);
+      for (let index = 0; index <= event.touches.length; index++) {
         const { currentTarget } = event;
-        const { clientX, clientY } = event.touches.item(index);
+        const { clientX, clientY } = event.changedTouches.item(index);
         const { left, top } = currentTarget.getBoundingClientRect();
 
         const x = clientX - left;
@@ -128,7 +129,7 @@ export const useClicker = (isSetInterval?: boolean) => {
         setClickEffects((prev) => [...prev, newEffect]);
 
         await onIncrementEarn(dateNow[0]);
-      });
+      }
 
       setTimeout(() => {
         setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
