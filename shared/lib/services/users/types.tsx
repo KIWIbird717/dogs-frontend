@@ -49,4 +49,12 @@ export namespace UserApiTypes {
     RECHAGE_SPEED: number;
     TAP_BOT: Date;
   };
+
+  export type DailyRewardResponse = {
+    currentLevel: number
+    nextBonus: number
+
+    nextLevel: number
+    timestamp: number
+  }
 }

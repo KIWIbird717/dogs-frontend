@@ -3,9 +3,15 @@ import { twMerge } from "tailwind-merge";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import TickIcon from "@/public/images/svg/breed/tick.svg";
 
-interface IDaysProps {}
+interface IDaysProps {
+  level: number
+}
 
-export const Days: FC<IDaysProps> = () => {
+export const Days: FC<IDaysProps> = (
+  {
+    level
+  }
+) => {
   return (
     <div className={"flex w-full gap-2"}>
       {Array.from(Array(7)).map((_, index) => {
@@ -17,7 +23,7 @@ export const Days: FC<IDaysProps> = () => {
             }
           >
             <div className={"flex h-full w-full items-center justify-center"}>
-              <TickIcon className={twMerge(index > 2 && "[&>path]:fill-black-400")} />
+              <TickIcon className={twMerge(index > level - 1 && "[&>path]:fill-black-400")} />
             </div>
             <div className={"flex h-full max-h-[12px] items-center justify-center bg-black-400"}>
               <Typography

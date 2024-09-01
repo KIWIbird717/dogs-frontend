@@ -52,4 +52,17 @@ export namespace UsersService {
       boostName,
     });
   };
+
+  /**
+   * GET /users/bonus/daily
+   */
+  export const getBonusDaily = () => {
+    return serverApi.get<UserApiTypes.DailyRewardResponse>("/users/bonus/daily");
+  };
+  /**
+   * GET /users/bonus/daily
+   */
+  export const useBonusDaily = () => {
+    return serverApi.post("/users/bonus/daily");
+  };
 }
