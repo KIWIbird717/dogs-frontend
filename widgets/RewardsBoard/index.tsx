@@ -5,6 +5,8 @@ import { Time } from "@/widgets/RewardsBoard/ui/Time";
 import { Days } from "@/widgets/RewardsBoard/ui/Days";
 import { CountDownWrapper } from "@/shared/ui/CountDownWrapper";
 import { useDailyReward } from "@/widgets/RewardsBoard/hooks/useDailyReward";
+import { twMerge } from "tailwind-merge";
+import { Typography } from "@/shared/ui/Typography/Typography";
 
 interface IRewardsBoardProps {
 }
@@ -41,12 +43,19 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
         className={"h-[48px] flex gap-1 items-center"}
         onClick={onClaimDailyReward}
       >
-        <CountDownWrapper timeStamp={daily?.timestamp!}
-                          onToggleDisabled={onToggleDisabled}
-                          titleCompleted={"Claim"}
-                          titleUnCompleted={"Claim at"}
-                          key={String(daily?.nextLevel)}
+        {daily
+          ? <CountDownWrapper timeStamp={daily?.timestamp!}
+                           onToggleDisabled={onToggleDisabled}
+                           titleCompleted={"Claim"}
+                           titleUnCompleted={"Claim at"}
+                           key={String(daily?.nextLevel)}
         />
+          : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
+                        tag={"p"}
+          >
+            Claim
+          </Typography>
+        }
       </Button>
     </div>
   );

@@ -28,8 +28,9 @@ export const BottomInviteBlock: FC<IBottomInviteBlockProps> = () => {
         disabled={bonus?.amount === 0 || isDisabled}
         onClick={onClaimBonusFriend}
       >
-        {
-          bonus?.amount !== 0 ?
+        {bonus
+          ? bonus?.amount !== 0
+            ?
             <CountDownWrapper timeStamp={timeStamp}
                               onToggleDisabled={onToggleDisabled}
                               titleCompleted={"Claim"}
@@ -41,6 +42,11 @@ export const BottomInviteBlock: FC<IBottomInviteBlockProps> = () => {
             >
               You don&apos;t have any friends
             </Typography>
+          : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
+                        tag={"p"}
+          >
+            Claim
+          </Typography>
         }
 
       </Button>
