@@ -65,23 +65,26 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     const { data } = await StatsService.getLeagueLeaders({
       start: pageParam,
       pagination: 50,
-      level: currentSlide + 1,
+      league: currentSlide + 1,
     });
 
     return data;
   };
 
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetching, isLoading } = useInfiniteQuery({
     queryKey: ["statsUsersByLevel", currentSlide],
     queryFn: fetchUsers,
     initialPageParam: 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      return lastPage.length > 0 ? lastPageParam + 1 : undefined;
+      return lastPage.leaders.length > 0 ? lastPageParam + 1 : undefined;
     },
     staleTime: 5 * 60 * 1000,
   });
 
-  const flattenedData = useMemo(() => (data ? data.pages.flatMap((page) => page) : []), [data]);
+  const flattenedData = useMemo(
+    () => (data ? data.pages.flatMap((page) => page.leaders) : []),
+    [data, currentSlide],
+  );
 
   const observer = useRef<IntersectionObserver>();
 
@@ -151,7 +154,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         >
           <GuildPlayerItem
             id={currentUser._id}
-            title={currentUser.first_name}
+            title={currentUser.username}
             league={currentUser ? guildName! : ""}
             avatarUrl={""}
             coins={currentUser.balance}

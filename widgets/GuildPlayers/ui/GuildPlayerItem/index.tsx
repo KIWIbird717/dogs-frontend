@@ -53,7 +53,11 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
         <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>
           {numberGuild}
         </Typography>
-        <div className={"relative flex h-[48px] w-[48px] items-center justify-center rounded-xl"}>
+        <div
+          className={
+            "relative flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-xl"
+          }
+        >
           <Image
             src={avatarUrl || AvatarImage}
             alt={`guild-${index}`}
@@ -72,16 +76,27 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
         </div>
 
         <div className={"flex h-full flex-col justify-center gap-1"}>
-          <Typography tag={"h3"}>{title}</Typography>
+          <Typography tag={"h3"} className="line-clamp-1">
+            {title}
+          </Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
             Pack: &nbsp;
-            <span className={"text-[15px] font-bold leading-[18px] text-white-900"}>{league}</span>
+            <span className={"text-[15px] font-bold leading-[18px] text-white-900"}>
+              {league ? league : "-"}
+            </span>
           </Typography>
         </div>
       </div>
 
       <div className={"flex h-full min-w-[89px] items-center gap-2"}>
-        <TotalCoin coin={coins as number} tag={"h4"} size={"middle"} info={numeral} />
+        <TotalCoin
+          coin={Intl.NumberFormat("en-US", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(typeof coins === "string" ? parseInt(coins) : coins)}
+          tag={"h4"}
+          size={"middle"}
+        />
       </div>
     </Button>
   );

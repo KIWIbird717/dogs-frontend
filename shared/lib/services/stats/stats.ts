@@ -1,7 +1,6 @@
 import { serverApi } from "../../axios";
 import { StatsApiTypes } from "@/shared/lib/services/stats/types";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
-import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
 export namespace StatsService {
   /**
@@ -15,9 +14,9 @@ export namespace StatsService {
    * GET /stats/league-leaders
    */
   export const getLeagueLeaders = (dto: StatsApiTypes.UsersByLevelDto) => {
-    return serverApi.get<StatsApiTypes.LeagueLeadersResponse>(
-      `/stats/league-leaders?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
-    );
+    return serverApi.get<StatsApiTypes.LeagueLeadersResponse>(`/stats/league-leaders`, {
+      params: dto,
+    });
   };
 
   /**

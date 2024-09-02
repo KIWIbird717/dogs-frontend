@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { twMerge } from "tailwind-merge";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { GameServiceTypes } from "@/shared/lib/services/game/types";
+import { StatsApiTypes } from "@/shared/lib/services/stats/types";
 
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: UserSlice.IUserSlice[];
+  players: StatsApiTypes.LeagueLeadersResponse["leaders"];
 }
 
 export interface IUserPlayer {
@@ -39,8 +41,8 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
             <GuildPlayerItem
               key={index}
               id={index}
-              title={player.first_name}
-              league={player.guildName!}
+              title={player.username}
+              league={player.guild || "-"}
               avatarUrl={""}
               coins={player.balance}
               index={index}

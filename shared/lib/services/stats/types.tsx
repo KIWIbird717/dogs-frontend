@@ -8,7 +8,7 @@ import { UserApiTypes } from "../users/types";
  */
 export namespace StatsApiTypes {
   export type UsersByLevelDto = {
-    level: number;
+    league: number;
     pagination: number;
     start: number;
     balance?: number;
@@ -24,5 +24,11 @@ export namespace StatsApiTypes {
     myPlace: number;
     myLeague: GameServiceTypes.LeagueLevels;
     statusBar: LeaguesStatusBar | null;
+    leaders: {
+      _id: string;
+      username: UserApiTypes.UserDto["username"];
+      balance: UserApiTypes.UserDto["balance"];
+      guild?: UserApiTypes.UserDto["guild"];
+    }[];
   };
 }

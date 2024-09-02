@@ -23,7 +23,7 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
 }) => {
   const { push } = useRouter();
 
-  const handlerRedirect = () => push("stats/1");
+  const handlerRedirect = () => {};
 
   return (
     <div className={"h-[304px] w-full"}>
