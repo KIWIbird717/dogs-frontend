@@ -3,12 +3,23 @@
 import { FC, useEffect } from "react";
 import BoneIcon from "@/public/images/svg/bone.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import Lottie from "react-lottie";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/shared/hooks/useUser";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
+import { setGameInfo } from "./shared/func/setGameInfo";
+import Lottie from "react-lottie";
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 interface IModalLoadingProps {}
 
@@ -16,18 +27,10 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
   const { push } = useRouter();
   const { getMe } = useUser();
   const telegram = useTelegram();
+  const dispatch = useAppDispatch();
   const logger = new Logger("ModalLoading");
 
-  logger.debug(telegram);
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  logger.debug({ telegram });
 
   useEffect(() => {
     /**
@@ -40,6 +43,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
     (async () => {
       try {
         await getMe();
+        await setGameInfo(dispatch); // устанавливаем данные об игре
         push("/main");
       } catch (error) {
         push("/onboarding");

@@ -4,6 +4,7 @@ import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSli
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
+import { GameSlice } from "./slices/game-slice/gameSlice";
 
 const persistConfig = {
   key: "root",
@@ -18,6 +19,7 @@ export const store = configureStore({
     user: persistedUserReducer,
     modal: ModalSlice.modalReducer,
     stats: StatsSlice.statsReducer,
+    game: GameSlice.gameReducer,
   },
   /**
    * You cant set up more middlewares
