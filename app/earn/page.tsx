@@ -18,6 +18,8 @@ import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import useSWR from "swr";
+import { TasksService } from "@/shared/lib/services/tasks/stats";
 
 interface IEarnPageProps {}
 
@@ -124,6 +126,8 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const [toggle, setToggle] = useState<ToggleCategoryType>("rewards");
   const onSetRewards = () => setToggle("rewards");
   const onSetTasks = () => setToggle("tasks");
+
+  const {data} = useSWR("/task", TasksService.getTasks)
 
   return (
     <View
