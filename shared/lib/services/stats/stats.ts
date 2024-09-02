@@ -12,11 +12,11 @@ export namespace StatsService {
   };
 
   /**
-   * GET /stats/users-by-level
+   * GET /stats/league-leaders
    */
-  export const getStatsUsersByLevel = (dto: StatsApiTypes.UsersByLevelDto) => {
+  export const getLeagueLeaders = (dto: StatsApiTypes.UsersByLevelDto) => {
     return serverApi.get<UserSlice.IUserSlice[]>(
-      `/stats/users-by-level?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
+      `/stats/league-leaders?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
     );
   };
 
