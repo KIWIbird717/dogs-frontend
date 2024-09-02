@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -18,9 +18,25 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
   const { balance } = user;
   const { isOpen, data, type } = modalData;
 
+  const [value, setValue] = useState<number>(data?.boost?.value!);
+
+  useEffect(() => {
+    if (data?.boost?.value) {
+      setValue(data.boost.value);
+    }
+  }, [data?.boost]);
+
   const isModalOpen = isOpen && type === "boosts";
 
   const formattedPrice = formatNumber(data ? data?.boost?.price! : 0);
+
+  const infoTurbo = data?.boost?.key === "turbo" && `${value}/3 available`;
+  const infoFullTank = data?.boost?.key === "full-tank" && `${value}/3 in day`;
+  const info = data?.boost?.key === "turbo"
+    ? infoTurbo
+    : data?.boost?.key === "full-tank"
+      ? infoFullTank
+      : data?.boost?.info;
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -32,6 +48,9 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
 
   const onClickHandler = () => {
     data?.boost?.onClick();
+    if (data?.boost?.value) {
+      setValue(value - 1);
+    }
     onClose();
   };
 
@@ -63,7 +82,6 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
               </Button>
 
               <div>
-                {/*TODO: Исправить размер на 32х32, когда реальные данные появятся*/}
                 {data?.boost?.icon}
               </div>
 
@@ -74,7 +92,7 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
                 {data?.boost?.title}
               </Typography>
               <Typography tag={"h2"} className={"font-normal text-white-900"}>
-                {data?.boost?.info}
+                {info}
               </Typography>
               {data?.boost?.description && <Typography tag={"h3"} className={"font-normal text-white-800"}>
                 {data.boost.description}

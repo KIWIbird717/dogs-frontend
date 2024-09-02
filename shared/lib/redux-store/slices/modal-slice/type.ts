@@ -22,6 +22,9 @@ export interface IBoost {
   info: string,
   description?: string
   price?: number
+  key?: "full-tank" | "turbo",
+  value?: number | null,
+  boosts?: number
   buttonTitle: string
   onClick: () => Promise<void>
 }

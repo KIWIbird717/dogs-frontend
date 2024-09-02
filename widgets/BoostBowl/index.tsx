@@ -50,6 +50,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         info: `Uses left ${user.turboBonusLeft}/3`,
         description: "Your tap gives you a lot more coins than you think.",
         buttonTitle: "Choose Free",
+        key: "turbo",
+        value: user.turboBonusLeft,
         onClick: async () => {
           if (!user.turboBonusLeft) return;
           dispatch(UserSlice.updateUser({ turboBonusLeft: user.turboBonusLeft - 1 }));
@@ -70,8 +72,11 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         info: `${user.eneryTankLeft}/3 in day`,
         buttonTitle: "Choose Free",
         price: 25000,
+        key: "full-tank",
+        value: user.eneryTankLeft,
+        boosts,
         onClick: async () => {
-          if (maxBoost === boosts) return;
+          if (maxBoost === boosts || user.eneryTankLeft === 0) return;
           onMaxBoost();
           await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
         },
