@@ -135,7 +135,16 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
         </div>
 
         {!isShowBonus && (
-          <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} players={players} />
+          <GuildPlayers
+            title={"Friends"}
+            classNameList={"pb-[190px]"}
+            players={players.map((player) => ({
+              _id: player._id,
+              username: player.username,
+              balance: player.balance,
+              guild: player.guild || "-",
+            }))}
+          />
         )}
         {isShowBonus && <Bonus />}
       </div>
