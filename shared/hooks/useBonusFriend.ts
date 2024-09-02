@@ -5,7 +5,7 @@ import { UsersService } from "@/shared/lib/services/users/users";
 
 export const useBonusFriend = () => {
   const [bonus, setBonus] = useState<UserApiTypes.BonusFriendResponse | null>(null);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const logger = new Logger("useBonusFriend");
 
   const getBonusFriend = async () => {

@@ -39,7 +39,7 @@ export const BottomInviteBlock: FC<IBottomInviteBlockProps> = () => {
             : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
                           tag={"p"}
             >
-              No friends
+              You don&apos;t have any friends
             </Typography>
         }
 

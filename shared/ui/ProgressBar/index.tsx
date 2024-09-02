@@ -37,6 +37,8 @@ export const ProgressBar: FC<IProgressBarProps> = ({ page = "main" }) => {
     }
   }, [page]);
 
+  console.log({percentage});
+
   return (
     <div className={twMerge(classNames.wrapper)}>
       <div style={{ width: `${percentage}%` }} className={twMerge(classNames.inner)} />

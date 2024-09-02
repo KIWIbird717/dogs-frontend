@@ -6,7 +6,7 @@ const levels = [
 export const getNextLevelValue = (level: number) => {
   const index = level - 1;
 
-  const nextLevelBalance = levels[level];
+  const nextLevelBalance = levels[level + 1];
   const currentLevelBalance = levels[index];
 
   return {
