@@ -10,7 +10,6 @@ import { useClicker } from "@/shared/hooks/useClicker";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
-import { useRouter } from "next/navigation";
 
 interface IMainForClickerProps {}
 

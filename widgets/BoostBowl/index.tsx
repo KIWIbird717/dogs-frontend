@@ -127,6 +127,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         icon: <EnergyIcon />,
         title: "Turbo",
         description: `${user.turboBonusLeft}/3 available`,
+        disabled: !user.turboBonusLeft,
         onClick: async () => {
           if (!user.turboBonusLeft) return;
           onOpenModal("boosts", { boost: boostsInfo[0] });
@@ -135,10 +136,10 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
       {
         icon: <BatteryIcon />,
         title: "Full Tank",
-        description: "3/3 in day",
-        disabled: maxBoost === boosts,
+        description: `${user.eneryTankLeft}/3 in day`,
+        disabled: maxBoost === boosts || user.eneryTankLeft === 0,
         onClick: () => {
-          if (maxBoost === boosts) return;
+          if (maxBoost === boosts || user.eneryTankLeft === 0) return;
           onOpenModal("boosts", { boost: boostsInfo[1] });
         },
       },

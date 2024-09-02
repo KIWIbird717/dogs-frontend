@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -9,17 +9,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { useUser } from "@/shared/hooks/useUser";
 
-interface IModalBoostsProps {}
+interface IModalBoostsProps {
+}
 
 export const ModalBoosts: FC<IModalBoostsProps> = () => {
   const { onClose, modalData } = useModal();
-  const {user} = useUser()
-  const {balance} = user
+  const { user } = useUser();
+  const { balance } = user;
   const { isOpen, data, type } = modalData;
 
   const isModalOpen = isOpen && type === "boosts";
 
-  const price =  formatNumber(data ? data?.boost?.price! : 0);
+  const formattedPrice = formatNumber(data ? data?.boost?.price! : 0);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -27,7 +28,12 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
     }
   };
 
-  const disabled = balance < data?.boost?.price!
+  const disabled = balance < data?.boost?.price!;
+
+  const onClickHandler = () => {
+    data?.boost?.onClick();
+    onClose();
+  };
 
   return (
     <AnimatePresence initial={true}>
@@ -84,7 +90,7 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
                 </Typography>
                 <div className={"flex items-center gap-1"}>
                   <TotalCoin
-                    coin={price}
+                    coin={formattedPrice}
                     isPlus
                     tag={"h2"}
                     size={"middle"}
@@ -96,9 +102,9 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
             </div>
             <div>
               <Button disabled={disabled}
-                variant={"deepBlue"}
-                className={"text-[18px] font-bold leading-6 text-white-900"}
-                onClick={data?.boost?.onClick}
+                      variant={"deepBlue"}
+                      className={"text-[18px] font-bold leading-6 text-white-900"}
+                      onClick={onClickHandler}
               >
                 {data?.boost?.buttonTitle}
               </Button>
