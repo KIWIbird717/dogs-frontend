@@ -1,3 +1,6 @@
+import { GameServiceTypes } from "../game/types";
+import { UserApiTypes } from "../users/types";
+
 /**
  * Partial - делать все типы внутри объекта необязательными
  * Omi - Исключение типа
@@ -9,5 +12,17 @@ export namespace StatsApiTypes {
     pagination: number;
     start: number;
     balance?: number;
+  };
+
+  type LeaguesStatusBar = {
+    balanceFrom: GameServiceTypes.League["requiredBalance"];
+    balanceTo: GameServiceTypes.League["requiredBalance"] | null;
+    currentBalance: UserApiTypes.UserDto["balance"];
+  };
+
+  export type LeagueLeadersResponse = {
+    myPlace: number;
+    myLeague: GameServiceTypes.LeagueLevels;
+    statusBar: LeaguesStatusBar | null;
   };
 }

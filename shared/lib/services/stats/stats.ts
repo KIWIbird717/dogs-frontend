@@ -15,7 +15,7 @@ export namespace StatsService {
    * GET /stats/league-leaders
    */
   export const getLeagueLeaders = (dto: StatsApiTypes.UsersByLevelDto) => {
-    return serverApi.get<UserSlice.IUserSlice[]>(
+    return serverApi.get<StatsApiTypes.LeagueLeadersResponse>(
       `/stats/league-leaders?level=${dto.level}&start=${dto.start}&pagination=${dto.pagination}`,
     );
   };
