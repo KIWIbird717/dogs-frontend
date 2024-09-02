@@ -33,7 +33,7 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
         />
       </div>
 
-      <Days level={daily?.currentLevel!} />
+      <Days level={daily?.currentLevel! || 0} />
 
       <Button
         variant={"primary"}

@@ -5,7 +5,7 @@ import { UsersService } from "@/shared/lib/services/users/users";
 
 export const useDailyReward = () => {
   const [daily, setDaily] = useState<UserApiTypes.DailyRewardResponse | null>(null);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const logger = new Logger("useDailyReward");
 
   useEffect(() => {
