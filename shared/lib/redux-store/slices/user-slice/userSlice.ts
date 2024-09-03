@@ -42,6 +42,9 @@ export namespace UserSlice {
     rechargeEnergy: number | null;
     turboBonusLeft: number | null;
     turboBoostExpired: Date | null;
+
+    league: number;
+    leagueLevel: number;
   };
 
   const initialState: IUserSlice = {
@@ -82,6 +85,9 @@ export namespace UserSlice {
     rechargeEnergy: null,
     turboBonusLeft: null,
     turboBoostExpired: null,
+
+    league: 0,
+    leagueLevel: 0,
   };
 
   export const userSlice = createSlice({
@@ -138,6 +144,9 @@ export namespace UserSlice {
         state.rechargeEnergy = action.payload.rechargeEnergy;
         state.turboBonusLeft = action.payload.turboBonusLeft;
         state.turboBoostExpired = action.payload.turboBoostExpired;
+
+        state.league = action.payload.league;
+        state.leagueLevel = action.payload.leagueLevel;
       },
       updateUser: (state, action: PayloadAction<Partial<IUserSlice>>) => {
         Object.assign(state, action.payload);

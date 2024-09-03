@@ -85,4 +85,11 @@ export namespace UsersService {
   export const setBonusFriend = () => {
     return serverApi.post("/users/bonus/friend");
   };
+
+  export const iAmFromInviteLink = (dto: UserApiTypes.IAmFromInviteLinkDto) => {
+    return serverApi.post<UserApiTypes.IAmFromInviteLinkResponse>(
+      "/users/i-am-from-invite-link",
+      dto,
+    );
+  };
 }

@@ -12,11 +12,12 @@ serverApi.interceptors.request.use((config) => {
 
   const initData = window.Telegram.WebApp.initData;
   const parsedTgInitData = parseTgInitData(initData);
+  console.log({ parsedTgInitData });
 
   if (!initData) return config;
 
   const serializedInitData = encodeURIComponent(JSON.stringify(parsedTgInitData.user));
-  console.log({ serializedInitData });
+
   config.headers.user = serializedInitData;
   return config;
 });

@@ -1,3 +1,5 @@
+import { UserSlice } from "../../redux-store/slices/user-slice/userSlice";
+
 /**
  * Partial - делать все типы внутри объекта необязательными
  * Omi - Исключение типа
@@ -51,24 +53,39 @@ export namespace UserApiTypes {
   };
 
   export type DailyRewardResponse = {
-    currentLevel: number
-    nextBonus: number
+    currentLevel: number;
+    nextBonus: number;
 
-    nextLevel: number
-    timestamp: number
-  }
+    nextLevel: number;
+    timestamp: number;
+  };
 
   export type BonusFriendResponse = {
-    nextUsage: Date,
-    amount: 0
-  }
+    nextUsage: Date;
+    amount: 0;
+  };
 
   export type MyFriendsResponse = {
-    username: string
-    balance: number
-    guild: null | string,
-    league: number,
-    breedKey: string,
-    level: number
-  }
+    username: string;
+    balance: number;
+    guild: null | string;
+    league: number;
+    breedKey: string;
+    level: number;
+  };
+
+  export type IAmFromInviteLinkDto = {
+    invitedByTgUserId: number;
+  };
+
+  export type IAmFromInviteLinkResponse = {
+    inviter: {
+      _id: UserSlice.Type["_id"];
+      username: UserSlice.Type["username"];
+      balance: UserSlice.Type["balance"];
+      level: UserSlice.Type["level"];
+      league: UserSlice.Type["league"];
+    };
+    timestamp: number;
+  };
 }
