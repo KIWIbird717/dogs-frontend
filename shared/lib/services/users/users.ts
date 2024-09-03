@@ -56,6 +56,13 @@ export namespace UsersService {
   /**
    * GET /users/bonus/daily
    */
+  export const getMyFriends = () => {
+    return serverApi.get<UserApiTypes.MyFriendsResponse[]>("/users/my-friends");
+  };
+
+  /**
+   * GET /users/bonus/daily
+   */
   export const getBonusDaily = () => {
     return serverApi.get<UserApiTypes.DailyRewardResponse>("/users/bonus/daily");
   };

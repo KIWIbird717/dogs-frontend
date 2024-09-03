@@ -5,23 +5,31 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { useRouter } from "next/navigation";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
 import { twMerge } from "tailwind-merge";
-import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import { GameServiceTypes } from "@/shared/lib/services/game/types";
 import { StatsApiTypes } from "@/shared/lib/services/stats/types";
+import { UserApiTypes } from "@/shared/lib/services/users/types";
 
 interface IGuildPlayersProps {
   title: string;
   classNameList?: string;
-  players: StatsApiTypes.LeagueLeadersResponse["leaders"];
+  friends?: UserApiTypes.MyFriendsResponse[]
+  leaders?: StatsApiTypes.LeagueLeadersResponse["leaders"];
 }
 
-export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
+export const GuildPlayers: FC<IGuildPlayersProps> = (
+  {
+    title,
+    classNameList,
+    friends,
+    leaders
+  }
+) => {
   const { push } = useRouter();
 
   const handleRedirect = (id: string | number) => {
     // push(`/guilds/${id}`)
   };
 
+  const items = friends ? friends : leaders
 
 
   return (
@@ -29,8 +37,8 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 pb-28", classNameList)}>
-        {players.length !== 0
-          ? players.map((player, index) => {
+        {items?.length !== 0
+          ? items?.map((player, index) => {
             return (
               <GuildPlayerItem
                 key={index}
@@ -48,7 +56,7 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
             <Typography className={twMerge("text-[20px] text-center font-bold leading-6 text-white-900")}
                         tag={"p"}
             >
-              There are no leaderboards
+              {friends ? "There are no friends" : "There are no leaderboards"}
             </Typography>
           </div>
         }

@@ -136,7 +136,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
       <div className={"flex flex-col gap-[20px] pb-[100px]"}>
         <GuildPlayers
           title={"Leaderboard Legue"}
-          players={flattenedData}
+          leaders={flattenedData}
           // classNameList={"pb-[190px]"}
           classNameList={"pb-[60px]"}
         />

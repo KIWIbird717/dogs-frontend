@@ -61,6 +61,14 @@ export namespace UserApiTypes {
   export type BonusFriendResponse = {
     nextUsage: Date,
     amount: 0
+  }
 
+  export type MyFriendsResponse = {
+    username: string
+    balance: number
+    guild: null | string,
+    league: number,
+    breedKey: string,
+    level: number
   }
 }

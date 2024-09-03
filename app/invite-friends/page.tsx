@@ -16,90 +16,96 @@ import { Bonus } from "@/widgets/Bonus";
 import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import IUserSlice = UserSlice.IUserSlice;
+import useSWR from "swr";
+import { UsersService } from "@/shared/lib/services/users/users";
 
-const players: IUserSlice[] = [
-  {
-    age: null,
-    country: null,
-    guild: null,
-    guildName: null,
-    lastDailyReward: {
-      date: new Date(),
-      value: 0,
-      _id: "0",
-    },
-    //imageUrl: string
-    energyLimit: 0,
-    friendBonusTaken: new Date(),
-    rechargeMultiplication: 0,
-    tapBotExpired: new Date(),
-    tapMultiplication: 0,
-    telegram_id: 0,
-    //imageUrl: string
-    currentBoost: 0,
-    eneryTankLeft: 0,
-    lastTap: new Date(),
-    rechargeEnergy: null,
-    turboBonusLeft: null,
-    turboBoostExpired: null,
-    _id: "0",
-    __v: 0,
-    balance: 0,
-    breedKey: "Husky",
-    earnPerHour: 0,
-    first_name: "Bot1",
-    lastOnline: new Date(),
-    level: 0,
-    touches: 0,
-    username: "bot2",
-    doneTask: [],
-    friends: [],
-  },
-  {
-    age: null,
-    country: null,
-    guild: null,
-    guildName: null,
-    currentBoost: 0,
-    lastDailyReward: {
-      date: new Date(),
-      value: 0,
-      _id: "0",
-    },
-    //imageUrl: string
-    energyLimit: 0,
-    friendBonusTaken: new Date(),
-    rechargeMultiplication: 0,
-    tapBotExpired: new Date(),
-    tapMultiplication: 0,
-    telegram_id: 0,
-    //imageUrl: string
+// const items: IUserSlice[] = [
+//   {
+//     age: null,
+//     country: null,
+//     guild: null,
+//     guildName: null,
+//     lastDailyReward: {
+//       date: new Date(),
+//       value: 0,
+//       _id: "0",
+//     },
+//     //imageUrl: string
+//     energyLimit: 0,
+//     friendBonusTaken: new Date(),
+//     rechargeMultiplication: 0,
+//     tapBotExpired: new Date(),
+//     tapMultiplication: 0,
+//     telegram_id: 0,
+//     //imageUrl: string
+//     currentBoost: 0,
+//     eneryTankLeft: 0,
+//     lastTap: new Date(),
+//     rechargeEnergy: null,
+//     turboBonusLeft: null,
+//     turboBoostExpired: null,
+//     _id: "0",
+//     __v: 0,
+//     balance: 0,
+//     breedKey: "Husky",
+//     earnPerHour: 0,
+//     first_name: "Bot1",
+//     lastOnline: new Date(),
+//     level: 0,
+//     touches: 0,
+//     username: "bot2",
+//     doneTask: [],
+//     friends: [],
+//   },
+//   {
+//     age: null,
+//     country: null,
+//     guild: null,
+//     guildName: null,
+//     currentBoost: 0,
+//     lastDailyReward: {
+//       date: new Date(),
+//       value: 0,
+//       _id: "0",
+//     },
+//     //imageUrl: string
+//     energyLimit: 0,
+//     friendBonusTaken: new Date(),
+//     rechargeMultiplication: 0,
+//     tapBotExpired: new Date(),
+//     tapMultiplication: 0,
+//     telegram_id: 0,
+//     //imageUrl: string
+//
+//     eneryTankLeft: 0,
+//     lastTap: new Date(),
+//     rechargeEnergy: null,
+//     turboBonusLeft: null,
+//     turboBoostExpired: null,
+//     _id: "1",
+//     __v: 0,
+//     balance: 0,
+//     breedKey: "Husky",
+//     earnPerHour: 0,
+//     first_name: "Bot2",
+//     lastOnline: new Date(),
+//     level: 0,
+//     touches: 0,
+//     username: "bot2",
+//     doneTask: [],
+//     friends: [],
+//   },
+// ];
 
-    eneryTankLeft: 0,
-    lastTap: new Date(),
-    rechargeEnergy: null,
-    turboBonusLeft: null,
-    turboBoostExpired: null,
-    _id: "1",
-    __v: 0,
-    balance: 0,
-    breedKey: "Husky",
-    earnPerHour: 0,
-    first_name: "Bot2",
-    lastOnline: new Date(),
-    level: 0,
-    touches: 0,
-    username: "bot2",
-    doneTask: [],
-    friends: [],
-  },
-];
-
-interface IInviteFriendsProps {}
+interface IInviteFriendsProps {
+}
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
+
+  const { data } = useSWR("/task", UsersService.getMyFriends);
+  const friends = data?.data
+  console.log({data});
 
   const handleToggle = () => setIsShowBonus(!isShowBonus);
 
@@ -138,12 +144,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
           <GuildPlayers
             title={"Friends"}
             classNameList={"pb-[190px]"}
-            players={players.map((player) => ({
-              _id: player._id,
-              username: player.username,
-              balance: player.balance,
-              guild: player.guild || "-",
-            }))}
+            friends={friends}
           />
         )}
         {isShowBonus && <Bonus />}
