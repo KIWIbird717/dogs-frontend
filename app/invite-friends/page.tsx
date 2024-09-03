@@ -28,7 +28,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
   const me = useAppSelector((store) => store.user);
 
-  const inviteLink = process.env.NEXT_PUBLIC_INVITE_LINK + `/start?startapp=huh${me.telegram_id}`;
+  const inviteLink = process.env.NEXT_PUBLIC_INVITE_LINK + `?startapp=huh${me.telegram_id}`;
   const fullInviteLink = process.env.NEXT_PUBLIC_INVITE_LINK
     ? inviteLink
     : "we can not create invite link :(";
