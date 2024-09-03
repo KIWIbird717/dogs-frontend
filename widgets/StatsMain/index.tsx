@@ -120,6 +120,8 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     setCurrentSlide((prev) => (prev === ranks.length - 1 ? 0 : prev + 1));
   };
 
+  const isMyRank = currentSlide + 1 === data?.pages[0].myLeague
+
   return (
     <div className={"z-[10] flex w-full flex-col gap-4"}>
       <div className={"flex flex-col gap-2 pb-2"}>
@@ -127,6 +129,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
         <Progress currentRank={currentRank}
                   serialNumber={data?.pages[0].myLeague || 0}
                   statusBar={data?.pages[0].statusBar}
+                  isMyRank={isMyRank}
         />
       </div>
 

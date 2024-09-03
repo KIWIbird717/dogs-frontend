@@ -10,6 +10,7 @@ interface IProgressProps {
   currentRank: string;
   serialNumber: number;
   statusBar: LeaguesStatusBar | null | undefined;
+  isMyRank: boolean
 }
 
 export const Progress: FC<IProgressProps> = (
@@ -17,29 +18,34 @@ export const Progress: FC<IProgressProps> = (
     currentRank,
     serialNumber,
     statusBar,
+    isMyRank
   },
 ) => {
   const numeral = useMemo(() => getNumeralSuffix(statusBar?.currentBalance!).toLowerCase(), [statusBar?.currentBalance!]);
   const nextNumeral = useMemo(() => getNumeralSuffix(statusBar?.balanceTo!), [statusBar?.balanceTo!]);
 
   return (
-    <div className={"flex w-full flex-col items-center gap-[11px]"}>
+    <div className={"flex w-full flex-col items-center gap-[11px] h-[75px]"}>
       <div className={"flex w-full flex-col justify-center"}>
         <Typography tag={"h1"} className={"text-center text-white-900"}>
-          #{serialNumber} {currentRank}
+          {isMyRank && <>#{serialNumber}</>} {currentRank}
         </Typography>
-        <Typography
-          tag={"p"}
-          className={"text-center text-[17px] font-normal leading-6 text-white-900"}
-        >
-          {statusBar?.currentBalance!}{numeral}/{statusBar?.balanceTo!}{nextNumeral}
-        </Typography>
+
+        {isMyRank && <>
+            <Typography
+              tag={"p"}
+              className={"text-center text-[17px] font-normal leading-6 text-white-900"}
+            >
+              {statusBar?.currentBalance!}{numeral}/{statusBar?.balanceTo!}{nextNumeral}
+            </Typography>
+          </>
+        }
       </div>
 
-      <ProgressBar page={"stats"}
-                   balanceTo={statusBar?.balanceTo!}
-                   currentBalance={statusBar?.currentBalance!}
-      />
+      {isMyRank && <ProgressBar page={"stats"}
+                    balanceTo={statusBar?.balanceTo!}
+                    currentBalance={statusBar?.currentBalance!}
+      />}
     </div>
   );
 };

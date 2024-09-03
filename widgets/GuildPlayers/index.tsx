@@ -15,15 +15,6 @@ interface IGuildPlayersProps {
   players: StatsApiTypes.LeagueLeadersResponse["leaders"];
 }
 
-export interface IUserPlayer {
-  id: string;
-  avatarUrl: string;
-  title: string;
-  league: string;
-  coins: string | number;
-  image?: any;
-}
-
 export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, players }) => {
   const { push } = useRouter();
 
@@ -31,25 +22,36 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({ title, classNameList, pla
     // push(`/guilds/${id}`)
   };
 
+
+
   return (
     <div className={"z-[10] flex w-full flex-col gap-2"}>
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 pb-28", classNameList)}>
-        {players.map((player, index) => {
-          return (
-            <GuildPlayerItem
-              key={index}
-              id={index}
-              title={player.username}
-              league={player.guild || "-"}
-              avatarUrl={""}
-              coins={player.balance}
-              index={index}
-              handleRedirect={handleRedirect}
-            />
-          );
-        })}
+        {players.length !== 0
+          ? players.map((player, index) => {
+            return (
+              <GuildPlayerItem
+                key={index}
+                id={index}
+                title={player.username}
+                league={player.guild || "-"}
+                avatarUrl={""}
+                coins={player.balance}
+                index={index}
+                handleRedirect={handleRedirect}
+              />
+            );
+          })
+          : <div className={"w-full h-[100px] flex items-center justify-center"}>
+            <Typography className={twMerge("text-[20px] text-center font-bold leading-6 text-white-900")}
+                        tag={"p"}
+            >
+              There are no leaderboards
+            </Typography>
+          </div>
+        }
       </div>
     </div>
   );
