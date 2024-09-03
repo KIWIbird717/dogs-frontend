@@ -6,23 +6,39 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
 import { AnimatePresence, motion } from "framer-motion";
-import { Field } from "@/widgets/Field";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
+import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
+import YoutubeIcon from "@/public/images/svg/earn/youtube.svg";
+import TwitterIcon from "@/public/images/svg/earn/x.svg";
+import NFTIcon from "@/public/images/svg/earn/nft.svg";
+import { useRouter } from "next/navigation";
 
-interface IModalEarnProps {}
+interface IModalEarnProps {
+}
 
 export const ModalEarn: FC<IModalEarnProps> = () => {
+  const { push } = useRouter();
   const { onClose, modalData } = useModal();
   const { isOpen, data, type } = modalData;
 
   const isModalOpen = isOpen && type === "earn";
 
-  const coin = formatNumber(data ? data?.task?.coin! : 0);
+  const coin = formatNumber(data ? data?.task?.amount! : 0);
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const buttonName = data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
+    ? "Watch Video"
+    : data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER
+      ? "Share us at X"
+      : "Start";
+
+  const onSubmit = () => {
+    push(data?.task?.link!);
   };
 
   return (
@@ -53,21 +69,24 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
               </Button>
 
               <div>
-                {/*TODO: Исправить размер на 32х32, когда реальные данные появятся*/}
-                {data?.task?.icon}
+                {data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
+                  ? <YoutubeIcon />
+                  : data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER
+                    ? <TwitterIcon />
+                    : <NFTIcon />}
               </div>
 
               <Typography
                 tag={"p"}
                 className={"text-[32px] font-bold leading-[38px] text-white-900"}
               >
-                {data?.task?.title}
+                {data?.task?.name}
               </Typography>
               <Typography tag={"h2"} className={"font-normal text-white-900"}>
-                {data?.task?.title}
+                What need to do?
               </Typography>
               <Typography tag={"h3"} className={"font-normal text-white-800"}>
-                {data?.task?.title}
+                {data?.task?.desc}
               </Typography>
 
               <div
@@ -92,26 +111,26 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
                   tag={"span"}
                   className={"text-[15px] font-normal leading-[18px] text-white-800"}
                 >
-                  {/*TODO: Настроить, когда реальные данные появятся*/}
                   Every 24 Hours
                 </Typography>
               </div>
             </div>
             <div>
-              {/*TODO: Настроить, когда реальные данные появятся*/}
-              <Field
-                onChange={() => {}}
-                isError={false}
-                placeholder={"Attach File"}
-                type={"file"}
-                buttonClassName={"h-[56px]"}
-              />
+              {/*<Field*/}
+              {/*  onChange={() => {*/}
+              {/*  }}*/}
+              {/*  isError={false}*/}
+              {/*  placeholder={"Attach File"}*/}
+              {/*  type={"file"}*/}
+              {/*  buttonClassName={"h-[56px]"}*/}
+              {/*/>*/}
 
-              <Button
-                variant={"deepBlue"}
-                className={"text-[18px] font-bold leading-6 text-white-900"}
+              <Button onClick={onSubmit}
+                      variant={"deepBlue"}
+                      className={"text-[18px] font-bold leading-6 text-white-900"}
+                      disabled={data?.task?.isCompleted}
               >
-                Here must be title
+                {buttonName}
               </Button>
             </div>
 

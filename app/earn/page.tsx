@@ -9,114 +9,80 @@ import { twMerge } from "tailwind-merge";
 
 import { Navbar } from "@/widgets/Navbar";
 
-import YoutubeIcon from "@/public/images/svg/earn/youtube.svg";
-import XIcon from "@/public/images/svg/earn/x.svg";
-import NFTIcon from "@/public/images/svg/earn/nft.svg";
+
 import { TaskList } from "@/widgets/TaskList";
-import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
 
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import useSWR from "swr";
 import { TasksService } from "@/shared/lib/services/tasks/stats";
+import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
+import { RewardsBoard } from "@/widgets/RewardsBoard";
+import { EarnTasksList } from "@/widgets/EarnTasks";
 
 interface IEarnPageProps {}
 
-const dogiYoutube: ITaskObj[] = [
+const mockTasks: TasksApiTypes.TasksDto[] = [
   {
-    title: "Dogi Youtube",
-    tasks: [
-      {
-        icon: <YoutubeIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Take a look and come back to collect your rewar",
-        coin: 25000,
-      },
-      {
-        icon: <YoutubeIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Take a look and come back to collect your rewar",
-        coin: 25000,
-      },
-    ],
+    id: "0",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.YOUTUBE,
+    isPeriodical: false,
+    amount: 25000,
+    link: "https://youtube.com",
+    isCompleted: true
   },
   {
-    title: "Dogi Task",
-    tasks: [
-      {
-        icon: <YoutubeIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Take a look and come back to collect your rewar",
-        coin: 25000,
-      },
-      {
-        icon: <YoutubeIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Take a look and come back to collect your rewar",
-        coin: 25000,
-      },
-    ],
+    id: "1",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.XTWITTER,
+    isPeriodical: false,
+    amount: 25000,
+    link: "/",
+    isCompleted: false
   },
-];
-
-const tasks: ITaskObj[] = [
   {
-    title: "Dogi Youtube",
-    tasks: [
-      {
-        icon: <YoutubeIcon />,
-        title: "Follow Kori our Co-Founder",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: false,
-      },
-      {
-        icon: <XIcon />,
-        title: "Share In X",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: false,
-      },
-      {
-        icon: <NFTIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: true,
-      },
-      {
-        icon: <YoutubeIcon />,
-        title: "Follow Kori our Co-Founder",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: true,
-      },
-      {
-        icon: <XIcon />,
-        title: "Share In X",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: true,
-      },
-      {
-        icon: <NFTIcon />,
-        title: "Special Task",
-        description: "Post a Story on Instagram",
-        purpose: "Follow Kori on Twitter for educantional content and crypto advice.",
-        coin: 25000,
-        isClaim: true,
-      },
-    ],
+    id: "2",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.EXTERNAL,
+    isPeriodical: false,
+    amount: 25000,
+    link: "/",
+    isCompleted: false
+  },
+  {
+    id: "3",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.YOUTUBE,
+    isPeriodical: false,
+    amount: 25000,
+    link: "https://youtube.com",
+    isCompleted: false
+  },
+  {
+    id: "4",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.XTWITTER,
+    isPeriodical: false,
+    amount: 25000,
+    link: "/",
+    isCompleted: true
+  },
+  {
+    id: "5",
+    name: "Special Task",
+    desc: "Post a Story on Instagram",
+    type: TasksApiTypes.TaskTypeEnum.EXTERNAL,
+    isPeriodical: false,
+    amount: 25000,
+    link: "/",
+    isCompleted: true
   },
 ];
 
@@ -128,6 +94,18 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const onSetTasks = () => setToggle("tasks");
 
   const {data} = useSWR("/task", TasksService.getTasks)
+
+  const youtubeTasks = mockTasks.filter((obj) => {
+    return obj.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
+  })
+  const twitterTasks = mockTasks.filter((obj) => {
+    return obj.type === TasksApiTypes.TaskTypeEnum.XTWITTER
+  })
+  const xternalTasks = mockTasks.filter((obj) => {
+    return obj.type === TasksApiTypes.TaskTypeEnum.EXTERNAL
+  })
+
+
 
   return (
     <View
@@ -170,8 +148,17 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
       </div>
 
       <div className={"flex h-full flex-col overflow-y-auto"}>
-        {toggle === "rewards" && <TaskList tasks={dogiYoutube} toggle={toggle} />}
-        {toggle === "tasks" && <TaskList tasks={tasks} toggle={toggle} />}
+        {toggle === "rewards" && <div className={"z-[10] flex w-full flex-col gap-4"}>
+          <RewardsBoard />
+
+          <div className={"flex w-full flex-col gap-4 pb-[110px]"}>
+            <EarnTasksList tasks={youtubeTasks} toggle={toggle} />
+            <EarnTasksList tasks={twitterTasks} toggle={toggle} />
+            <EarnTasksList tasks={xternalTasks} toggle={toggle} />
+          </div>
+        </div>}
+
+        {toggle === "tasks" && <TaskList tasks={mockTasks} toggle={toggle} />}
       </div>
 
       <Navbar />

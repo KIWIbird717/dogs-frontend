@@ -2,10 +2,10 @@ import { FC } from "react";
 import { RewardsBoard } from "@/widgets/RewardsBoard";
 import { EarnTasksList } from "@/widgets/EarnTasks";
 import { ToggleCategoryType } from "@/app/earn/page";
-import { ITaskObj } from "@/shared/lib/redux-store/slices/modal-slice/type";
+import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
 interface ITaskListProps {
-  tasks: ITaskObj[];
+  tasks:  TasksApiTypes.TasksDto[]
   toggle: ToggleCategoryType;
 }
 
@@ -15,9 +15,7 @@ export const TaskList: FC<ITaskListProps> = ({ tasks, toggle }) => {
       {toggle === "rewards" && <RewardsBoard />}
 
       <div className={"flex w-full flex-col gap-4 pb-[110px]"}>
-        {tasks.map((item, i) => {
-          return <EarnTasksList key={i} title={item.title} tasks={item.tasks} toggle={toggle} />;
-        })}
+          <EarnTasksList tasks={tasks} toggle={toggle} />
       </div>
     </div>
   );

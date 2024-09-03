@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
 export type ModelType = "settings" | "editAge" | "earn" | "boosts"
 
@@ -30,7 +31,7 @@ export interface IBoost {
 }
 
 export interface IModalData {
-  task?: ITask;
+  task?: TasksApiTypes.TasksDto;
   boost?: IBoost;
 }
 
