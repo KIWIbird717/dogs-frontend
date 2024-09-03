@@ -1,13 +1,12 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import AvatarImage from "@/public/images/avatar.png";
 import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { twMerge } from "tailwind-merge";
-import { getNumeralSuffix } from "@/shared/lib/utils/getNumeralSuffix";
 
 interface IGuildPlayerItemProps {
   avatarUrl: string;
@@ -31,19 +30,9 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   className,
 }) => {
   const numberGuild = index + 1;
-  const onClickHandler = () => {
-    if (handleRedirect) {
-      handleRedirect(id);
-    }
-  };
-
-  const numeral = useMemo(() => {
-    return getNumeralSuffix(coins);
-  }, [coins]);
 
   return (
-    <Button
-      onClick={onClickHandler}
+    <div
       className={twMerge(
         "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 px-3 py-2 text-left shadow-buttonNoAccent",
         className ? className : "bg-black-400",
@@ -98,6 +87,6 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
           size={"middle"}
         />
       </div>
-    </Button>
+    </div>
   );
 };

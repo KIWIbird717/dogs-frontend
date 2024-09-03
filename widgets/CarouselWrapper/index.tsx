@@ -8,12 +8,12 @@ import {
 } from "@/shared/ui/Carousel";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { IRank } from "@/widgets/StatsMain";
+import { ILeague } from "../StatsMain/shared/constants/leagues";
 
 interface ICarouselWrapperProps {
   handlePrevious: () => void;
   handleNext: () => void;
-  ranks: IRank[];
+  ranks: ILeague[];
 }
 
 export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
@@ -21,8 +21,6 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
   handlePrevious,
   ranks,
 }) => {
-  const { push } = useRouter();
-
   const handlerRedirect = () => {};
 
   return (
@@ -35,7 +33,7 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
                 <button onClick={handlerRedirect}>
                   <Image
                     src={item.image}
-                    alt={`image+${i}`}
+                    alt={`carousel-image-${i}`}
                     className={"h-[304px] w-[296px] object-cover"}
                   />
                 </button>
@@ -43,8 +41,14 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className={"left-0 top-[40%]"} onClick={handlePrevious} />
-        <CarouselNext className={"right-0 top-[40%]"} onClick={handleNext} />
+        <CarouselPrevious
+          className={"left-0 top-[40%] h-full w-full translate-x-[-45%]"}
+          onClick={handlePrevious}
+        />
+        <CarouselNext
+          className={"right-0 top-[40%] h-full w-full translate-x-[45%]"}
+          onClick={handleNext}
+        />
       </Carousel>
     </div>
   );

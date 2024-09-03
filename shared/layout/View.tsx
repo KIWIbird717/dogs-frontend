@@ -24,6 +24,7 @@ export const View: FC<Props> = (props) => {
         `relative h-[calc(100svh+1px)]`,
         props.className,
         props.fadeInOnLoad && styles["animate-fadeIn"],
+        styles["hidden-scrollbar"],
       )}
     >
       {props.children}

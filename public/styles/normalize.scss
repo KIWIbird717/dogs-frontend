@@ -6,6 +6,7 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow: scroll;
+  scrollbar-width: none;
 }
 
 // prevent tg webapp window closing
@@ -15,10 +16,12 @@ html {
   height: 100vh;
   overflow: hidden;
 }
-/* скрытие скролбара */
-// *::-webkit-scrollbar {
-//   display: none;
-// }
+
+*::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  scrollbar-width: none;
+}
 
 // отключение выделения для всех айтемов
 * {
