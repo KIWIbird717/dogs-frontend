@@ -10,6 +10,11 @@ import { useClicker } from "@/shared/hooks/useClicker";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
+import { AnimatePresence } from "framer-motion";
+import { Typography } from "@/shared/ui/Typography/Typography";
+import dynamic from "next/dynamic";
+
+const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface IMainForClickerProps {}
 
@@ -47,12 +52,30 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
             <StatsInfo value={currentBalance} isIcon />
           </div>
 
-          <Clicker
-            handleClick={handleClick}
-            clickEffects={clickEffects}
-            level={level}
-            tabValue={tabValue}
-          />
+          <div className="relative h-full w-full">
+            <AnimatePresence>
+              {clickEffects.map((effect) => (
+                <MotionDiv
+                  key={effect.id}
+                  initial={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 0, y: -200 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                  className="pointer-events-none absolute top-0 z-[100] rounded-xl border-[6px] border-black-400 bg-white-100 text-center text-[28px] font-normal text-white backdrop-blur-xl"
+                  style={{
+                    left: effect.x + 30,
+                    top: effect.y,
+                  }}
+                >
+                  <Typography tag={"h1"} className={"text-[28px] font-normal leading-8"}>
+                    +{tabValue}
+                  </Typography>
+                </MotionDiv>
+              ))}
+            </AnimatePresence>
+
+            <Clicker handleClick={handleClick} level={level} tabValue={tabValue} />
+          </div>
         </div>
 
         <EnergyBoost boosts={boosts} maxBoost={maxBoost} onMaxBoost={onMaxBoost} />

@@ -8,17 +8,15 @@ import Image from "next/image";
 import Level1 from "@/public/images/bowls/level1.png";
 import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
 
-const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 
 interface IClickerProps {
   handleClick: TouchEventHandler<HTMLButtonElement>;
-  clickEffects: ClickEffect[];
   level: number;
   tabValue: number;
 }
 
-export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, tabValue }) => {
+export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => {
   const [image, setImage] = useState(Level1);
 
   useEffect(() => {
@@ -49,26 +47,6 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
             width={100}
             height={100}
           />
-          <AnimatePresence>
-            {clickEffects.map((effect) => (
-              <MotionDiv
-                key={effect.id}
-                initial={{ opacity: 1, y: 0 }}
-                animate={{ opacity: 0, y: -200 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="pointer-events-none absolute rounded-xl border-[6px] border-black-400 bg-white-100 text-center text-[28px] font-normal text-white backdrop-blur-xl"
-                style={{
-                  left: effect.x - 40,
-                  top: effect.y,
-                }}
-              >
-                <Typography tag={"h1"} className={"text-[28px] font-normal leading-8"}>
-                  +{tabValue}
-                </Typography>
-              </MotionDiv>
-            ))}
-          </AnimatePresence>
         </div>
       </MotionButton>
     </div>

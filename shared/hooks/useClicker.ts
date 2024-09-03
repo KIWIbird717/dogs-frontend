@@ -114,8 +114,9 @@ export const useClicker = (isSetInterval?: boolean) => {
     async (event: TouchEvent) => {
       let newEffect: ClickEffect;
 
-      console.log(event);
       for (let index = 0; index <= event.touches.length; index++) {
+        if (index >= 5) return;
+
         const { currentTarget } = event;
         const { clientX, clientY } = event.changedTouches.item(index);
         const { left, top } = currentTarget.getBoundingClientRect();
