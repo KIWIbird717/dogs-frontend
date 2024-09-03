@@ -20,8 +20,6 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
   const { user, onChangeGuildName } = useUser();
   const { guild, level } = user;
 
-  // const { push } = useRouter();
-
   useEffect(() => {
     if (guild) {
       (async () => {
