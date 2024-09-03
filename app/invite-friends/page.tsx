@@ -17,24 +17,38 @@ import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg
 import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
 import useSWR from "swr";
 import { UsersService } from "@/shared/lib/services/users/users";
+import toast, { Toaster } from "react-hot-toast";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 interface IInviteFriendsProps {}
+const inviteText = "Join and play DOGS with me";
+const inviteTitle = "Join to DOGS";
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
+  const me = useAppSelector((store) => store.user);
+
+  const inviteLink = process.env.NEXT_PUBLIC_INVITE_LINK + `/start?startapp=huh${me.telegram_id}`;
+  const fullInviteLink = process.env.NEXT_PUBLIC_INVITE_LINK
+    ? inviteLink
+    : "we can not create invite link :(";
 
   const { data } = useSWR("/task", UsersService.getMyFriends);
   const friends = data?.data;
-  console.log({ data });
 
   const handleToggle = () => setIsShowBonus(!isShowBonus);
 
   const onCopyHandler = () => {
-    navigator.clipboard.writeText("" as string);
+    navigator.clipboard
+      .writeText(fullInviteLink)
+      .then(() => toast.success("Copied"))
+      .catch(() => toast.error("Copy not allowed in your telegram app. Allow it in settings"));
   };
 
   const onShareHandler = () => {
-    navigator.share({ text: "" as string });
+    navigator
+      .share({ title: inviteTitle, text: inviteText, url: fullInviteLink })
+      .catch(() => toast.error("Share not allowed in your telegram app. Allow it in settings"));
   };
 
   return (
@@ -42,6 +56,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
+      <Toaster />
       <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
       <div className={"flex h-full w-full flex-col gap-4 overflow-y-auto"}>
