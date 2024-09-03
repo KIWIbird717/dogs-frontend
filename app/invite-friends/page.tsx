@@ -48,7 +48,10 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const onShareHandler = () => {
     navigator
       .share({ title: inviteTitle, text: inviteText, url: fullInviteLink })
-      .catch(() => toast.error("Share not allowed in your telegram app. Allow it in settings"));
+      .catch((error) => {
+        if (error.name === "AbortError") return;
+        toast.error("Share not allowed in your telegram app. Allow it in settings");
+      });
   };
 
   return (
