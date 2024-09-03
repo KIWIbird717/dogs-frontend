@@ -3,17 +3,24 @@ import { ProgressBar } from "@/shared/ui/ProgressBar";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { useProgressBar } from "@/shared/hooks/useProgressBar";
 import { getNumeralSuffix } from "@/shared/lib/utils/getNumeralSuffix";
+import { StatsApiTypes } from "@/shared/lib/services/stats/types";
+import LeaguesStatusBar = StatsApiTypes.LeaguesStatusBar;
 
 interface IProgressProps {
   currentRank: string;
   serialNumber: number;
+  statusBar: LeaguesStatusBar | null | undefined;
 }
 
-export const Progress: FC<IProgressProps> = ({ currentRank, serialNumber }) => {
-  const { nextLevelBalance, balance } = useProgressBar();
-
-  const numeral = useMemo(() => getNumeralSuffix(balance).toLowerCase(), [balance]);
-  const nextNumeral = useMemo(() => getNumeralSuffix(nextLevelBalance), [nextLevelBalance]);
+export const Progress: FC<IProgressProps> = (
+  {
+    currentRank,
+    serialNumber,
+    statusBar,
+  },
+) => {
+  const numeral = useMemo(() => getNumeralSuffix(statusBar?.currentBalance!).toLowerCase(), [statusBar?.currentBalance!]);
+  const nextNumeral = useMemo(() => getNumeralSuffix(statusBar?.balanceTo!), [statusBar?.balanceTo!]);
 
   return (
     <div className={"flex w-full flex-col items-center gap-[11px]"}>
@@ -25,13 +32,14 @@ export const Progress: FC<IProgressProps> = ({ currentRank, serialNumber }) => {
           tag={"p"}
           className={"text-center text-[17px] font-normal leading-6 text-white-900"}
         >
-          {balance}
-          {numeral}/{nextLevelBalance}
-          {nextNumeral}
+          {statusBar?.currentBalance!}{numeral}/{statusBar?.balanceTo!}{nextNumeral}
         </Typography>
       </div>
 
-      <ProgressBar page={"stats"} />
+      <ProgressBar page={"stats"}
+                   balanceTo={statusBar?.balanceTo!}
+                   currentBalance={statusBar?.currentBalance!}
+      />
     </div>
   );
 };

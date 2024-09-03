@@ -94,7 +94,6 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const onSetTasks = () => setToggle("tasks");
 
   const { data } = useSWR("/task", TasksService.getTasks);
-
   const tasks = data?.data;
 
   const notFoundTasks = tasks?.length === 0 ? "There are no tasks" : null

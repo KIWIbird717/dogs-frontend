@@ -14,7 +14,7 @@ export namespace StatsApiTypes {
     balance?: number;
   };
 
-  type LeaguesStatusBar = {
+  export type LeaguesStatusBar = {
     balanceFrom: GameServiceTypes.League["requiredBalance"];
     balanceTo: GameServiceTypes.League["requiredBalance"] | null;
     currentBalance: UserApiTypes.UserDto["balance"];

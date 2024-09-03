@@ -4,10 +4,18 @@ import { twMerge } from "tailwind-merge";
 
 interface IProgressBarProps {
   page?: "main" | "stats";
+  balanceTo?: number | undefined;
+  currentBalance?: number | undefined;
 }
 
-export const ProgressBar: FC<IProgressBarProps> = ({ page = "main" }) => {
-  const { percentage } = useProgressBar();
+export const ProgressBar: FC<IProgressBarProps> = (
+  {
+    page = "main",
+    currentBalance,
+    balanceTo,
+  }
+  ) => {
+  const { percentage } = useProgressBar(currentBalance!, balanceTo!);
 
   const WRAPPER_MAIN_PAGE_CLASSNAME =
     "relative h-[8px] w-full rounded-[32px] border border-black-300";

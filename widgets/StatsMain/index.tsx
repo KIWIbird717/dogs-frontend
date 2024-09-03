@@ -124,7 +124,10 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     <div className={"z-[10] flex w-full flex-col gap-4"}>
       <div className={"flex flex-col gap-2 pb-2"}>
         <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={ranks} />
-        <Progress currentRank={currentRank} serialNumber={currentUser?.serialNumber || 0} />
+        <Progress currentRank={currentRank}
+                  serialNumber={data?.pages[0].myLeague || 0}
+                  statusBar={data?.pages[0].statusBar}
+        />
       </div>
 
       <div className={"flex flex-col gap-[20px] pb-[100px]"}>
@@ -132,7 +135,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
           title={"Leaderboard Legue"}
           players={flattenedData}
           // classNameList={"pb-[190px]"}
-          classNameList={"pb-0"}
+          classNameList={"pb-[60px]"}
         />
 
         {isFetching && (
@@ -155,10 +158,10 @@ export const StatsMain: FC<IStatsMainProps> = () => {
           <GuildPlayerItem
             id={currentUser._id}
             title={currentUser.username}
-            league={currentUser ? guildName! : ""}
+            league={currentUser?.guild ? currentUser.guild : "-"}
             avatarUrl={""}
             coins={currentUser.balance}
-            index={0}
+            index={data?.pages[0].myPlace! - 1}
             className={"border-none shadow-none"}
           />
         </Button>

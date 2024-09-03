@@ -9,7 +9,7 @@ const LoadingPage: NextPage<ILoadingPageProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col items-center justify-center bg-gradient-background"
+      className="relative flex h-screen w-full flex-col overflow-hidden items-center justify-center bg-gradient-background"
     >
       <DuckBackground />
       <ModalLoading />

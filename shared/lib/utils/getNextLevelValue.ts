@@ -12,11 +12,13 @@ export const getNextLevelValue = (level: number, providedLevels: GameSlice.Type[
 
   const index = level - 1;
 
-  const nextLevelBalance = levels[level + 1];
+  const nextLevelBalance = levels[level];
   const currentLevelBalance = levels[index];
+  const preLevelBalance = levels[index - 1];
 
   return {
     currentLevelBalance,
     nextLevelBalance,
+    preLevelBalance
   };
 };
