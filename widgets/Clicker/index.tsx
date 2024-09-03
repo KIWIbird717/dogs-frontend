@@ -9,6 +9,7 @@ import Level1 from "@/public/images/bowls/level1.png";
 import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
+const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 
 interface IClickerProps {
   handleClick: TouchEventHandler<HTMLButtonElement>;
@@ -27,10 +28,12 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
 
   return (
     <div className={"flex h-full w-full justify-center"}>
-      <button
+      <MotionButton
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: "spring", bounce: 20, stiffness: 2000 }}
         onTouchEnd={handleClick}
         className={
-          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec transition-all duration-[10ms] active:scale-95"
+          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
         } /*h-[296px] w-[296px]*/
       >
         <div
@@ -67,7 +70,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, clickEffects, level, t
             ))}
           </AnimatePresence>
         </div>
-      </button>
+      </MotionButton>
     </div>
   );
 };
