@@ -18,10 +18,10 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import useSWR from "swr";
 import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
-import { RewardsBoard } from "@/widgets/RewardsBoard";
-import { EarnTasksList } from "@/widgets/EarnTasks";
+import { RewardTaskList } from "@/widgets/RewardTaskList";
 
-interface IEarnPageProps {}
+interface IEarnPageProps {
+}
 
 const mockTasks: TasksApiTypes.TasksDto[] = [
   {
@@ -32,7 +32,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "https://youtube.com",
-    isCompleted: true
+    isCompleted: true,
   },
   {
     id: "1",
@@ -42,7 +42,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "/",
-    isCompleted: false
+    isCompleted: false,
   },
   {
     id: "2",
@@ -52,7 +52,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "/",
-    isCompleted: false
+    isCompleted: false,
   },
   {
     id: "3",
@@ -62,7 +62,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "https://youtube.com",
-    isCompleted: false
+    isCompleted: false,
   },
   {
     id: "4",
@@ -72,7 +72,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "/",
-    isCompleted: true
+    isCompleted: true,
   },
   {
     id: "5",
@@ -82,7 +82,7 @@ const mockTasks: TasksApiTypes.TasksDto[] = [
     isPeriodical: false,
     amount: 25000,
     link: "/",
-    isCompleted: true
+    isCompleted: true,
   },
 ];
 
@@ -93,19 +93,11 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const onSetRewards = () => setToggle("rewards");
   const onSetTasks = () => setToggle("tasks");
 
-  const {data} = useSWR("/task", TasksService.getTasks)
+  const { data } = useSWR("/task", TasksService.getTasks);
 
-  const youtubeTasks = mockTasks.filter((obj) => {
-    return obj.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
-  })
-  const twitterTasks = mockTasks.filter((obj) => {
-    return obj.type === TasksApiTypes.TaskTypeEnum.XTWITTER
-  })
-  const xternalTasks = mockTasks.filter((obj) => {
-    return obj.type === TasksApiTypes.TaskTypeEnum.EXTERNAL
-  })
+  const tasks = data?.data;
 
-
+  const notFoundTasks = tasks?.length === 0 ? "There are no tasks" : null
 
   return (
     <View
@@ -148,17 +140,8 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
       </div>
 
       <div className={"flex h-full flex-col overflow-y-auto"}>
-        {toggle === "rewards" && <div className={"z-[10] flex w-full flex-col gap-4"}>
-          <RewardsBoard />
-
-          <div className={"flex w-full flex-col gap-4 pb-[110px]"}>
-            <EarnTasksList tasks={youtubeTasks} toggle={toggle} />
-            <EarnTasksList tasks={twitterTasks} toggle={toggle} />
-            <EarnTasksList tasks={xternalTasks} toggle={toggle} />
-          </div>
-        </div>}
-
-        {toggle === "tasks" && <TaskList tasks={mockTasks} toggle={toggle} />}
+        {toggle === "rewards" && <RewardTaskList notFoundTasks={notFoundTasks}  tasks={tasks || []} toggle={toggle} />}
+        {toggle === "tasks" && <TaskList notFoundTasks={notFoundTasks}  tasks={tasks || []} toggle={toggle} />}
       </div>
 
       <Navbar />
