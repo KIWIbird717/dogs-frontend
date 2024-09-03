@@ -17,9 +17,9 @@ export namespace TasksService {
   };
 
   /**
-   * GET /tasks
+   * POST /tasks
    */
-  export const setTask = (taskId: number) => {
+  export const setTask = (taskId: number | string) => {
     return serverApi.post(`/task/${taskId}`);
   };
 }

@@ -20,71 +20,8 @@ import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import { RewardTaskList } from "@/widgets/RewardTaskList";
 
-interface IEarnPageProps {
-}
+interface IEarnPageProps {}
 
-const mockTasks: TasksApiTypes.TasksDto[] = [
-  {
-    id: "0",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.YOUTUBE,
-    isPeriodical: false,
-    amount: 25000,
-    link: "https://youtube.com",
-    isCompleted: true,
-  },
-  {
-    id: "1",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.XTWITTER,
-    isPeriodical: false,
-    amount: 25000,
-    link: "/",
-    isCompleted: false,
-  },
-  {
-    id: "2",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.EXTERNAL,
-    isPeriodical: false,
-    amount: 25000,
-    link: "/",
-    isCompleted: false,
-  },
-  {
-    id: "3",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.YOUTUBE,
-    isPeriodical: false,
-    amount: 25000,
-    link: "https://youtube.com",
-    isCompleted: false,
-  },
-  {
-    id: "4",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.XTWITTER,
-    isPeriodical: false,
-    amount: 25000,
-    link: "/",
-    isCompleted: true,
-  },
-  {
-    id: "5",
-    name: "Special Task",
-    desc: "Post a Story on Instagram",
-    type: TasksApiTypes.TaskTypeEnum.EXTERNAL,
-    isPeriodical: false,
-    amount: 25000,
-    link: "/",
-    isCompleted: true,
-  },
-];
 
 export type ToggleCategoryType = "rewards" | "tasks";
 
