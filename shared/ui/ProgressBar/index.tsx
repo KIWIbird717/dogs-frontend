@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useProgressBar } from "@/shared/hooks/useProgressBar";
 import { twMerge } from "tailwind-merge";
+import { cn } from "@/shared/lib/utils/cn";
 
 interface IProgressBarProps {
   page?: "main" | "stats";
@@ -8,17 +9,15 @@ interface IProgressBarProps {
   currentBalance?: number | undefined;
 }
 
-export const ProgressBar: FC<IProgressBarProps> = (
-  {
-    page = "main",
-    currentBalance,
-    balanceTo,
-  }
-  ) => {
+export const ProgressBar: FC<IProgressBarProps> = ({
+  page = "main",
+  currentBalance,
+  balanceTo,
+}) => {
   const { percentage } = useProgressBar(currentBalance!, balanceTo!);
 
   const WRAPPER_MAIN_PAGE_CLASSNAME =
-    "relative h-[8px] w-full rounded-[32px] border border-black-300";
+    "relative h-[8px] w-full rounded-[32px] border border-black-300 overflow-hidden";
   const INNER_MAIN_PAGE_CLASSNAME = "absolute left-0 top-0 h-full bg-gradient-loading";
 
   const WRAPPER_STATS_PAGE_CLASSNAME =
@@ -46,7 +45,7 @@ export const ProgressBar: FC<IProgressBarProps> = (
   }, [page]);
 
   return (
-    <div className={twMerge(classNames.wrapper)}>
+    <div className={cn(classNames.wrapper)}>
       <div style={{ width: `${percentage}%` }} className={twMerge(classNames.inner)} />
     </div>
   );

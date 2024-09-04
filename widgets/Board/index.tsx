@@ -6,6 +6,8 @@ import { useUser } from "@/shared/hooks/useUser";
 import { ProgressBar } from "@/shared/ui/ProgressBar";
 import { getNextLevelValue } from "@/shared/lib/utils/getNextLevelValue";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { ProgressBar as ProgressBarV2 } from "@/shared/ui/ProgressBar/v2/index";
+import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPercentage";
 
 interface IBoardProps {}
 
@@ -15,6 +17,8 @@ export const Board: FC<IBoardProps> = () => {
   const { level, guildName, balance } = user;
   const { levels } = useAppSelector((store) => store.game);
   const { nextLevelBalance } = getNextLevelValue(level, levels);
+
+  const levelProgress = useGetLevelProgressPercentage();
 
   const onRedirectStats = () => push("/stats");
   const onRedirectGuilds = () => push("/guilds");
@@ -32,6 +36,11 @@ export const Board: FC<IBoardProps> = () => {
         </Typography>
 
         <ProgressBar page={"main"} currentBalance={balance} balanceTo={nextLevelBalance} />
+        {typeof levelProgress === "number" ? (
+          <ProgressBarV2 progressPercentage={levelProgress} />
+        ) : (
+          "max"
+        )}
       </Button>
       <Button
         onClick={onRedirectGuilds}
