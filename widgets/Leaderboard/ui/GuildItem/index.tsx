@@ -50,7 +50,8 @@ export const GuildItem: FC<IGuildItemProps> = ({
           }
         >
           <Image
-            src={avatarUrl || GuildImage}
+            src={GuildImage}
+            placeholder="blur"
             alt={`guild-${index}`}
             width={48}
             height={48}
@@ -59,7 +60,9 @@ export const GuildItem: FC<IGuildItemProps> = ({
         </div>
 
         <div className={"flex h-full flex-col justify-center gap-1"}>
-          <Typography tag={"h3"}>{title}</Typography>
+          <Typography tag={"h4"} className="w-[100px] max-w-[100px] overflow-hidden text-ellipsis">
+            {title}
+          </Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
             {joinMethod === "bylink" ? "By invitation only" : "Free"}
           </Typography>

@@ -27,7 +27,9 @@ export const StatsInfo: FC<IMoneyProps> = ({ value, title, isIcon }) => {
             tag={"p"}
             size={"huge"}
             className={"gap-2"}
-            classNameText={"font-portico text-white-900 text-[32px] leading-[40px] font-normal"}
+            classNameText={
+              "font-portico text-white-900 text-[32px] leading-[40px] font-normal tabular-nums"
+            }
           />
         ) : (
           <div className={"flex items-center"}>

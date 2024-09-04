@@ -22,7 +22,10 @@ export const Block: FC<IBlockProps> = ({ icon, title, onClick, className, ...pro
       {...props}
     >
       <div>{icon}</div>
-      <Typography tag={"p"} className={"text-[17px] font-bold leading-6 text-white-900"}>
+      <Typography
+        tag={"p"}
+        className={"text-[17px] font-bold tabular-nums leading-6 text-white-900"}
+      >
         {title}
       </Typography>
     </Button>

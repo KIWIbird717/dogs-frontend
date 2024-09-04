@@ -9,6 +9,7 @@ import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { GuildResponseWithMembersType } from "@/shared/lib/services/guilds/guilds";
+import GuildImage from "@/public/images/guild.png";
 
 interface IGuildBannerProps {
   guild: GuildResponseWithMembersType;
@@ -48,7 +49,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
           <img
-            src={guildImage} //TODO: Не приходит изображение с бэка. Нужно изменить
+            src={GuildImage.src} //TODO: Не приходит изображение с бэка. Нужно изменить
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
@@ -58,7 +59,11 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
           <div className={"flex w-full flex-col justify-center gap-1"}>
             <Typography
               tag={isBanner ? "h1" : "h2"}
-              className={twMerge(isBanner ? "font-normal uppercase" : "font-bold")}
+              className={twMerge(
+                isBanner
+                  ? "font-normal uppercase"
+                  : "w-[200px] max-w-[200px] overflow-hidden text-ellipsis font-bold",
+              )}
             >
               {guild.name}
             </Typography>
