@@ -11,6 +11,7 @@ import BoneIcon from "@/public/images/svg/nav/bone.svg";
 import { INavItems, NavItems } from "@/widgets/Navbar/shared/ui/NavItems";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { cn } from "@/shared/lib/utils/cn";
 
 interface INavbarProps {}
 
@@ -51,21 +52,20 @@ export const Navbar: FC<INavbarProps> = () => {
 
   return (
     <div className={"fixed bottom-0 left-0 z-[10] flex h-[107px] w-full items-end"}>
-      <div
-        className={"relative flex h-[75px] w-full justify-between rounded-t-xl bg-black-790 px-4"}
-      >
+      <div className={"bg-navbar relative flex h-[75px] w-full justify-between rounded-t-xl px-4"}>
         <NavItems items={navItemsFirst} pathName={pathName} />
 
         <div className={"relative flex w-full justify-center"}>
           <div
             className={
-              "absolute -top-[28px] flex h-[72px] w-[72px] items-center justify-center rounded-full bg-black-790"
+              "bg-navbar absolute -top-[28px] flex h-[72px] w-[72px] items-center justify-center rounded-full"
             }
           >
             <Button
-              className={
-                "absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton"
-              }
+              className={cn(
+                "absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton",
+                pathName !== "/main" && "border-[1px] border-[#6857FD] bg-none",
+              )}
             >
               <Link href={"/main"}>
                 <BoneIcon />
@@ -76,13 +76,13 @@ export const Navbar: FC<INavbarProps> = () => {
 
             <div
               className={"absolute -left-[32px] top-[-12px] h-[40px] w-[40px] rounded-full bg-none"}
-              style={{ boxShadow: "20px 25px #1E1E1E" }}
+              style={{ boxShadow: "20px 25px #030303" }}
             />
             <div
               className={
                 "absolute -right-[32px] top-[-12px] h-[40px] w-[40px] rounded-full bg-none"
               }
-              style={{ boxShadow: "-20px 25px #1E1E1E" }}
+              style={{ boxShadow: "-20px 25px #030303" }}
             />
           </div>
         </div>

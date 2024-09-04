@@ -35,7 +35,6 @@ export const Board: FC<IBoardProps> = () => {
           Level {level}
         </Typography>
 
-        <ProgressBar page={"main"} currentBalance={balance} balanceTo={nextLevelBalance} />
         {typeof levelProgress === "number" ? (
           <ProgressBarV2 progressPercentage={levelProgress} />
         ) : (
@@ -49,7 +48,7 @@ export const Board: FC<IBoardProps> = () => {
         }
       >
         <Typography tag={"p"} className={"text-[15px] font-bold leading-[18px] text-white-900"}>
-          Pack
+          Guild
         </Typography>
         <Typography tag={"h4"} className={"text-[18px] font-normal leading-[18px] text-blue-800"}>
           {guildName || "-"}

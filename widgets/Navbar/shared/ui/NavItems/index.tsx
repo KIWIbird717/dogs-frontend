@@ -24,7 +24,7 @@ export const NavItems: FC<INavItemsProps> = ({ items, pathName }) => {
             href={item.link}
             key={index}
             className={
-              "flex h-[75px] w-[64px] flex-col items-center justify-start gap-[5px] rounded-t-xl bg-black-790 pt-3"
+              "bg-navbar flex h-[75px] w-[64px] flex-col items-center justify-start gap-[5px] rounded-t-xl pt-3"
             }
           >
             <div>

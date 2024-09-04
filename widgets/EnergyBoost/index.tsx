@@ -20,9 +20,7 @@ export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoos
       <Block
         icon={<EnergyIcon />}
         title={`${boosts}/${maxBoost}`}
-        onClick={onMaxBoost}
         className="flex min-w-[156px] items-center justify-start"
-        disabled
       />
       <Block icon={<RacketIcon />} title={"Boost"} onClick={redirectToBoost} />
     </div>

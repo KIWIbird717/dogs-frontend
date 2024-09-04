@@ -6,7 +6,7 @@ import { cn } from "@/shared/lib/utils/cn";
 interface IBlockProps {
   icon: ReactNode;
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   className?: string;
 }

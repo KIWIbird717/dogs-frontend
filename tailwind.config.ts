@@ -105,6 +105,9 @@ const config: Config = {
       red: {
         DEFAULT: "var( --red-default)",
       },
+      navbar: {
+        DEFAULT: "var(--navbar)",
+      },
     },
   },
   plugins: [],
