@@ -12,7 +12,6 @@ serverApi.interceptors.request.use((config) => {
 
   const initData = window.Telegram.WebApp.initData;
   const parsedTgInitData = parseTgInitData(initData);
-  console.log({ parsedTgInitData });
 
   if (!initData) return config;
 

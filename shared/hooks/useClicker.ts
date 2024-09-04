@@ -8,8 +8,8 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 
 export interface ClickEffect {
   id: number;
-  x: number;
-  y: number;
+  x: number | string;
+  y: number | string;
 }
 
 export const useClicker = (isSetInterval?: boolean) => {
@@ -20,12 +20,10 @@ export const useClicker = (isSetInterval?: boolean) => {
     time: string;
   } | null>("lastBoostTime", null);
 
-  const { energyLimit, currentBoost, turboBoostExpired } = useAppSelector((state) => state.user);
+  const { energyLimit, currentBoost, rechargeMultiplication, tapMultiplication, tapBotExpired } =
+    useAppSelector((state) => state.user);
 
-  const isTurboAvailable =
-    turboBoostExpired && new Date().getTime() < new Date(turboBoostExpired).getTime();
-
-  const tabValue = isTurboAvailable ? 5 : 1;
+  const tabValue = 1 * rechargeMultiplication * tapMultiplication;
 
   const [state, setState] = useState({
     earned: 0,
@@ -101,14 +99,23 @@ export const useClicker = (isSetInterval?: boolean) => {
     if (!isSetInterval || currentBoost >= maxBoost) return;
 
     const interval = setInterval(() => {
-      const newBoost = Math.min(currentBoost + 3, maxBoost);
+      const energyIncome = 1 * rechargeMultiplication * tapMultiplication;
+      const newBoost = Math.min(currentBoost + energyIncome, maxBoost);
 
       setBoostsLS({ time: Date.now().toString(), boost: newBoost });
       dispatch(UserSlice.setCurrentBoost(newBoost));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isSetInterval, currentBoost, maxBoost, dispatch, setBoostsLS]);
+  }, [
+    isSetInterval,
+    currentBoost,
+    maxBoost,
+    rechargeMultiplication,
+    tapMultiplication,
+    dispatch,
+    setBoostsLS,
+  ]);
 
   const handleClick = useCallback(
     async (event: TouchEvent) => {
@@ -116,6 +123,7 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       for (let index = 0; index <= event.touches.length; index++) {
         if (index >= 5) return;
+        if (currentBoost < tabValue) return; // если не хватает энергии на тап
 
         const { currentTarget } = event;
         const { clientX, clientY } = event.changedTouches.item(index);
@@ -129,7 +137,7 @@ export const useClicker = (isSetInterval?: boolean) => {
         setDateNow((prev) => [...prev, newEffect.id]);
         setClickEffects((prev) => [...prev, newEffect]);
 
-        await onIncrementEarn(dateNow[0]);
+        onIncrementEarn(dateNow[0]);
       }
 
       setTimeout(() => {
@@ -139,8 +147,33 @@ export const useClicker = (isSetInterval?: boolean) => {
     [dateNow, onIncrementEarn],
   );
 
+  /**
+   * Passive income
+   */
+  useEffect(() => {
+    const isTapbotActive = new Date(tapBotExpired).getTime() > new Date().getTime();
+    if (!isTapbotActive) return;
+
+    const interval = setInterval(() => {
+      if (currentBoost < tabValue) return; // если не хватает энергии на тап
+
+      const x = "50%";
+      const y = "50%";
+      const newEffect = { id: Date.now(), x, y };
+
+      setDateNow((prev) => [...prev, newEffect.id]);
+      setClickEffects((prev) => [...prev, newEffect]);
+
+      onIncrementEarn(dateNow[0]);
+    }, 800);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [dateNow, onIncrementEarn, tapBotExpired]);
+
   const onMaxBoost = useCallback(() => {
-    setState((prevState) => ({ ...prevState, boosts: maxBoost }));
+    dispatch(UserSlice.setCurrentBoost(maxBoost));
   }, [maxBoost]);
 
   return {

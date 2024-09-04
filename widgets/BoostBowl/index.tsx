@@ -22,6 +22,8 @@ import FullTankImg from "@/public/images/svg/modal/boosts/full-tank.svg";
 import MultiTapImg from "@/public/images/svg/modal/boosts/multi-tap.svg";
 import EnergyLimitImg from "@/public/images/svg/modal/boosts/energy-limit.svg";
 import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
+import toast, { Toaster } from "react-hot-toast";
+import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
@@ -63,6 +65,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
           );
           const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
 
+          toast.success(`Turbo active for ${getTimeLeftUntil(new Date(response.data.TURBO))}`);
           dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
         },
       },
@@ -78,6 +81,12 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         onClick: async () => {
           if (maxBoost === boosts || user.eneryTankLeft === 0) return;
           onMaxBoost();
+
+          if (user.eneryTankLeft) {
+            dispatch(UserSlice.updateUser({ eneryTankLeft: user.eneryTankLeft - 1 }));
+          }
+
+          toast.success("Energy restored");
           await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
         },
       },
@@ -88,6 +97,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         buttonTitle: "Buy",
         price: 25000,
         onClick: async () => {
+          toast.success(`Multitap activate`);
           await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
         },
       },
@@ -96,9 +106,10 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Energy Limit",
         info: "800 000 coin",
         buttonTitle: "Buy",
-        price: 25000,
+        price: 800_000,
         onClick: async () => {
-          await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+          const response = await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
+          toast.success(`Energy limit updated to ${response.data.ENERY_LIMIT}`);
         },
       },
       {
@@ -109,6 +120,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         price: 25000,
         buttonTitle: "Buy",
         onClick: async () => {
+          toast.success(`Recharge speed updated`);
           await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
         },
       },
@@ -117,9 +129,10 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "Tap Bot",
         info: "100 000 Coin in 4 hours",
         buttonTitle: "Buy",
-        price: 25000,
+        price: 100_000,
         onClick: async () => {
-          await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+          const response = await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+          toast.success(`Tapbot active for ${getTimeLeftUntil(response.data.TAP_BOT)}`);
         },
       },
     ],
@@ -192,6 +205,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-6"}>
+      <Toaster />
       <div className={"flex w-full flex-col gap-2"}>
         <Typography tag={"h3"} className={"text-white-900"}>
           Free Daily Bowl

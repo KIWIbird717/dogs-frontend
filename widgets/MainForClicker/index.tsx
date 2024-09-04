@@ -63,7 +63,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
                   transition={{ duration: 1 }}
                   className="pointer-events-none absolute top-0 z-[100] rounded-xl border-[6px] border-black-400 bg-white-100 text-center text-[28px] font-normal text-white backdrop-blur-xl"
                   style={{
-                    left: effect.x + 30,
+                    left: typeof effect.x === "string" ? effect.x : effect.x + 30,
                     top: effect.y,
                   }}
                 >
