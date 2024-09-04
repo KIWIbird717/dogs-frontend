@@ -69,7 +69,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
             {title}
           </Typography>
           <Typography tag={"span"} className={"text-[13px] font-normal leading-4 text-white-800"}>
-            Pack: &nbsp;
+            Guild: &nbsp;
             <span className={"text-[15px] font-bold leading-[18px] text-white-900"}>
               {league ? league : "-"}
             </span>

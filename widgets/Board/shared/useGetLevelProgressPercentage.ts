@@ -16,7 +16,5 @@ export const useGetLevelProgressPercentage = () => {
 
   const percentage = ((balance - balanceFrom) / (balanceTo - balanceFrom)) * 100;
 
-  console.log({ balance, balanceTo, balanceFrom, percentage });
-
   return percentage;
 };
