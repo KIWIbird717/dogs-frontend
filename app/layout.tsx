@@ -11,23 +11,27 @@ import TanStackQueryProvider from "@/shared/providers/TanStackQueryProvider";
 const epilogue = Epilogue({ subsets: ["latin"] });
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-    <head>
-      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
-    </head>
-    <body className={epilogue.className}>
-    <TanStackQueryProvider>
-      <StoreProvider>
-        <ModalProvider />
-        {children}
-      </StoreProvider>
-    </TanStackQueryProvider>
-    </body>
+      <head>
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </head>
+      <body className={epilogue.className}>
+        <TanStackQueryProvider>
+          <StoreProvider>
+            <ModalProvider />
+            {children}
+          </StoreProvider>
+        </TanStackQueryProvider>
+      </body>
     </html>
   );
 }
