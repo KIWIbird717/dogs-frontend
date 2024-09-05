@@ -12,7 +12,8 @@ export namespace UserApiTypes {
     country: string;
     breedKey: string;
     username: string;
-    guild: string;
+    guild: string | null;
+    guildName: string | null;
     balance: number;
     earnPerHour: number;
     lastDailyReward: number;
@@ -69,6 +70,7 @@ export namespace UserApiTypes {
     username: string;
     balance: number;
     guild: null | string;
+    guildName: string | null;
     league: number;
     breedKey: string;
     level: number;

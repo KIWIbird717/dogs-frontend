@@ -28,7 +28,8 @@ export namespace StatsApiTypes {
       _id: string;
       username: UserApiTypes.UserDto["username"];
       balance: UserApiTypes.UserDto["balance"];
-      guild?: UserApiTypes.UserDto["guild"];
+      guild: UserApiTypes.UserDto["guild"] | null;
+      guildName: UserApiTypes.UserDto["guildName"] | null;
     }[];
   };
 }
