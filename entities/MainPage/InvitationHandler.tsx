@@ -29,3 +29,5 @@ export const InvitationHandler = memo(() => {
 
   return <Toaster />;
 });
+
+InvitationHandler.displayName = "InvitationHandler";

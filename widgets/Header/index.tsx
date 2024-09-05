@@ -56,9 +56,19 @@ export const Header: FC<IHeaderProps> = () => {
           >
             {first_name}
           </Typography>
-          <Typography tag={"h4"} className={"font-portico font-normal text-blue-800"}>
-            {guildName || "-"}
-          </Typography>
+
+          {guildName ? (
+            <Typography tag={"h4"} className={"font-portico font-normal text-blue-800"}>
+              {guildName}
+            </Typography>
+          ) : (
+            <Typography tag="p" className="text-white-500 text-[15px]">
+              Press & join <span className="max-[410px]:hidden">to</span>{" "}
+              <span className="text-ellipsis font-semibold text-white-900 max-[410px]:hidden">
+                Guild
+              </span>
+            </Typography>
+          )}
         </div>
       </div>
 
