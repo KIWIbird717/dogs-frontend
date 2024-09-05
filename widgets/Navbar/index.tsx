@@ -52,13 +52,13 @@ export const Navbar: FC<INavbarProps> = () => {
 
   return (
     <div className={"fixed bottom-0 left-0 z-[10] flex h-[107px] w-full items-end"}>
-      <div className={"bg-navbar relative flex h-[75px] w-full justify-between rounded-t-xl px-4"}>
+      <div className={"relative flex h-[75px] w-full justify-between rounded-t-xl bg-navbar px-4"}>
         <NavItems items={navItemsFirst} pathName={pathName} />
 
         <div className={"relative flex w-full justify-center"}>
           <div
             className={
-              "bg-navbar absolute -top-[28px] flex h-[72px] w-[72px] items-center justify-center rounded-full"
+              "absolute -top-[28px] flex h-[72px] w-[72px] items-center justify-center rounded-full bg-navbar"
             }
           >
             <Button
@@ -67,7 +67,7 @@ export const Navbar: FC<INavbarProps> = () => {
                 pathName !== "/main" && "border-[1px] border-[#6857FD] bg-none",
               )}
             >
-              <Link href={"/main"}>
+              <Link href={"/main"} prefetch>
                 <BoneIcon />
               </Link>
             </Button>

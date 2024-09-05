@@ -22,9 +22,10 @@ export const NavItems: FC<INavItemsProps> = ({ items, pathName }) => {
         return (
           <Link
             href={item.link}
+            prefetch
             key={index}
             className={
-              "bg-navbar flex h-[75px] w-[64px] flex-col items-center justify-start gap-[5px] rounded-t-xl pt-3"
+              "flex h-[75px] w-[64px] flex-col items-center justify-start gap-[5px] rounded-t-xl bg-navbar pt-3"
             }
           >
             <div>
