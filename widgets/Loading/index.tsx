@@ -24,7 +24,7 @@ const defaultOptions = {
 interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
-  const { push } = useRouter();
+  const router = useRouter();
   const { getMe } = useUser();
   const telegram = useTelegram();
   const dispatch = useAppDispatch();
@@ -40,16 +40,19 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь не найден переходим на страницу onboarding
      */
 
+    router.prefetch("/main");
+    router.prefetch("/onboarding");
+
     (async () => {
       try {
         await getMe();
         await setGameInfo(dispatch); // устанавливаем данные об игре
-        push("/main");
+        router.push("/main");
       } catch (error) {
-        push("/onboarding");
+        router.push("/onboarding");
       }
     })();
-  }, [push]);
+  }, [getMe, router]);
 
   return (
     <div
