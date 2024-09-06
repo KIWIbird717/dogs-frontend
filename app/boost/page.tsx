@@ -6,7 +6,7 @@ import { Navbar } from "@/widgets/Navbar";
 import { BoostBowl } from "@/widgets/BoostBowl";
 import Gradient1 from "@/public/images/svg/boost/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/boost/gradient/gradient2.svg";
-import { useClicker } from "@/shared/hooks/useClicker";
+import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 import RacketIcon from "@/public/images/svg/boost/racket.svg";
 import EnergyIcon from "@/public/images/svg/energy.svg";
 import { Block } from "@/widgets/Block";

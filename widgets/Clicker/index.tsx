@@ -2,7 +2,7 @@ import { FC, MouseEvent, TouchEvent, TouchEventHandler, useEffect, useState } fr
 import { Button } from "@/shared/ui/Button/Button";
 import { AnimatePresence } from "framer-motion";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { ClickEffect } from "@/shared/hooks/useClicker";
+import { ClickEffect } from "@/shared/hooks/useClicker/useClicker";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Level1 from "@/public/images/bowls/level1.png";

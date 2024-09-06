@@ -23,6 +23,9 @@ export const useClicker = (isSetInterval?: boolean) => {
   const { energyLimit, currentBoost, rechargeMultiplication, tapMultiplication, tapBotExpired } =
     useAppSelector((state) => state.user);
 
+  const { levels } = useAppSelector((store) => store.game);
+  const { balance } = useAppSelector((store) => store.user);
+
   const tabValue = 1 * rechargeMultiplication * tapMultiplication;
 
   const [state, setState] = useState({
@@ -81,15 +84,30 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const onIncrementEarn = useCallback(
     async (dateNowValue: number) => {
-      if (currentBoost > 2) {
+      if (currentBoost > 1) {
         const newEarned = state.earned + tabValue;
         const newTouches = state.touches + 1;
 
         setState({ earned: newEarned, touches: newTouches });
         setBoostsLS({ time: Date.now().toString(), boost: currentBoost - 2 });
         dispatch(UserSlice.setCurrentBoost(currentBoost - 2));
+        debouncedSendEarned(dateNowValue, newTouches);
 
-        await debouncedSendEarned(dateNowValue, newTouches);
+        const currentBalance = balance + state.earned;
+
+        let userLevel = 1;
+
+        if (!levels) return;
+
+        for (const [level, requiredExperience] of Object.entries(levels)) {
+          if (currentBalance >= requiredExperience) {
+            userLevel = Number(level);
+          } else {
+            break;
+          }
+        }
+
+        dispatch(UserSlice.updateUser({ level: userLevel }));
       }
     },
     [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned],

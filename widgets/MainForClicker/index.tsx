@@ -6,7 +6,7 @@ import { Board } from "@/widgets/Board";
 import { StatsInfo } from "../StatsInfo";
 import { Clicker } from "@/widgets/Clicker";
 import { EnergyBoost } from "@/widgets/EnergyBoost";
-import { useClicker } from "@/shared/hooks/useClicker";
+import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { useUser } from "@/shared/hooks/useUser";
