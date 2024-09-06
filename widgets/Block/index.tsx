@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils/cn";
 
 interface IBlockProps {
   icon: ReactNode;
-  title: string;
+  title: string | ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
@@ -24,7 +24,7 @@ export const Block: FC<IBlockProps> = ({ icon, title, onClick, className, ...pro
       <div>{icon}</div>
       <Typography
         tag={"p"}
-        className={"text-[17px] font-bold tabular-nums leading-6 text-white-900"}
+        className={"w-full text-[17px] font-bold tabular-nums leading-6 text-white-900"}
       >
         {title}
       </Typography>
