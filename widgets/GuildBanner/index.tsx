@@ -27,7 +27,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
   guildImage,
 }) => {
   const { push } = useRouter();
-  const totalScore = formatNumber(guild.guildBalance || 0);
+  const totalScore = formatNumber(guild?.guildBalance || 0);
 
   const redirectHandler = () => {
     if (isBanner) {
@@ -35,7 +35,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
     }
   };
 
-  const members = guild.membersCount || guild.members.length;
+  const members = guild?.membersCount || guild?.members.length;
 
   return (
     <div
@@ -65,7 +65,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
                   : "w-[200px] max-w-[200px] overflow-hidden text-ellipsis font-bold",
               )}
             >
-              {guild.name}
+              {guild?.name}
             </Typography>
             <Typography tag={"p"} className={"text-[18px] font-normal leading-6 text-white-900"}>
               {"Author"}

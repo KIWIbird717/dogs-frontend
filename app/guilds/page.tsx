@@ -88,7 +88,9 @@ const Guilds: NextPage<IGuildsProps> = () => {
             Join Guild
           </Button>
           <Button variant={"default"} className={"text-[18px] font-bold leading-6 text-white-900"}>
-            <Link href={"/guilds/create"}>Create Guild</Link>
+            <Link href={"/guilds/create"} prefetch>
+              Create Guild
+            </Link>
           </Button>
         </div>
       )}

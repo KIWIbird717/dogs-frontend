@@ -1,161 +1,160 @@
 "use client";
 
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
-import { Field, IFieldProps } from "@/widgets/Field";
+import { ChangeEvent, FC, useRef, useState } from "react";
+import { Field as FieldComponent, IFieldProps } from "@/widgets/Field";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { serverApi } from "@/shared/lib/axios";
-import { useUser } from "@/shared/hooks/useUser";
 import { CheckboxInvitation } from "@/widgets/CreateGuildFields/shared/ui/CheckboxInvitation";
-import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
+import { GuildsService, JoinMethod } from "@/shared/lib/services/guilds/guilds";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ZodSchemas } from "@/shared/lib/zod-schemas";
+import { ZodSchemaTypes } from "@/shared/lib/zod-schemas/types";
+import { Field } from "@/shared/ui/Field";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { cn } from "@/shared/lib/utils/cn";
+import { AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+import toast, { Toaster } from "react-hot-toast";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { useRouter } from "next/navigation";
+
+const MotionImage = dynamic(() => import("framer-motion").then((mod) => mod.motion.img));
+
+const BALANCE_TO_CREATE_GUILD = 500;
 
 interface ICreateGuildFieldsProps {}
 
 export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
   const logger = new Logger("CreateGuildFields");
 
-  const { user } = useUser();
-  const { push } = useRouter();
+  const { handleSubmit, formState, setError, setValue, reset } =
+    useForm<ZodSchemaTypes.GuildCreate>({
+      resolver: zodResolver(ZodSchemas.guildCreate),
+      defaultValues: {
+        link: "https://t.me",
+        joinMethod: JoinMethod.OPEN,
+      },
+    });
 
-  const inputFileRef = useRef<any>(null);
-  const needBalance = 500;
-  const bones = user.balance;
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [avatar, setAvatar] = useState<File>();
-  const [link, setLink] = useState("https://t.me/");
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [isCorrect, setIsCorrect] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { balance } = useAppSelector((store) => store.user);
+  const fileUploaderRef = useRef<any>(null);
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [uploadedAvatar, setUploadedAvatar] = useState<string | null>(null);
   const [joinMethod, setJoinMethod] = useState<JoinMethod>(JoinMethod.OPEN);
 
   const onToggleJoinMethod = () => {
     if (joinMethod === "open") {
+      setValue("joinMethod", JoinMethod.BYLINK);
       setJoinMethod(JoinMethod.BYLINK);
-    } else setJoinMethod(JoinMethod.OPEN);
+    } else {
+      setValue("joinMethod", JoinMethod.OPEN);
+      setJoinMethod(JoinMethod.OPEN);
+    }
   };
 
   const handleFile: IFieldProps["onChange"] = (e) => {
     if (typeof e === "string") return;
+
     if (!(e as ChangeEvent<HTMLInputElement>).currentTarget.files) {
       logger.error("[handleFile] e.currentTarget.files is null");
       return;
     }
 
     let selectedFile = (e as any).currentTarget?.files[0];
-    const allowedTypes = ["image/png", "image/jpeg"];
-    if (!allowedTypes.includes(selectedFile.type)) {
-      setIsError(true);
-      setErrorMessage("Error Format Send PNG or JPGE");
-    } else {
-      setIsError(false);
-      setErrorMessage("");
-    }
+
     setAvatar(selectedFile);
+    setUploadedAvatar(URL.createObjectURL(selectedFile));
+    setValue("image", selectedFile, { shouldValidate: true });
   };
 
-  const onChangeName: IFieldProps["onChange"] = (e) => {
-    if (typeof e === "string") return;
-    setName(e.currentTarget.value);
-  };
-  const onChangeDescription: IFieldProps["onChange"] = (e) => {
-    if (typeof e === "string") return;
-    setDescription(e.currentTarget.value);
-  };
-  const onChangeLink: IFieldProps["onChange"] = (e) => {
-    if (typeof e === "string") return;
-    setLink(e.currentTarget.value);
-  };
-
-  useEffect(() => {
-    if (name.length === 0 || description.length === 0 || !avatar || isError) {
-      // if (name.length === 0 || !avatar || isError || !(Number(bones) >= needBalance)) {
-      // if (name.length === 0 || !avatar || isError) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
-  }, [avatar, isError, name.length]);
-
-  const onSubmit = async () => {
-    const formData = new FormData();
-    if (avatar) {
-      formData.append("name", name);
-      formData.append("image", avatar);
-      formData.append("description", description);
-      formData.append("link", link);
-      formData.append("joinMethod", joinMethod);
-    }
-
+  const submitForm: SubmitHandler<ZodSchemaTypes.GuildCreate> = async (form) => {
     try {
-      await serverApi.post(`/guilds/create`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const formData = new FormData();
 
-      push("/guilds");
+      if (!form.image) {
+        setError("image", { type: "required", message: "Avatar was not provided" });
+        return;
+      }
+
+      formData.append("name", form.name);
+      formData.append("description", form.description);
+      formData.append("link", form.link);
+      formData.append("image", form.image);
+      formData.append("joinMethod", form.joinMethod);
+
+      const response = await GuildsService.createGuild(formData);
+
+      reset();
+      dispatch(UserSlice.updateUser({ guildName: response.data.name, guild: response.data.id }));
+      router.push("/main");
     } catch (error) {
-      logger.error(error);
+      toast.error("Can not create guild now");
+      reset();
     }
   };
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2 pb-[100px]"}>
-      <Field
-        keyForLabel={"name"}
+    <form
+      className={"z-[10] flex w-full flex-col gap-3 pb-[100px]"}
+      onSubmit={handleSubmit(submitForm)}
+    >
+      <Toaster />
+
+      <Field.Input
+        onChange={(e) => setValue("name", e.target.value, { shouldValidate: true })}
+        type="text"
         label={"Name Guild"}
-        value={name}
-        onChange={onChangeName}
-        isError={false}
-        placeholder={"Name"}
-        type={"text"}
-        isCorrect={isCorrect}
+        error={formState.errors.name}
       />
-
-      <Field
-        keyForLabel={"description"}
-        label={"Description Guild"}
-        value={description}
-        onChange={onChangeDescription}
-        isError={false}
-        placeholder={"Up to 300 characters"}
-        isTextArea
+      <Field.Textarea
+        onChange={(e) => setValue("description", e.target.value, { shouldValidate: true })}
+        label="Description Guild"
+        error={formState.errors.description}
+        placeholder="Up to 300 characters"
       />
-
-      <Field
-        keyForLabel={"link"}
+      <Field.Input
+        onChange={(e) => setValue("link", e.target.value, { shouldValidate: true })}
+        type="text"
         label={"Link to the Guild"}
-        labelDescription={"Telegram only"}
-        errorText={"Invalid link"}
-        value={link}
-        onChange={onChangeLink}
-        isError={false}
-        placeholder={"Link"}
-        type={"url"}
+        labelAfter={"Telegram only"}
+        placeholder="https://t.me"
+        error={formState.errors.link}
       />
-      <Field
-        keyForLabel={"avatar"}
-        label={"Choose avatar for Guild"}
-        labelDescription={"Telegram only"}
-        errorText={errorMessage}
-        onChange={handleFile}
-        isError={isError}
-        type={"file"}
-        inputRef={inputFileRef}
-        value={!!avatar}
-      />
+      <div className="flex h-full w-full flex-col gap-[1px]">
+        <FieldComponent
+          keyForLabel={"avatar"}
+          label={"Choose avatar for Guild"}
+          labelDescription={"Telegram only"}
+          onChange={handleFile}
+          error={formState.errors.image}
+          inputRef={fileUploaderRef}
+          type={"file"}
+          value={!!avatar}
+        />
+        <AnimatePresence>
+          {uploadedAvatar && (
+            <MotionImage
+              initial={{ height: 0 }}
+              animate={{ height: 80 }}
+              exit={{ height: 0 }}
+              className="m-2 aspect-square h-full w-fit overflow-hidden rounded-[10px] border-[1px] border-blue-900 object-cover object-center"
+              src={uploadedAvatar}
+            />
+          )}
+        </AnimatePresence>
+      </div>
 
       <CheckboxInvitation joinMethod={joinMethod} onToggleJoinMethod={onToggleJoinMethod} />
 
       <div className={"flex w-full flex-col gap-4 pt-2"}>
         <Button
-          onClick={onSubmit}
+          type="submit"
           variant={"primary"}
-          disabled={isDisabled}
+          disabled={!formState.isValid || formState.isSubmitting}
           className={"text-[18px] font-bold leading-6 text-white-900"}
         >
           Create Guild
@@ -163,13 +162,18 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
 
         <div className={"flex w-full flex-col items-center gap-1"}>
           <Typography tag={"span"} className={"text-white-800"}>
-            You need {needBalance} bones
+            {balance < BALANCE_TO_CREATE_GUILD
+              ? `You need ${BALANCE_TO_CREATE_GUILD} coins`
+              : `${BALANCE_TO_CREATE_GUILD} coins for guild creation`}
           </Typography>
-          <Typography tag={"span"} className={"text-red"}>
-            Your balance {bones} bones
+          <Typography
+            tag={"span"}
+            className={cn(balance < BALANCE_TO_CREATE_GUILD ? "text-red" : "hidden")}
+          >
+            Your balance {balance} coins
           </Typography>
         </div>
       </div>
-    </div>
+    </form>
   );
 };

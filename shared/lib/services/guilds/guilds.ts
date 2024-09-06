@@ -17,7 +17,6 @@ export interface IGuildResponse {
   image: string;
 }
 
-
 export type GuildResponseWithMembersType = {
   joinMethod: JoinMethod;
   name: string;
@@ -58,8 +57,12 @@ export namespace GuildsService {
   /**
    * POST /guilds/create
    */
-  export const createGuild = (dto: GuildsApiTypes.GuildDto) => {
-    return serverApi.post<any>(`/guilds/create`, dto);
+  export const createGuild = (dto: FormData) => {
+    return serverApi.post<GuildsApiTypes.CreateResponse>(`/guilds/create`, dto, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   };
 
   /**

@@ -24,7 +24,7 @@ export const CheckboxInvitation: FC<ICheckboxInvitationProps> = ({
           <Typography
             tag={"p"}
             className={twMerge(
-              "text-[16px] font-medium leading-6 text-[#4D4A65]",
+              "text-[16px] font-medium leading-6 text-[#4D4A65] transition-all duration-150",
               joinMethod === "bylink" && "text-white-900",
             )}
           >

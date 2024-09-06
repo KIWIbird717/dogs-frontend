@@ -6,6 +6,9 @@ import { Button } from "@/shared/ui/Button/Button";
 import FileIcon from "@/public/images/svg/guild/file.svg";
 import { Textarea } from "@/shared/ui/Textarea";
 import { twMerge } from "tailwind-merge";
+import { AnimatePresence } from "framer-motion";
+import { ErrorSpan } from "@/shared/ui/Field/shared/ErrorSpan";
+import { FieldError } from "react-hook-form";
 
 export interface IFieldProps {
   keyForLabel?: string;
@@ -16,13 +19,14 @@ export interface IFieldProps {
   onChange: (
     value: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | string,
   ) => void;
-  isError: boolean;
+  isError?: boolean;
   placeholder?: string;
   type?: string;
   inputRef?: any;
   isTextArea?: boolean;
   isCorrect?: boolean;
   buttonClassName?: string;
+  error?: FieldError | undefined;
 }
 
 export const Field: FC<IFieldProps> = ({
@@ -39,13 +43,19 @@ export const Field: FC<IFieldProps> = ({
   isTextArea,
   isCorrect,
   buttonClassName,
+  error,
 }) => {
   const validationValue = value && type !== "file" ? value : "";
 
   return (
-    <div className={"flex w-full flex-col gap-2"}>
+    <div className={"flex w-full flex-col gap-[1px]"}>
       {!!label && (
-        <Label keyForLabel={keyForLabel!} label={label} labelDescription={labelDescription} />
+        <Label
+          className="ml-[10px]"
+          keyForLabel={keyForLabel!}
+          label={label}
+          labelDescription={labelDescription}
+        />
       )}
 
       {type === "file" && (
@@ -53,10 +63,11 @@ export const Field: FC<IFieldProps> = ({
           className={twMerge(
             "h-[48px] items-center justify-start border-[2px] px-3",
             !isError && value && "border-blue-900",
-            isError && "border-red",
+            error && "border-red",
             buttonClassName,
           )}
           variant={"select"}
+          type="button"
           onClick={() => inputRef?.current.click()}
         >
           <Typography
@@ -93,6 +104,8 @@ export const Field: FC<IFieldProps> = ({
           className={twMerge(isCorrect && "border-[2px] border-green")}
         />
       )}
+
+      <AnimatePresence>{error && <ErrorSpan error={error} />}</AnimatePresence>
 
       {isError && (
         <Typography

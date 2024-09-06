@@ -4,8 +4,23 @@
  * Pick - выбор определенного типа
  */
 export namespace GuildsApiTypes {
-  export type GuildDto = {
-    image: any; //TODO: узнать type image
+  export enum JoinMethod {
+    OPEN = "open",
+    BYLINK = "bylink",
+  }
+  export type CreateDto = {
+    name: string;
+    description: string;
+    link: string;
+    avatar: File;
+    joinMethod: JoinMethod;
+  };
+
+  export type CreateResponse = {
+    status: number;
+    message: string;
+    image: string;
+    id: string;
     name: string;
   };
 
