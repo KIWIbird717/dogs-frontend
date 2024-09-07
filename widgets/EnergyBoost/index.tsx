@@ -30,7 +30,7 @@ export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoos
       <BoostsButton
         icon={<RacketIcon />}
         title={"Boost"}
-        className="!w-[155px]"
+        className="!w-[135px]"
         onClick={redirectToBoost}
       />
     </div>
