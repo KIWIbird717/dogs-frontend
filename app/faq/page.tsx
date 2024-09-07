@@ -31,7 +31,7 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
   return (
     <View
       fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-6 bg-gradient-background px-4 pt-6"
+      className="relative flex h-screen w-full flex-col gap-6 overflow-x-hidden bg-gradient-background px-4 pt-6"
     >
       <Toaster />
       <div className={"z-[10] flex flex-col gap-4"}>

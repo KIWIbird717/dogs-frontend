@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { AccordionListItem } from "@/widgets/AccordionList/entities/AccordionItem";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { Accordion } from "@/shared/ui/Accordion";
 
 interface IAccordionListProps {}
 
@@ -39,18 +40,20 @@ export const AccordionList: FC<IAccordionListProps> = () => {
         FAQ
       </Typography>
 
-      <div className={"flex h-auto w-full flex-col gap-2 pb-[180px]"}>
-        {faqs.map((item, i) => {
-          return (
-            <AccordionListItem
-              key={i}
-              title={item.title}
-              description={item.description}
-              index={i}
-            />
-          );
-        })}
-      </div>
+      <Accordion type="single" collapsible>
+        <div className={"flex h-auto w-full flex-col gap-2 pb-[180px]"}>
+          {faqs.map((item, i) => {
+            return (
+              <AccordionListItem
+                key={i}
+                title={item.title}
+                description={item.description}
+                index={i}
+              />
+            );
+          })}
+        </div>
+      </Accordion>
     </div>
   );
 };

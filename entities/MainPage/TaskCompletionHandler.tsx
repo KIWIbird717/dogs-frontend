@@ -12,6 +12,8 @@ export const TaskCompletionHandler = () => {
     const parsedTask = JSON.parse(compliedTask) as Localstorage.CompliedTaskRawType;
     const earned = Intl.NumberFormat("en-US").format(parsedTask.earned);
     toast.success(`Task complied +${earned}`);
+
+    localStorage.removeItem(LocalstorageKeys.CompliedTask);
   }, []);
 
   return <Toaster />;
