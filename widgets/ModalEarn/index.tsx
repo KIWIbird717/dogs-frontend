@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -17,50 +17,71 @@ import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import { useRouter } from "next/navigation";
-import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
+import { IModalData } from "@/shared/lib/redux-store/slices/modal-slice/type";
 
-interface IModalEarnProps {}
+interface IModalEarnProps {
+  isOpen: boolean;
+  data: IModalData | null;
+  onClose: () => void;
+  onComplete?: (task: TasksApiTypes.TasksDto | null) => void;
+}
 
-export const ModalEarn: FC<IModalEarnProps> = () => {
-  const { onClose, modalData } = useModal();
-  const { isOpen, data, type } = modalData;
+export const ModalEarn: FC<IModalEarnProps> = (props) => {
+  const [isUserOpenLink, setIsUserOpenLink] = useState(false);
 
-  const isModalOpen = isOpen && type === "earn";
-
-  const coin = formatNumber(data ? data?.task?.amount! : 0);
+  const coin = formatNumber(props.data ? props.data?.task?.amount! : 0);
   const telegram = useTelegram();
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      props.onClose();
     }
   };
 
   const buttonName =
-    data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
+    props.data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
       ? "Watch Video"
-      : data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER
+      : props.data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER
         ? "Share us at X"
         : "Start";
 
   const onSubmit = async () => {
     try {
-      if (!data?.task?.link) {
+      if (!props.data?.task?.link) {
         return toast.error("Can not open the link");
       }
-      const response = await TasksService.setTask(data.task.id);
 
+      telegram?.openLink(props.data?.task?.link!);
+      setIsUserOpenLink(true);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message === "Task is expired") {
+          return toast.error("Task is expired");
+        }
+      }
+      toast.error("Can not complete the task");
+    }
+  };
+
+  const handleCompleteTask = async () => {
+    try {
+      if (!props.data?.task?.link) {
+        return toast.error("Can not finish task");
+      }
+
+      const response = await TasksService.setTask(props.data.task.id);
+
+      const earned = Intl.NumberFormat("ja").format(response.data.earned);
+      toast.success(`Task complied +${earned} coins`);
+
+      // update user balance
       dispatch(UserSlice.updateUser({ balance: response.data.currentBalance }));
-      telegram?.openLink(data?.task?.link!);
-      localStorage.setItem(
-        LocalstorageKeys.CompliedTask,
-        JSON.stringify({ taskId: data.task.id, earned: response.data.earned }),
-      );
 
-      router.push("./main");
+      setIsUserOpenLink(false); // refresh state
+
+      props.onComplete && props.onComplete(props.data.task);
+      props.onClose(); // close modal
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data.message === "Task is expired") {
@@ -75,7 +96,7 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
     <>
       <Toaster />
       <AnimatePresence initial={true}>
-        {isModalOpen && (
+        {props.isOpen && (
           <div
             className={
               "fixed left-0 top-0 z-[100] flex h-full w-full flex-col items-center justify-end bg-[#000]/30"
@@ -95,15 +116,15 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
               <div className={"flex w-full flex-col gap-4"}>
                 <Button
                   className={"leading-4.5 h-[18px] w-fit !p-0 text-[15px] font-normal"}
-                  onClick={onClose}
+                  onClick={props.onClose}
                 >
                   Cancel
                 </Button>
 
                 <div>
-                  {data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE ? (
+                  {props.data?.task?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE ? (
                     <YoutubeIcon />
-                  ) : data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER ? (
+                  ) : props.data?.task?.type === TasksApiTypes.TaskTypeEnum.XTWITTER ? (
                     <TwitterIcon />
                   ) : (
                     <NFTIcon />
@@ -114,13 +135,13 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
                   tag={"p"}
                   className={"line-clamp-3 text-[32px] font-bold leading-[38px] text-white-900"}
                 >
-                  {data?.task?.name}
+                  {props.data?.task?.name}
                 </Typography>
                 <Typography tag={"h2"} className={"font-normal text-white-900"}>
                   What need to do?
                 </Typography>
                 <Typography tag={"h3"} className={"font-normal text-white-800"}>
-                  {data?.task?.desc}
+                  {props.data?.task?.desc}
                 </Typography>
 
                 <div
@@ -150,14 +171,25 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
                 </div>
               </div>
               <div>
-                <Button
-                  onClick={onSubmit}
-                  variant={"deepBlue"}
-                  className={"text-[18px] font-bold leading-6 text-white-900"}
-                  disabled={data?.task?.isCompleted}
-                >
-                  {buttonName}
-                </Button>
+                {isUserOpenLink ? (
+                  <Button
+                    onClick={handleCompleteTask}
+                    variant={"deepBlue"}
+                    className={"text-[18px] font-bold leading-6 text-white-900"}
+                    disabled={props.data?.task?.isCompleted}
+                  >
+                    Claim bonus
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={onSubmit}
+                    variant={"deepBlue"}
+                    className={"text-[18px] font-bold leading-6 text-white-900"}
+                    disabled={props.data?.task?.isCompleted}
+                  >
+                    {buttonName}
+                  </Button>
+                )}
               </div>
             </motion.div>
           </div>

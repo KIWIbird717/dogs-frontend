@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
-export type ModelType = "settings" | "editAge" | "earn" | "boosts"
+export type ModelType = "settings" | "editAge" | "earn" | "boosts";
 
 export interface ITaskObj {
   title: string;
@@ -19,19 +19,19 @@ export interface ITask {
 
 export interface IBoost {
   icon: ReactNode;
-  title: string
-  info: string,
-  description?: string
-  price?: number
-  key?: "full-tank" | "turbo",
-  value?: number | null,
-  boosts?: number
-  buttonTitle: string
-  onClick: () => Promise<void>
+  title: string;
+  info: string;
+  description?: string;
+  price?: number;
+  key?: "full-tank" | "turbo";
+  value?: number | null;
+  boosts?: number;
+  buttonTitle: string;
+  onClick: () => Promise<void>;
 }
 
 export interface IModalData {
-  task?: TasksApiTypes.TasksDto;
+  task?: TasksApiTypes.TasksDto | null;
   boost?: IBoost;
 }
 

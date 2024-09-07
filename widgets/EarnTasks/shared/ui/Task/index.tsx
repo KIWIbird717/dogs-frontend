@@ -5,25 +5,24 @@ import { formatNumber } from "@/shared/lib/utils/formatNumber";
 import { ToggleCategoryType } from "@/app/earn/page";
 import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
 import { Button } from "@/shared/ui/Button/Button";
-import { useModal } from "@/shared/hooks/useModal";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import YoutubeIcon from "@/public/images/svg/earn/youtube.svg";
 import TwitterIcon from "@/public/images/svg/earn/x.svg";
 import NFTIcon from "@/public/images/svg/earn/nft.svg";
 
-interface ITaskProps {
+export interface ITaskProps {
   task: TasksApiTypes.TasksDto;
   toggle: ToggleCategoryType;
+  onOpen?: ({ data }: { data: TasksApiTypes.TasksDto }) => void;
 }
 
-export const Task: FC<ITaskProps> = ({ toggle, task }) => {
-  const { onOpenModal } = useModal();
+export const Task: FC<ITaskProps> = ({ toggle, task, onOpen }) => {
   const newFormatCoins = formatNumber(task.amount);
 
   const handleClick = () => {
     if (!task.isCompleted) {
-      onOpenModal("earn", { task: task });
+      onOpen && onOpen({ data: task });
     }
   };
 

@@ -16,8 +16,10 @@ import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import useSWR from "swr";
 import { TasksService } from "@/shared/lib/services/tasks/stats";
-import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import { RewardTaskList } from "@/widgets/RewardTaskList";
+import { ModalEarn } from "@/widgets/ModalEarn";
+import { ITaskProps } from "@/widgets/EarnTasks/shared/ui/Task";
+import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
 interface IEarnPageProps {}
 
@@ -25,19 +27,48 @@ export type ToggleCategoryType = "rewards" | "tasks";
 
 const EarnPage: NextPage<IEarnPageProps> = () => {
   const [toggle, setToggle] = useState<ToggleCategoryType>("rewards");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<TasksApiTypes.TasksDto | null>(null);
+
   const onSetRewards = () => setToggle("rewards");
   const onSetTasks = () => setToggle("tasks");
 
-  const { data } = useSWR("/task", TasksService.getTasks);
+  const { data, mutate } = useSWR("/task", TasksService.getTasks);
   const tasks = data?.data;
 
   const notFoundTasks = tasks?.length === 0 ? "There are no tasks" : null;
+
+  const handleModalOpen = ({ data }: { data: TasksApiTypes.TasksDto }) => {
+    setIsModalOpen(true);
+    setModalData(data);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setModalData(null);
+  };
 
   return (
     <View
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
+      <ModalEarn
+        isOpen={isModalOpen}
+        data={{ task: modalData }}
+        onClose={handleCloseModal}
+        onComplete={(compliedTask) => {
+          if (!compliedTask) return;
+          if (!data) return;
+          if (!tasks) return;
+
+          const compliedTaskIndex = tasks?.findIndex((rawTask) => rawTask.id === compliedTask.id);
+          delete tasks[compliedTaskIndex];
+
+          mutate({ ...data, data: tasks });
+        }}
+      />
+
       <Header />
 
       <div className={"z-[10] flex h-[48px] w-full gap-2"}>
@@ -75,7 +106,12 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
 
       <div className={"flex h-full flex-col overflow-y-auto"}>
         {toggle === "rewards" && (
-          <RewardTaskList notFoundTasks={notFoundTasks} tasks={tasks || []} toggle={toggle} />
+          <RewardTaskList
+            notFoundTasks={notFoundTasks}
+            tasks={tasks || []}
+            onOpen={handleModalOpen}
+            toggle={toggle}
+          />
         )}
         {toggle === "tasks" && (
           <TaskList notFoundTasks={notFoundTasks} tasks={tasks || []} toggle={toggle} />

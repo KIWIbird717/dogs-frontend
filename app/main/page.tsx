@@ -6,7 +6,6 @@ import { MainForClicker } from "@/widgets/MainForClicker";
 import Gradient1 from "@/public/images/svg/main/gradient1.svg";
 import Gradient2 from "@/public/images/svg/main/gradient2.svg";
 import { InvitationHandler } from "@/entities/MainPage/InvitationHandler";
-import { TaskCompletionHandler } from "@/entities/MainPage/TaskCompletionHandler";
 
 interface IMainPageProps {}
 
@@ -21,7 +20,6 @@ const MainPage: NextPage<IMainPageProps> = () => {
       <Gradient2 className={"absolute -bottom-[50px] left-0 z-[1]"} />
 
       <InvitationHandler />
-      <TaskCompletionHandler />
 
       <MainForClicker />
 
