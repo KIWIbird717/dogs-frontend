@@ -74,7 +74,6 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         title: "FullTank",
         info: `${user.eneryTankLeft}/3 in day`,
         buttonTitle: "Choose Free",
-        price: 25000,
         key: "full-tank",
         value: user.eneryTankLeft,
         boosts,
