@@ -11,6 +11,7 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { setGameInfo } from "./shared/func/setGameInfo";
 import Lottie from "react-lottie";
+import { Platforms } from "@twa-dev/types";
 
 const defaultOptions = {
   loop: true,
@@ -20,6 +21,8 @@ const defaultOptions = {
     preserveAspectRatio: "xMidYMid slice",
   },
 };
+
+const allowedPlatforms: Platforms[] = ["android", "android_x", "ios"];
 
 interface IModalLoadingProps {}
 
@@ -40,10 +43,19 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
      * - если есть пользователь не найден переходим на страницу onboarding
      */
 
-    router.prefetch("/main");
-    router.prefetch("/onboarding");
-
     (async () => {
+      // для запуска платформы в браузере во время дебага
+      const isDebug = parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0");
+      if (!isDebug) {
+        if (!telegram?.platform) return;
+        if (!(telegram.platform in allowedPlatforms)) {
+          return router.push("/not-allowed-platform");
+        }
+      }
+
+      router.prefetch("/main");
+      router.prefetch("/onboarding");
+
       try {
         await getMe();
         await setGameInfo(dispatch); // устанавливаем данные об игре
@@ -52,7 +64,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
         router.push("/onboarding");
       }
     })();
-  }, []);
+  }, [telegram?.platform]);
 
   return (
     <div

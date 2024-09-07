@@ -21,8 +21,8 @@ type Color = Exclude<NodeColorsKeys, "Reset">;
  * Использовать вместо обычного console.log, console.error, console.warn. Данный
  * класс должен использоваться только во время разработки. После сборки проекта
  * отключить вывод сообщений в консоль в .env файле поставив переменную окружения
- * `NEXT_PUBLIC_LOGGER_STATE = off`. Изначально переменная окружения `NEXT_PUBLIC_LOGGER_STATE`
- * стоит в значении `on`.
+ * `NEXT_PUBLIC_LOGGER_STATE = 0`. Изначально переменная окружения `NEXT_PUBLIC_LOGGER_STATE`
+ * стоит в значении `1`.
  *
  * Если в логере нужно отслеживать где была вызвана ошибка, то в переменной окружения
  * в .env файле нужно поставить переменную окружения `NEXT_PUBLIC_NEXT_PUBLIC_TRACE_ERRORS = true`.
@@ -38,7 +38,7 @@ type Color = Exclude<NodeColorsKeys, "Reset">;
  * Logger.warn("warn message");   // [WARN]   05:10:21  -  warn message
  * Logger.error("error message"); // [ERROR]  05:10:21  -  error message
  *
- * // Логирование c контекста
+ * // Логирование DiceRollHeader контекста
  * const logger = new Logger("context");
  * logger.log("log message with context");     // [LOG]    05:10:21  [context]  - log message with context
  * logger.debug("debug message with context"); // [DEBUG]  05:10:21  [context]  - debug message with context
@@ -60,7 +60,7 @@ export class Logger {
       this.consoleAlwd.error(logMsg);
       return false;
     }
-    return NEXT_PUBLIC_LOGGER_STATE === "on";
+    return Boolean(parseInt(NEXT_PUBLIC_LOGGER_STATE));
   }
 
   private static get isTracingErrors() {
@@ -72,7 +72,7 @@ export class Logger {
       this.consoleAlwd.warn('NEXT_PUBLIC_TRACE_ERRORS could be only "true" or "false"');
       return false;
     }
-    return NEXT_PUBLIC_TRACE_ERRORS === "true";
+    return Boolean(parseInt(NEXT_PUBLIC_TRACE_ERRORS));
   }
 
   private static getTime() {
