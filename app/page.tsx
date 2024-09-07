@@ -5,6 +5,7 @@ import { View } from "@/shared/layout/View";
 import { ModalLoading } from "@/widgets/Loading";
 import { DuckBackground } from "@/widgets/DuckBackground";
 import { useTelegram } from "@/shared/hooks/useTelegram";
+import { useEffect } from "react";
 
 interface ILoadingPageProps {}
 
@@ -21,7 +22,9 @@ const LoadingPage: NextPage<ILoadingPageProps> = () => {
   const telegram = useTelegram();
   const startAppParams = telegram?.initDataUnsafe.start_param;
 
-  handleInvitation(startAppParams);
+  useEffect(() => {
+    handleInvitation(startAppParams);
+  }, [startAppParams]);
 
   return (
     <View
