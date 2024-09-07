@@ -87,7 +87,12 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
         {isShowBonus && <Bonus />}
       </div>
 
-      <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
+      <ShareAndInvite
+        onShareHandler={onShareHandler}
+        inviteText={inviteText}
+        fullInviteLink={fullInviteLink}
+        onCopyHandler={onCopyHandler}
+      />
 
       <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
       <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
