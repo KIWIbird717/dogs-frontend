@@ -25,15 +25,22 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
       const bowl = setBowlsByLevel(level);
       setImage(bowl);
 
-      // const levelBeforeBowlUpdate = localStorage.getItem(LocalstorageKeys.LevelBeforeBowlUpdate)
-      // if (!levelBeforeBowlUpdate) {
-      //   localStorage.setItem(LocalstorageKeys.LevelBeforeBowlUpdate, level)
-      // }
+      // if localstorage is empty
+      const levelBeforeBowlUpdate = localStorage.getItem(LocalstorageKeys.LevelBeforeBowlUpdate);
+      if (!levelBeforeBowlUpdate) {
+        localStorage.setItem(LocalstorageKeys.LevelBeforeBowlUpdate, `${level}`);
+      }
 
-      setIsClickAvailable(false);
-      await controls.start({ scale: 1.5, transition: { duration: 0.2 } });
-      await controls.start({ scale: 1 });
-      setIsClickAvailable(true);
+      const isAnimationAvailable =
+        parseInt(localStorage.getItem(LocalstorageKeys.LevelBeforeBowlUpdate) || "0") !== level;
+      if (isAnimationAvailable) {
+        setIsClickAvailable(false);
+        await controls.start({ scale: 1.5, transition: { duration: 0.2 } });
+        await controls.start({ scale: 1 });
+        setIsClickAvailable(true);
+        // update level before bowl update
+        localStorage.setItem(LocalstorageKeys.LevelBeforeBowlUpdate, `${level}`);
+      }
     })();
   }, [level]);
 
