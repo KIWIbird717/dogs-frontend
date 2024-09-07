@@ -48,7 +48,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
       const isDebug = parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0");
       if (!isDebug) {
         if (!telegram?.platform) return;
-        if (!(telegram.platform in allowedPlatforms)) {
+        if (!allowedPlatforms.includes(telegram.platform)) {
           return router.push("/not-allowed-platform");
         }
       }
