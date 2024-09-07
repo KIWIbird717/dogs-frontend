@@ -70,7 +70,7 @@ export namespace UsersService {
    * POST /users/bonus/daily
    */
   export const setBonusDaily = () => {
-    return serverApi.post("/users/bonus/daily");
+    return serverApi.post<UserApiTypes.GetBonusDailyResponse>("/users/bonus/daily");
   };
 
   /**

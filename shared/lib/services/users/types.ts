@@ -90,4 +90,11 @@ export namespace UserApiTypes {
     };
     timestamp: number;
   };
+
+  export type GetBonusDailyResponse = {
+    level: number;
+    bonus: number;
+    balance: number;
+    avaliableTimer: number;
+  };
 }

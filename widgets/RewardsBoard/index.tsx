@@ -7,17 +7,12 @@ import { CountDownWrapper } from "@/shared/ui/CountDownWrapper";
 import { useDailyReward } from "@/widgets/RewardsBoard/hooks/useDailyReward";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "@/shared/ui/Typography/Typography";
+import { Toaster } from "react-hot-toast";
 
-interface IRewardsBoardProps {
-}
+interface IRewardsBoardProps {}
 
 export const RewardsBoard: FC<IRewardsBoardProps> = () => {
-  const {
-    daily,
-    onClaimDailyReward,
-    isDisabled,
-    onToggleDisabled
-  } = useDailyReward()
+  const { daily, onClaimDailyReward, isDisabled, onToggleDisabled } = useDailyReward();
 
   return (
     <div
@@ -25,13 +20,23 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
         "flex w-full flex-col gap-6 rounded-xl border border-black-300 bg-black-400 px-3 py-5 shadow-buttonNoAccent"
       }
     >
+      <Toaster />
       <div className={"flex w-full"}>
         <Header />
-        <Time titleUnCompleted={<>Available <br/> at</>}
-              titleCompleted={<>Available <br/> at <br/> NOW</>}
-              onToggleDisabled={onToggleDisabled}
-              timeStamp={daily?.timestamp!}
-              key={String(daily?.nextLevel)}
+        <Time
+          titleUnCompleted={
+            <>
+              Available <br /> at
+            </>
+          }
+          titleCompleted={
+            <>
+              Available <br /> at <br /> NOW
+            </>
+          }
+          onToggleDisabled={onToggleDisabled}
+          timeStamp={daily?.timestamp!}
+          key={String(daily?.nextLevel)}
         />
       </div>
 
@@ -40,22 +45,25 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
       <Button
         variant={"primary"}
         disabled={isDisabled}
-        className={"h-[48px] flex gap-1 items-center"}
+        className={"flex h-[48px] items-center gap-1"}
         onClick={onClaimDailyReward}
       >
-        {daily
-          ? <CountDownWrapper timeStamp={daily?.timestamp!}
-                           onToggleDisabled={onToggleDisabled}
-                           titleCompleted={"Claim"}
-                           titleUnCompleted={"Claim at"}
-                           key={String(daily?.nextLevel)}
-        />
-          : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
-                        tag={"p"}
+        {daily ? (
+          <CountDownWrapper
+            timeStamp={daily?.timestamp!}
+            onToggleDisabled={onToggleDisabled}
+            titleCompleted={"Claim"}
+            titleUnCompleted={"Claim at"}
+            key={String(daily?.nextLevel)}
+          />
+        ) : (
+          <Typography
+            className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
+            tag={"p"}
           >
             Claim
           </Typography>
-        }
+        )}
       </Button>
     </div>
   );
