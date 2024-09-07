@@ -25,9 +25,6 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     isMyGuild,
     guild,
     guildImage,
-    setIsLoading,
-    setGuild,
-    getImageOfGuild,
     handleToggleGuild,
     handleFetchGuildById,
   } = useGuild();
@@ -82,9 +79,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
       {!isLoading && guild?.members && <GuildPlayers title={"Players"} friends={guild.members} />}
 
-      {isMyGuild && (
-        <ShareAndInvite onShareHandler={onShareHandler} onCopyHandler={onCopyHandler} />
-      )}
+      {isMyGuild && <ShareAndInvite onCopyHandler={onCopyHandler} />}
 
       <Navbar />
 

@@ -1,7 +1,4 @@
 import { ModalProvider } from "@/shared/providers/ModalProvider";
-
-("use client ");
-
 import { Epilogue } from "next/font/google";
 import "@/public/styles/globals.scss";
 import Script from "next/script";

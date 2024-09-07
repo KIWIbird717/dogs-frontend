@@ -5,8 +5,8 @@ import { cn } from "@/shared/lib/utils/cn";
 
 interface IShareAndInviteProps {
   onCopyHandler: () => void;
-  fullInviteLink: string;
-  inviteText: string;
+  fullInviteLink?: string;
+  inviteText?: string;
 }
 
 export const ShareAndInvite: FC<IShareAndInviteProps> = ({ onCopyHandler, ...props }) => {
@@ -14,11 +14,6 @@ export const ShareAndInvite: FC<IShareAndInviteProps> = ({ onCopyHandler, ...pro
 
   return (
     <div className={"fixed bottom-[116px] left-4 z-[10] flex w-[calc(100%-32px)] gap-2"}>
-      {/* <a
-        href={`https://telegram.me/share/url?url=${props.fullInviteLink}&text=${props.inviteText}`}
-      >
-        Test
-      </a> */}
       <a
         className={cn(
           ButtonNS.DEFAULT_CLASSES,
