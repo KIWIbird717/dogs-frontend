@@ -48,15 +48,6 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
       .catch(() => toast.error("Copy not allowed in your telegram app. Allow it in settings"));
   };
 
-  const onShareHandler = () => {
-    navigator
-      .share({ title: inviteTitle, text: inviteText, url: fullInviteLink })
-      .catch((error) => {
-        if (error.name === "AbortError") return;
-        toast.error("Share not allowed in your telegram app. Allow it in settings");
-      });
-  };
-
   return (
     <View
       fadeInOnLoad
@@ -88,7 +79,6 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
       </div>
 
       <ShareAndInvite
-        onShareHandler={onShareHandler}
         inviteText={inviteText}
         fullInviteLink={fullInviteLink}
         onCopyHandler={onCopyHandler}
