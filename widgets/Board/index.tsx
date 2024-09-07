@@ -8,15 +8,15 @@ import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPerce
 import { GuildButton } from "./shared/GuildButton";
 
 interface IBoardProps {
-  balance: number;
+  balance?: number;
 }
 
 export const Board: FC<IBoardProps> = (props) => {
   const { push } = useRouter();
   const { user } = useUser();
-  const { level, guildName } = user;
+  const { level, guildName, balance } = user;
 
-  const levelProgress = useGetLevelProgressPercentage(props.balance);
+  const levelProgress = useGetLevelProgressPercentage(props.balance || balance);
 
   const onRedirectStats = () => push("/stats");
   const onRedirectGuilds = () => push("/guilds");
