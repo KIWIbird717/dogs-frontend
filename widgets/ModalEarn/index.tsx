@@ -15,6 +15,10 @@ import { useTelegram } from "@/shared/hooks/useTelegram";
 import toast, { Toaster } from "react-hot-toast";
 import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { AxiosError } from "axios";
+import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { useRouter } from "next/navigation";
+import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
 
 interface IModalEarnProps {}
 
@@ -26,6 +30,8 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
 
   const coin = formatNumber(data ? data?.task?.amount! : 0);
   const telegram = useTelegram();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onCloseHandler = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -45,8 +51,16 @@ export const ModalEarn: FC<IModalEarnProps> = () => {
       if (!data?.task?.link) {
         return toast.error("Can not open the link");
       }
-      await TasksService.setTask(data.task.id);
+      const response = await TasksService.setTask(data.task.id);
+
+      dispatch(UserSlice.updateUser({ balance: response.data.currentBalance }));
       telegram?.openLink(data?.task?.link!);
+      localStorage.setItem(
+        LocalstorageKeys.CompliedTask,
+        JSON.stringify({ taskId: data.task.id, earned: response.data.earned }),
+      );
+
+      router.push("./main");
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.data.message === "Task is expired") {

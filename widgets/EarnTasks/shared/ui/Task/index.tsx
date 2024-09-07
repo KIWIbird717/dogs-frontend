@@ -34,16 +34,20 @@ export const Task: FC<ITaskProps> = ({ toggle, task }) => {
         "flex h-[96px] w-full items-center justify-between gap-3 rounded-xl border border-black-300 bg-black-400 p-3 shadow-buttonNoAccent",
         task.isCompleted && "bg-black-750",
         toggle === "tasks" && "h-[66px]",
+        task.isCompleted && "opacity-50",
       )}
+      disabled={task.isCompleted}
       onClick={handleClick}
     >
       <div className={"flex items-center gap-3 overflow-hidden"}>
         <div className={"h-[48px] w-[48px]"}>
-          {task.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
-            ? <YoutubeIcon />
-            : task.type === TasksApiTypes.TaskTypeEnum.XTWITTER
-              ? <TwitterIcon />
-              : <NFTIcon />}
+          {task.type === TasksApiTypes.TaskTypeEnum.YOUTUBE ? (
+            <YoutubeIcon />
+          ) : task.type === TasksApiTypes.TaskTypeEnum.XTWITTER ? (
+            <TwitterIcon />
+          ) : (
+            <NFTIcon />
+          )}
         </div>
 
         <div className={"flex h-full flex-col gap-1 overflow-hidden"}>

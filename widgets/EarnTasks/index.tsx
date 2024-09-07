@@ -9,16 +9,15 @@ interface IEarnTasksListProps {
   toggle: ToggleCategoryType;
 }
 
-export const EarnTasksList: FC<IEarnTasksListProps> = (
-  { tasks, toggle },
-) => {
-  const title = toggle === "tasks"
-    ? "Dogi Task"
-    : tasks[0].type === TasksApiTypes.TaskTypeEnum.YOUTUBE
-      ? "Youtube Task"
-      : tasks[0].type === TasksApiTypes.TaskTypeEnum.XTWITTER
-        ? "Twitter Task"
-        : "External Task";
+export const EarnTasksList: FC<IEarnTasksListProps> = ({ tasks, toggle }) => {
+  const title =
+    toggle === "tasks"
+      ? "Dogi Task"
+      : tasks[0]?.type === TasksApiTypes.TaskTypeEnum.YOUTUBE
+        ? "Youtube Task"
+        : tasks[0]?.type === TasksApiTypes.TaskTypeEnum.XTWITTER
+          ? "Twitter Task"
+          : "External Task";
 
   return (
     <div className={"flex w-full flex-col gap-3"}>
@@ -26,7 +25,7 @@ export const EarnTasksList: FC<IEarnTasksListProps> = (
 
       <div className={"flex w-full flex-col gap-2"}>
         {tasks.map((task, i) => {
-          return <Task key={i} task={task} toggle={toggle} />
+          return <Task key={i} task={task} toggle={toggle} />;
         })}
       </div>
     </div>
