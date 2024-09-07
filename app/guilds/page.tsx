@@ -70,7 +70,10 @@ const Guilds: NextPage<IGuildsProps> = () => {
   }, [inputValue]);
 
   return (
-    <View fadeInOnLoad className="relative flex h-screen w-full flex-col gap-4 px-4 pt-6">
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
+    >
       <Header />
       <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
