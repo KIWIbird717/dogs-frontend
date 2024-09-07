@@ -29,7 +29,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
     if (guild) {
       (async () => {
         try {
-          const { data } = await GuildsService.getGuild(guild!);
+          const { data } = await GuildsService.getGuild(guild);
           onChangeGuildName(data.name);
         } catch (error) {
           logger.error(error);

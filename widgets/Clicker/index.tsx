@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Level1 from "@/public/images/bowls/level1.png";
 import { setBowlsByLevel } from "@/shared/lib/utils/setBowlsByLevel";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
@@ -16,6 +17,7 @@ interface IClickerProps {
 
 export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => {
   const controls = useAnimationControls();
+  const { level: userLevel } = useAppSelector((store) => store.user);
   const [image, setImage] = useState(Level1);
   const [isClickAvailable, setIsClickAvailable] = useState(true);
 
@@ -24,10 +26,12 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
       const bowl = setBowlsByLevel(level);
       setImage(bowl);
 
-      setIsClickAvailable(false);
-      await controls.start({ scale: 1.5, transition: { duration: 0.2 } });
-      await controls.start({ scale: 1 });
-      setIsClickAvailable(true);
+      if (level !== userLevel) {
+        setIsClickAvailable(false);
+        await controls.start({ scale: 1.5, transition: { duration: 0.2 } });
+        await controls.start({ scale: 1 });
+        setIsClickAvailable(true);
+      }
     })();
   }, [level]);
 
