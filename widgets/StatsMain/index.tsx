@@ -21,11 +21,12 @@ export const StatsMain: FC<IStatsMainProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const me = useAppSelector((store) => store.user);
   const currentRank = leagues[currentSlide].rank;
+  const PAGINATION = 50;
 
   const fetchUsers = async ({ pageParam }: { pageParam: number }) => {
     const { data } = await StatsService.getLeagueLeaders({
-      start: pageParam,
-      pagination: 50,
+      start: pageParam * PAGINATION,
+      pagination: PAGINATION,
       league: currentSlide + 1,
     });
 
@@ -134,7 +135,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
 type LoadingSinnerProps = {};
 const LoadingSinner: FC<LoadingSinnerProps> = (props) => {
   return (
-    <div className={"animate-fade-in flex w-full items-center justify-center"}>
+    <div className={"flex w-full animate-fade-in items-center justify-center"}>
       <SpinnerCircularFixed color={"#fff"} enabled={true} size={40} />
     </div>
   );
