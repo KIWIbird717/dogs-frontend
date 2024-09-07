@@ -83,10 +83,12 @@ export const GuildItem: FC<IGuildItemProps> = ({
 
       <div className={"flex h-full w-[89px] items-center gap-2"}>
         <TotalCoin
-          coin={coins as number}
+          coin={Intl.NumberFormat("en-US", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(typeof coins === "string" ? parseInt(coins) : coins)}
           tag={"h4"}
           size={"middle"}
-          info={"K"}
           className={"gap-2"}
           classNameText={"font-normal"}
         />

@@ -10,6 +10,9 @@ import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { GuildResponseWithMembersType } from "@/shared/lib/services/guilds/guilds";
 import GuildImage from "@/public/images/guild.png";
+import dynamic from "next/dynamic";
+
+const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface IGuildBannerProps {
   guild: GuildResponseWithMembersType;
@@ -27,7 +30,6 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
   guildImage,
 }) => {
   const { push } = useRouter();
-  const totalScore = formatNumber(guild?.guildBalance || 0);
 
   const redirectHandler = () => {
     if (isBanner) {
@@ -38,7 +40,10 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
   const members = guild?.membersCount || guild?.members.length;
 
   return (
-    <div
+    <MotionDiv
+      initial={{ scale: isBanner ? 0 : 1 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 0 }}
       className={twMerge(
         "z-[10] flex w-full flex-col rounded-xl",
         isBanner && "gap-2 border border-black-400 bg-black-400 p-4 shadow-buttonNoAccent",
@@ -60,6 +65,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
             <Typography
               tag={isBanner ? "h1" : "h2"}
               className={twMerge(
+                "text-white",
                 isBanner
                   ? "font-normal uppercase"
                   : "w-[200px] max-w-[200px] overflow-hidden text-ellipsis font-bold",
@@ -84,9 +90,16 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
         )}
       </div>
       <div className={"flex w-full gap-2"}>
-        <Block value={totalScore} title={"Total score"} isBanner={isBanner} />
+        <Block
+          value={Intl.NumberFormat("en-US", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(guild?.guildBalacne || 0)}
+          title={"Guild balance"}
+          isBanner={isBanner}
+        />
         <Block value={members} title={"Members"} isBanner={isBanner} />
       </div>
-    </div>
+    </MotionDiv>
   );
 };

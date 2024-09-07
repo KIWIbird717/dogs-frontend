@@ -21,7 +21,7 @@ export type GuildResponseWithMembersType = {
   joinMethod: JoinMethod;
   name: string;
   _id: string;
-  guildBalance: null | number;
+  guildBalacne: null | number;
   image: string;
   membersCount: number;
   members: IUserSlice[];

@@ -9,7 +9,6 @@ import { twMerge } from "tailwind-merge";
 
 import { Navbar } from "@/widgets/Navbar";
 
-
 import { TaskList } from "@/widgets/TaskList";
 
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
@@ -22,7 +21,6 @@ import { RewardTaskList } from "@/widgets/RewardTaskList";
 
 interface IEarnPageProps {}
 
-
 export type ToggleCategoryType = "rewards" | "tasks";
 
 const EarnPage: NextPage<IEarnPageProps> = () => {
@@ -33,7 +31,7 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
   const { data } = useSWR("/task", TasksService.getTasks);
   const tasks = data?.data;
 
-  const notFoundTasks = tasks?.length === 0 ? "There are no tasks" : null
+  const notFoundTasks = tasks?.length === 0 ? "There are no tasks" : null;
 
   return (
     <View
@@ -76,8 +74,12 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
       </div>
 
       <div className={"flex h-full flex-col overflow-y-auto"}>
-        {toggle === "rewards" && <RewardTaskList notFoundTasks={notFoundTasks}  tasks={tasks || []} toggle={toggle} />}
-        {toggle === "tasks" && <TaskList notFoundTasks={notFoundTasks}  tasks={tasks || []} toggle={toggle} />}
+        {toggle === "rewards" && (
+          <RewardTaskList notFoundTasks={notFoundTasks} tasks={tasks || []} toggle={toggle} />
+        )}
+        {toggle === "tasks" && (
+          <TaskList notFoundTasks={notFoundTasks} tasks={tasks || []} toggle={toggle} />
+        )}
       </div>
 
       <Navbar />

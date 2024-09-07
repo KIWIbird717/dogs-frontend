@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { Search } from "@/widgets/Search";
+import { AnimatePresence } from "framer-motion";
 
 interface IGuildsProps {}
 
@@ -69,31 +70,33 @@ const Guilds: NextPage<IGuildsProps> = () => {
   }, [inputValue]);
 
   return (
-    <View
-      fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
-    >
+    <View fadeInOnLoad className="relative flex h-screen w-full flex-col gap-4 px-4 pt-6">
       <Header />
       <Search value={inputValue || ""} onChange={onChangeValueDebounce} />
 
-      {guild && !isLoading ? (
-        <GuildBanner guild={guild!} guildImage={guildImage} />
-      ) : (
-        <div className={"z-[10] flex w-full gap-2"}>
-          <Button
-            onClick={handleRandomJoinGuild}
-            variant={"primary"}
-            className={"text-[18px] font-bold leading-6 text-white-900"}
-          >
-            Join Guild
-          </Button>
-          <Button variant={"default"} className={"text-[18px] font-bold leading-6 text-white-900"}>
-            <Link href={"/guilds/create"} prefetch>
-              Create Guild
-            </Link>
-          </Button>
-        </div>
-      )}
+      <AnimatePresence>
+        {guild && !isLoading ? (
+          <GuildBanner guild={guild} guildImage={guildImage} />
+        ) : (
+          <div className={"z-[10] flex w-full gap-2"}>
+            <Button
+              onClick={handleRandomJoinGuild}
+              variant={"primary"}
+              className={"text-[18px] font-bold leading-6 text-white-900"}
+            >
+              Join Guild
+            </Button>
+            <Button
+              variant={"default"}
+              className={"text-[18px] font-bold leading-6 text-white-900"}
+            >
+              <Link href={"/guilds/create"} prefetch>
+                Create Guild
+              </Link>
+            </Button>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Leaderboard guilds={guilds} />
 
