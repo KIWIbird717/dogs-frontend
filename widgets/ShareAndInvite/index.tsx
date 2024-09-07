@@ -10,6 +10,7 @@ interface IShareAndInviteProps {
 export const ShareAndInvite: FC<IShareAndInviteProps> = ({ onShareHandler, onCopyHandler }) => {
   return (
     <div className={"fixed bottom-[116px] left-4 z-[10] flex w-[calc(100%-32px)] gap-2"}>
+      <a href="https://telegram.me/share/url?url=<URL>&text=<TEXT>">Test</a>
       <Button
         variant={"deepBlue"}
         className={"text-[18px] font-bold leading-6 text-white-900"}
