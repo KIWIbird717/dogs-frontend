@@ -46,6 +46,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
     (async () => {
       // для запуска платформы в браузере во время дебага
       const isDebug = parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0");
+      console.log({ isDebug });
       if (!isDebug) {
         if (!telegram?.platform) return;
         if (!allowedPlatforms.includes(telegram.platform)) {
