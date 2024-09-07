@@ -44,14 +44,17 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
     })();
   }, [level]);
 
+  const handleButtonClick: TouchEventHandler<HTMLButtonElement> = (event) => {
+    if (!isClickAvailable) return;
+    handleClick(event);
+  };
+
   return (
     <div className={"flex h-full w-full justify-center"}>
       <MotionButton
         whileTap={{ scale: isClickAvailable ? 0.95 : 1 }}
         transition={{ type: "spring", bounce: 20, stiffness: 2000 }}
-        onTouchEnd={(event) => {
-          if (isClickAvailable) handleClick(event);
-        }}
+        onTouchEnd={handleButtonClick}
         className={
           "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
         }
