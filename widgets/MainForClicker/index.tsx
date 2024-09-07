@@ -48,7 +48,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
       <div className={"flex h-full flex-col justify-between gap-8"}>
         <div className={"flex w-full flex-col gap-8"}>
           <div className={"flex w-full flex-col gap-6"}>
-            <Board />
+            <Board balance={currentBalance} />
             <StatsInfo value={currentBalance} isIcon />
           </div>
 

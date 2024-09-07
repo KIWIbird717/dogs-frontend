@@ -12,6 +12,8 @@ export interface ClickEffect {
   y: number | string;
 }
 
+const HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET = 1;
+
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
@@ -64,8 +66,9 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const sendCoins = async (clickEffectValue: number, touches: number) => {
     try {
+      console.log({ clickEffectValue, test: new Date(clickEffectValue || new Date().getTime()) });
       const { data } = await UsersService.addUseMoney({
-        startTimestamp: new Date(clickEffectValue),
+        startTimestamp: new Date(clickEffectValue || new Date().getTime()),
         taps: touches,
       });
 
@@ -80,7 +83,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     }
   };
 
-  const debouncedSendEarned = useCallback(debounce(sendCoins, 4000), []);
+  const debouncedSendEarned = useCallback(debounce(sendCoins, 2000), []);
 
   const onIncrementEarn = useCallback(
     async (dateNowValue: number) => {
@@ -100,7 +103,10 @@ export const useClicker = (isSetInterval?: boolean) => {
         if (!levels) return;
 
         for (const [level, requiredExperience] of Object.entries(levels)) {
-          if (currentBalance >= requiredExperience) {
+          if (
+            currentBalance >=
+            requiredExperience - HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET
+          ) {
             userLevel = Number(level);
           } else {
             break;

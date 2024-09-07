@@ -7,14 +7,16 @@ import { ProgressBar as ProgressBarV2 } from "@/shared/ui/ProgressBar/v2/index";
 import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPercentage";
 import { GuildButton } from "./shared/GuildButton";
 
-interface IBoardProps {}
+interface IBoardProps {
+  balance: number;
+}
 
-export const Board: FC<IBoardProps> = () => {
+export const Board: FC<IBoardProps> = (props) => {
   const { push } = useRouter();
   const { user } = useUser();
   const { level, guildName } = user;
 
-  const levelProgress = useGetLevelProgressPercentage();
+  const levelProgress = useGetLevelProgressPercentage(props.balance);
 
   const onRedirectStats = () => push("/stats");
   const onRedirectGuilds = () => push("/guilds");
