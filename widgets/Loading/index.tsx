@@ -52,7 +52,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
         router.push("/onboarding");
       }
     })();
-  }, [getMe, router]);
+  }, []);
 
   return (
     <div
