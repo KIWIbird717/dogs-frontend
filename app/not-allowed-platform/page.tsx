@@ -1,4 +1,3 @@
-import { useTelegram } from "@/shared/hooks/useTelegram";
 import { View } from "@/shared/layout/View";
 import { Typography } from "@/shared/ui/Typography/Typography";
 
