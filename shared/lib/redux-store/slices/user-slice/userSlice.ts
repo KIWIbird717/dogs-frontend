@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { useAppSelector } from "../../hooks";
+import { store } from "../../store";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 export namespace UserSlice {
   export type LastDailyRewardType = {
@@ -91,7 +94,7 @@ export namespace UserSlice {
   };
 
   export const userSlice = createSlice({
-    name: "auth",
+    name: "user",
     initialState,
     reducers: {
       setAge: (state, action: PayloadAction<IUserSlice["age"]>) => {
@@ -148,8 +151,35 @@ export namespace UserSlice {
         state.league = action.payload.league;
         state.leagueLevel = action.payload.leagueLevel;
       },
+
       updateUser: (state, action: PayloadAction<Partial<IUserSlice>>) => {
         Object.assign(state, action.payload);
+      },
+      /**
+       * Добавление заработка пользователю
+       * + ревалидация уровня
+       */
+      addCoins: (state, action: PayloadAction<IUserSlice["balance"]>) => {
+        state.balance += action.payload;
+
+        // revalidate user level
+        // const levels = store.getState().game.levels;
+        // if (!levels) {
+        //   Logger.error("Can not revalidate level in redux addCoins action. levels is null");
+        //   return;
+        // }
+
+        // let possibleLevel = 1;
+
+        // for (const [level, requiredExperience] of Object.entries(levels)) {
+        //   if (state.balance >= requiredExperience - 1) {
+        //     possibleLevel = Number(level);
+        //   } else {
+        //     break;
+        //   }
+        // }
+
+        // state.level = possibleLevel;
       },
     },
   });

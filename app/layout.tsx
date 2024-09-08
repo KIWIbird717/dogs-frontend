@@ -7,6 +7,7 @@ import Script from "next/script";
 import StoreProvider from "@/shared/lib/redux-store/StoreProvider";
 import TanStackQueryProvider from "@/shared/providers/TanStackQueryProvider";
 import { usePreventZoom } from "@/shared/hooks/usePreventZoom";
+import { useOnTelegramWebAppRefresh } from "@/shared/hooks/useOnTelegramWebAppRefresh";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   usePreventZoom();
+  useOnTelegramWebAppRefresh();
 
   return (
     <html lang="en">
