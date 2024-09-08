@@ -6,11 +6,8 @@ import { Header } from "@/widgets/Header";
 import { Button } from "@/shared/ui/Button/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-
 import { Navbar } from "@/widgets/Navbar";
-
 import { TaskList } from "@/widgets/TaskList";
-
 import Gradient1 from "@/public/images/svg/earn/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/earn/gradient/gradient2.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
@@ -18,7 +15,6 @@ import useSWR from "swr";
 import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { RewardTaskList } from "@/widgets/RewardTaskList";
 import { ModalEarn } from "@/widgets/ModalEarn";
-import { ITaskProps } from "@/widgets/EarnTasks/shared/ui/Task";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
 interface IEarnPageProps {}

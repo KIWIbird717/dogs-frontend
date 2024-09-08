@@ -2,11 +2,16 @@
 
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
-import { MainForClicker } from "@/widgets/MainForClicker";
 import Gradient1 from "@/public/images/svg/main/gradient1.svg";
 import Gradient2 from "@/public/images/svg/main/gradient2.svg";
 import { InvitationHandler } from "@/entities/MainPage/InvitationHandler";
 import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
+import dynamic from "next/dynamic";
+
+const MainForClicker = dynamic(
+  () => import("@/widgets/MainForClicker").then((mod) => mod.MainForClicker),
+  { ssr: false },
+);
 
 const MainPage = () => {
   usePreventOnSwipeWindowClose(true);

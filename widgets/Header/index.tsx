@@ -25,8 +25,6 @@ export const Header: FC<IHeaderProps> = memo(() => {
     onOpenModal("settings");
   };
 
-  console.log({ first_name, guildName });
-
   return (
     <div className={"z-[10] flex h-[48px] w-full gap-4"}>
       <Link href={"/profile"} prefetch className={"flex w-[56%] justify-between gap-2"}>

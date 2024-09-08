@@ -136,7 +136,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
-    router.prefetch("/main");
+    router.prefetch("./main");
 
     (async () => {
       try {

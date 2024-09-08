@@ -4,6 +4,7 @@ import { useAppSelector } from "../../hooks";
 import { RootState, store } from "../../store";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GameSlice } from "../game-slice/gameSlice";
+import { GameServiceTypes } from "@/shared/lib/services/game/types";
 
 export namespace UserSlice {
   export type LastDailyRewardType = {
@@ -162,7 +163,10 @@ export namespace UserSlice {
        */
       _addCoins: (
         state,
-        action: PayloadAction<Pick<IUserSlice, "balance"> & Pick<GameSlice.Type, "levels">>,
+        action: PayloadAction<
+          Pick<IUserSlice, "balance"> &
+            Pick<GameSlice.Type, "levels"> & { level: GameServiceTypes.Levels }
+        >,
       ) => {
         state.balance += action.payload.balance;
 
@@ -172,17 +176,11 @@ export namespace UserSlice {
           return;
         }
 
-        let possibleLevel = 1;
+        const balanceForNextLevel = action.payload.levels[action.payload.level];
 
-        for (const [level, requiredExperience] of Object.entries(action.payload.levels)) {
-          if (state.balance >= requiredExperience - 1) {
-            possibleLevel = Number(level);
-          } else {
-            break;
-          }
+        if (state.balance >= balanceForNextLevel) {
+          state.level += 1;
         }
-
-        state.level = possibleLevel;
       },
     },
   });
@@ -192,9 +190,10 @@ export namespace UserSlice {
     async (coins: number, { getState, dispatch }) => {
       const state = getState() as RootState;
       const levels = state.game.levels;
+      const level = state.user.level as GameServiceTypes.Levels;
 
       if (levels) {
-        dispatch(UserSlice._addCoins({ balance: coins, levels }));
+        dispatch(UserSlice._addCoins({ balance: coins, levels, level }));
       }
     },
   );

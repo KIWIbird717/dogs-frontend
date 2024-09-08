@@ -7,9 +7,7 @@ import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPerce
 import { GuildButton } from "./shared/GuildButton";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
-interface IBoardProps {
-  balance?: number;
-}
+interface IBoardProps {}
 
 export const Board: FC<IBoardProps> = (props) => {
   const router = useRouter();
@@ -18,7 +16,7 @@ export const Board: FC<IBoardProps> = (props) => {
   const guildName = useAppSelector((store) => store.user.guildName);
   const balance = useAppSelector((store) => store.user.balance);
 
-  const levelProgress = useGetLevelProgressPercentage(props.balance || balance);
+  const levelProgress = useGetLevelProgressPercentage(balance);
 
   useEffect(() => {
     router.prefetch("/stats");

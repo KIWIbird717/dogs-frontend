@@ -11,6 +11,7 @@ interface IMoneyProps {
 
 export const StatsInfo: FC<IMoneyProps> = ({ value, title, isIcon }) => {
   const newFormatCoins = formatNumber(value);
+
   return (
     <div className={"flex w-full flex-col justify-center gap-2"}>
       <Typography

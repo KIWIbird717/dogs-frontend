@@ -76,7 +76,7 @@ export const ModalEarn: FC<IModalEarnProps> = (props) => {
       toast.success(`Task complied +${earned} coins`);
 
       // update user balance
-      dispatch(UserSlice.updateUser({ balance: response.data.currentBalance }));
+      dispatch(UserSlice.addCoins(response.data.earned));
 
       setIsUserOpenLink(false); // refresh state
 
