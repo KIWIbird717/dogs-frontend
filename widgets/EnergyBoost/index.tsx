@@ -11,7 +11,7 @@ interface IEnergyBoostProps {
   onMaxBoost: () => void;
 }
 
-export const EnergyBoost: FC<IEnergyBoostProps> = memo(({ boosts, maxBoost, onMaxBoost }) => {
+export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -39,6 +39,4 @@ export const EnergyBoost: FC<IEnergyBoostProps> = memo(({ boosts, maxBoost, onMa
       />
     </div>
   );
-});
-
-EnergyBoost.displayName = "EnergyBoost";
+};

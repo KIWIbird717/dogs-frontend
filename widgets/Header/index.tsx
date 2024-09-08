@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, memo } from "react";
 import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
@@ -16,9 +16,10 @@ import Link from "next/link";
 
 interface IHeaderProps {}
 
-export const Header: FC<IHeaderProps> = () => {
+export const Header: FC<IHeaderProps> = memo(() => {
   const { onOpenModal } = useModal();
-  const { first_name, guildName } = useAppSelector((store) => store.user, {});
+  const first_name = useAppSelector((store) => store.user.first_name);
+  const guildName = useAppSelector((store) => store.user.guildName);
 
   const onOpenSettings = () => {
     onOpenModal("settings");
@@ -90,4 +91,6 @@ export const Header: FC<IHeaderProps> = () => {
       </div>
     </div>
   );
-};
+});
+
+Header.displayName = "Header";

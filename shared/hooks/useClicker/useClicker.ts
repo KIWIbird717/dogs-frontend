@@ -22,11 +22,13 @@ export const useClicker = (isSetInterval?: boolean) => {
     time: string;
   } | null>("lastBoostTime", null);
 
-  const { energyLimit, currentBoost, rechargeMultiplication, tapMultiplication, tapBotExpired } =
-    useAppSelector((state) => state.user);
-
-  const { levels } = useAppSelector((store) => store.game);
-  const { balance } = useAppSelector((store) => store.user);
+  const energyLimit = useAppSelector((store) => store.user.energyLimit);
+  const currentBoost = useAppSelector((store) => store.user.currentBoost);
+  const rechargeMultiplication = useAppSelector((store) => store.user.rechargeMultiplication);
+  const tapMultiplication = useAppSelector((store) => store.user.tapMultiplication);
+  const tapBotExpired = useAppSelector((store) => store.user.tapBotExpired);
+  const levels = useAppSelector((store) => store.game.levels);
+  const balance = useAppSelector((store) => store.user.balance);
 
   const tabValue = 1 * rechargeMultiplication * tapMultiplication;
 
@@ -92,8 +94,8 @@ export const useClicker = (isSetInterval?: boolean) => {
         const newTouches = state.touches + 1;
 
         setState({ earned: newEarned, touches: newTouches });
-        setBoostsLS({ time: Date.now().toString(), boost: currentBoost - 2 });
-        dispatch(UserSlice.setCurrentBoost(currentBoost - 2));
+        setBoostsLS({ time: Date.now().toString(), boost: currentBoost - 1 });
+        dispatch(UserSlice.setCurrentBoost(currentBoost - 1));
         debouncedSendEarned(dateNowValue, newTouches);
 
         const currentBalance = balance + state.earned;

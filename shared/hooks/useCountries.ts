@@ -19,7 +19,7 @@ preload("/countries/flag/images", getCountries);
 export const useCountries = () => {
   const logger = new Logger("useCountries");
 
-  const { country } = useAppSelector((store) => store.user);
+  const country = useAppSelector((store) => store.user.country);
   const dispatch = useAppDispatch();
 
   const [searchValue, setSearchValue] = useState("");

@@ -25,7 +25,8 @@ export const store = configureStore({
    * You cant set up more middlewares
    * Check instruction: @see https://redux-toolkit.js.org/api/serializabilityMiddleware
    */
-  middleware: (gDM) => gDM({ serializableCheck: false }),
+  middleware: (gDM) => gDM(),
+  devTools: Boolean(parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0")),
 });
 
 export const persistor = persistStore(store);

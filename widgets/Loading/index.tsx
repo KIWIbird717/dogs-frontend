@@ -5,7 +5,6 @@ import BoneIcon from "@/public/images/svg/bone.svg";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import animationData from "@/public/lotties/loading.json";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/shared/hooks/useUser";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";

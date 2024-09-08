@@ -27,10 +27,10 @@ export const GuildButton: FC<GuildButtonProps> = (props) => {
         </>
       ) : (
         <>
-          <Typography tag="p" className={"text-white-500 text-[15px] font-bold leading-[18px]"}>
+          <Typography tag="p" className={"text-[15px] font-bold leading-[18px] text-white-500"}>
             Press & Join to
           </Typography>
-          <Typography tag="p" className="text-white-500 text-[18px] font-bold leading-[18px]">
+          <Typography tag="p" className="text-[18px] font-bold leading-[18px] text-white-500">
             GUILD
           </Typography>
         </>

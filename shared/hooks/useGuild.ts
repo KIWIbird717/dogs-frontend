@@ -4,16 +4,19 @@ import {
   GuildsService,
   IGuildResponse,
 } from "@/shared/lib/services/guilds/guilds";
-import { useUser } from "@/shared/hooks/useUser";
 import { useParams, useRouter } from "next/navigation";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useDebounce } from "@/shared/hooks/useDebounce";
+import { useAppDispatch, useAppSelector } from "../lib/redux-store/hooks";
+import { UserSlice } from "../lib/redux-store/slices/user-slice/userSlice";
 
 export const useGuild = () => {
   const logger = new Logger("useGuild");
 
   const guildId = useParams() as { id: string };
-  const { push } = useRouter();
+  const router = useRouter();
+  const myGuildId = useAppSelector((store) => store.user.guild);
+  const dispatch = useAppDispatch();
 
   const [guilds, setGuilds] = useState<IGuildResponse[]>([]);
   const [guild, setGuild] = useState<GuildResponseWithMembersType | null>(null);
@@ -24,9 +27,6 @@ export const useGuild = () => {
   const [inputValue, setInputValue] = useState<null | string>(null);
 
   const FoundOrFetchedGuilds = inputValue ? foundGuilds : guilds;
-
-  const { user, getMe, onChangeGuildName } = useUser();
-  const { guild: myGuildId } = user;
 
   const isMyGuild = myGuildId === guildId.id;
 
@@ -45,8 +45,10 @@ export const useGuild = () => {
 
   const handleJoinGuild = async (guildId: string) => {
     try {
-      await GuildsService.joinGuild(guildId);
-      await getMe();
+      const response = await GuildsService.joinGuild(guildId);
+      dispatch(
+        UserSlice.updateUser({ guild: response.data.guild, guildName: response.data.guildName }),
+      );
       await handleFetchGuildById(guildId);
     } catch (error) {
       logger.error(error);
@@ -57,9 +59,8 @@ export const useGuild = () => {
     if (isMyGuild) {
       try {
         await GuildsService.leaveGuild();
-        await getMe();
-        onChangeGuildName(null);
-        push("/guilds");
+        dispatch(UserSlice.updateUser({ guild: null, guildName: null }));
+        router.push("/guilds");
       } catch (error) {
         logger.error(error);
       }

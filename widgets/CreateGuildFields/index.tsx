@@ -41,7 +41,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { balance } = useAppSelector((store) => store.user);
+  const balance = useAppSelector((store) => store.user.balance);
   const fileUploaderRef = useRef<any>(null);
   const [avatar, setAvatar] = useState<File | null>(null);
   const [uploadedAvatar, setUploadedAvatar] = useState<string | null>(null);

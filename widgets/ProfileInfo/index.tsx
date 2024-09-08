@@ -2,7 +2,6 @@ import { FC, useCallback, useMemo } from "react";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { useModal } from "@/shared/hooks/useModal";
-import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 import { useCountries } from "@/shared/hooks/useCountries";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
@@ -11,7 +10,11 @@ interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { breedKey, age, country } = useAppSelector((store) => store.user);
+
+  const breedKey = useAppSelector((store) => store.user.breedKey);
+  const age = useAppSelector((store) => store.user.age);
+  const country = useAppSelector((store) => store.user.country);
+
   const { onOpenModal } = useModal();
   const { currentCountryName } = useCountries();
 

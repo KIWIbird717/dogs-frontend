@@ -54,7 +54,7 @@ const breeds: IBreedCountry[] = [
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { breedKey } = useAppSelector((store) => store.user);
+  const breedKey = useAppSelector((store) => store.user.breedKey);
   const [breedLocal, setBreedLocal] = useState(breedKey);
   const dispatch = useAppDispatch();
 

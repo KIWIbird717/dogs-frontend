@@ -2,8 +2,8 @@ import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { GameServiceTypes } from "@/shared/lib/services/game/types";
 
 export const useGetLevelProgressPercentage = (balance: number) => {
-  const { level } = useAppSelector((store) => store.user);
-  const { levels } = useAppSelector((store) => store.game);
+  const level = useAppSelector((store) => store.user.level);
+  const levels = useAppSelector((store) => store.game.levels);
 
   if (level === null || level === undefined) return 0;
   if (levels === null || levels === undefined) return 0;

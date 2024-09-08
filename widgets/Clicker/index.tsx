@@ -51,9 +51,9 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
 
   return (
     <div className={"flex h-full w-full justify-center"}>
-      <MotionButton
-        whileTap={{ scale: isClickAvailable ? 0.95 : 1 }}
-        transition={{ type: "spring", bounce: 20, stiffness: 2000 }}
+      <button
+        // whileTap={{ scale: isClickAvailable ? 0.95 : 1 }}
+        // transition={{ type: "spring", bounce: 20, stiffness: 2000 }}
         onTouchEnd={handleButtonClick}
         className={
           "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
@@ -75,7 +75,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
             />
           </MotionDiv>
         </div>
-      </MotionButton>
+      </button>
     </div>
   );
 };

@@ -29,4 +29,9 @@ export namespace GuildsApiTypes {
     start: number;
     pagination: number;
   };
+
+  export type GuildJoinResponse = {
+    guild: string;
+    guildName: string;
+  };
 }

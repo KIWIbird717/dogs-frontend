@@ -2,10 +2,10 @@ import { FC, MouseEventHandler, useEffect } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/shared/hooks/useUser";
 import { ProgressBar as ProgressBarV2 } from "@/shared/ui/ProgressBar/v2/index";
 import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPercentage";
 import { GuildButton } from "./shared/GuildButton";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 interface IBoardProps {
   balance?: number;
@@ -13,8 +13,11 @@ interface IBoardProps {
 
 export const Board: FC<IBoardProps> = (props) => {
   const router = useRouter();
-  const { user } = useUser();
-  const { level, guildName, balance } = user;
+
+  const level = useAppSelector((store) => store.user.level);
+  const guildName = useAppSelector((store) => store.user.guildName);
+  const balance = useAppSelector((store) => store.user.balance);
+
   const levelProgress = useGetLevelProgressPercentage(props.balance || balance);
 
   useEffect(() => {

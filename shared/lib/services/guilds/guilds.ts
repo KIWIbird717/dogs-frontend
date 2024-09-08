@@ -76,11 +76,11 @@ export namespace GuildsService {
    * POST /guilds/join
    */
   export const joinGuild = (guildId: string) => {
-    return serverApi.post<any>(`/guilds/join`, { id: guildId });
+    return serverApi.post<GuildsApiTypes.GuildJoinResponse>(`/guilds/join`, { id: guildId });
   };
 
   /**
-   * POST /guilds/join
+   * POST /guilds/leave
    */
   export const leaveGuild = () => {
     return serverApi.post<any>(`/guilds/leave`);

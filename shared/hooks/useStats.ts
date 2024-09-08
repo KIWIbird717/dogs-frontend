@@ -4,7 +4,11 @@ import IStatsSlice = StatsSlice.IStatsSlice;
 
 export const useStats = () => {
   const dispatch = useAppDispatch();
-  const { dailyUsers, online, totalUsers, totalTouches } = useAppSelector((state) => state.stats);
+
+  const dailyUsers = useAppSelector((store) => store.stats.dailyUsers);
+  const online = useAppSelector((store) => store.stats.online);
+  const totalUsers = useAppSelector((store) => store.stats.totalUsers);
+  const totalTouches = useAppSelector((store) => store.stats.totalTouches);
 
   const onChangeStats = (stats: IStatsSlice) => {
     dispatch(

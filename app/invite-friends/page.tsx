@@ -26,11 +26,11 @@ const inviteTitle = "Join to DOGS";
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
-  const me = useAppSelector((store) => store.user);
+  const telegram_id = useAppSelector((store) => store.user.telegram_id);
 
   const inviteLink =
     process.env.NEXT_PUBLIC_INVITE_LINK +
-    `?startapp=${process.env.NEXT_PUBLIC_INVITE_LINK_PREFIX}${me.telegram_id}`;
+    `?startapp=${process.env.NEXT_PUBLIC_INVITE_LINK_PREFIX}${telegram_id}`;
   const fullInviteLink = process.env.NEXT_PUBLIC_INVITE_LINK
     ? inviteLink
     : "we can not create invite link :(";

@@ -3,7 +3,6 @@ import { useModal } from "@/shared/hooks/useModal";
 import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Field, IFieldProps } from "@/widgets/Field";
-import { useUser } from "@/shared/hooks/useUser";
 import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
