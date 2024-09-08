@@ -22,6 +22,8 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
 
   useEffect(() => {
     (async () => {
+      console.log("IMAGE");
+
       const bowl = setBowlsByLevel(level);
       setImage(bowl);
 
@@ -56,26 +58,24 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
         transition={{ type: "spring", bounce: 20, stiffness: 2000 }}
         onTouchEnd={handleButtonClick}
         className={
-          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec"
+          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-sec p-4 shadow-buttonSec"
         }
       >
         <div
           className={
-            "relative flex max-h-[264px] max-w-[264px] items-center justify-center rounded-[42px] bg-gradient-button-sec" /*h-[264px] w-[264px]*/
+            "relative flex max-h-[264px] max-w-[264px] items-center justify-center rounded-[42px]" /*h-[264px] w-[264px]*/
           }
         >
           <MotionDiv className="max-h-full max-w-full object-cover" animate={controls}>
-            <Image
-              src={image}
+            <img
+              src={image.src}
               alt={`bowl-${level}`}
-              className={"max-h-full max-w-full object-cover"}
-              layout="responsive"
+              className={"h-full max-h-full w-full max-w-full object-cover"}
               width={100}
               height={100}
             />
           </MotionDiv>
         </div>
-      </MotionButton>
       </MotionButton>
     </div>
   );
