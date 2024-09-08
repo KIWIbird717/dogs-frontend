@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
 import storage from "redux-persist/lib/storage";
@@ -15,12 +15,12 @@ const persistConfig = {
 const persistedUserReducer = persistReducer(persistConfig, UserSlice.userReducer);
 
 export const store = configureStore({
-  reducer: {
+  reducer: combineReducers({
     user: persistedUserReducer,
     modal: ModalSlice.modalReducer,
     stats: StatsSlice.statsReducer,
     game: GameSlice.gameReducer,
-  },
+  }),
   /**
    * You cant set up more middlewares
    * Check instruction: @see https://redux-toolkit.js.org/api/serializabilityMiddleware

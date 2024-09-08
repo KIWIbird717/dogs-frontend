@@ -14,8 +14,9 @@ import { useRouter } from "next/navigation";
 import Image, { StaticImageData } from "next/image";
 import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
-import { useUser } from "@/shared/hooks/useUser";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
 interface IOnboardingMediaProps {}
 
@@ -114,13 +115,12 @@ export type HeadersType = {
 };
 
 export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
-  const { push } = useRouter();
+  const router = useRouter();
   const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
+  const dispatch = useAppDispatch();
 
-  const { getMe } = useUser();
-
-  const redirectToMain = () => push("/main");
+  const redirectToMain = () => router.push("/main");
 
   const onNextStep = () => {
     if (step === 4) redirectToMain();
@@ -136,10 +136,13 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
+    router.prefetch("/main");
+
     (async () => {
       try {
         await UsersService.createUser();
-        await getMe();
+        const me = await UsersService.getMe();
+        dispatch(UserSlice.setUser(me.data));
       } catch (error) {
         logger.error(error);
       }
@@ -149,7 +152,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   return (
     <>
       <div className={"z-[10] flex w-full flex-col items-center gap-[5.582vw]"}>
-        {/*gap-6*/}
         <OnboardingHeader header={headers[step]} step={step} />
         <AnimatePresence mode={"wait"}>
           <motion.div
@@ -159,14 +161,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
             exit={{ opacity: 0 }}
             key={`image-${headers[step].id}`}
           >
-            {/*{headers[step].image}*/}
-            {/*<Image*/}
-            {/*  src={headers[step].image}*/}
-            {/*  alt={""}*/}
-            {/*  // className={twMerge("h-[398px] w-[398px]", step === 4 && "h-[346px] w-[346px]")}*/}
-            {/*  className={twMerge("h-[92.58vw] w-[92.58vw]", step === 4 && "h-[80.466vw] w-[80.466vw]")}*/}
-            {/*/>*/}
-
             <Image
               src={headers[step].image}
               alt={""}

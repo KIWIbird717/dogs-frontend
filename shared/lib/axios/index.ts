@@ -10,7 +10,8 @@ export const serverApi = axios.create({
 serverApi.interceptors.request.use((config) => {
   if (isServer) return config;
 
-  const initData = window.Telegram.WebApp.initData;
+  const initData =
+    window.Telegram.WebApp.initData || process.env.NEXT_PUBLIC_DEV_INIT_DATA || "NOT INIT DATA";
   const parsedTgInitData = parseTgInitData(initData);
 
   if (!initData) return config;

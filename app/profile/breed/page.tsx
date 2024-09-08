@@ -14,15 +14,16 @@ import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { IBreedCountry } from "../country/page";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
-interface IBreedPageProps {
-}
+interface IBreedPageProps {}
 
 const breeds: IBreedCountry[] = [
   {
     name: "The mutt",
-    iso2: "Husky",
-    iso3: "Husky",
+    iso2: "The mutt",
+    iso3: "The mutt",
   },
 
   {
@@ -54,12 +55,14 @@ const breeds: IBreedCountry[] = [
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeUser, onChangeBreed, breedKey } = useUser();
+  const { breedKey } = useAppSelector((store) => store.user);
   const [breedLocal, setBreedLocal] = useState(breedKey);
+  const dispatch = useAppDispatch();
 
   const logger = new Logger("BreedPage");
 
   const handleChangeBreed = async (breed: string) => {
+    console.log({ breed });
     setBreedLocal(breed);
 
     try {
@@ -67,8 +70,7 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
         breedKey: breed,
       });
 
-      const { data } = await UsersService.getMe();
-      onChangeUser(data);
+      dispatch(UserSlice.updateUser({ breedKey: breed }));
     } catch (error) {
       logger.error(error);
     }

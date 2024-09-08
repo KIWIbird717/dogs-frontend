@@ -16,7 +16,7 @@ export const BreedCountryList: FC<IBreedCountryListProps> = ({ items, onClick, i
   return (
     <>
       {items.map((obj, i) => {
-        const isSelected = obj.name === item;
+        const isSelected = obj.name.toUpperCase() === item;
         const icon = isSelected ? <TickIcon /> : <ArrowRightIcon />;
 
         return (

@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler, useEffect } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
@@ -12,14 +12,18 @@ interface IBoardProps {
 }
 
 export const Board: FC<IBoardProps> = (props) => {
-  const { push } = useRouter();
+  const router = useRouter();
   const { user } = useUser();
   const { level, guildName, balance } = user;
-
   const levelProgress = useGetLevelProgressPercentage(props.balance || balance);
 
-  const onRedirectStats = () => push("/stats");
-  const onRedirectGuilds = () => push("/guilds");
+  useEffect(() => {
+    router.prefetch("/stats");
+    router.prefetch("/guilds");
+  }, [router]);
+
+  const onRedirectStats = () => router.push("/stats");
+  const onRedirectGuilds = () => router.push("/guilds");
 
   return (
     <div className={"flex w-full rounded-xl"}>

@@ -1,12 +1,14 @@
-import { NextPage } from "next";
+"use client";
+
 import { DuckBackground } from "@/widgets/DuckBackground";
 import { View } from "@/shared/layout/View";
 import { ModalNft } from "@/widgets/ModalNft";
 import { Navbar } from "@/widgets/Navbar";
+import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 
-interface INftPageProps {}
+const NftPage = () => {
+  usePreventOnSwipeWindowClose(true);
 
-const NftPage: NextPage<INftPageProps> = () => {
   return (
     <View
       fadeInOnLoad

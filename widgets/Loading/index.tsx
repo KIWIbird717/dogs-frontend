@@ -12,6 +12,7 @@ import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { setGameInfo } from "./shared/func/setGameInfo";
 import Lottie from "react-lottie";
 import { Platforms } from "@twa-dev/types";
+import { setUserInfo } from "./shared/func/setUserInfo";
 
 const defaultOptions = {
   loop: true,
@@ -28,7 +29,6 @@ interface IModalLoadingProps {}
 
 export const ModalLoading: FC<IModalLoadingProps> = () => {
   const router = useRouter();
-  const { getMe } = useUser();
   const telegram = useTelegram();
   const dispatch = useAppDispatch();
   const logger = new Logger("ModalLoading");
@@ -58,8 +58,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
       router.prefetch("/onboarding");
 
       try {
-        await getMe();
-        await setGameInfo(dispatch); // устанавливаем данные об игре
+        await Promise.all([setGameInfo(dispatch), setUserInfo(dispatch)]);
         router.push("/main");
       } catch (error) {
         router.push("/onboarding");

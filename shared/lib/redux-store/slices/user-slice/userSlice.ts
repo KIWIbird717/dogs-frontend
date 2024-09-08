@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { useAppSelector } from "../../hooks";
-import { store } from "../../store";
+import { RootState, store } from "../../store";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { GameSlice } from "../game-slice/gameSlice";
 
 export namespace UserSlice {
   export type LastDailyRewardType = {
@@ -159,30 +160,44 @@ export namespace UserSlice {
        * Добавление заработка пользователю
        * + ревалидация уровня
        */
-      addCoins: (state, action: PayloadAction<IUserSlice["balance"]>) => {
-        state.balance += action.payload;
+      _addCoins: (
+        state,
+        action: PayloadAction<Pick<IUserSlice, "balance"> & Pick<GameSlice.Type, "levels">>,
+      ) => {
+        state.balance += action.payload.balance;
 
         // revalidate user level
-        // const levels = store.getState().game.levels;
-        // if (!levels) {
-        //   Logger.error("Can not revalidate level in redux addCoins action. levels is null");
-        //   return;
-        // }
+        if (!action.payload.levels) {
+          Logger.error("Can not revalidate level in redux addCoins action. levels is null");
+          return;
+        }
 
-        // let possibleLevel = 1;
+        let possibleLevel = 1;
 
-        // for (const [level, requiredExperience] of Object.entries(levels)) {
-        //   if (state.balance >= requiredExperience - 1) {
-        //     possibleLevel = Number(level);
-        //   } else {
-        //     break;
-        //   }
-        // }
+        for (const [level, requiredExperience] of Object.entries(action.payload.levels)) {
+          if (state.balance >= requiredExperience - 1) {
+            possibleLevel = Number(level);
+          } else {
+            break;
+          }
+        }
 
-        // state.level = possibleLevel;
+        state.level = possibleLevel;
       },
     },
   });
+
+  export const addCoins = createAsyncThunk(
+    "user/addCoinsWithLevels",
+    async (coins: number, { getState, dispatch }) => {
+      const state = getState() as RootState;
+      const levels = state.game.levels;
+
+      if (levels) {
+        dispatch(UserSlice._addCoins({ balance: coins, levels }));
+      }
+    },
+  );
 
   export const {
     setAge,
@@ -194,6 +209,7 @@ export namespace UserSlice {
     setUser,
     setCurrentBoost,
     updateUser,
+    _addCoins,
   } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;

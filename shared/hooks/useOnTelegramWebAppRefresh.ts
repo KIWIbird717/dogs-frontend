@@ -4,9 +4,10 @@ import { Logger } from "../lib/utils/logger/Logger";
 
 export const useOnTelegramWebAppRefresh = () => {
   const router = useRouter();
-  const logger = new Logger("useOnTelegramWebAppRefresh");
 
   useEffect(() => {
+    const logger = new Logger("useOnTelegramWebAppRefresh");
+
     if (window.performance) {
       logger.log("window.performance works fine on this browser");
     }
@@ -17,5 +18,5 @@ export const useOnTelegramWebAppRefresh = () => {
     } else {
       logger.debug("This page is not reloaded");
     }
-  }, []);
+  }, [router]);
 };

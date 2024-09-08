@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo, useEffect } from "react";
 import EnergyIcon from "@/public/images/svg/energy.svg";
 import RacketIcon from "@/public/images/svg/racket.svg";
 import { useRouter } from "next/navigation";
@@ -11,10 +11,14 @@ interface IEnergyBoostProps {
   onMaxBoost: () => void;
 }
 
-export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost }) => {
-  const { push } = useRouter();
+export const EnergyBoost: FC<IEnergyBoostProps> = memo(({ boosts, maxBoost, onMaxBoost }) => {
+  const router = useRouter();
 
-  const redirectToBoost = () => push("/boost");
+  useEffect(() => {
+    router.prefetch("/boost");
+  }, [router]);
+
+  const redirectToBoost = () => router.push("/boost");
 
   return (
     <div className={"flex w-full justify-between"}>
@@ -35,4 +39,6 @@ export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoos
       />
     </div>
   );
-};
+});
+
+EnergyBoost.displayName = "EnergyBoost";

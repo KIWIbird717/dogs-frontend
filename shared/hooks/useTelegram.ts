@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 export const useTelegram = () => {
   const [telegram, setTelegram] = useState<Telegram["WebApp"] | null>(null);
   useEffect(() => {
-    setTelegram(window.Telegram.WebApp);
+    setTelegram(window.Telegram?.WebApp);
   }, []);
 
   return telegram;
