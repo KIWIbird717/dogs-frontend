@@ -47,10 +47,17 @@
   }
 }
 
+html {
+  zoom: 1 !important;
+  touch-action: manipulation;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   //background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   background: linear-gradient(180deg, #1c1c1c 50%, #2e2e2e 103.67%);
+  zoom: 1 !important;
+  touch-action: manipulation;
 }
 
 h1 {
