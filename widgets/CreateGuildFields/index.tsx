@@ -19,6 +19,7 @@ import dynamic from "next/dynamic";
 import toast, { Toaster } from "react-hot-toast";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 const MotionImage = dynamic(() => import("framer-motion").then((mod) => mod.motion.img));
 
