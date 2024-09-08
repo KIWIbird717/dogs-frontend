@@ -5,13 +5,13 @@ import { useModal } from "@/shared/hooks/useModal";
 import { useUser } from "@/shared/hooks/useUser";
 import { useRouter } from "next/navigation";
 import { useCountries } from "@/shared/hooks/useCountries";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 interface IProfileInfoProps {}
 
 export const ProfileInfo: FC<IProfileInfoProps> = () => {
   const { push } = useRouter();
-  const { user } = useUser();
-  const { breedKey, age, country } = user;
+  const { breedKey, age, country } = useAppSelector((store) => store.user);
   const { onOpenModal } = useModal();
   const { currentCountryName } = useCountries();
 

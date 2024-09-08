@@ -7,6 +7,8 @@ import { useUser } from "@/shared/hooks/useUser";
 import { twMerge } from "tailwind-merge";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
 interface IModalEditAgeProps {}
 
@@ -16,7 +18,8 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
   const { onClose, modalData } = useModal();
   const { isOpen, data, type } = modalData;
   const [isError, setIsError] = useState(false);
-  const { age, onChangeUser, onChangeAge } = useUser();
+  const { age } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
 
   const isModalOpen = isOpen && type === "editAge";
 
@@ -45,8 +48,7 @@ export const ModalEditAge: FC<IModalEditAgeProps> = () => {
         age: Number(localAge),
       });
 
-      const { data } = await UsersService.getMe();
-      onChangeUser(data);
+      dispatch(UserSlice.updateUser({ age: Number(localAge) }));
     } catch (error) {
       logger.error(error);
     } finally {

@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
 import DogIcon from "@/public/images/svg/breed/dog.svg";
-import { useUser } from "@/shared/hooks/useUser";
 import { Navbar } from "@/widgets/Navbar";
 import { useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
@@ -62,7 +61,6 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
   const logger = new Logger("BreedPage");
 
   const handleChangeBreed = async (breed: string) => {
-    console.log({ breed });
     setBreedLocal(breed);
 
     try {

@@ -2,31 +2,38 @@ import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IBreedCountry } from "@/app/profile/country/page";
-import { useUser } from "@/shared/hooks/useUser";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppDispatch, useAppSelector } from "../lib/redux-store/hooks";
+import { UserSlice } from "../lib/redux-store/slices/user-slice/userSlice";
+import useSWR, { preload } from "swr";
+
+const getCountries = async () => {
+  return await axios.get<{ data: IBreedCountry[] }>(
+    "https://countriesnow.space/api/v0.1/countries/flag/images",
+  );
+};
+
+preload("/countries/flag/images", getCountries);
 
 export const useCountries = () => {
   const logger = new Logger("useCountries");
 
-  const [countries, setCountries] = useState<IBreedCountry[]>([]);
+  const { country } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
   const [searchValue, setSearchValue] = useState("");
-  const { onChangeUser, country } = useUser();
   const [currentCountryISO2, setCurrentCountryISO2] = useState(country);
   const [currentCountryName, setCurrentCountryName] = useState<string | null>(null);
 
-  useRequest(async () => {
-    const { data } = await axios.get("https://countriesnow.space/api/v0.1/countries/flag/images");
-
-    setCountries(data.data);
-  }, []);
+  const { data } = useSWR("/countries/flag/images", getCountries);
 
   useEffect(() => {
-    const newCountry = countries.find((obj) => obj.iso2 === currentCountryISO2);
+    const newCountry = (data?.data.data || []).find((obj) => obj.iso2 === currentCountryISO2);
     if (newCountry) {
       setCurrentCountryName(newCountry.name);
     }
-  }, [countries, currentCountryISO2]);
+  }, [currentCountryISO2, data?.data.data]);
 
   const handleChangeCountry = async (countryISO2: string) => {
     setCurrentCountryISO2(countryISO2);
@@ -36,23 +43,21 @@ export const useCountries = () => {
         country: countryISO2,
       });
 
-      const { data } = await UsersService.getMe();
-      onChangeUser(data);
+      dispatch(UserSlice.updateUser({ country: countryISO2 }));
     } catch (error) {
       logger.error(error);
     }
-
   };
   const handleSearch = (value: string) => setSearchValue(value);
   const clearValue = () => setSearchValue("");
 
   return {
     currentCountryName,
-    countries,
+    countries: data?.data.data || [],
     searchValue,
     clearValue,
 
     handleChangeCountry,
-    handleSearch
-  }
-}
+    handleSearch,
+  };
+};

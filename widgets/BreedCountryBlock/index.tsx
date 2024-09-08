@@ -23,6 +23,8 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
   setClearValue,
   pageName,
 }) => {
+  if (!items) return null;
+
   const filteredItems = items.filter((breed) =>
     breed.name.toLowerCase().includes(value.toLowerCase()),
   );

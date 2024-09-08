@@ -11,50 +11,28 @@ import { StatsInfo } from "@/widgets/StatsInfo";
 import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/profile/gradient/gradient2.svg";
 import { StatsService } from "@/shared/lib/services/stats/stats";
-import { useEffect, useMemo } from "react";
-import { useStats } from "@/shared/hooks/useStats";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useMemo } from "react";
+import useSWR from "swr";
 
-interface IProfilePageProps {}
-
-const ProfilePage: NextPage<IProfilePageProps> = () => {
-  const logger = new Logger("ProfilePage");
-
-  const { onChangeStats, online, dailyUsers, totalUsers, totalTouches } = useStats();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await StatsService.getAllUsersStats();
-        onChangeStats({
-          totalUsers: data.totalUsers,
-          online: data.online,
-          dailyUsers: data.dailyUsers,
-          totalTouches: data.totalTouches,
-        });
-      } catch (error) {
-        logger.error(error);
-      } finally {
-      }
-    })();
-  }, []);
+const ProfilePage = () => {
+  const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
 
   const statics = useMemo(
     () => [
       {
         title: "Total Players",
-        value: totalUsers || 0,
+        value: data?.data.totalUsers || 0,
       },
       {
         title: "Dayly Users",
-        value: dailyUsers,
+        value: data?.data.dailyUsers || 0,
       },
       {
         title: "Online Players",
-        value: online,
+        value: data?.data.online || 0,
       },
     ],
-    [dailyUsers, online, totalUsers],
+    [data?.data.totalUsers, data?.data.dailyUsers, data?.data.online],
   );
 
   return (
@@ -73,11 +51,11 @@ const ProfilePage: NextPage<IProfilePageProps> = () => {
       <div className={"relative z-[10] w-full flex-col pt-6"}>
         <div className={"absolute left-0 top-0 h-[1px] w-full bg-gradient-border"} />
 
-        <StatsInfo value={totalTouches || 0} title={"Total Touches:"} isIcon />
+        <StatsInfo value={data?.data.totalTouches || 0} title={"Total Touches:"} isIcon />
 
         <div className={"flex w-full flex-col gap-10 pt-6"}>
           {statics.map((item, i) => {
-            return <StatsInfo key={i} title={item.title} value={item.value} />;
+            return <StatsInfo key={i} title={item.title} value={item.value || 0} />;
           })}
         </div>
       </div>
