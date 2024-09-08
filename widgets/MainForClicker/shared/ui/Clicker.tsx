@@ -76,6 +76,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level, tabValue }) => 
           </MotionDiv>
         </div>
       </MotionButton>
+      </MotionButton>
     </div>
   );
 };

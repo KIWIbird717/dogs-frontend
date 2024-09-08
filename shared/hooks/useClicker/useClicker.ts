@@ -200,7 +200,10 @@ export const useClicker = (isSetInterval?: boolean) => {
   }, [dateNow, onIncrementEarn, tapBotExpired]);
 
   const onMaxBoost = useCallback(() => {
-    dispatch(UserSlice.setCurrentBoost(maxBoost));
+    setBoostsLS({
+      boost: maxBoost,
+      time: Date.now().toString(),
+    });
   }, [maxBoost]);
 
   return {
