@@ -11,7 +11,10 @@ interface ICreateGuidPageProps {}
 
 const CreateGuidPage: NextPage<ICreateGuidPageProps> = () => {
   return (
-    <View fadeInOnLoad className="relative flex h-screen w-full flex-col gap-4 px-4 pt-6">
+    <View
+      fadeInOnLoad
+      className="relative flex h-screen w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
+    >
       <div className={"z-[10] flex w-full flex-col gap-2 px-8"}>
         <Typography tag={"h1"} className={"text-center text-white-900"}>
           Creatures of the guild
