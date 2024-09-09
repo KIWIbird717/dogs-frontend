@@ -60,7 +60,7 @@ export const Header: FC<IHeaderProps> = memo(() => {
             alt={"avatar"}
             width={16}
             height={16}
-            className={"absolute bottom-0 left-0 rounded"}
+            className={"absolute bottom-0 left-0 rounded border-[1px] border-white"}
           />
         </div>
 
