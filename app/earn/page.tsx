@@ -16,6 +16,7 @@ import { TasksService } from "@/shared/lib/services/tasks/stats";
 import { RewardTaskList } from "@/widgets/RewardTaskList";
 import { ModalEarn } from "@/widgets/ModalEarn";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
+import toast, { Toaster } from "react-hot-toast";
 
 interface IEarnPageProps {}
 
@@ -110,7 +111,12 @@ const EarnPage: NextPage<IEarnPageProps> = () => {
           />
         )}
         {toggle === "tasks" && (
-          <TaskList notFoundTasks={notFoundTasks} tasks={tasks || []} toggle={toggle} />
+          <TaskList
+            notFoundTasks={notFoundTasks}
+            onOpen={handleModalOpen}
+            tasks={tasks || []}
+            toggle={toggle}
+          />
         )}
       </div>
 

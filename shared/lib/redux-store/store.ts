@@ -1,18 +1,10 @@
+"use client";
+
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
-import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 import { GameSlice } from "./slices/game-slice/gameSlice";
-
-// const persistConfig = {
-//   key: "root",
-//   storage: storage,
-//   whitelist: ["user"],
-// };
-
-// const persistedUserReducer = persistReducer(persistConfig, UserSlice.userReducer);
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -28,8 +20,6 @@ export const store = configureStore({
   middleware: (gDM) => gDM(),
   devTools: Boolean(parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0")),
 });
-
-// export const persistor = persistStore(store);
 
 // Infer the type of makeStore
 export type AppStore = typeof store;

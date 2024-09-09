@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { FC, TouchEventHandler, useMemo } from "react";
 import { Header } from "@/widgets/Header";
 import { Board } from "@/widgets/Board";
 import { StatsInfo } from "../StatsInfo";
@@ -31,6 +31,17 @@ const MainClicker = () => {
 
   const level = useAppSelector((store) => store.user.level);
   const balance = useAppSelector((store) => store.user.balance);
+
+  // const clickEffects: any[] = [];
+  // const tabValue = 1;
+  // const maxBoost = 500;
+  // const boosts = 500;
+  // const earned = 5;
+  // const onMaxBoost = () => {};
+
+  // const handleClick: TouchEventHandler<HTMLButtonElement> = (event) => {
+  //   console.log(event);
+  // };
 
   const currentBalance = useMemo(() => balance + earned, [earned, balance]);
 

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:local": "next dev -H tg-mini-app.local -p 3000 --experimental-https",
+    "tg": "npm run build && npm run start",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

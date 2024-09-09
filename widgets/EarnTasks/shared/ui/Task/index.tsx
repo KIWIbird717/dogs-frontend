@@ -10,6 +10,7 @@ import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import YoutubeIcon from "@/public/images/svg/earn/youtube.svg";
 import TwitterIcon from "@/public/images/svg/earn/x.svg";
 import NFTIcon from "@/public/images/svg/earn/nft.svg";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface ITaskProps {
   task: TasksApiTypes.TasksDto;
@@ -23,6 +24,8 @@ export const Task: FC<ITaskProps> = ({ toggle, task, onOpen }) => {
   const handleClick = () => {
     if (!task.isCompleted) {
       onOpen && onOpen({ data: task });
+    } else {
+      toast.success("Task already complied");
     }
   };
 
@@ -32,12 +35,13 @@ export const Task: FC<ITaskProps> = ({ toggle, task, onOpen }) => {
       className={twMerge(
         "flex h-[96px] w-full items-center justify-between gap-3 rounded-xl border border-black-300 bg-black-400 p-3 shadow-buttonNoAccent",
         task.isCompleted && "bg-black-750",
-        toggle === "tasks" && "h-[66px]",
         task.isCompleted && "opacity-50",
+        toggle === "tasks" && "h-[66px]",
       )}
       disabled={task.isCompleted}
       onClick={handleClick}
     >
+      <Toaster />
       <div className={"flex items-center gap-3 overflow-hidden"}>
         <div className={"h-[48px] w-[48px]"}>
           {task.type === TasksApiTypes.TaskTypeEnum.YOUTUBE ? (
