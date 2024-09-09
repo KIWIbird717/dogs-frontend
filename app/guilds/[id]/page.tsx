@@ -15,6 +15,7 @@ import { useGuild } from "@/shared/hooks/useGuild";
 import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { AnimatePresence } from "framer-motion";
+import { useTgBackButton } from "@/shared/hooks/useTgBackButton";
 
 const MotionDic = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
@@ -23,6 +24,8 @@ interface IGuildPageProps {}
 const inviteText = "Join to my guild";
 
 const GuildPage: NextPage<IGuildPageProps> = () => {
+  useTgBackButton("/guilds");
+
   const {
     isLoading,
     guildId,

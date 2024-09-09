@@ -57,7 +57,11 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
           <img
-            src={isImageLoadingError ? GuildImagePlaceholder.src : guild.image}
+            src={
+              isImageLoadingError
+                ? GuildImagePlaceholder.src
+                : guild?.image || "https://no-photo.huh"
+            }
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
