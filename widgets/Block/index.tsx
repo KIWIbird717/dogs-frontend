@@ -17,7 +17,7 @@ export const Block: FC<IBlockProps> = ({ icon, title, onClick, className, ...pro
       onClick={onClick}
       className={cn(
         className,
-        "flex w-fit gap-2 rounded-xl border-[2px] border-black-400 bg-black-400 px-3 py-2 shadow-buttonNoAccent",
+        "shadow-fix flex w-fit gap-2 rounded-xl border-[2px] border-black-400 bg-black-400 px-3 py-2 shadow-buttonNoAccent",
       )}
       {...props}
     >

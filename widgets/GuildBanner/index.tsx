@@ -48,7 +48,8 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       exit={{ scale: 0 }}
       className={twMerge(
         "z-[10] flex w-full flex-col rounded-xl",
-        isBanner && "gap-2 border border-black-400 bg-black-400 p-4 shadow-buttonNoAccent",
+        isBanner &&
+          "shadow-fix gap-2 border border-black-400 bg-black-400 p-4 shadow-buttonNoAccent",
         !isBanner && "gap-4",
       )}
       onClick={redirectHandler}
@@ -89,7 +90,7 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
         {!isBanner && isGuildJoined && (
           <Button
             className={
-              "h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
+              "shadow-fix h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
             }
           >
             <SettingsIcon />

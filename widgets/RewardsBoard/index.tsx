@@ -17,7 +17,7 @@ export const RewardsBoard: FC<IRewardsBoardProps> = () => {
   return (
     <div
       className={
-        "flex w-full flex-col gap-6 rounded-xl border border-black-300 bg-black-400 px-3 py-5 shadow-buttonNoAccent"
+        "shadow-fix flex w-full flex-col gap-6 rounded-xl border border-black-300 bg-black-400 px-3 py-5 shadow-buttonNoAccent"
       }
     >
       <Toaster />

@@ -9,10 +9,10 @@ export namespace ButtonNS {
   // варианты стилей кнопок
   export const variants = {
     primary: {
-      className: "bg-blue-900 text-white shadow-buttonAccent",
+      className: "bg-blue-900 text-white shadow-buttonAccent shadow-fix",
     },
     deepBlue: {
-      className: "bg-gradient-button-accent text-white-900 shadow-buttonAccent",
+      className: "bg-gradient-button-accent text-white-900 shadow-buttonAccent shadow-fix",
     },
     noAccent: {
       className: "bg-black-400 text-white-800",

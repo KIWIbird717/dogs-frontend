@@ -25,7 +25,7 @@ export namespace Field {
             {...props}
             className={cn(
               className,
-              "z-[10] h-[48px] w-full rounded-xl border border-black-300 !bg-black-400 p-3 text-[17px] font-normal leading-6 text-white-900 shadow-buttonNoAccent placeholder:text-[17px] placeholder:font-normal placeholder:leading-6 placeholder:text-white-800",
+              "shadow-fix z-[10] h-[48px] w-full rounded-xl border border-black-300 !bg-black-400 p-3 text-[17px] font-normal leading-6 text-white-900 shadow-buttonNoAccent placeholder:text-[17px] placeholder:font-normal placeholder:leading-6 placeholder:text-white-800",
               "focus-visible:border-[1px] focus-visible:border-blue-900 disabled:cursor-not-allowed disabled:opacity-50",
               props.error && "border-red",
             )}
@@ -53,7 +53,7 @@ export namespace Field {
           <textarea
             className={cn(
               className,
-              "z-[10] w-full rounded-xl border border-black-300 bg-black-400 p-3 text-[17px] font-normal leading-6 text-white-900 shadow-buttonNoAccent outline-none placeholder:text-[17px] placeholder:font-normal placeholder:leading-6 placeholder:text-white-800",
+              "shadow-fix z-[10] w-full rounded-xl border border-black-300 bg-black-400 p-3 text-[17px] font-normal leading-6 text-white-900 shadow-buttonNoAccent outline-none placeholder:text-[17px] placeholder:font-normal placeholder:leading-6 placeholder:text-white-800",
               "focus-visible:border-[1px] focus-visible:border-blue-900 disabled:cursor-not-allowed disabled:opacity-50",
               props.error && "border-red",
             )}

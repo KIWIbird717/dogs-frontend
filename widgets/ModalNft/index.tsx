@@ -10,7 +10,7 @@ export const ModalNft: FC<IModalNftProps> = () => {
   return (
     <div
       className={
-        "relative z-[10] flex w-full flex-col gap-4 rounded-xl border-[1px] border-black-300 px-4 py-6 shadow-nftModal"
+        "shadow-fix relative z-[10] flex w-full flex-col gap-4 rounded-xl border-[1px] border-black-300 px-4 py-6 shadow-nftModal"
       }
     >
       <div className={"flex w-full flex-col gap-8"}>

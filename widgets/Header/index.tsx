@@ -80,7 +80,7 @@ export const Header: FC<IHeaderProps> = memo(() => {
 
         <Button
           className={
-            "h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
+            "shadow-fix shadow-fix h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
           }
           onClick={onOpenSettings}
         >

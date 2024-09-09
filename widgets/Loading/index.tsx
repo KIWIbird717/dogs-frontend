@@ -68,7 +68,7 @@ export const ModalLoading: FC<IModalLoadingProps> = () => {
   return (
     <div
       className={
-        "relative z-[10] flex w-[296px] flex-col gap-4 rounded-xl border-[1px] border-black-300 px-4 pb-4 pt-6 shadow-loadingModal"
+        "shadow-fix relative z-[10] flex w-[296px] flex-col gap-4 rounded-xl border-[1px] border-black-300 px-4 pb-4 pt-6 shadow-loadingModal"
       }
     >
       <div className={"flex w-full flex-col gap-2"}>

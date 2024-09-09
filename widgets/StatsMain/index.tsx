@@ -113,7 +113,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
             exit={{ y: 200 }}
             transition={{ type: "tween" }}
             className={
-              "fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
+              "shadow-fix fixed bottom-[55px] left-0 z-[11] flex h-[112px] w-full items-start rounded-xl border-t border-t-black-300 bg-black-400 shadow-buttonNoAccent backdrop-blur-[16px]"
             }
           >
             <GuildPlayerItem

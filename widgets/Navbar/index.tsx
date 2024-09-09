@@ -63,7 +63,7 @@ export const Navbar: FC<INavbarProps> = () => {
           >
             <Button
               className={cn(
-                "absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton",
+                "shadow-fix absolute top-2.5 z-[10] h-[56px] w-[56px] rounded-full bg-gradient-button-accent shadow-boneButton",
                 pathName !== "/main" && "border-[1px] border-[#6857FD] bg-none",
               )}
             >

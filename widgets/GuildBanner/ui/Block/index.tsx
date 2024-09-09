@@ -12,7 +12,7 @@ export const Block: FC<IBlockProps> = ({ title, value, isBanner }) => {
   return (
     <div
       className={twMerge(
-        "flex w-1/2 flex-col items-center justify-center gap-3 rounded-xl border border-black-400 bg-black-750 p-4 shadow-buttonNoAccent",
+        "shadow-fix flex w-1/2 flex-col items-center justify-center gap-3 rounded-xl border border-black-400 bg-black-750 p-4 shadow-buttonNoAccent",
         isBanner && "h-[93px]",
         !isBanner && "h-[100px]",
       )}

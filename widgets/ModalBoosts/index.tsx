@@ -68,7 +68,7 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
             exit={{ opacity: 0, y: 464 }}
             transition={{ duration: 0.4 }}
             className={
-              "relative z-[11] flex w-full flex-col gap-8 rounded-xl border border-black-300 bg-black-750 p-4 pb-20 shadow-buttonNoAccent backdrop-blur-lg"
+              "shadow-fix relative z-[11] flex w-full flex-col gap-8 rounded-xl border border-black-300 bg-black-750 p-4 pb-20 shadow-buttonNoAccent backdrop-blur-lg"
             }
             key="boosts"
           >

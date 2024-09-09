@@ -41,7 +41,6 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const handleToggle = () => setIsShowBonus(!isShowBonus);
 
   const onCopyHandler = () => {
-    console.log(fullInviteLink);
     navigator.clipboard
       .writeText(fullInviteLink)
       .then(() => toast.success("Copied"))

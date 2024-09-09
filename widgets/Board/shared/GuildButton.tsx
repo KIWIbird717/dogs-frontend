@@ -9,15 +9,11 @@ type GuildButtonProps = {
   guildName?: string | null;
 };
 export const GuildButton: FC<GuildButtonProps> = (props) => {
-  useEffect(() => {
-    console.log({ guildName: props.guildName });
-  }, [props.guildName]);
-
   return (
     <Button
       onClick={props.onClick}
       className={
-        "flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-1 rounded-l-none rounded-r-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
+        "shadow-fix flex h-full min-h-[62px] w-1/2 flex-col items-center justify-center gap-1 rounded-l-none rounded-r-xl border border-black-300 bg-black-400 px-2 shadow-buttonNoAccent"
       }
     >
       {props.guildName ? (

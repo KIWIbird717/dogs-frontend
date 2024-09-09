@@ -19,7 +19,7 @@ import Level18 from "@/public/images/bowls/level18.png";
 import Level19 from "@/public/images/bowls/level19.png";
 import Level20 from "@/public/images/bowls/level20.png";
 
-const levelImages = [
+export const levelImages = [
   Level1,
   Level2,
   Level3,

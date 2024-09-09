@@ -35,7 +35,7 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
           onClick={onCloseHandler}
         >
           <MotionDiv
-            className="relative w-[344px] flex-col rounded-xl border border-black-300 p-4 pb-6 shadow-buttonNoAccent"
+            className="shadow-fix relative w-[344px] flex-col rounded-xl border border-black-300 p-4 pb-6 shadow-buttonNoAccent"
             initial={{ height: 346, opacity: 0 }}
             animate={{ height: containerHeight, opacity: 1 }}
             transition={{ duration: 0.3 }}

@@ -1,17 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export namespace ClickerSlice {
   export type Type = {
-    tapCoast: number;
+    energy: number;
+    tapEnergyCoast: number;
+    energyRecoverPerSecond: number;
   };
 
   const initialState: Type = {
-    tapCoast: 1,
+    energy: 500,
+    tapEnergyCoast: 1,
+    energyRecoverPerSecond: 1,
   };
 
   export const clickerSlice = createSlice({
     name: "clicker",
     initialState,
-    reducers: {},
+    reducers: {
+      takeEnergy: (state) => {
+        state.energy -= state.tapEnergyCoast;
+      },
+      recoverEnergy: (state) => {
+        state.energy += state.energyRecoverPerSecond;
+      },
+    },
   });
+
+  export const { takeEnergy, recoverEnergy } = clickerSlice.actions;
+  export const clickerReducer = clickerSlice.reducer;
 }

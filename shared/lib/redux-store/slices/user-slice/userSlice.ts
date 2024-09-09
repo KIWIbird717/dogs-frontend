@@ -177,7 +177,8 @@ export namespace UserSlice {
           return;
         }
 
-        const balanceForNextLevel = action.payload.levels[action.payload.level];
+        const balanceForNextLevel =
+          action.payload.levels[(action.payload.level + 1) as GameServiceTypes.Levels];
 
         if (state.balance >= balanceForNextLevel) {
           state.level += 1;

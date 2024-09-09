@@ -38,7 +38,7 @@ export const GuildItem: FC<IGuildItemProps> = ({
     <Button
       onClick={onClickHandler}
       className={
-        "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 bg-black-400 px-3 py-2 text-left shadow-buttonNoAccent"
+        "shadow-fix flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 bg-black-400 px-3 py-2 text-left shadow-buttonNoAccent"
       }
     >
       <div className={"flex w-auto max-w-[261px] items-center gap-2"}>

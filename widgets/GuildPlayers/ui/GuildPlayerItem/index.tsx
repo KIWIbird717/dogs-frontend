@@ -34,7 +34,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   return (
     <div
       className={twMerge(
-        "flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 px-3 py-2 text-left shadow-buttonNoAccent",
+        "shadow-fix flex h-[64px] w-full items-center justify-between gap-2 rounded-xl border border-black-300 px-3 py-2 text-left shadow-buttonNoAccent",
         className ? className : "bg-black-400",
       )}
     >

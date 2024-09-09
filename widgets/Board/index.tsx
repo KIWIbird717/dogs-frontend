@@ -18,8 +18,6 @@ export const Board: FC<IBoardProps> = (props) => {
   const guildName = useAppSelector((store) => store.user.guildName);
   const balance = useAppSelector((store) => store.user.balance);
 
-  console.log({ level, guildName, balance });
-
   const levelProgress = useGetLevelProgressPercentage(balance);
 
   useEffect(() => {

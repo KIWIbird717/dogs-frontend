@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, TouchEventHandler, useMemo } from "react";
+import { FC, TouchEventHandler, useEffect, useMemo } from "react";
 import { Header } from "@/widgets/Header";
 import { Board } from "@/widgets/Board";
 import { StatsInfo } from "../StatsInfo";
@@ -10,7 +10,11 @@ import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 import { AnimatePresence } from "framer-motion";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import dynamic from "next/dynamic";
-import { useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
+import toast, { Toaster } from "react-hot-toast";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { ClickerSlice } from "@/shared/lib/redux-store/slices/clicker-slice/clickerSlice";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
@@ -28,9 +32,7 @@ export const MainForClicker: FC<IMainForClickerProps> = () => {
 const MainClicker = () => {
   const { clickEffects, handleClick, tabValue, maxBoost, boosts, earned, onMaxBoost } =
     useClicker(true);
-
-  const level = useAppSelector((store) => store.user.level);
-  const balance = useAppSelector((store) => store.user.balance);
+  // const logger = new Logger("MainClicker");
 
   // const clickEffects: any[] = [];
   // const tabValue = 1;
@@ -39,19 +41,42 @@ const MainClicker = () => {
   // const earned = 5;
   // const onMaxBoost = () => {};
 
+  // /**
+  //  * Clicker
+  //  */
+  // const dispatch = useAppDispatch();
+  // const tapEnergyCoast = useAppSelector((store) => store.clicker.tapEnergyCoast);
+  // const maxEnergyLimit = useAppSelector((store) => store.user.energyLimit);
+  // const energy = useAppSelector((store) => store.clicker.energy);
+  const balance = useAppSelector((store) => store.user.balance);
+  const level = useAppSelector((store) => store.user.level);
+
   // const handleClick: TouchEventHandler<HTMLButtonElement> = (event) => {
-  //   console.log(event);
+  //   if (energy < tapEnergyCoast) return;
+  //   dispatch(UserSlice.addCoins(tapEnergyCoast));
+  //   dispatch(ClickerSlice.takeEnergy());
   // };
 
-  const currentBalance = useMemo(() => balance + earned, [earned, balance]);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (energy >= maxEnergyLimit) return;
+  //     dispatch(ClickerSlice.recoverEnergy());
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [energy, logger, maxEnergyLimit]);
 
   return (
     <div className={"flex h-full flex-col justify-between gap-8"}>
       <div className={"flex w-full flex-col gap-8"}>
         <div className={"flex w-full flex-col gap-6"}>
           <Board />
-          <StatsInfo value={currentBalance} isIcon />
+          <StatsInfo value={balance} isIcon />
         </div>
+
+        <Toaster />
 
         <div className="relative h-full w-full">
           <AnimatePresence>
@@ -75,7 +100,7 @@ const MainClicker = () => {
             ))}
           </AnimatePresence>
 
-          <Clicker handleClick={handleClick} level={level} tabValue={tabValue} />
+          <Clicker handleClick={handleClick} level={level} />
         </div>
       </div>
 

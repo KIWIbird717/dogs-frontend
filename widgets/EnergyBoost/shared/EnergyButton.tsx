@@ -15,7 +15,7 @@ export const EnergyButton: FC<EnergyButtonProps> = (props) => {
     <div
       className={cn(
         props.className,
-        "flex items-center justify-center gap-2 rounded-xl border-[2px] border-black-400 bg-black-400 px-2 py-2 shadow-buttonNoAccent",
+        "shadow-fix shadow-fix flex items-center justify-center gap-2 rounded-xl border-[2px] border-black-400 bg-black-400 px-2 py-2 shadow-buttonNoAccent",
       )}
     >
       <div>{props.icon}</div>

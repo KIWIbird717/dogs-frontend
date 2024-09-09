@@ -33,7 +33,7 @@ export const Task: FC<ITaskProps> = ({ toggle, task, onOpen }) => {
     <Button
       variant={"default"}
       className={twMerge(
-        "flex h-[96px] w-full items-center justify-between gap-3 rounded-xl border border-black-300 bg-black-400 p-3 shadow-buttonNoAccent",
+        "shadow-fix flex h-[96px] w-full items-center justify-between gap-3 rounded-xl border border-black-300 bg-black-400 p-3 shadow-buttonNoAccent",
         task.isCompleted && "bg-black-750",
         task.isCompleted && "opacity-50",
         toggle === "tasks" && "h-[66px]",

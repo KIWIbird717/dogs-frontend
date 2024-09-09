@@ -5,6 +5,7 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 import { GameSlice } from "./slices/game-slice/gameSlice";
+import { ClickerSlice } from "./slices/clicker-slice/clickerSlice";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -12,6 +13,7 @@ export const store = configureStore({
     modal: ModalSlice.modalReducer,
     stats: StatsSlice.statsReducer,
     game: GameSlice.gameReducer,
+    clicker: ClickerSlice.clickerReducer,
   }),
   /**
    * You cant set up more middlewares
