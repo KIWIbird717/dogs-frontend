@@ -10,11 +10,8 @@ import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 import { AnimatePresence } from "framer-motion";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import dynamic from "next/dynamic";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
-import toast, { Toaster } from "react-hot-toast";
-import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import { ClickerSlice } from "@/shared/lib/redux-store/slices/clicker-slice/clickerSlice";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { Toaster } from "react-hot-toast";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 

@@ -50,6 +50,8 @@ export namespace UserSlice {
 
     league: number;
     leagueLevel: number;
+
+    avatar?: string;
   };
 
   const initialState: IUserSlice = {
@@ -93,6 +95,8 @@ export namespace UserSlice {
 
     league: 0,
     leagueLevel: 0,
+
+    avatar: undefined,
   };
 
   export const userSlice = createSlice({
@@ -153,6 +157,8 @@ export namespace UserSlice {
 
         state.league = action.payload.league;
         state.leagueLevel = action.payload.leagueLevel;
+
+        state.avatar = action.payload.avatar;
       },
 
       updateUser: (state, action: PayloadAction<Partial<IUserSlice>>) => {

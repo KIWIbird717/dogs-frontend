@@ -1,11 +1,10 @@
 "use client";
 
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 
-import AvatarIcon from "@/public/images/avatar.png";
 import WalletIcon from "@/public/images/svg/wallet.svg";
 import QuestionIcon from "@/public/images/svg/question-icon.svg";
 import SettingsIcon from "@/public/images/svg/settings.svg";
@@ -13,13 +12,30 @@ import { useModal } from "@/shared/hooks/useModal";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { LinkButton } from "@/shared/ui/LinkButton";
 import Link from "next/link";
+import UserImagePlaceholder from "@/public/images/user-placeholder.png";
+import useSWR, { useSWRConfig } from "swr";
+import { GuildsService } from "@/shared/lib/services/guilds/guilds";
+import GuildPlaceholderImage from "@/public/images/guild.png";
 
 interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = memo(() => {
   const { onOpenModal } = useModal();
+  const [isIconLoadingError, setIsIconLoadingError] = useState(false);
+  const [isGuildImageLoadError, setIsGuildImageLoadError] = useState(false);
+
   const first_name = useAppSelector((store) => store.user.first_name);
   const guildName = useAppSelector((store) => store.user.guildName);
+  const guild = useAppSelector((store) => store.user.guild);
+  const avatar = useAppSelector((store) => store.user.avatar) || "https://no-photo.huh";
+
+  const { data } = useSWR("/guilds/get-guilds", () => GuildsService.getGuild(guild || ""));
+  const { mutate } = useSWRConfig();
+
+  useEffect(() => {
+    if (!guild) return;
+    mutate("/guilds/get-guilds");
+  }, [guild]);
 
   const onOpenSettings = () => {
     onOpenModal("settings");
@@ -30,15 +46,17 @@ export const Header: FC<IHeaderProps> = memo(() => {
       <Link href={"/profile"} prefetch className={"flex w-[56%] justify-between gap-2"}>
         <div className={"relative"}>
           <div className={"h-[48px] w-[48px]"}>
-            <Image
-              src={AvatarIcon}
-              alt={"avatar"}
+            <img
+              src={isIconLoadingError ? UserImagePlaceholder.src : avatar}
+              alt={isIconLoadingError ? "placeholder" : "avatar"}
+              onError={() => setIsIconLoadingError(true)}
               className={"h-full w-full rounded-2xl object-cover"}
             />
           </div>
 
-          <Image
-            src={"/images/guild.png"}
+          <img
+            src={isGuildImageLoadError ? GuildPlaceholderImage.src : data?.data.image}
+            onError={() => setIsGuildImageLoadError(true)}
             alt={"avatar"}
             width={16}
             height={16}
