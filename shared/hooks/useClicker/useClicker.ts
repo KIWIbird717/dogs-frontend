@@ -6,6 +6,7 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export interface ClickEffect {
   id: number;
@@ -18,10 +19,10 @@ const HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET = 1;
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
-  const [boostsLS, setBoostsLS] = useState<{
+  const [boostsLS, setBoostsLS] = useLocalStorage<{
     boost: number;
     time: string;
-  } | null>(null);
+  } | null>("lastBoostTime", null);
 
   const energyLimit = useAppSelector((store) => store.user.energyLimit);
   const currentBoost = useAppSelector((store) => store.user.currentBoost);
