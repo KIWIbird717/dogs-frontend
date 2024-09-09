@@ -1,6 +1,11 @@
 "use client";
 
+import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
+import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { UsersService } from "@/shared/lib/services/users/users";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { memo, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -13,17 +18,40 @@ import toast, { Toaster } from "react-hot-toast";
  * и не отправлял лишние запросы
  */
 export const InvitationHandler = () => {
-  useEffect(() => {
-    const inviterId = localStorage.getItem("inviterId");
-    if (!inviterId) return;
+  const dispatch = useAppDispatch();
+  const logger = new Logger("InvitationHandler");
 
-    (async () => {
+  useEffect(() => {
+    const inviterId = localStorage.getItem(LocalstorageKeys.InviterId);
+    const inviterGuildId = localStorage.getItem(LocalstorageKeys.InviterGuildId);
+
+    const handleFriendInvitation = async (id?: string | null) => {
+      if (!id) return;
+
       const response = await UsersService.iAmFromInviteLink({
-        invitedByTgUserId: parseInt(inviterId),
+        invitedByTgUserId: parseInt(id),
       });
 
       toast.success(`You invited by ${response.data.inviter.username}`);
-    })();
+    };
+
+    const handleGuildInvitation = async (id?: string | null) => {
+      try {
+        if (!id) return;
+
+        const response = await GuildsService.joinGuild(id);
+
+        dispatch(
+          UserSlice.updateUser({ guild: response.data.guild, guildName: response.data.guildName }),
+        );
+        toast.success(`You invited to guild ${response.data.guildName}`);
+      } catch (error) {
+        logger.error("Can not handle guild invitation");
+      }
+    };
+
+    handleFriendInvitation(inviterId);
+    handleGuildInvitation(inviterGuildId);
   }, []);
 
   return <Toaster />;

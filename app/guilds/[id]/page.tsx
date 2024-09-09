@@ -35,7 +35,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
   const inviteLink =
     process.env.NEXT_PUBLIC_INVITE_LINK +
-    `?startapp=${process.env.NEXT_PUBLIC_GUILD_INVITE_PREFIX}${guild}`;
+    `?startapp=${process.env.NEXT_PUBLIC_GUILD_INVITE_PREFIX}${guild?._id}`;
   const fullInviteLink = process.env.NEXT_PUBLIC_INVITE_LINK
     ? inviteLink
     : "we can not create invite link :(";

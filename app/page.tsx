@@ -6,16 +6,28 @@ import { ModalLoading } from "@/widgets/Loading";
 import { DuckBackground } from "@/widgets/DuckBackground";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { useEffect } from "react";
+import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
 
 interface ILoadingPageProps {}
 
-const handleInvitation = (inviterId?: string) => {
+const handleFriendInvitation = (inviterId?: string) => {
   if (!inviterId) return;
 
   const inviteLinkPrefix = process.env.NEXT_PUBLIC_INVITE_LINK_PREFIX || "";
+  if (!inviterId.includes(inviteLinkPrefix)) return;
   const serializedId = inviterId.replace(inviteLinkPrefix, "");
 
-  localStorage.setItem("inviterId", serializedId);
+  localStorage.setItem(LocalstorageKeys.InviterId, serializedId);
+};
+
+const handleGuildInvitation = (inviterId?: string) => {
+  if (!inviterId) return;
+
+  const inviteLinkPrefix = process.env.NEXT_PUBLIC_GUILD_INVITE_PREFIX || "";
+  if (!inviterId.includes(inviteLinkPrefix)) return;
+  const serializedId = inviterId.replace(inviteLinkPrefix, "");
+
+  localStorage.setItem(LocalstorageKeys.InviterGuildId, serializedId);
 };
 
 const LoadingPage: NextPage<ILoadingPageProps> = () => {
@@ -23,7 +35,8 @@ const LoadingPage: NextPage<ILoadingPageProps> = () => {
   const startAppParams = telegram?.initDataUnsafe.start_param;
 
   useEffect(() => {
-    handleInvitation(startAppParams);
+    handleFriendInvitation(startAppParams);
+    handleGuildInvitation(startAppParams);
   }, [startAppParams]);
 
   return (
