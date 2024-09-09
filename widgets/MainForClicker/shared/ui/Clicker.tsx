@@ -9,16 +9,20 @@ interface IClickerProps {
 export const Clicker: FC<IClickerProps> = ({ handleClick, level }) => {
   const [isTaped, setIsTaped] = useState(false);
 
+  const handleButtonClick: TouchEventHandler<HTMLButtonElement> = (event) => {
+    handleClick(event);
+  };
+
   return (
     <div className={"flex h-full w-full justify-center"}>
       <button
         onTouchStart={() => setIsTaped(true)}
         onTouchEnd={(event) => {
-          handleClick(event);
+          handleButtonClick(event);
           setIsTaped(false);
         }}
         className={
-          "h-fit max-h-[296px] w-fit max-w-[296px] rounded-[52px] bg-gradient-button-accent p-4 shadow-buttonSec transition-all duration-100"
+          "max-h-[296px] w-[270px] max-w-[296px] rounded-[52px] bg-gradient-button-sec p-4 shadow-buttonSec transition-all duration-100"
         }
         style={{ transform: isTaped ? "scale(0.9)" : "scale(1)" }}
       >
