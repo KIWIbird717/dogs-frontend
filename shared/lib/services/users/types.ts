@@ -74,6 +74,7 @@ export namespace UserApiTypes {
     league: number;
     breedKey: string;
     level: number;
+    avatar?: string;
   };
 
   export type IAmFromInviteLinkDto = {

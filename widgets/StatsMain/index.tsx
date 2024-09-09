@@ -119,7 +119,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
             <GuildPlayerItem
               id={me._id}
               title={me.username}
-              league={me?.guild ? me.guild : "-"}
+              league={me?.guildName ? me.guildName : "-"}
               avatarUrl={""}
               coins={me.balance}
               index={data?.pages[0].myPlace! - 1}

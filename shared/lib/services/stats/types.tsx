@@ -30,6 +30,7 @@ export namespace StatsApiTypes {
       balance: UserApiTypes.UserDto["balance"];
       guild: UserApiTypes.UserDto["guild"] | null;
       guildName: UserApiTypes.UserDto["guildName"] | null;
+      avatar?: string;
     }[];
   };
 }

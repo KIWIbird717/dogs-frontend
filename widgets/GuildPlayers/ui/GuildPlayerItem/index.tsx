@@ -1,15 +1,16 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import AvatarImage from "@/public/images/avatar.png";
 import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { twMerge } from "tailwind-merge";
+import UserImagePlaceholder from "@/public/images/user-placeholder.png";
 
 interface IGuildPlayerItemProps {
-  avatarUrl: string;
+  avatarUrl?: string;
   title: string;
   league: string;
   coins: number | string;
@@ -30,6 +31,7 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
   className,
 }) => {
   const numberGuild = index + 1;
+  const [isAvatarLoadingError, setIsAvatarLoadingError] = useState(false);
 
   return (
     <div
@@ -47,20 +49,15 @@ export const GuildPlayerItem: FC<IGuildPlayerItemProps> = ({
             "relative flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-xl"
           }
         >
-          <Image
-            src={avatarUrl || AvatarImage}
+          <img
+            src={
+              isAvatarLoadingError ? UserImagePlaceholder.src : avatarUrl || "https://no-photo.huh"
+            }
             alt={`guild-${index}`}
+            onError={() => setIsAvatarLoadingError(true)}
             width={48}
             height={48}
             className={"h-full w-full rounded-xl border border-white-900 object-cover"}
-          />
-
-          <Image
-            src={"/images/guild.png"}
-            alt={"avatar"}
-            width={16}
-            height={16}
-            className={"absolute bottom-0 left-0 rounded"}
           />
         </div>
 
