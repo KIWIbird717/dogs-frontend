@@ -1,11 +1,12 @@
 "use client";
 
-import { TouchEvent, useCallback, useEffect, useState } from "react";
+import { MouseEvent, TouchEvent, useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export interface ClickEffect {
   id: number;
@@ -18,10 +19,10 @@ const HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET = 1;
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
-  const [boostsLS, setBoostsLS] = useState<{
+  const [boostsLS, setBoostsLS] = useLocalStorage<{
     boost: number;
     time: string;
-  } | null>(null);
+  } | null>("lastBoostTime", null);
 
   const energyLimit = useAppSelector((store) => store.user.energyLimit);
   const currentBoost = useAppSelector((store) => store.user.currentBoost);
@@ -69,7 +70,6 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const sendCoins = async (clickEffectValue: number, touches: number) => {
     try {
-      console.log({ clickEffectValue, test: new Date(clickEffectValue || new Date().getTime()) });
       const { data } = await UsersService.addUseMoney({
         startTimestamp: new Date(clickEffectValue || new Date().getTime()),
         taps: touches,
@@ -90,7 +90,7 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const onIncrementEarn = useCallback(
     async (dateNowValue: number) => {
-      if (boostsLS?.boost && boostsLS?.boost > 1) {
+      if (boostsLS?.boost && boostsLS.boost > 1) {
         const newEarned = state.earned + tabValue;
         const newTouches = state.touches + 1;
 
@@ -150,7 +150,8 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       for (let index = 0; index <= event.touches.length; index++) {
         if (index >= 5) return;
-        if (currentBoost < tabValue) return; // если не хватает энергии на тап
+        const energyIncome = 1 * rechargeMultiplication * tapMultiplication;
+        if (boostsLS?.boost && boostsLS.boost < energyIncome + 1) return; // если не хватает энергии на тап
 
         const { currentTarget } = event;
         const { clientX, clientY } = event.changedTouches.item(index);
@@ -200,10 +201,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   }, [dateNow, onIncrementEarn, tapBotExpired]);
 
   const onMaxBoost = useCallback(() => {
-    setBoostsLS({
-      boost: maxBoost,
-      time: Date.now().toString(),
-    });
+    dispatch(UserSlice.setCurrentBoost(maxBoost));
   }, [maxBoost]);
 
   return {
