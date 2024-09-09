@@ -85,7 +85,7 @@ export namespace UserSlice {
     doneTask: [],
     friends: [],
 
-    currentBoost: 100,
+    currentBoost: 500,
 
     lastTap: null,
     eneryTankLeft: null,
