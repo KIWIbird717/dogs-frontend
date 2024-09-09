@@ -1,4 +1,4 @@
-import { formatDistanceStrict, intervalToDuration } from "date-fns";
+import { intervalToDuration } from "date-fns";
 
 export function getTimeLeftUntil(endDate: Date): string {
   const now = new Date(); // Текущая дата и время

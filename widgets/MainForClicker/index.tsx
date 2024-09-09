@@ -65,12 +65,14 @@ const MainClicker = () => {
   //   };
   // }, [energy, logger, maxEnergyLimit]);
 
+  const currentBalance = useMemo(() => balance + earned, [earned, balance]);
+
   return (
     <div className={"flex h-full flex-col justify-between gap-8"}>
       <div className={"flex w-full flex-col gap-8"}>
         <div className={"flex w-full flex-col gap-6"}>
           <Board />
-          <StatsInfo value={balance} isIcon />
+          <StatsInfo value={currentBalance} isIcon />
         </div>
 
         <Toaster />
