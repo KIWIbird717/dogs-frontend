@@ -18,7 +18,7 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level }) => {
           setIsTaped(false);
         }}
         className={
-          "max-h-[296px] w-full max-w-[296px] rounded-[52px] bg-gradient-button-sec p-4 shadow-buttonSec transition-all duration-100"
+          "max-h-[296px] w-[296px] max-w-[296px] rounded-[52px] bg-gradient-button-sec p-4 shadow-buttonSec transition-all duration-100"
         }
         style={{ transform: isTaped ? "scale(0.9)" : "scale(1)" }}
       >

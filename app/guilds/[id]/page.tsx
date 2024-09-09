@@ -10,10 +10,9 @@ import Gradient1 from "@/public/images/svg/guild/inner-guild/gradient/gradient1.
 import Gradient2 from "@/public/images/svg/guild/inner-guild/gradient/gradient2.svg";
 import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { usePathname } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 import { useGuild } from "@/shared/hooks/useGuild";
-import { LoaderIcon } from "react-hot-toast";
+import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { AnimatePresence } from "framer-motion";
 
@@ -21,9 +20,9 @@ const MotionDic = dynamic(() => import("framer-motion").then((mod) => mod.motion
 
 interface IGuildPageProps {}
 
-const GuildPage: NextPage<IGuildPageProps> = () => {
-  const pathName = usePathname();
+const inviteText = "Join to my guild";
 
+const GuildPage: NextPage<IGuildPageProps> = () => {
   const {
     isLoading,
     guildId,
@@ -34,16 +33,18 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     handleFetchGuildById,
   } = useGuild();
 
-  const onCopyHandler = () => {
-    if (guild) {
-      navigator.clipboard.writeText(pathName as string);
-    }
-  };
+  const inviteLink =
+    process.env.NEXT_PUBLIC_INVITE_LINK +
+    `?startapp=${process.env.NEXT_PUBLIC_GUILD_INVITE_PREFIX}${guild}`;
+  const fullInviteLink = process.env.NEXT_PUBLIC_INVITE_LINK
+    ? inviteLink
+    : "we can not create invite link :(";
 
-  const onShareHandler = () => {
-    if (guild) {
-      navigator.share({ text: pathName as string });
-    }
+  const onCopyHandler = () => {
+    navigator.clipboard
+      .writeText(fullInviteLink)
+      .then(() => toast.success("Copied"))
+      .catch(() => toast.error("Copy not allowed in your telegram app. Allow it in settings"));
   };
 
   useEffect(() => {
@@ -57,6 +58,8 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
+      <Toaster />
+
       <div className={"z-[10] flex w-full flex-col gap-2"}>
         {isLoading ? (
           <div className="flex h-[176px] w-full items-center justify-center">
@@ -90,7 +93,13 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
 
       {!isLoading && guild?.members && <GuildPlayers title={"Players"} friends={guild.members} />}
 
-      {isMyGuild && <ShareAndInvite onCopyHandler={onCopyHandler} />}
+      {isMyGuild && (
+        <ShareAndInvite
+          onCopyHandler={onCopyHandler}
+          fullInviteLink={fullInviteLink}
+          inviteText={inviteText}
+        />
+      )}
 
       <Navbar />
 
