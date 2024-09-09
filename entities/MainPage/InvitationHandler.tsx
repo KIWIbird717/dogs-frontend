@@ -12,10 +12,9 @@ import toast, { Toaster } from "react-hot-toast";
  * - затем удаляем id из localStorage, чтобы он больше не мешал
  * и не отправлял лишние запросы
  */
-export const InvitationHandler = memo(() => {
-  const inviterId = localStorage.getItem("inviterId");
-
+export const InvitationHandler = () => {
   useEffect(() => {
+    const inviterId = localStorage.getItem("inviterId");
     if (!inviterId) return;
 
     (async () => {
@@ -28,6 +27,4 @@ export const InvitationHandler = memo(() => {
   }, []);
 
   return <Toaster />;
-});
-
-InvitationHandler.displayName = "InvitationHandler";
+};

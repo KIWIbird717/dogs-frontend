@@ -136,6 +136,7 @@ export namespace UserSlice {
         state.age = action.payload.age;
         state.country = action.payload.country;
         state.guild = action.payload.guild;
+        state.guildName = action.payload.guildName;
         state.energyLimit = action.payload.energyLimit;
         state.friendBonusTaken = action.payload.friendBonusTaken;
         state.lastDailyReward = action.payload.lastDailyReward;

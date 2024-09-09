@@ -13,6 +13,11 @@ import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";
 import { useGuild } from "@/shared/hooks/useGuild";
+import { LoaderIcon } from "react-hot-toast";
+import dynamic from "next/dynamic";
+import { AnimatePresence } from "framer-motion";
+
+const MotionDic = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface IGuildPageProps {}
 
@@ -54,14 +59,20 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
     >
       <div className={"z-[10] flex w-full flex-col gap-2"}>
         {isLoading ? (
-          "Загрузка"
+          <div className="flex h-[176px] w-full items-center justify-center">
+            <LoaderIcon style={{ width: 30, height: 30 }} />
+          </div>
         ) : (
-          <GuildBanner
-            guild={guild!}
-            isBanner={false}
-            isGuildJoined={isMyGuild}
-            guildImage={guildImage}
-          />
+          <AnimatePresence>
+            <MotionDic initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <GuildBanner
+                guild={guild!}
+                isBanner={false}
+                isGuildJoined={isMyGuild}
+                guildImage={guildImage}
+              />
+            </MotionDic>
+          </AnimatePresence>
         )}
 
         <Button

@@ -1,3 +1,5 @@
+"use client";
+
 import useRequest from "@/shared/hooks/useRequest";
 import axios from "axios";
 import { useEffect, useState } from "react";

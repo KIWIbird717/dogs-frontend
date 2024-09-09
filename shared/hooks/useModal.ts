@@ -1,3 +1,5 @@
+"use client";
+
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { ModalSlice } from "@/shared/lib/redux-store/slices/modal-slice/modalSlice";
 import { IModalData, ModelType } from "@/shared/lib/redux-store/slices/modal-slice/type";

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Block } from "@/widgets/GuildBanner/ui/Block";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
@@ -9,7 +9,7 @@ import SettingsIcon from "@/public/images/svg/settings.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
 import { GuildResponseWithMembersType } from "@/shared/lib/services/guilds/guilds";
-import GuildImage from "@/public/images/guild.png";
+import GuildImagePlaceholder from "@/public/images/guild.png";
 import dynamic from "next/dynamic";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
@@ -37,6 +37,8 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
     }
   };
 
+  const [isImageLoadingError, setIsImageLoadingError] = useState(false);
+
   const members = guild?.membersCount || guild?.members.length;
 
   return (
@@ -54,11 +56,16 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
       <div className={"flex w-full items-center gap-2"}>
         <div className={"flex w-full gap-2"}>
           <img
-            src={GuildImage.src} //TODO: Не приходит изображение с бэка. Нужно изменить
+            src={isImageLoadingError ? GuildImagePlaceholder.src : guild.image}
             alt={"guild"}
             width={isBanner ? 80 : 56}
             height={isBanner ? 80 : 56}
-            className={twMerge(isBanner ? "h-[80px] w-[80px]" : "h-[56px] w-[56px]")}
+            className={twMerge(
+              isBanner
+                ? "h-[80px] w-[80px] rounded-[20px] border-[2px] border-white"
+                : "h-[56px] w-[56px] rounded-[10px] border-[2px] border-white",
+            )}
+            onError={() => setIsImageLoadingError(true)}
           />
 
           <div className={"flex w-full flex-col justify-center gap-1"}>

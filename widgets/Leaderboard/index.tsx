@@ -26,10 +26,10 @@ export const Leaderboard: FC<ILeaderboardProps> = ({ guilds }) => {
           return (
             <GuildItem
               key={index}
+              image={guild.image}
               id={guild._id}
               title={guild.name}
               joinMethod={guild.joinMethod}
-              avatarUrl={""}
               members={guild.members}
               coins={guild.guildBalance || 0}
               index={index}

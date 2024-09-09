@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, MouseEventHandler, useEffect } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
@@ -15,6 +17,8 @@ export const Board: FC<IBoardProps> = (props) => {
   const level = useAppSelector((store) => store.user.level);
   const guildName = useAppSelector((store) => store.user.guildName);
   const balance = useAppSelector((store) => store.user.balance);
+
+  console.log({ level, guildName, balance });
 
   const levelProgress = useGetLevelProgressPercentage(balance);
 

@@ -6,17 +6,17 @@ import { persistReducer, persistStore } from "redux-persist";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
 import { GameSlice } from "./slices/game-slice/gameSlice";
 
-const persistConfig = {
-  key: "root",
-  storage: storage,
-  whitelist: ["user"],
-};
+// const persistConfig = {
+//   key: "root",
+//   storage: storage,
+//   whitelist: ["user"],
+// };
 
-const persistedUserReducer = persistReducer(persistConfig, UserSlice.userReducer);
+// const persistedUserReducer = persistReducer(persistConfig, UserSlice.userReducer);
 
 export const store = configureStore({
   reducer: combineReducers({
-    user: persistedUserReducer,
+    user: UserSlice.userReducer,
     modal: ModalSlice.modalReducer,
     stats: StatsSlice.statsReducer,
     game: GameSlice.gameReducer,
@@ -29,7 +29,7 @@ export const store = configureStore({
   devTools: Boolean(parseInt(process.env.NEXT_PUBLIC_IS_DEBUG || "0")),
 });
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
 
 // Infer the type of makeStore
 export type AppStore = typeof store;

@@ -1,15 +1,14 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import GuildImage from "@/public/images/guild.png";
+import GuildImagePlaceholder from "@/public/images/guild.png";
 import Image from "next/image";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
 import { JoinMethod } from "@/shared/lib/services/guilds/guilds";
 
 interface IGuildItemProps {
-  avatarUrl: string;
   title: string;
   joinMethod: JoinMethod;
   members: number;
@@ -17,20 +16,23 @@ interface IGuildItemProps {
   index: number;
   id: string;
   handleRedirect: (id: string) => void;
+  image: string;
 }
 
 export const GuildItem: FC<IGuildItemProps> = ({
-  avatarUrl,
   members,
   joinMethod,
   title,
   coins,
   index,
   id,
+  image,
   handleRedirect,
 }) => {
   const numberGuild = index + 1;
   const onClickHandler = () => handleRedirect(id);
+
+  const [isImageLoadingError, setIsImageLoadingError] = useState(false);
 
   return (
     <Button
@@ -44,18 +46,14 @@ export const GuildItem: FC<IGuildItemProps> = ({
           {numberGuild}
         </Typography>
 
-        <div
-          className={
-            "flex h-[48px] w-[48px] items-center justify-center rounded-xl border border-white-900"
-          }
-        >
-          <Image
-            src={GuildImage}
-            placeholder="blur"
+        <div className="flex h-[48px] w-[48px] items-center justify-center overflow-hidden rounded-xl border border-white-900">
+          <img
+            src={isImageLoadingError ? GuildImagePlaceholder.src : image}
             alt={`guild-${index}`}
             width={48}
             height={48}
             className={"h-full w-full object-cover"}
+            onError={() => setIsImageLoadingError(true)}
           />
         </div>
 

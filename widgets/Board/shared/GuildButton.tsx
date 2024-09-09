@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler, useEffect } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 
@@ -9,6 +9,10 @@ type GuildButtonProps = {
   guildName?: string | null;
 };
 export const GuildButton: FC<GuildButtonProps> = (props) => {
+  useEffect(() => {
+    console.log({ guildName: props.guildName });
+  }, [props.guildName]);
+
   return (
     <Button
       onClick={props.onClick}
