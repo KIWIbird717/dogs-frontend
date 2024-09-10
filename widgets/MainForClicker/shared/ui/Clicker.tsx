@@ -11,16 +11,14 @@ export const Clicker: FC<IClickerProps> = ({ handleClick, level }) => {
 
   const handleButtonClick: TouchEventHandler<HTMLButtonElement> = (event) => {
     handleClick(event);
+    setIsTaped(false);
   };
 
   return (
     <div className={"flex h-full w-full justify-center"}>
       <button
         onTouchStart={() => setIsTaped(true)}
-        onTouchEnd={(event) => {
-          handleButtonClick(event);
-          setIsTaped(false);
-        }}
+        onTouchEnd={handleButtonClick}
         className={
           "max-h-[296px] w-[270px] max-w-[296px] rounded-[52px] bg-gradient-button-sec p-4 shadow-buttonSec transition-all duration-100"
         }

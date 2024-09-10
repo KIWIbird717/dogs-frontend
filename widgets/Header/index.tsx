@@ -54,14 +54,16 @@ export const Header: FC<IHeaderProps> = memo(() => {
             />
           </div>
 
-          <img
-            src={isGuildImageLoadError ? GuildPlaceholderImage.src : data?.data.image}
-            onError={() => setIsGuildImageLoadError(true)}
-            alt={"avatar"}
-            width={16}
-            height={16}
-            className={"absolute bottom-0 left-0 rounded border-[1px] border-white"}
-          />
+          {guild && (
+            <img
+              src={isGuildImageLoadError ? GuildPlaceholderImage.src : data?.data.image}
+              onError={() => setIsGuildImageLoadError(true)}
+              alt={"avatar"}
+              width={16}
+              height={16}
+              className={"absolute bottom-0 left-0 rounded border-[1px] border-white"}
+            />
+          )}
         </div>
 
         <div className={"flex w-full flex-col"}>

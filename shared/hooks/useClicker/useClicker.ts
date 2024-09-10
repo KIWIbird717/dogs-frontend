@@ -18,13 +18,16 @@ const HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET = 1;
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
+  const currentBoost = useAppSelector((store) => store.user.currentBoost);
   const [boostsLS, setBoostsLS] = useState<{
     boost: number;
     time: string;
-  } | null>(null);
+  } | null>({
+    boost: currentBoost,
+    time: new Date().toString(),
+  });
 
   const energyLimit = useAppSelector((store) => store.user.energyLimit);
-  const currentBoost = useAppSelector((store) => store.user.currentBoost);
   const rechargeMultiplication = useAppSelector((store) => store.user.rechargeMultiplication);
   const tapMultiplication = useAppSelector((store) => store.user.tapMultiplication);
   const tapBotExpired = useAppSelector((store) => store.user.tapBotExpired);
@@ -166,13 +169,19 @@ export const useClicker = (isSetInterval?: boolean) => {
 
         onIncrementEarn(dateNow[0]);
       }
-
-      setTimeout(() => {
-        setClickEffects((prev) => prev.filter((effect) => effect.id !== newEffect.id));
-      }, 1000);
     },
-    [dateNow, onIncrementEarn],
+    [boostsLS?.boost, dateNow, onIncrementEarn, rechargeMultiplication, tapMultiplication],
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClickEffects((prev) => prev.filter((effect) => effect.id > Date.now() - 3000));
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   /**
    * Passive income
