@@ -173,6 +173,9 @@ export const useClicker = (isSetInterval?: boolean) => {
     [boostsLS?.boost, dateNow, onIncrementEarn, rechargeMultiplication, tapMultiplication],
   );
 
+  /**
+   * Clear click effects
+   */
   useEffect(() => {
     const interval = setInterval(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id > Date.now() - 3000));

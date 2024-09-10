@@ -24,6 +24,7 @@ import EnergyLimitImg from "@/public/images/svg/modal/boosts/energy-limit.svg";
 import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
 import toast, { Toaster } from "react-hot-toast";
 import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
+import { useRouter } from "next/navigation";
 
 interface IBoostBowlProps {
   onMaxBoost: () => void;
@@ -43,6 +44,7 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const { onOpenModal } = useModal();
+  const router = useRouter();
 
   const boostsInfo: IBoost[] = useMemo(
     () => [
@@ -67,6 +69,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
 
           toast.success(`Turbo active for ${getTimeLeftUntil(new Date(response.data.TURBO))}`);
           dispatch(UserSlice.updateUser({ turboBoostExpired: response.data.TURBO }));
+
+          router.push("/main");
         },
       },
       {
@@ -87,6 +91,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
 
           toast.success("Energy restored");
           await UsersService.boost(UserApiTypes.BoostName.FULL_TANK);
+
+          router.push("/main");
         },
       },
       {
@@ -98,6 +104,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         onClick: async () => {
           toast.success(`Multitap activate`);
           await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+
+          router.push("/main");
         },
       },
       {
@@ -109,6 +117,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         onClick: async () => {
           const response = await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
           toast.success(`Energy limit updated to ${response.data.ENERY_LIMIT}`);
+
+          router.push("/main");
         },
       },
       {
@@ -121,6 +131,8 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         onClick: async () => {
           toast.success(`Recharge speed updated`);
           await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+
+          router.push("/main");
         },
       },
       {
@@ -132,10 +144,12 @@ export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts })
         onClick: async () => {
           const response = await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
           toast.success(`Tapbot active for ${getTimeLeftUntil(response.data.TAP_BOT)}`);
+
+          router.push("/main");
         },
       },
     ],
-    [boosts, maxBoost, onMaxBoost, user.eneryTankLeft, user.turboBonusLeft],
+    [boosts, dispatch, maxBoost, onMaxBoost, router, user.eneryTankLeft, user.turboBonusLeft],
   );
 
   const firstBowlItems: BoostBowlItemType[] = useMemo(
