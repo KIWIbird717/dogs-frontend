@@ -161,7 +161,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
           Create Guild
         </Button>
 
-        <div className={"flex w-full flex-col items-center gap-1"}>
+        <div className={"mb-[50px] flex w-full flex-col items-center gap-1"}>
           <Typography tag={"span"} className={"text-white-800"}>
             {balance < BALANCE_TO_CREATE_GUILD
               ? `You need ${BALANCE_TO_CREATE_GUILD} coins`
