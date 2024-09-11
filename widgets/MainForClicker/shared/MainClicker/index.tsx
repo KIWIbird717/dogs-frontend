@@ -11,6 +11,7 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { BreedPack } from "../BreedPack";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
@@ -54,6 +55,8 @@ export const MainClicker = () => {
               </MotionDiv>
             ))}
           </AnimatePresence>
+
+          {/* <BreedPack /> */}
 
           <Clicker handleClick={handleClick} level={level} />
         </div>

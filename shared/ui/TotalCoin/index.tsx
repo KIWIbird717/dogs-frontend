@@ -4,6 +4,8 @@ import CoinSmallIcon from "@/public/images/svg/invite-friends/coin.svg";
 import CoinMiddleIcon from "@/public/images/svg/guild/coin.svg";
 import CoinBigIcon from "@/public/images/svg/invite-friends/coinBig.svg";
 import CoinHugeIcon from "@/public/images/svg/coin.svg";
+
+import CoinImage from "@/public/images/coin.png";
 import { twMerge } from "tailwind-merge";
 
 type TypographyTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div" | "p" | "span";

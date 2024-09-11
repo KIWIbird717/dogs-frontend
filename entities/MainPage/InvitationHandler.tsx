@@ -1,6 +1,6 @@
 "use client";
 
-import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
+import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
 import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
@@ -22,8 +22,8 @@ export const InvitationHandler = () => {
   const logger = new Logger("InvitationHandler");
 
   useEffect(() => {
-    const inviterId = localStorage.getItem(LocalstorageKeys.InviterId);
-    const inviterGuildId = localStorage.getItem(LocalstorageKeys.InviterGuildId);
+    const inviterId = localStorage.getItem(LocalStorageKeys.InviterId);
+    const inviterGuildId = localStorage.getItem(LocalStorageKeys.InviterGuildId);
 
     const handleFriendInvitation = async (id?: string | null) => {
       if (!id) return;

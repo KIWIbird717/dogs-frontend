@@ -6,7 +6,7 @@ import { ModalLoading } from "@/widgets/Loading";
 import { DuckBackground } from "@/widgets/DuckBackground";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { useEffect } from "react";
-import { LocalstorageKeys } from "@/shared/constants/localstorage-keys";
+import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
 
 interface ILoadingPageProps {}
 
@@ -17,7 +17,7 @@ const handleFriendInvitation = (inviterId?: string) => {
   if (!inviterId.includes(inviteLinkPrefix)) return;
   const serializedId = inviterId.replace(inviteLinkPrefix, "");
 
-  localStorage.setItem(LocalstorageKeys.InviterId, serializedId);
+  localStorage.setItem(LocalStorageKeys.InviterId, serializedId);
 };
 
 const handleGuildInvitation = (inviterId?: string) => {
@@ -27,7 +27,7 @@ const handleGuildInvitation = (inviterId?: string) => {
   if (!inviterId.includes(inviteLinkPrefix)) return;
   const serializedId = inviterId.replace(inviteLinkPrefix, "");
 
-  localStorage.setItem(LocalstorageKeys.InviterGuildId, serializedId);
+  localStorage.setItem(LocalStorageKeys.InviterGuildId, serializedId);
 };
 
 const LoadingPage: NextPage<ILoadingPageProps> = () => {

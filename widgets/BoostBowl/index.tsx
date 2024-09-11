@@ -25,11 +25,12 @@ import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
 import toast, { Toaster } from "react-hot-toast";
 import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
 import { useRouter } from "next/navigation";
+import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 
 interface IBoostBowlProps {
-  onMaxBoost: () => void;
-  boosts: number;
-  maxBoost: number;
+  // onMaxBoost: () => void;
+  // boosts: number;
+  // maxBoost: number;
 }
 
 export type BoostBowlItemType = {
@@ -40,11 +41,12 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
-export const BoostBowl: FC<IBoostBowlProps> = ({ onMaxBoost, maxBoost, boosts }) => {
+export const BoostBowl: FC<IBoostBowlProps> = () => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const { onOpenModal } = useModal();
   const router = useRouter();
+  const { boosts, maxBoost, onMaxBoost } = useClicker(true);
 
   const boostsInfo: IBoost[] = useMemo(
     () => [
