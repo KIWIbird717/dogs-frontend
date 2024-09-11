@@ -17,7 +17,12 @@ interface ITaskListProps extends Pick<ITaskProps, "onOpen"> {
 
 export const TaskList: FC<ITaskListProps> = ({ tasks, toggle, notFoundTasks, ...props }) => {
   return (
-    <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <MotionDiv
+      className="z-[2] h-fit w-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       {tasks?.length !== 0 ? (
         <div className={"z-[10] flex w-full flex-col gap-4 pb-[110px]"}>
           <EarnTasksList onOpen={props.onOpen} tasks={tasks} toggle={toggle} />
