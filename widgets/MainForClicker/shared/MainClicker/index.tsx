@@ -12,6 +12,7 @@ import styles from "./styles.module.scss";
 import { cn } from "@/shared/lib/utils/cn";
 import { CoinEffect } from "../CoinEffect";
 import { PackPrizeModal } from "../PackPrizeModal";
+import toast from "react-hot-toast";
 
 export const MainClicker = () => {
   const [isPackModalOpen, setIsPackModalOpen] = useState(false);
@@ -22,9 +23,19 @@ export const MainClicker = () => {
   const level = useAppSelector((store) => store.user.level);
   const currentBalance = useMemo(() => balance + earned, [earned, balance]);
 
+  const handleTakePrise = () => {
+    onMaxBoost();
+    setIsPackModalOpen(false);
+    toast.success("Boost restored");
+  };
+
   return (
     <div className={"relative flex h-screen flex-col justify-between gap-8"}>
-      {/* <PackPrizeModal isOpen={true} /> */}
+      <PackPrizeModal
+        isOpen={isPackModalOpen}
+        onClose={() => setIsPackModalOpen(false)}
+        onTakePrise={handleTakePrise}
+      />
 
       <div className="flex w-full flex-col gap-8">
         <div className={cn(styles.boardStatsWrapper, "flex w-full flex-col")}>
@@ -33,7 +44,7 @@ export const MainClicker = () => {
         </div>
 
         <div className="relative h-full w-full">
-          {/* <BreedPack /> */}
+          <BreedPack onPackClick={() => setIsPackModalOpen(true)} />
           <CoinEffect tabValue={tabValue} clickEffects={clickEffects} />
           <Clicker handleClick={handleClick} level={level} />
         </div>

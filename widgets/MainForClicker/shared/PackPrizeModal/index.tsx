@@ -56,14 +56,7 @@ export const PackPrizeModal: FC<PackPrizeModalProps> = (props) => {
               </Typography>
             </div>
 
-            <Button
-              variant={"deepBlue"}
-              className="flex items-center justify-center text-[18px] font-bold leading-6 text-white-900"
-              onClick={props.onTakePrise}
-            >
-              <PriseIcon />
-              Take the prize
-            </Button>
+            <ProseButton onTakePrise={props.onTakePrise} />
           </MotionDiv>
         </MotionDiv>
       )}
@@ -71,11 +64,23 @@ export const PackPrizeModal: FC<PackPrizeModalProps> = (props) => {
   );
 };
 
-const PriseIcon = () => {
+type ProseButtonProps = {
+  onTakePrise?: () => void;
+};
+const ProseButton: FC<ProseButtonProps> = (props) => {
   return (
-    <div className="relative">
-      <img src={ConfettiAnimation.src} alt="confetti-animation" className="absolute left-0 top-0" />
+    <Button
+      variant={"deepBlue"}
+      className="relative flex items-center justify-center gap-3 text-[18px] font-bold leading-6 text-white-900"
+      onClick={props.onTakePrise}
+    >
+      <img
+        src={ConfettiAnimation.src}
+        alt="confetti-animation"
+        className="absolute left-[32%] top-[50%] z-[130] h-[150px] min-h-[150px] w-[150px] translate-x-[-50%] translate-y-[-50%]"
+      />
       <PrizeIcon />
-    </div>
+      Take the prize
+    </Button>
   );
 };

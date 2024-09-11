@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
 import { useState } from "react";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
@@ -61,7 +61,10 @@ const TOTAL_NOTIFICATIONS = 7;
 const DAY_DURATION = 24 * 60 * 60 * 1000; // Миллисекунды в дне
 const NOTIFICATION_DURATION = 5 * 1000; // 5 секунд
 
-export const BreedPack = () => {
+type BreedPackProps = {
+  onPackClick?: () => void;
+};
+export const BreedPack: FC<BreedPackProps> = (props) => {
   const dispatch = useAppDispatch();
   const maxBoost = useAppSelector((store) => store.user.energyLimit);
   const [notificationVisible, setNotificationVisible] = useState(true);
@@ -72,13 +75,19 @@ export const BreedPack = () => {
   );
 
   const handleMissPack = () => {
+    if (!notificationVisible) return; // если пак уже забрали
+
     setNotificationVisible(false);
     setNotificationsLeft(notificationsLeft - 1);
     dispatch(UserSlice.setCurrentBoost(maxBoost));
     toast.success("Boost restored");
   };
 
-  const handleClickPack = () => {};
+  const handleClickPack = () => {
+    props.onPackClick && props.onPackClick();
+    setNotificationVisible(false);
+    setNotificationsLeft(notificationsLeft - 1);
+  };
 
   useEffect(() => {
     const now = Date.now();
@@ -116,7 +125,7 @@ export const BreedPack = () => {
   }, [window.localStorage.getItem(LocalStorageKeys.BreedPack)]);
 
   return (
-    <div className="absolute h-full w-full bg-[rgba(255,255,255,0.1)]">
+    <div className="absolute h-full w-full">
       {notificationVisible && (
         <MotionButton
           initial={{ opacity: 0, scale: 0 }}
