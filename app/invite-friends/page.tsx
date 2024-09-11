@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import PeopleIcon from "@/public/images/svg/invite-friends/people.svg";
-import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
+import { HeaderWithIcon } from "@/shared/ui/HeaderWithIcon";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
 import { ShareAndInvite } from "@/widgets/ShareAndInvite";

@@ -5,7 +5,7 @@ import { cn } from "@/shared/lib/utils/cn";
 
 export namespace Gradient {
   type GradientProps = {
-    className: string;
+    className?: string;
   };
 
   export const First: FC<GradientProps> = (props) => {

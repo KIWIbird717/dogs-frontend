@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
-import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
+import { HeaderWithIcon } from "@/shared/ui/HeaderWithIcon";
 import { Navbar } from "@/widgets/Navbar";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 import World from "@/public/images/svg/country/world.svg";

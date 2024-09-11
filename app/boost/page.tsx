@@ -1,41 +1,25 @@
-"use client";
-
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
 import { BoostBowl } from "@/widgets/BoostBowl";
-import Gradient1 from "@/public/images/svg/boost/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/boost/gradient/gradient2.svg";
-import RacketIcon from "@/public/images/svg/boost/racket.svg";
-import EnergyIcon from "@/public/images/svg/energy.svg";
-import { Block } from "@/widgets/Block";
-import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
-import { useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { Gradient } from "@/shared/ui/Gradient";
+import { BoostHeaderWithIcon } from "@/entities/BoostPage/BoostHeaderWithIcon";
 
 interface IBoostPageProps {}
 
 const BoostPage: NextPage<IBoostPageProps> = () => {
-  const maxBoost = useAppSelector((store) => store.user.energyLimit);
-  const currentEnergy = useAppSelector((store) => store.user.currentBoost);
-
   return (
     <View
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden bg-gradient-background px-4 pt-6"
     >
-      <HeaderWithIcon
-        title={"Boost"}
-        icon={<RacketIcon />}
-        button={
-          <Block icon={<EnergyIcon />} title={`${currentEnergy}/${maxBoost}`} onClick={() => {}} />
-        }
-      />
+      <BoostHeaderWithIcon />
       <BoostBowl />
 
       <Navbar />
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
+      <Gradient.First className="absolute left-[-70%] top-[-30%] scale-125" />
+      <Gradient.Second className="absolute bottom-[-20%] right-[-50%] scale-125" />
     </View>
   );
 };

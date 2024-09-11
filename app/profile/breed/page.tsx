@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
-import { HeaderWithIcon } from "@/widgets/HeaderWithIcon";
+import { HeaderWithIcon } from "@/shared/ui/HeaderWithIcon";
 import DogIcon from "@/public/images/svg/breed/dog.svg";
 import { Navbar } from "@/widgets/Navbar";
 import { useState } from "react";
