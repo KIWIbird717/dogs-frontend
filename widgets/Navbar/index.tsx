@@ -51,7 +51,7 @@ export const Navbar: FC<INavbarProps> = () => {
   );
 
   return (
-    <div className={"fixed bottom-0 left-0 z-[10] flex h-[107px] w-full items-end"}>
+    <div className={"fixed bottom-0 left-0 z-[100] flex h-[107px] w-full items-end"}>
       <div className={"relative flex h-[75px] w-full justify-between rounded-t-xl bg-navbar px-4"}>
         <NavItems items={navItemsFirst} pathName={pathName} />
 
