@@ -15,7 +15,7 @@ const FaqPage: NextPage<IFaqPageProps> = () => {
     <>
       <View
         fadeInOnLoad
-        className="relative flex h-svh w-full flex-col gap-6 overflow-x-hidden bg-gradient-background px-4 pb-[60px] pt-6"
+        className="relative flex h-svh w-full flex-col gap-6 overflow-x-hidden px-4 pb-[60px] pt-6"
       >
         <div className={"z-[10] flex flex-col gap-4"}>
           <FaqHeader />

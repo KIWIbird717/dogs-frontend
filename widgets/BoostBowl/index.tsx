@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, ReactNode, useMemo } from "react";
+import { FC, ReactNode, useMemo, useRef } from "react";
 import EnergyIcon from "@/public/images/svg/boost/energy.svg";
 import BatteryIcon from "@/public/images/svg/boost/battery.svg";
 import EnergyLimitIcon from "@/public/images/svg/boost/energy-limit.svg";
@@ -26,12 +26,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
 import { useRouter } from "next/navigation";
 import { useClicker } from "@/shared/hooks/useClicker/useClicker";
+import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 
-interface IBoostBowlProps {
-  // onMaxBoost: () => void;
-  // boosts: number;
-  // maxBoost: number;
-}
+interface IBoostBowlProps {}
 
 export type BoostBowlItemType = {
   icon: ReactNode;
@@ -42,11 +39,16 @@ export type BoostBowlItemType = {
 };
 
 export const BoostBowl: FC<IBoostBowlProps> = () => {
+  // usePreventOnSwipeWindowClose(true);
+
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const { onOpenModal } = useModal();
   const router = useRouter();
   const { boosts, maxBoost, onMaxBoost } = useClicker(true);
+
+  const refBowlsFirst = useRef<HTMLDivElement>(null);
+  const refBowlsSecond = useRef<HTMLDivElement>(null);
 
   const boostsInfo: IBoost[] = useMemo(
     () => [
@@ -221,7 +223,7 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
   return (
     <div className={"z-[10] flex w-full flex-col gap-6"}>
       {/* <Toaster /> */}
-      <div className={"flex w-full flex-col gap-2"}>
+      <div ref={refBowlsFirst} className={"flex w-full flex-col gap-2"}>
         <Typography tag={"h3"} className={"text-white-900"}>
           Free Daily Bowl
         </Typography>
@@ -240,7 +242,7 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
         </div>
       </div>
 
-      <div className={"flex w-full flex-col gap-2"}>
+      <div ref={refBowlsSecond} className={"flex w-full flex-col gap-2"}>
         <Typography tag={"h3"} className={"text-white-900"}>
           Bowls
         </Typography>
@@ -251,6 +253,17 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
           })}
         </div>
       </div>
+
+      <div
+        style={{
+          height:
+            window.innerHeight -
+            (refBowlsFirst.current?.clientHeight || 0) -
+            (refBowlsSecond.current?.clientHeight || 0) -
+            142 + // на угад подбирал, лень думать уже, я сонный пипец
+            1, // это чтобы скрол в 1 пиксель появлялся на странице
+        }}
+      />
     </div>
   );
 };

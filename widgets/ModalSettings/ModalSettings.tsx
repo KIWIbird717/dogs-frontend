@@ -31,14 +31,13 @@ export const ModalSettings: FC<IModalSettingsProps> = () => {
           initial={{ backgroundColor: "rgba(0, 0, 0, 0)", opacity: 0 }}
           animate={{ backgroundColor: "rgba(0, 0, 0, 0.3)", opacity: 1 }}
           exit={{ backgroundColor: "rgba(0, 0, 0, 0)", opacity: 0 }}
-          transition={{ duration: 0.3 }}
           onClick={onCloseHandler}
         >
           <MotionDiv
             className="shadow-fix relative w-[344px] flex-col rounded-xl border border-black-300 p-4 pb-6 shadow-buttonNoAccent"
-            initial={{ height: 346, opacity: 0 }}
-            animate={{ height: containerHeight, opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            initial={{ height: 346, opacity: 0, y: 70 }}
+            animate={{ height: containerHeight, opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 70 }}
             onClick={(e) => e.stopPropagation()}
           >
             <AnimatePresence mode="wait">

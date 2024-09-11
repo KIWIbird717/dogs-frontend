@@ -64,7 +64,7 @@ export const ModalBoosts: FC<IModalBoostsProps> = () => {
         >
           <motion.div
             initial={{ opacity: 0, y: 464 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: -30 }}
             exit={{ opacity: 0, y: 464 }}
             transition={{ duration: 0.4 }}
             className={
