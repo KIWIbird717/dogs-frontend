@@ -8,7 +8,7 @@ interface IMainForClickerProps {}
 
 export const MainForClicker: FC<IMainForClickerProps> = () => {
   return (
-    <div className={"z-[10] flex h-[calc(100%-112px)] w-full flex-col gap-4 px-4"}>
+    <div className={"z-[10] flex h-[calc(100svh-75px)] w-full flex-col gap-4 px-4"}>
       <Header />
       <MainClicker />
     </div>

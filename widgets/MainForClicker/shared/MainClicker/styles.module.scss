@@ -1,0 +1,7 @@
+.boardStatsWrapper {
+  @apply gap-6;
+
+  @media (max-height: 705px) {
+    @apply gap-1;
+  }
+}

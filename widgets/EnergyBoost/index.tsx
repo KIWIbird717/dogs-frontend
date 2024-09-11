@@ -4,14 +4,16 @@ import RacketIcon from "@/public/images/svg/racket.svg";
 import { useRouter } from "next/navigation";
 import { EnergyButton } from "./shared/EnergyButton";
 import { BoostsButton } from "./shared/BoostsButton";
+import { cn } from "@/shared/lib/utils/cn";
 
 interface IEnergyBoostProps {
   boosts: number;
   maxBoost: number;
   onMaxBoost: () => void;
+  className?: string;
 }
 
-export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost }) => {
+export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoost, ...props }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoos
   const redirectToBoost = () => router.push("/boost");
 
   return (
-    <div className={"flex w-full justify-between"}>
+    <div className={cn(props.className, "flex w-full justify-between")}>
       <EnergyButton
         icon={<EnergyIcon />}
         className="w-[155px]"
