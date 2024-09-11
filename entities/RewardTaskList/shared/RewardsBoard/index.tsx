@@ -1,26 +1,28 @@
 import { FC } from "react";
 import { Button } from "@/shared/ui/Button/Button";
-import { Header } from "@/widgets/RewardsBoard/ui/Header";
-import { Time } from "@/widgets/RewardsBoard/ui/Time";
-import { Days } from "@/widgets/RewardsBoard/ui/Days";
+import { Header } from "@/entities/RewardTaskList/shared/RewardsBoard/ui/Header";
+import { Time } from "@/entities/RewardTaskList/shared/RewardsBoard/ui/Time";
+import { Days } from "@/entities/RewardTaskList/shared/RewardsBoard/ui/Days";
 import { CountDownWrapper } from "@/shared/ui/CountDownWrapper";
-import { useDailyReward } from "@/widgets/RewardsBoard/hooks/useDailyReward";
+import { useDailyReward } from "@/entities/RewardTaskList/shared/RewardsBoard/hooks/useDailyReward";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "@/shared/ui/Typography/Typography";
-import { Toaster } from "react-hot-toast";
+import { cn } from "@/shared/lib/utils/cn";
 
-interface IRewardsBoardProps {}
+interface IRewardsBoardProps {
+  className?: string;
+}
 
-export const RewardsBoard: FC<IRewardsBoardProps> = () => {
+export const RewardsBoard: FC<IRewardsBoardProps> = (props) => {
   const { daily, onClaimDailyReward, isDisabled, onToggleDisabled } = useDailyReward();
 
   return (
     <div
-      className={
-        "shadow-fix flex w-full flex-col gap-6 rounded-xl border border-black-300 bg-black-400 px-3 py-5 shadow-buttonNoAccent"
-      }
+      className={cn(
+        props.className,
+        "shadow-fix flex w-full flex-col gap-6 rounded-xl border border-black-300 bg-black-400 px-3 py-5 shadow-buttonNoAccent",
+      )}
     >
-      <Toaster />
       <div className={"flex w-full"}>
         <Header />
         <Time

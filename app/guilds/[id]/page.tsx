@@ -61,7 +61,7 @@ const GuildPage: NextPage<IGuildPageProps> = () => {
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
-      <Toaster />
+      {/* <Toaster /> */}
 
       <div className={"z-[10] flex w-full flex-col gap-2"}>
         {isLoading ? (

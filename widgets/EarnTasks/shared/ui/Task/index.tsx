@@ -2,7 +2,6 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
-import { ToggleCategoryType } from "@/app/earn/page";
 import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
 import { Button } from "@/shared/ui/Button/Button";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
@@ -10,11 +9,12 @@ import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import YoutubeIcon from "@/public/images/svg/earn/youtube.svg";
 import TwitterIcon from "@/public/images/svg/earn/x.svg";
 import NFTIcon from "@/public/images/svg/earn/nft.svg";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { TabCategory } from "@/shared/types/tab-category";
 
 export interface ITaskProps {
   task: TasksApiTypes.TasksDto;
-  toggle: ToggleCategoryType;
+  toggle: TabCategory;
   onOpen?: ({ data }: { data: TasksApiTypes.TasksDto }) => void;
 }
 
@@ -41,7 +41,6 @@ export const Task: FC<ITaskProps> = ({ toggle, task, onOpen }) => {
       disabled={task.isCompleted}
       onClick={handleClick}
     >
-      <Toaster />
       <div className={"flex items-center gap-3 overflow-hidden"}>
         <div className={"h-[48px] w-[48px]"}>
           {task.type === TasksApiTypes.TaskTypeEnum.YOUTUBE ? (

@@ -8,6 +8,7 @@ import StoreProvider from "@/shared/lib/redux-store/StoreProvider";
 import TanStackQueryProvider from "@/shared/providers/TanStackQueryProvider";
 import { usePreventZoom } from "@/shared/hooks/usePreventZoom";
 import { useOnTelegramWebAppRefresh } from "@/shared/hooks/useOnTelegramWebAppRefresh";
+import { Toaster } from "react-hot-toast";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className={epilogue.className}>
         <TanStackQueryProvider>
           <StoreProvider>
+            <Toaster />
             <ModalProvider />
             {children}
           </StoreProvider>

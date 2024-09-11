@@ -94,7 +94,7 @@ export const ModalEarn: FC<IModalEarnProps> = (props) => {
 
   return (
     <>
-      <Toaster />
+      {/* <Toaster /> */}
       <AnimatePresence initial={true}>
         {props.isOpen && (
           <div

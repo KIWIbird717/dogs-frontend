@@ -190,18 +190,57 @@ export namespace UserSlice {
           state.level += 1;
         }
       },
+      /**
+       * Ревалидация уровня пользователя
+       * Проверка уровня пользователя в соответствии с его текущим балансом
+       */
+      _revalidateLevel: (state, action: PayloadAction<Pick<GameSlice.Type, "levels">>) => {
+        if (!action.payload.levels) return;
+
+        let userLevel = 1;
+
+        for (const [level, requiredExperience] of Object.entries(action.payload.levels)) {
+          if (state.balance >= requiredExperience) {
+            userLevel = Number(level);
+          } else {
+            break;
+          }
+        }
+
+        state.level = userLevel;
+      },
     },
   });
 
+  /**
+   * Добавление заработка пользователю
+   * + ревалидация уровня
+   */
   export const addCoins = createAsyncThunk(
-    "user/addCoinsWithLevels",
+    "user/addCoins",
     async (coins: number, { getState, dispatch }) => {
       const state = getState() as RootState;
       const levels = state.game.levels;
       const level = state.user.level as GameServiceTypes.Levels;
 
       if (levels) {
-        dispatch(UserSlice._addCoins({ balance: coins, levels, level }));
+        dispatch(userSlice.actions._addCoins({ balance: coins, levels, level }));
+      }
+    },
+  );
+
+  /**
+   * Ревалидация уровня пользователя
+   * Проверка уровня пользователя в соответствии с его текущим балансом
+   */
+  export const revalidateLevel = createAsyncThunk(
+    "user/revalidateLevel",
+    async (_: never, { getState, dispatch }) => {
+      const state = getState() as RootState;
+      const levels = state.game.levels;
+
+      if (levels) {
+        dispatch(userSlice.actions._revalidateLevel({ levels }));
       }
     },
   );
@@ -216,7 +255,6 @@ export namespace UserSlice {
     setUser,
     setCurrentBoost,
     updateUser,
-    _addCoins,
   } = userSlice.actions;
   export const userReducer = userSlice.reducer;
   export type Type = IUserSlice;

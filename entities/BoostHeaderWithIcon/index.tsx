@@ -14,9 +14,7 @@ export const BoostHeaderWithIcon = () => {
     <HeaderWithIcon
       title={"Boost"}
       icon={<RacketIcon />}
-      button={
-        <Block icon={<EnergyIcon />} title={`${currentEnergy}/${maxBoost}`} onClick={() => {}} />
-      }
+      button={<Block icon={<EnergyIcon />} title={`${currentEnergy}/${maxBoost}`} />}
     />
   );
 };

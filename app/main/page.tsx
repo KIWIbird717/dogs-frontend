@@ -20,13 +20,12 @@ const MainPage = () => {
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-[21px] overflow-hidden bg-gradient-accent-center pt-6"
     >
-      <Gradient.First className={"scale-130 absolute left-[-60%] top-[-20%]"} />
-      <Gradient.Second className={"absolute -bottom-[27%] right-[-50%] z-[1] scale-150"} />
-
       <InvitationHandler />
 
       <MainForClicker />
 
+      <Gradient.First className={"scale-130 absolute left-[-60%] top-[-20%] z-[1]"} />
+      <Gradient.Second className={"absolute -bottom-[27%] right-[-50%] z-[1] scale-150"} />
       <Navbar />
     </View>
   );

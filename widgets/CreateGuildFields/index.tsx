@@ -103,7 +103,7 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
       className={"z-[10] flex w-full flex-col gap-3 pb-[100px]"}
       onSubmit={handleSubmit(submitForm)}
     >
-      <Toaster />
+      {/* <Toaster /> */}
 
       <Field.Input
         onChange={(e) => setValue("name", e.target.value, { shouldValidate: true })}

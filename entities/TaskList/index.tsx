@@ -1,20 +1,23 @@
 import { FC } from "react";
 import { EarnTasksList } from "@/widgets/EarnTasks";
-import { ToggleCategoryType } from "@/app/earn/page";
+import { TabCategory } from "@/shared/types/tab-category";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { twMerge } from "tailwind-merge";
-import { ITaskProps } from "../EarnTasks/shared/ui/Task";
+import { ITaskProps } from "../../widgets/EarnTasks/shared/ui/Task";
+import dynamic from "next/dynamic";
+
+const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
 interface ITaskListProps extends Pick<ITaskProps, "onOpen"> {
   tasks: TasksApiTypes.TasksDto[];
-  toggle: ToggleCategoryType;
+  toggle: TabCategory;
   notFoundTasks: string | null;
 }
 
 export const TaskList: FC<ITaskListProps> = ({ tasks, toggle, notFoundTasks, ...props }) => {
   return (
-    <>
+    <MotionDiv initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       {tasks?.length !== 0 ? (
         <div className={"z-[10] flex w-full flex-col gap-4 pb-[110px]"}>
           <EarnTasksList onOpen={props.onOpen} tasks={tasks} toggle={toggle} />
@@ -29,6 +32,6 @@ export const TaskList: FC<ITaskListProps> = ({ tasks, toggle, notFoundTasks, ...
           </Typography>
         </div>
       )}
-    </>
+    </MotionDiv>
   );
 };

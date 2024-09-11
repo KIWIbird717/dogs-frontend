@@ -220,7 +220,7 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-6"}>
-      <Toaster />
+      {/* <Toaster /> */}
       <div className={"flex w-full flex-col gap-2"}>
         <Typography tag={"h3"} className={"text-white-900"}>
           Free Daily Bowl

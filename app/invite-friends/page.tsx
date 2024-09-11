@@ -52,7 +52,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
       fadeInOnLoad
       className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
     >
-      <Toaster />
+      {/* <Toaster /> */}
       <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
       <div className={"flex h-full w-full flex-col gap-4 overflow-y-auto"}>

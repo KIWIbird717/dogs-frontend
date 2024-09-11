@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { ITaskProps, Task } from "@/widgets/EarnTasks/shared/ui/Task";
-import { ToggleCategoryType } from "@/app/earn/page";
+import { TabCategory } from "@/shared/types/tab-category";
 import { TasksApiTypes } from "@/shared/lib/services/tasks/types";
 
 interface IEarnTasksListProps extends Pick<ITaskProps, "onOpen"> {
   tasks: TasksApiTypes.TasksDto[];
-  toggle: ToggleCategoryType;
+  toggle: TabCategory;
 }
 
 export const EarnTasksList: FC<IEarnTasksListProps> = ({ tasks, toggle, ...props }) => {

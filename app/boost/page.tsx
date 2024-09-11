@@ -3,7 +3,7 @@ import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
 import { BoostBowl } from "@/widgets/BoostBowl";
 import { Gradient } from "@/shared/ui/Gradient";
-import { BoostHeaderWithIcon } from "@/entities/BoostPage/BoostHeaderWithIcon";
+import { BoostHeaderWithIcon } from "@/entities/BoostHeaderWithIcon";
 
 interface IBoostPageProps {}
 
