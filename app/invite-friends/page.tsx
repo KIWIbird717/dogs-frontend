@@ -19,6 +19,7 @@ import useSWR from "swr";
 import { UsersService } from "@/shared/lib/services/users/users";
 import toast, { Toaster } from "react-hot-toast";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
+import { Gradient } from "@/shared/ui/Gradient";
 
 interface IInviteFriendsProps {}
 const inviteText = "Join and play DOGS with me";
@@ -48,46 +49,48 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   };
 
   return (
-    <View
-      fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden px-4 pt-6"
-    >
-      {/* <Toaster /> */}
-      <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
+    <>
+      <View
+        fadeInOnLoad
+        className="relative z-[2] flex h-screen w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
+      >
+        {/* <Toaster /> */}
+        <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
 
-      <div className={"flex h-full w-full flex-col gap-4 overflow-y-auto"}>
-        <InviteBanner />
+        <div className={"flex h-full w-full flex-col gap-4"}>
+          <InviteBanner />
 
-        <div className={"z-[10] h-[56px] w-full"}>
-          <Button
-            variant={isShowBonus ? "select" : "deepBlue"}
-            className={twMerge(
-              "text-[18px] font-bold leading-6",
-              isShowBonus && "border-[2px] border-blue-900",
-            )}
-            onClick={handleToggle}
-          >
-            {isShowBonus ? "Less bonus" : "More bonus"}
-          </Button>
+          <div className={"z-[10] h-[56px] w-full"}>
+            <Button
+              variant={isShowBonus ? "select" : "deepBlue"}
+              className={twMerge(
+                "text-[18px] font-bold leading-6",
+                isShowBonus && "border-[2px] border-blue-900",
+              )}
+              onClick={handleToggle}
+            >
+              {isShowBonus ? "Less bonus" : "More bonus"}
+            </Button>
+          </div>
+
+          {!isShowBonus && (
+            <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} friends={friends} />
+          )}
+          {isShowBonus && <Bonus />}
         </div>
 
-        {!isShowBonus && (
-          <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} friends={friends} />
-        )}
-        {isShowBonus && <Bonus />}
-      </div>
+        <ShareAndInvite
+          inviteText={inviteText}
+          fullInviteLink={fullInviteLink}
+          onCopyHandler={onCopyHandler}
+        />
 
-      <ShareAndInvite
-        inviteText={inviteText}
-        fullInviteLink={fullInviteLink}
-        onCopyHandler={onCopyHandler}
-      />
+        <Navbar />
+      </View>
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
-
-      <Navbar />
-    </View>
+      <Gradient.First className="absolute top-[-30%] scale-150" />
+      <Gradient.Second className="absolute bottom-[-10%] scale-150" />
+    </>
   );
 };
 export default InviteFriends;
