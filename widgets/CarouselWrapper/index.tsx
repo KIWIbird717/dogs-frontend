@@ -6,8 +6,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/ui/Carousel";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { ILeague } from "../StatsMain/shared/constants/leagues";
 
 interface ICarouselWrapperProps {
@@ -31,10 +29,10 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
             return (
               <CarouselItem key={i} className={"flex flex-col items-center justify-center gap-2"}>
                 <button onClick={handlerRedirect}>
-                  <Image
-                    src={item.image}
+                  <img
+                    src={item.image.src}
                     alt={`carousel-image-${i}`}
-                    className={"h-[304px] w-[296px] object-cover"}
+                    className={"ml-[10px] h-[304px] w-[296px] object-contain"}
                   />
                 </button>
               </CarouselItem>

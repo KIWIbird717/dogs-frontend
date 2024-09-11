@@ -3,22 +3,26 @@ import { View } from "@/shared/layout/View";
 import { Header } from "@/widgets/Header";
 import { Navbar } from "@/widgets/Navbar";
 import { StatsMain } from "@/widgets/StatsMain";
-
-import Gradient1 from "@/public/images/svg/leaderboard/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/leaderboard/gradient/gradient2.svg";
+import { Gradient } from "@/shared/ui/Gradient";
 
 interface IStatsProps {}
 
 const Stats: NextPage<IStatsProps> = () => {
   return (
-    <View fadeInOnLoad className="relative flex overflow-x-hidden h-screen w-full flex-col gap-4 px-4 pt-6">
-      <Header />
-      <StatsMain />
+    <>
+      <View
+        fadeInOnLoad
+        className="relative flex h-screen w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
+      >
+        <Header />
+        <StatsMain />
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
-      <Navbar />
-    </View>
+        <Navbar />
+      </View>
+
+      <Gradient.First className="absolute top-0 scale-150" />
+      <Gradient.Second className="absolute bottom-[-20%] right-[-30%]" />
+    </>
   );
 };
 export default Stats;

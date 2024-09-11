@@ -81,6 +81,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     <div className={"z-[10] flex w-full flex-col gap-4"}>
       <div className={"flex flex-col gap-2 pb-2"}>
         <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={leagues} />
+
         <Progress
           currentRank={currentRank}
           serialNumber={data?.pages[0].myPlace || 0}
