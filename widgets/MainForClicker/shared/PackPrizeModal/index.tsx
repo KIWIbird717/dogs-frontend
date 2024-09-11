@@ -74,7 +74,7 @@ export const PackPrizeModal: FC<PackPrizeModalProps> = (props) => {
 const PriseIcon = () => {
   return (
     <div className="relative">
-      <img src={ConfettiAnimation.src} alt="confetti-animation" className="absolute" />
+      <img src={ConfettiAnimation.src} alt="confetti-animation" className="absolute left-0 top-0" />
       <PrizeIcon />
     </div>
   );

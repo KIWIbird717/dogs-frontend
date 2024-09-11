@@ -24,7 +24,7 @@ export const MainClicker = () => {
 
   return (
     <div className={"relative flex h-screen flex-col justify-between gap-8"}>
-      <PackPrizeModal isOpen={true} />
+      {/* <PackPrizeModal isOpen={true} /> */}
 
       <div className="flex w-full flex-col gap-8">
         <div className={cn(styles.boardStatsWrapper, "flex w-full flex-col")}>
