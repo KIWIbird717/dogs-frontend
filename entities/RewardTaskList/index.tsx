@@ -24,15 +24,15 @@ export const RewardTaskList: FC<IRewardTaskListProps> = ({
 }) => {
   const youtubeTasks = useMemo(
     () => tasks?.filter((obj) => obj.type === TasksApiTypes.TaskTypeEnum.YOUTUBE) || [],
-    [],
+    [tasks.length],
   );
   const twitterTasks = useMemo(
     () => tasks?.filter((obj) => obj.type === TasksApiTypes.TaskTypeEnum.XTWITTER) || [],
-    [],
+    [tasks.length],
   );
   const xternalTasks = useMemo(
     () => tasks?.filter((obj) => obj.type === TasksApiTypes.TaskTypeEnum.EXTERNAL) || [],
-    [],
+    [tasks.length],
   );
 
   return (

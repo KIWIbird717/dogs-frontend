@@ -55,7 +55,7 @@ export const EarnTasks = () => {
 
       <Tabs state={toggle} onChange={(category) => setToggle(category)} />
 
-      <div className={"flex h-full flex-col overflow-y-auto"}>
+      <div className={"flex h-full flex-col"}>
         <AnimatePresence>
           {toggle === "rewards" && (
             <RewardTaskList

@@ -34,7 +34,9 @@ export default function RootLayout({
           <StoreProvider>
             <Toaster />
             <ModalProvider />
-            <div className="relative w-svw max-w-[100svw] overflow-x-hidden">{children}</div>
+            <div className="relative h-svh max-h-[100svh] w-svw max-w-[100svw] overflow-hidden">
+              {children}
+            </div>
           </StoreProvider>
         </TanStackQueryProvider>
       </body>
