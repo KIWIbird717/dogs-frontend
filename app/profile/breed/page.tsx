@@ -7,14 +7,13 @@ import DogIcon from "@/public/images/svg/breed/dog.svg";
 import { Navbar } from "@/widgets/Navbar";
 import { useState } from "react";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
-
-import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { IBreedCountry } from "../country/page";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { Gradient } from "@/shared/ui/Gradient";
+import { useTgBackButton } from "@/shared/hooks/useTgBackButton";
 
 interface IBreedPageProps {}
 
@@ -53,6 +52,8 @@ const breeds: IBreedCountry[] = [
 ];
 
 const BreedPage: NextPage<IBreedPageProps> = () => {
+  useTgBackButton("/profile");
+
   const [searchValue, setSearchValue] = useState("");
   const breedKey = useAppSelector((store) => store.user.breedKey);
   const [breedLocal, setBreedLocal] = useState(breedKey);
@@ -77,27 +78,29 @@ const BreedPage: NextPage<IBreedPageProps> = () => {
   const clearValue = () => setSearchValue("");
 
   return (
-    <View
-      fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden bg-gradient-background px-4 pt-6"
-    >
-      <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
+    <>
+      <View
+        fadeInOnLoad
+        className="relative z-[2] flex h-svh w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
+      >
+        <HeaderWithIcon title={"Select Breed"} icon={<DogIcon />} />
 
-      <BreedCountryBlock
-        item={breedLocal}
-        onClick={handleChangeBreed}
-        items={breeds}
-        onChange={handleSearch}
-        value={searchValue}
-        setClearValue={clearValue}
-        pageName={"breed"}
-      />
+        <BreedCountryBlock
+          item={breedLocal}
+          onClick={handleChangeBreed}
+          items={breeds}
+          onChange={handleSearch}
+          value={searchValue}
+          setClearValue={clearValue}
+          pageName={"breed"}
+        />
 
-      <Navbar />
+        <Navbar />
+      </View>
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
-    </View>
+      <Gradient.First className={"scale-130 absolute left-[-60%] top-[-20%]"} />
+      <Gradient.Second className={"absolute -bottom-[27%] right-[-50%] z-[1] scale-150"} />
+    </>
   );
 };
 export default BreedPage;

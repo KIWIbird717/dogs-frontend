@@ -38,9 +38,9 @@ export type BoostBowlItemType = {
   disabled?: boolean;
 };
 
-export const BoostBowl: FC<IBoostBowlProps> = () => {
-  // usePreventOnSwipeWindowClose(true);
+const isServer = typeof window === "undefined";
 
+export const BoostBowl: FC<IBoostBowlProps> = () => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const { onOpenModal } = useModal();
@@ -220,6 +220,8 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
     [boostsInfo],
   );
 
+  if (isServer) return null;
+
   return (
     <div className={"z-[10] flex w-full flex-col gap-6"}>
       {/* <Toaster /> */}
@@ -257,7 +259,7 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
       <div
         style={{
           height:
-            window.innerHeight -
+            window?.innerHeight -
             (refBowlsFirst.current?.clientHeight || 0) -
             (refBowlsSecond.current?.clientHeight || 0) -
             142 + // на угад подбирал, лень думать уже, я сонный пипец

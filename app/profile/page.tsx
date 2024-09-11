@@ -7,14 +7,15 @@ import { Navbar } from "@/widgets/Navbar";
 import { Board } from "@/widgets/Board";
 import { ProfileInfo } from "@/widgets/ProfileInfo";
 import { StatsInfo } from "@/widgets/StatsInfo";
-
-import Gradient1 from "@/public/images/svg/profile/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/profile/gradient/gradient2.svg";
 import { StatsService } from "@/shared/lib/services/stats/stats";
 import { useMemo } from "react";
 import useSWR from "swr";
+import { Gradient } from "@/shared/ui/Gradient";
+import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 
 const ProfilePage = () => {
+  usePreventOnSwipeWindowClose(true);
+
   const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
 
   const statics = useMemo(
@@ -62,8 +63,8 @@ const ProfilePage = () => {
 
       <Navbar />
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-[75px] right-0 z-[1]"} />
+      <Gradient.First className={"scale-130 absolute left-[-60%] top-[-20%]"} />
+      <Gradient.Second className={"absolute -bottom-[27%] right-[-50%] z-[1] scale-150"} />
     </View>
   );
 };

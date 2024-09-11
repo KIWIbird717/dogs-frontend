@@ -10,6 +10,8 @@ import World from "@/public/images/svg/country/world.svg";
 import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { useCountries } from "@/shared/hooks/useCountries";
+import { Gradient } from "@/shared/ui/Gradient";
+import { useTgBackButton } from "@/shared/hooks/useTgBackButton";
 
 interface ICountryPageProps {}
 
@@ -21,6 +23,7 @@ export interface IBreedCountry {
 }
 
 const CountryPage: NextPage<ICountryPageProps> = () => {
+  useTgBackButton("/profile");
   const {
     currentCountryName,
     countries,
@@ -31,27 +34,26 @@ const CountryPage: NextPage<ICountryPageProps> = () => {
   } = useCountries();
 
   return (
-    <View
-      fadeInOnLoad
-      className="relative flex h-screen w-full flex-col gap-4 overflow-hidden bg-gradient-background px-4 pt-6"
-    >
-      <HeaderWithIcon title={"Select Country"} icon={<World />} />
+    <>
+      <View fadeInOnLoad className="relative flex h-svh w-full flex-col gap-4 px-4 pt-6">
+        <HeaderWithIcon title={"Select Country"} icon={<World />} />
 
-      <BreedCountryBlock
-        item={currentCountryName || "-"}
-        onClick={handleChangeCountry}
-        items={countries}
-        onChange={handleSearch}
-        value={searchValue}
-        setClearValue={clearValue}
-        pageName={"country"}
-      />
+        <BreedCountryBlock
+          item={currentCountryName || "-"}
+          onClick={handleChangeCountry}
+          items={countries}
+          onChange={handleSearch}
+          value={searchValue}
+          setClearValue={clearValue}
+          pageName={"country"}
+        />
 
-      <Navbar />
+        <Navbar />
+      </View>
 
-      <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-      <Gradient2 className={"absolute bottom-0 right-0 z-[1]"} />
-    </View>
+      <Gradient.First className={"scale-130 absolute left-[-60%] top-[-20%]"} />
+      <Gradient.Second className={"absolute -bottom-[27%] right-[-50%] z-[1] scale-150"} />
+    </>
   );
 };
 export default CountryPage;

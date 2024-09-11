@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Input } from "@/shared/ui/Input";
 import { NotFound } from "@/shared/ui/NotFound";
 import { BreedCountryList } from "@/widgets/BreedCountryList";
@@ -25,12 +25,13 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
 }) => {
   if (!items) return null;
 
-  const filteredItems = items.filter((breed) =>
-    breed.name.toLowerCase().includes(value.toLowerCase()),
+  const filteredItems = useMemo(
+    () => items.filter((breed) => breed.name.toLowerCase().includes(value.toLowerCase())),
+    [items?.length],
   );
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-4 overflow-y-auto"}>
+    <div className={"z-[10] flex min-h-[calc(100vh+1px)] w-full flex-col gap-4"}>
       <div className={""}>
         <Input
           isIcon
@@ -42,7 +43,7 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
         />
       </div>
 
-      <div className={"flex w-full flex-col gap-2 overflow-y-scroll pb-[112px]"}>
+      <div className={"flex w-full flex-col gap-2 overflow-y-scroll pb-[250px]"}>
         {filteredItems.length > 0 ? (
           <BreedCountryList items={filteredItems} onClick={onClick} item={item} />
         ) : (

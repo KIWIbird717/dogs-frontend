@@ -1,28 +1,27 @@
+"use client";
+
 import { FC } from "react";
-import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import Gradient1 from "@/public/images/svg/loading/gradient1.svg";
-import Gradient2 from "@/public/images/svg/loading/gradient2.svg";
-import Gradient3 from "@/public/images/svg/loading/gradient3.svg";
-import Gradient4 from "@/public/images/svg/loading/gradient4.svg";
+import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
+import { Gradient } from "@/shared/ui/Gradient";
 
 interface IDuckBackgroundProps {
   isNftPage?: boolean;
 }
 
 export const DuckBackground: FC<IDuckBackgroundProps> = ({ isNftPage }) => {
+  usePreventOnSwipeWindowClose(true);
+
   return (
     <div className={""}>
       <>
-        <Gradient1 className={"absolute left-0 top-0 z-[1]"} />
-        <Gradient2 className={"absolute left-0 top-0 z-[1]"} />
-        <Gradient3 className={"absolute left-0 top-0 z-[1]"} />
-        <Gradient4 className={"absolute left-4 top-0 z-[1]"} />
+        <Gradient.First className="absolute left-[-40%] top-[-20%]" />
+        <Gradient.Second className="absolute bottom-[-10%] right-[-30%] scale-125" />
       </>
 
       {Array.from(Array(4)).map((value, index) => {
         return (
-          <Image
+          <img
             key={index}
             src={"/images/duck.png"}
             alt={"duck-background-1"}
