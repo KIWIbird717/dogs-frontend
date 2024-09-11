@@ -1,7 +1,6 @@
 import { ComponentProps, FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import CoinSmallIcon from "@/public/images/svg/invite-friends/coin.svg";
-import CoinMiddleIcon from "@/public/images/svg/guild/coin.svg";
 import CoinBigIcon from "@/public/images/svg/invite-friends/coinBig.svg";
 import CoinHugeIcon from "@/public/images/svg/coin.svg";
 
@@ -50,9 +49,11 @@ export const TotalCoin: FC<TotalCoinNS.Props> = ({
 }) => {
   return (
     <div className={twMerge("flex w-full items-center justify-center gap-1", className)}>
-      <div>
+      <div className="w-fit">
         {size === "small" && <CoinSmallIcon />}
-        {size === "middle" && <CoinMiddleIcon />}
+        {size === "middle" && (
+          <img src={CoinImage.src} alt="coin" className="h-[24px] w-[24px] min-w-[24px]" />
+        )}
         {size === "big" && <CoinBigIcon />}
         {size === "huge" && <CoinHugeIcon />}
       </div>

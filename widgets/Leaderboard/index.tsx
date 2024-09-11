@@ -18,10 +18,10 @@ export const Leaderboard: FC<ILeaderboardProps> = ({ guilds }) => {
   };
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2 overflow-y-auto"}>
+    <div className={"z-[10] flex w-full flex-col gap-2"}>
       <Typography tag={"h3"}>Leaderboard</Typography>
 
-      <div className={"flex w-full flex-col gap-2 overflow-y-auto pb-28"}>
+      <div className={"flex w-full flex-col gap-2 pb-28"}>
         {guilds.map((guild, index) => {
           return (
             <GuildItem

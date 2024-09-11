@@ -28,7 +28,7 @@ export const GuildPlayers: FC<IGuildPlayersProps> = ({
   const items = friends ? friends : leaders;
 
   return (
-    <div className={"z-[10] flex w-full flex-col gap-2"}>
+    <div className={"z-[10] flex min-h-[80vh] w-full flex-col gap-2"}>
       <Typography tag={"h3"}>{title}</Typography>
 
       <div className={twMerge("flex w-full flex-col gap-2 pb-28", classNameList)}>
