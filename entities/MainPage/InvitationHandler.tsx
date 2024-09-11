@@ -32,6 +32,8 @@ export const InvitationHandler = () => {
         invitedByTgUserId: parseInt(id),
       });
 
+      localStorage.removeItem(LocalStorageKeys.InviterId);
+
       toast.success(`You invited by ${response.data.inviter.username}`);
     };
 
@@ -44,6 +46,9 @@ export const InvitationHandler = () => {
         dispatch(
           UserSlice.updateUser({ guild: response.data.guild, guildName: response.data.guildName }),
         );
+
+        localStorage.removeItem(LocalStorageKeys.InviterGuildId);
+
         toast.success(`You invited to guild ${response.data.guildName}`);
       } catch (error) {
         logger.error("Can not handle guild invitation");
