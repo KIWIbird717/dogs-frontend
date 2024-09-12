@@ -51,6 +51,7 @@ export namespace UserApiTypes {
     ENERY_LIMIT: number;
     RECHAGE_SPEED: number;
     TAP_BOT: Date;
+    balance: number;
   };
 
   export type DailyRewardResponse = {

@@ -104,10 +104,16 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
         title: "Multitap",
         info: "1 tap 20 energy",
         buttonTitle: "Buy",
-        price: 25000,
+        price: 25_000,
         onClick: async () => {
           toast.success(`Multitap activate`);
-          await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+          const response = await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
+
+          dispatch(UserSlice.addCoins(-25_000));
+          dispatch(UserSlice.updateUser({ tapMultiplication: response.data.MULTITAP }));
+
+          dispatch(UserSlice.setBalance(response.data.balance));
+          dispatch(UserSlice.revalidateLevel());
 
           router.push("/main");
         },
@@ -122,6 +128,12 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
           const response = await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
           toast.success(`Energy limit updated to ${response.data.ENERY_LIMIT}`);
 
+          dispatch(UserSlice.addCoins(-800_000));
+          dispatch(UserSlice.updateUser({ energyLimit: response.data.ENERY_LIMIT }));
+
+          dispatch(UserSlice.setBalance(response.data.balance));
+          dispatch(UserSlice.revalidateLevel());
+
           router.push("/main");
         },
       },
@@ -130,11 +142,17 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
         title: "Recharging Speed",
         info: "5 energy",
         description: "Your tap gives you a lot more coins than you think.",
-        price: 25000,
+        price: 25_000,
         buttonTitle: "Buy",
         onClick: async () => {
           toast.success(`Recharge speed updated`);
-          await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+          const response = await UsersService.boost(UserApiTypes.BoostName.RECHARGE_SPEED);
+
+          dispatch(UserSlice.addCoins(-25_000));
+          dispatch(UserSlice.updateUser({ rechargeMultiplication: response.data.RECHAGE_SPEED }));
+
+          dispatch(UserSlice.setBalance(response.data.balance));
+          dispatch(UserSlice.revalidateLevel());
 
           router.push("/main");
         },
@@ -142,14 +160,19 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
       {
         icon: <TapBotImg />,
         title: "Tap Bot",
-        info: "100 000 000 Coin in 8 hours",
+        info: "1 000 000 Coin in 8 hours",
         buttonTitle: "Buy",
-        price: 100_000_000,
+        price: 1_000_000,
         onClick: async () => {
           const response = await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
-          dispatch(UserSlice.addCoins(-1_000_000));
-          toast.success(`Tapbot active for ${getTimeLeftUntil(response.data.TAP_BOT)}`);
 
+          dispatch(UserSlice.addCoins(-1_000_000));
+          dispatch(UserSlice.updateUser({ tapBotExpired: response.data.TAP_BOT }));
+
+          dispatch(UserSlice.setBalance(response.data.balance));
+          dispatch(UserSlice.revalidateLevel());
+
+          toast.success(`Tapbot active for ${getTimeLeftUntil(response.data.TAP_BOT)}`);
           router.push("/main");
         },
       },
@@ -212,7 +235,7 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
-        description: "100 000 Coin in 4 hours",
+        description: "1 000 000 Coin in 8 hours",
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[5] });
         },
