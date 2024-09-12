@@ -9,6 +9,7 @@ import TanStackQueryProvider from "@/shared/providers/TanStackQueryProvider";
 import { usePreventZoom } from "@/shared/hooks/usePreventZoom";
 import { useOnTelegramWebAppRefresh } from "@/shared/hooks/useOnTelegramWebAppRefresh";
 import { Toaster } from "react-hot-toast";
+import { useOpenWebappWindow } from "@/shared/hooks/useOpenWebappWindow";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }>) {
   usePreventZoom();
   useOnTelegramWebAppRefresh();
+  useOpenWebappWindow();
 
   return (
     <html lang="en">
