@@ -6,6 +6,8 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
+import { useLocalStorage } from "../useLocalStorage";
+import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
 
 export interface ClickEffect {
   id: number;
@@ -19,10 +21,10 @@ export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
   const currentBoost = useAppSelector((store) => store.user.currentBoost);
-  const [boostsLS, setBoostsLS] = useState<{
+  const [boostsLS, setBoostsLS] = useLocalStorage<{
     boost: number;
     time: string;
-  } | null>({
+  } | null>(LocalStorageKeys.Clicker, {
     boost: currentBoost,
     time: new Date().toString(),
   });

@@ -12,8 +12,8 @@ export const useGetLevelProgressPercentage = (balance: number) => {
     if (level === null || level === undefined) return;
     if (levels === null || levels === undefined) return;
 
-    const balanceFrom = levels[level as GameServiceTypes.LeagueLevels];
-    const balanceTo = levels[(level + 1) as GameServiceTypes.LeagueLevels] || null;
+    const balanceFrom = levels[level as GameServiceTypes.Levels];
+    const balanceTo = levels[(level + 1) as GameServiceTypes.Levels] || null;
 
     if (!balanceTo) return;
 

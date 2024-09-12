@@ -5,21 +5,18 @@ import { SwitchItem } from "@/widgets/ModalSettings/shared/ui/SwitchItem";
 import { LanguageToggle } from "@/widgets/ModalSettings/shared/ui/LanguageToggle";
 
 interface ISettingsProps {
-  language: "English" | "Russian",
-  onOpenLanguageChange: () => void,
-  onCloseWindowOrLang: () => void
+  language: "English" | "Russian";
+  onOpenLanguageChange: () => void;
+  onCloseWindowOrLang: () => void;
 }
 
-export const Settings: FC<ISettingsProps> = (
-  {
-    onCloseWindowOrLang,
-    onOpenLanguageChange,
-    language,
-  },
-) => {
+export const Settings: FC<ISettingsProps> = ({
+  onCloseWindowOrLang,
+  onOpenLanguageChange,
+  language,
+}) => {
   return (
-    <
-    >
+    <>
       <Button
         className={"leading-4.5 h-[18px] w-fit !p-0 text-[15px] font-normal"}
         onClick={onCloseWindowOrLang}
@@ -37,12 +34,9 @@ export const Settings: FC<ISettingsProps> = (
           <SwitchItem title={"Songs"} />
           <SwitchItem title={"Vibration"} />
         </div>
-
       </div>
 
-      <LanguageToggle language={language}
-                      onOpenLanguageChange={onOpenLanguageChange}
-      />
+      <LanguageToggle language={language} onOpenLanguageChange={onOpenLanguageChange} />
 
       <div
         className={

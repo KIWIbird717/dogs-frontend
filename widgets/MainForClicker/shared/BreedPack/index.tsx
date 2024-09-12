@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 
@@ -30,32 +31,6 @@ const getRandomIntervals = (count: number, duration: number): number[] => {
 
   return intervals;
 };
-
-// hooks/useLocalStorage.ts
-
-function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
-  const logger = new Logger("useLocalStorage");
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      logger.error(error);
-      return initialValue;
-    }
-  });
-
-  const setValue = (value: T) => {
-    try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return [storedValue, setValue];
-}
 
 const TOTAL_NOTIFICATIONS = 7;
 const DAY_DURATION = 24 * 60 * 60 * 1000; // Миллисекунды в дне

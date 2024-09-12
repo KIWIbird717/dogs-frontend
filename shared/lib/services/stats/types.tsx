@@ -22,7 +22,7 @@ export namespace StatsApiTypes {
 
   export type LeagueLeadersResponse = {
     myPlace: number;
-    myLeague: GameServiceTypes.LeagueLevels;
+    myLeague: GameServiceTypes.Levels;
     statusBar: LeaguesStatusBar | null;
     leaders: {
       _id: string;

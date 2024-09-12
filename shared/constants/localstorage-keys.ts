@@ -4,6 +4,7 @@ export enum LocalStorageKeys {
   InviterId = "inviterId",
   InviterGuildId = "inviterGuildId",
   BreedPack = "breed-pack",
+  Clicker = "clicker",
 }
 
 export namespace Localstorage {

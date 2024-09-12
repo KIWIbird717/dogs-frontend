@@ -12,11 +12,13 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { Gradient } from "@/shared/ui/Gradient";
 import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
+import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 const ProfilePage = () => {
   usePreventOnSwipeWindowClose(true);
 
   const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
+  const balance = useAppSelector((store) => store.user.balance);
 
   const statics = useMemo(
     () => [
@@ -44,7 +46,7 @@ const ProfilePage = () => {
       <div className={"z-[10] flex w-full flex-col gap-4"}>
         <Header />
         <div className={"flex w-full flex-col gap-2"}>
-          <Board />
+          <Board balance={balance} />
           <ProfileInfo />
         </div>
       </div>
