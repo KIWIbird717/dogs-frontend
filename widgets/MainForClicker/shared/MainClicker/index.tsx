@@ -39,7 +39,7 @@ export const MainClicker = () => {
 
       <div className="flex w-full flex-col gap-8">
         <div className={cn(styles.boardStatsWrapper, "flex w-full flex-col")}>
-          <Board />
+          <Board balance={currentBalance} />
           <StatsInfo value={currentBalance} isIcon />
         </div>
 

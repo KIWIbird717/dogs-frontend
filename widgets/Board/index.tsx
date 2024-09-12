@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, MouseEventHandler, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
 import { useRouter } from "next/navigation";
@@ -9,16 +9,18 @@ import { useGetLevelProgressPercentage } from "./shared/useGetLevelProgressPerce
 import { GuildButton } from "./shared/GuildButton";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
-interface IBoardProps {}
+interface IBoardProps {
+  balance: number;
+}
 
 export const Board: FC<IBoardProps> = (props) => {
   const router = useRouter();
 
   const level = useAppSelector((store) => store.user.level);
   const guildName = useAppSelector((store) => store.user.guildName);
-  const balance = useAppSelector((store) => store.user.balance);
+  // const balance = useAppSelector((store) => store.user.balance);
 
-  const levelProgress = useGetLevelProgressPercentage(balance);
+  const levelProgress = useGetLevelProgressPercentage(props.balance);
 
   useEffect(() => {
     router.prefetch("/stats");

@@ -74,8 +74,6 @@ export const BreedPack: FC<BreedPackProps> = (props) => {
     TOTAL_NOTIFICATIONS,
   );
 
-  console.log({ notificationsLeft });
-
   const handleMissPack = () => {
     if (!notificationVisible) return; // если пак уже забрали
 
