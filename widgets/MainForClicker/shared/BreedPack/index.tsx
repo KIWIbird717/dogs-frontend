@@ -1,117 +1,174 @@
 "use client";
 
-import { FC, useEffect } from "react";
-import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
+import { FC, useEffect, useRef } from "react";
 import { useState } from "react";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
-import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
+import { cn } from "@/shared/lib/utils/cn";
 
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 
-type BreedPackLocalStorage = {
-  lastUpdate: Date | string;
-  bagsPerDay: number;
-  caught: number;
+const TOTAL_PRIZES = 7;
+const DAY_IN_MS = 60 * 1000; // 24 часа в миллисекундах
+const MIN_INTERVAL = 1 * 60 * 60 * 1000; // минимальный интервал в 1 час
+const MAX_INTERVAL = 2 * 60 * 60 * 1000; // максимальный интервал в 2 часа
+
+// Функция для генерации случайной позиции
+const getRandomPosition = (
+  containerWidth: number,
+  containerHeight: number,
+  elementWidth: number,
+  elementHeight: number,
+  excludedAreaPercentage: number = 0.7, // % от ширины и высоты, которые нужно исключить
+) => {
+  const maxX = containerWidth - elementWidth;
+  const maxY = containerHeight - elementHeight;
+
+  // Центральный квадрат, который нужно исключить
+  const excludedWidth = containerWidth * excludedAreaPercentage;
+  const excludedHeight = containerHeight * excludedAreaPercentage;
+
+  const excludedStartX = (containerWidth - excludedWidth) / 2;
+  const excludedEndX = excludedStartX + excludedWidth;
+
+  const excludedStartY = (containerHeight - excludedHeight) / 2;
+  const excludedEndY = excludedStartY + excludedHeight;
+
+  let randomX, randomY;
+
+  do {
+    randomX = Math.random() * maxX;
+    randomY = Math.random() * maxY;
+  } while (
+    randomX > excludedStartX &&
+    randomX < excludedEndX &&
+    randomY > excludedStartY &&
+    randomY < excludedEndY
+  );
+
+  return { top: randomY, left: randomX };
 };
-
-// utils/randomIntervals.ts
-const getRandomIntervals = (count: number, duration: number): number[] => {
-  const intervals: number[] = [];
-  let totalTime = 0;
-
-  for (let i = 0; i < count; i++) {
-    const randomTime = Math.random() * (duration / count);
-    totalTime += randomTime;
-    intervals.push(totalTime);
-  }
-
-  return intervals;
-};
-
-const TOTAL_NOTIFICATIONS = 7;
-const DAY_DURATION = 24 * 60 * 60 * 1000; // Миллисекунды в дне
-const NOTIFICATION_DURATION = 5 * 1000; // 5 секунд
 
 type BreedPackProps = {
   onPackClick?: () => void;
+  className?: string;
 };
+
 export const BreedPack: FC<BreedPackProps> = (props) => {
   const dispatch = useAppDispatch();
   const maxBoost = useAppSelector((store) => store.user.energyLimit);
-  const [notificationVisible, setNotificationVisible] = useState(true);
-  const [lastShownTime, setLastShownTime] = useLocalStorage<number>("lastShownTime", 0);
-  const [notificationsLeft, setNotificationsLeft] = useLocalStorage<number>(
-    "notificationsLeft",
-    TOTAL_NOTIFICATIONS,
-  );
 
-  const handleMissPack = () => {
-    if (!notificationVisible) return; // если пак уже забрали
+  // LocalStorage для хранения количества пойманных призов
+  const [prizesCaught, setPrizesCaught] = useLocalStorage<number>("prizesCaught", 0);
+  const [lastReset, setLastReset] = useLocalStorage<number>("lastReset", Date.now());
 
-    setNotificationVisible(false);
-    setNotificationsLeft(notificationsLeft - 1);
-    dispatch(UserSlice.setCurrentBoost(maxBoost));
-    toast.success("Boost restored");
+  // Состояние для отображения картинки
+  const [showPrize, setShowPrize] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const [prizePosition, setPrizePosition] = useState<{ top: number; left: number }>({
+    top: 0,
+    left: 0,
+  });
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Обновляем позицию при первом рендере и каждом обновлении
+  const updatePrizePosition = () => {
+    const container = wrapperRef.current;
+
+    if (container) {
+      const containerRect = container.getBoundingClientRect();
+
+      // Получаем случайные координаты
+      const { top, left } = getRandomPosition(containerRect.width, containerRect.height, 38, 48);
+      setPrizePosition({ top, left });
+    }
   };
 
-  const handleClickPack = () => {
-    props.onPackClick && props.onPackClick();
-    setNotificationVisible(false);
-    setNotificationsLeft(notificationsLeft - 1);
-  };
-
+  // Проверка и сброс счетчика каждый день
   useEffect(() => {
     const now = Date.now();
-
-    // Если день сменился, сбросить уведомления
-    if (now - lastShownTime > DAY_DURATION) {
-      setNotificationsLeft(TOTAL_NOTIFICATIONS);
-      setLastShownTime(now);
+    if (now - lastReset >= DAY_IN_MS) {
+      setPrizesCaught(0);
+      setLastReset(now);
     }
+  }, [lastReset, setPrizesCaught, setLastReset]);
 
-    if (notificationsLeft > 0) {
-      const intervals = getRandomIntervals(notificationsLeft, DAY_DURATION);
+  // Функция для запуска таймера на случайный промежуток времени
+  const startRandomTimer = () => {
+    const randomInterval = Math.random() * (MAX_INTERVAL - MIN_INTERVAL) + MIN_INTERVAL;
 
-      const timers = intervals.map((interval) => {
-        return setTimeout(() => {
-          setNotificationVisible(true);
+    setTimeout(() => {
+      if (prizesCaught < TOTAL_PRIZES) {
+        showPrizeToUser();
+      }
+    }, randomInterval);
+  };
 
-          setTimeout(() => {
-            handleMissPack();
-          }, NOTIFICATION_DURATION);
-        }, interval);
-      });
+  // Функция для показа приза
+  const showPrizeToUser = () => {
+    updatePrizePosition();
+    setShowPrize(true);
 
-      return () => {
-        timers.forEach((timer) => clearTimeout(timer));
-      };
+    const autoCaptureTimeout = setTimeout(() => {
+      capturePrize();
+    }, 5000); // Таймер на 5 секунд
+
+    setTimer(autoCaptureTimeout);
+  };
+
+  // Функция захвата приза
+  const capturePrize = () => {
+    setPrizesCaught(prizesCaught + 1);
+    clearTimer();
+    startRandomTimer(); // Запускаем таймер заново
+    capturePrize();
+    dispatch(UserSlice.setCurrentBoost(maxBoost));
+  };
+
+  // Обработчик клика по картинке
+  const handleClickPack = () => {
+    props.onPackClick && props.onPackClick();
+  };
+
+  // Очистка таймера
+  const clearTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
     }
-  }, [lastShownTime, notificationsLeft, setNotificationsLeft, setLastShownTime]);
+    setShowPrize(false);
+  };
 
-  /**
-   * Handle breed pack logic
-   */
+  // При первом рендере запускаем таймер на первый приз
   useEffect(() => {
-    console.log(localStorage.getItem(LocalStorageKeys.BreedPack));
-  }, [window.localStorage.getItem(LocalStorageKeys.BreedPack)]);
+    if (prizesCaught < TOTAL_PRIZES) {
+      startRandomTimer();
+    }
+  }, [prizesCaught]);
 
   return (
-    <div className="absolute h-full w-full">
-      {notificationVisible && (
-        <MotionButton
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          onClick={handleClickPack}
-          className="animate-bounce"
-        >
-          <img src={"images/breed-pack.png"} alt="breed-pack" />
-        </MotionButton>
-      )}
+    <div className={cn(props?.className, "absolute h-full w-full")}>
+      <div ref={wrapperRef} className="relative h-full w-full">
+        {showPrize && (
+          <MotionButton
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            style={{
+              top: prizePosition.top,
+              left: prizePosition.left,
+            }}
+            onClick={handleClickPack}
+            className="absolute animate-bounce"
+          >
+            <img src={"images/breed-pack.png"} alt="breed-pack" />
+          </MotionButton>
+        )}
+      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
   CarouselPrevious,
 } from "@/shared/ui/Carousel";
 import { ILeague } from "../StatsMain/shared/constants/leagues";
+import Image from "next/image";
 
 interface ICarouselWrapperProps {
   handlePrevious: () => void;
@@ -29,10 +30,12 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
             return (
               <CarouselItem key={i} className={"flex flex-col items-center justify-center gap-2"}>
                 <button onClick={handlerRedirect}>
-                  <img
-                    src={item.image.src}
+                  <Image
+                    src={item.image}
                     alt={`carousel-image-${i}`}
                     className={"ml-[10px] h-[304px] w-[296px] object-contain"}
+                    width={296}
+                    height={304}
                   />
                 </button>
               </CarouselItem>
