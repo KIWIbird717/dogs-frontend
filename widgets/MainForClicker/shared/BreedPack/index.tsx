@@ -7,49 +7,10 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 import dynamic from "next/dynamic";
 import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 import { cn } from "@/shared/lib/utils/cn";
+import { getRandomPosition } from "./shared/func/getRandomPosition";
+import { DAY_IN_MS, MAX_INTERVAL, MIN_INTERVAL, TOTAL_PRIZES } from "./shared/constants";
 
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
-
-const TOTAL_PRIZES = 7;
-const DAY_IN_MS = 24 * 60 * 60 * 1000; // 24 часа в миллисекундах
-const MIN_INTERVAL = 1 * 60 * 60 * 1000; // минимальный интервал в 1 час
-const MAX_INTERVAL = 2 * 60 * 60 * 1000; // максимальный интервал в 2 часа
-
-// Функция для генерации случайной позиции
-const getRandomPosition = (
-  containerWidth: number,
-  containerHeight: number,
-  elementWidth: number,
-  elementHeight: number,
-  excludedAreaPercentage: number = 0.7, // % от ширины и высоты, которые нужно исключить
-) => {
-  const maxX = containerWidth - elementWidth;
-  const maxY = containerHeight - elementHeight;
-
-  // Центральный квадрат, который нужно исключить
-  const excludedWidth = containerWidth * excludedAreaPercentage;
-  const excludedHeight = containerHeight * excludedAreaPercentage;
-
-  const excludedStartX = (containerWidth - excludedWidth) / 2;
-  const excludedEndX = excludedStartX + excludedWidth;
-
-  const excludedStartY = (containerHeight - excludedHeight) / 2;
-  const excludedEndY = excludedStartY + excludedHeight;
-
-  let randomX, randomY;
-
-  do {
-    randomX = Math.random() * maxX;
-    randomY = Math.random() * maxY;
-  } while (
-    randomX > excludedStartX &&
-    randomX < excludedEndX &&
-    randomY > excludedStartY &&
-    randomY < excludedEndY
-  );
-
-  return { top: randomY, left: randomX };
-};
 
 type BreedPackProps = {
   onPackClick?: () => void;
@@ -97,15 +58,13 @@ export const BreedPack: FC<BreedPackProps> = (props) => {
     }
   }, [lastReset, setPrizesCaught, setLastReset]);
 
-  // Функция для запуска таймера на случайный промежуток времени
-  const startRandomTimer = () => {
-    const randomInterval = Math.random() * (MAX_INTERVAL - MIN_INTERVAL) + MIN_INTERVAL;
-
-    setTimeout(() => {
-      if (prizesCaught < TOTAL_PRIZES) {
-        showPrizeToUser();
-      }
-    }, randomInterval);
+  // Функция захвата приза
+  const capturePrize = () => {
+    setPrizesCaught(prizesCaught + 1);
+    clearTimer();
+    startRandomTimer(); // Запускаем таймер заново
+    capturePrize();
+    dispatch(UserSlice.setCurrentBoost(maxBoost));
   };
 
   // Функция для показа приза
@@ -120,13 +79,15 @@ export const BreedPack: FC<BreedPackProps> = (props) => {
     setTimer(autoCaptureTimeout);
   };
 
-  // Функция захвата приза
-  const capturePrize = () => {
-    setPrizesCaught(prizesCaught + 1);
-    clearTimer();
-    startRandomTimer(); // Запускаем таймер заново
-    capturePrize();
-    dispatch(UserSlice.setCurrentBoost(maxBoost));
+  // Функция для запуска таймера на случайный промежуток времени
+  const startRandomTimer = () => {
+    const randomInterval = Math.random() * (MAX_INTERVAL - MIN_INTERVAL) + MIN_INTERVAL;
+
+    setTimeout(() => {
+      if (prizesCaught < TOTAL_PRIZES) {
+        showPrizeToUser();
+      }
+    }, randomInterval);
   };
 
   // Обработчик клика по картинке
