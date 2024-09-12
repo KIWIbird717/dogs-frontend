@@ -214,6 +214,10 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const onMaxBoost = useCallback(() => {
     dispatch(UserSlice.setCurrentBoost(maxBoost));
+    setBoostsLS({
+      boost: maxBoost,
+      time: Date.now().toString(),
+    });
   }, [maxBoost]);
 
   return {
