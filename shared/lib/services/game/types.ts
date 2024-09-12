@@ -1,32 +1,10 @@
 export namespace GameServiceTypes {
-  export type Levels =
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20;
-
-  export type LeagueLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  export type Levels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
   export type League = {
     requiredBalance: number;
   };
 
   export type GetLevelsResponse = Record<Levels, number>;
-  export type GetLeaguesResponse = Record<LeagueLevels, League>;
+  export type GetLeaguesResponse = Record<Levels, League>;
 }
