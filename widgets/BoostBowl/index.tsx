@@ -22,7 +22,7 @@ import FullTankImg from "@/public/images/svg/modal/boosts/full-tank.svg";
 import MultiTapImg from "@/public/images/svg/modal/boosts/multi-tap.svg";
 import EnergyLimitImg from "@/public/images/svg/modal/boosts/energy-limit.svg";
 import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
 import { useRouter } from "next/navigation";
 import { useClicker } from "@/shared/hooks/useClicker/useClicker";
