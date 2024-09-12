@@ -26,7 +26,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { getTimeLeftUntil } from "@/shared/lib/utils/getTimeLeft";
 import { useRouter } from "next/navigation";
 import { useClicker } from "@/shared/hooks/useClicker/useClicker";
-import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 
 interface IBoostBowlProps {}
 
