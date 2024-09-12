@@ -12,6 +12,9 @@ export function useLocalStorage<T extends Record<string, any> | null | number | 
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === "ReferenceError") return;
+      }
       logger.error(error);
       return initialValue;
     }
