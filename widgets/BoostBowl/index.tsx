@@ -142,11 +142,12 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
       {
         icon: <TapBotImg />,
         title: "Tap Bot",
-        info: "100 000 Coin in 4 hours",
+        info: "100 000 000 Coin in 8 hours",
         buttonTitle: "Buy",
-        price: 100_000,
+        price: 100_000_000,
         onClick: async () => {
           const response = await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
+          dispatch(UserSlice.addCoins(-1_000_000));
           toast.success(`Tapbot active for ${getTimeLeftUntil(response.data.TAP_BOT)}`);
 
           router.push("/main");

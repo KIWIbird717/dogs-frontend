@@ -47,6 +47,9 @@ export namespace UsersService {
     return serverApi.post<UserApiTypes.ResponseEarnDto>("/users/tap", dto);
   };
 
+  /**
+   * POST /users/boost
+   */
   export const boost = (boostName: UserApiTypes.BoostName) => {
     return serverApi.post<UserApiTypes.BoostResponse>("/users/boost", {
       boostName,
