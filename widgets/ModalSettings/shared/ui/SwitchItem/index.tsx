@@ -7,13 +7,13 @@ interface ISwitchItemProps extends React.ComponentPropsWithoutRef<typeof SwitchP
   title: string;
 }
 
-export const SwitchItem: FC<ISwitchItemProps> = ({ title }) => {
+export const SwitchItem: FC<ISwitchItemProps> = ({ title, ...props }) => {
   return (
     <div className={"flex w-full items-center justify-between"}>
       <Typography tag={"h3"} className={"font-normal text-white-900"}>
         {title}
       </Typography>
-      <Switch />
+      <Switch {...props} />
     </div>
   );
 };

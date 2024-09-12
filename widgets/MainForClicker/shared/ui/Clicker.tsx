@@ -1,5 +1,8 @@
-import { FC, TouchEventHandler, useState } from "react";
+import { FC, TouchEventHandler, useEffect, useState } from "react";
 import { Bowl } from "./Bowl";
+import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
+import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
+import { useTelegram } from "@/shared/hooks/useTelegram";
 
 interface IClickerProps {
   handleClick: TouchEventHandler<HTMLButtonElement>;
@@ -8,10 +11,17 @@ interface IClickerProps {
 
 export const Clicker: FC<IClickerProps> = ({ handleClick, level }) => {
   const [isTaped, setIsTaped] = useState(false);
+  const [isVibrationActive] = useLocalStorage<boolean>(LocalStorageKeys.SettingsVibration, false);
+  const telegram = useTelegram();
 
   const handleButtonClick: TouchEventHandler<HTMLButtonElement> = (event) => {
     handleClick(event);
     setIsTaped(false);
+
+    // vibration on click if active
+    if (isVibrationActive) {
+      telegram?.HapticFeedback.impactOccurred("light");
+    }
   };
 
   return (

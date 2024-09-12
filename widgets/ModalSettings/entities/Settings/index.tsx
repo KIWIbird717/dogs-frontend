@@ -3,6 +3,8 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { SwitchItem } from "@/widgets/ModalSettings/shared/ui/SwitchItem";
 import { LanguageToggle } from "@/widgets/ModalSettings/shared/ui/LanguageToggle";
+import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
+import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
 
 interface ISettingsProps {
   language: "English" | "Russian";
@@ -15,6 +17,11 @@ export const Settings: FC<ISettingsProps> = ({
   onOpenLanguageChange,
   language,
 }) => {
+  const [isVibrationActive, setIsVibrationActive] = useLocalStorage<boolean>(
+    LocalStorageKeys.SettingsVibration,
+    false,
+  );
+
   return (
     <>
       <Button
@@ -32,7 +39,14 @@ export const Settings: FC<ISettingsProps> = ({
         <div className={"flex w-full flex-col gap-4"}>
           <SwitchItem title={"Music"} />
           <SwitchItem title={"Songs"} />
-          <SwitchItem title={"Vibration"} />
+          <SwitchItem
+            title={"Vibration"}
+            checked={isVibrationActive}
+            onCheckedChange={(checked) => {
+              setIsVibrationActive(checked);
+              console.log({ checked });
+            }}
+          />
         </div>
       </div>
 
