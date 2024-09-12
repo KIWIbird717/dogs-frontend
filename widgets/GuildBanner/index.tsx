@@ -90,16 +90,6 @@ export const GuildBanner: FC<IGuildBannerProps> = ({
             </Typography>
           </div>
         </div>
-
-        {!isBanner && isGuildJoined && (
-          <Button
-            className={
-              "shadow-fix h-[48px] w-[48px] border border-black-400 bg-black-400 p-3 shadow-buttonNoAccent"
-            }
-          >
-            <SettingsIcon />
-          </Button>
-        )}
       </div>
       <div className={"flex w-full gap-2"}>
         <Block
