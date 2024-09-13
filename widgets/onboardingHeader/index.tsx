@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { HeadersType } from "@/widgets/onboardingMedia";
+import { HeadersType } from "../onboardingMedia/shared/types/headers-type";
 import { AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 
