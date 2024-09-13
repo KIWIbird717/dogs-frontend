@@ -23,19 +23,19 @@ export const BreedCountryBlock: FC<IBreedCountryBlockProps> = ({
   setClearValue,
   pageName,
 }) => {
-  if (!items) return null;
-
   const filteredItems = useMemo(
     () => items.filter((breed) => breed.name.toLowerCase().includes(value.toLowerCase())),
-    [items?.length],
+    [items?.length, value],
   );
+
+  if (!items) return null;
 
   return (
     <div className={"z-[10] flex min-h-[calc(100vh+1px)] w-full flex-col gap-4"}>
       <div className={""}>
         <Input
           isIcon
-          placeholder={"Search Breed"}
+          placeholder={pageName === "breed" ? "Search Breed" : "Search Country"}
           value={value}
           type={"search"}
           onClear={setClearValue}

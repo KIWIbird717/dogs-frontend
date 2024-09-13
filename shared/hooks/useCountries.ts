@@ -9,11 +9,24 @@ import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { useAppDispatch, useAppSelector } from "../lib/redux-store/hooks";
 import { UserSlice } from "../lib/redux-store/slices/user-slice/userSlice";
 import useSWR, { preload } from "swr";
+import { useRouter } from "next/navigation";
+import { sleep } from "../lib/utils/sleep";
 
 const getCountries = async () => {
-  return await axios.get<{ data: IBreedCountry[] }>(
+  const response = await axios.get<{ data: IBreedCountry[] }>(
     "https://countriesnow.space/api/v0.1/countries/flag/images",
   );
+
+  response.data.data.push({
+    flag: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg",
+    iso2: "RU",
+    iso3: "RUS",
+    name: "Russia",
+  });
+
+  response.data.data.sort((a, b) => a.name.localeCompare(b.name));
+
+  return response;
 };
 
 preload("/countries/flag/images", getCountries);
@@ -23,6 +36,7 @@ export const useCountries = () => {
 
   const country = useAppSelector((store) => store.user.country);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [searchValue, setSearchValue] = useState("");
   const [currentCountryISO2, setCurrentCountryISO2] = useState(country);
@@ -41,11 +55,13 @@ export const useCountries = () => {
     setCurrentCountryISO2(countryISO2);
 
     try {
-      await UsersService.updateUser({
+      UsersService.updateUser({
         country: countryISO2,
       });
 
       dispatch(UserSlice.updateUser({ country: countryISO2 }));
+      await sleep(200);
+      router.push("/profile");
     } catch (error) {
       logger.error(error);
     }

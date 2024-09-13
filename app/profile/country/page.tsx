@@ -6,9 +6,6 @@ import { HeaderWithIcon } from "@/shared/ui/HeaderWithIcon";
 import { Navbar } from "@/widgets/Navbar";
 import { BreedCountryBlock } from "@/widgets/BreedCountryBlock";
 import World from "@/public/images/svg/country/world.svg";
-
-import Gradient1 from "@/public/images/svg/breed/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/breed/gradient/gradient2.svg";
 import { useCountries } from "@/shared/hooks/useCountries";
 import { Gradient } from "@/shared/ui/Gradient";
 import { useTgBackButton } from "@/shared/hooks/useTgBackButton";
