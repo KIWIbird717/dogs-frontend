@@ -13,6 +13,7 @@ import { useAppDispatch } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 import { headers } from "./shared/constants/headers";
+import { sleep } from "@/shared/lib/utils/sleep";
 
 interface IOnboardingMediaProps {}
 
@@ -20,7 +21,6 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   usePreventOnSwipeWindowClose(true);
 
   const router = useRouter();
-  const logger = new Logger("OnboardingMedia");
   const [step, setStep] = useState(0);
   const dispatch = useAppDispatch();
 
@@ -40,18 +40,20 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
   };
 
   useEffect(() => {
+    const logger = new Logger("OnboardingMedia");
     router.prefetch("./main");
 
     (async () => {
       try {
         await UsersService.createUser();
+        sleep(1000); // fo sure user is created
         const me = await UsersService.getMe();
         dispatch(UserSlice.setUser(me.data));
       } catch (error) {
         logger.error(error);
       }
     })();
-  }, []);
+  }, [dispatch, router]);
 
   return (
     <>

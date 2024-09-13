@@ -1,7 +1,5 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
-import Gradient1 from "@/public/images/svg/onboarding/gradient.svg";
-import Gradient2 from "@/public/images/svg/onboarding/gradient2.svg";
 import { OnboardingMedia } from "@/widgets/onboardingMedia";
 import { Gradient } from "@/shared/ui/Gradient";
 
