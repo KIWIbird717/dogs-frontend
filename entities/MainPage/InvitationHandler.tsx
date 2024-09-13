@@ -28,11 +28,11 @@ export const InvitationHandler = () => {
     const handleFriendInvitation = async (id?: string | null) => {
       if (!id) return;
 
+      localStorage.removeItem(LocalStorageKeys.InviterId);
+
       const response = await UsersService.iAmFromInviteLink({
         invitedByTgUserId: parseInt(id),
       });
-
-      localStorage.removeItem(LocalStorageKeys.InviterId);
 
       toast.success(`You invited by ${response.data.inviter.username}`);
     };
@@ -41,13 +41,13 @@ export const InvitationHandler = () => {
       try {
         if (!id) return;
 
+        localStorage.removeItem(LocalStorageKeys.InviterGuildId);
+
         const response = await GuildsService.joinGuild(id);
 
         dispatch(
           UserSlice.updateUser({ guild: response.data.guild, guildName: response.data.guildName }),
         );
-
-        localStorage.removeItem(LocalStorageKeys.InviterGuildId);
 
         toast.success(`You invited to guild ${response.data.guildName}`);
       } catch (error) {
