@@ -18,8 +18,8 @@ const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion
 interface IStatsMainProps {}
 
 export const StatsMain: FC<IStatsMainProps> = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const me = useAppSelector((store) => store.user);
+  const [currentSlide, setCurrentSlide] = useState(me.league - 1);
   const currentRank = leagues[currentSlide].rank;
   const PAGINATION = 50;
 
