@@ -6,7 +6,6 @@ import { Navbar } from "@/widgets/Navbar";
 import { Button } from "@/shared/ui/Button/Button";
 import { BonusList } from "@/widgets/BonusList";
 import { Typography } from "@/shared/ui/Typography/Typography";
-
 import Gradient1 from "@/public/images/svg/leaderboard/currentStats/gradient/gradient1.svg";
 import Gradient2 from "@/public/images/svg/leaderboard/currentStats/gradient/gradient2.svg";
 
