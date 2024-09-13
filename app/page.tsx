@@ -32,15 +32,13 @@ const handleGuildInvitation = (inviterId?: string) => {
 };
 
 const LoadingPage: NextPage<ILoadingPageProps> = () => {
-  const logger = new Logger("LoadingPage");
   const telegram = useTelegram();
   const startAppParams = telegram?.initDataUnsafe.start_param;
 
   useEffect(() => {
-    logger.debug({ startAppParams, rest: telegram?.initDataUnsafe });
     handleFriendInvitation(startAppParams);
     handleGuildInvitation(startAppParams);
-  }, [startAppParams]);
+  }, [startAppParams, telegram?.initDataUnsafe]);
 
   return (
     <View
