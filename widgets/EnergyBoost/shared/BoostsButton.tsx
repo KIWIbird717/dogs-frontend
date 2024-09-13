@@ -17,7 +17,7 @@ export const BoostsButton: FC<BoostsButtonProps> = (props) => {
       onClick={props.onClick}
       className={cn(
         props.className,
-        "shadow-fix flex w-fit items-center justify-center gap-3 rounded-xl border-[2px] border-black-400 bg-black-400 px-3 py-2 shadow-buttonNoAccent",
+        "shadow-fix flex w-fit items-center justify-center gap-3 rounded-xl border-[2px] border-black-400 bg-black-400 px-2 py-2 shadow-buttonNoAccent",
       )}
     >
       <div>{props.icon}</div>
