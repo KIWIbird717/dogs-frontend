@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CarouselWrapper } from "@/widgets/CarouselWrapper";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import { GuildPlayerItem } from "@/widgets/GuildPlayers/ui/GuildPlayerItem";
@@ -19,7 +19,7 @@ interface IStatsMainProps {}
 
 export const StatsMain: FC<IStatsMainProps> = () => {
   const me = useAppSelector((store) => store.user);
-  const [currentSlide, setCurrentSlide] = useState(me.league - 1);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const currentRank = leagues[currentSlide].rank;
   const PAGINATION = 50;
 
@@ -69,6 +69,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     [isLoading, isFetching, hasNextPage],
   );
 
+  console.log({ currentSlide });
   const handlePrevious = () => {
     setCurrentSlide((prev) => (prev === 0 ? leagues.length - 1 : prev - 1));
   };
