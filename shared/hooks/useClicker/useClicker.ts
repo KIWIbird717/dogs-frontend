@@ -37,10 +37,10 @@ export const useClicker = (isSetInterval?: boolean) => {
   const balance = useAppSelector((store) => store.user.balance);
   const turboBoostExpired = useAppSelector((store) => store.user.turboBoostExpired);
 
-  const isTurboBoostExpired =
+  const isTurboBoostActive =
     new Date(turboBoostExpired || new Date()).getTime() > new Date().getTime();
 
-  const tabValue = 1 * rechargeMultiplication * tapMultiplication * (isTurboBoostExpired ? 5 : 1);
+  const tabValue = 1 * rechargeMultiplication * tapMultiplication;
 
   const [state, setState] = useState({
     earned: 0,
@@ -98,7 +98,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   const onIncrementEarn = useCallback(
     async (dateNowValue: number) => {
       if (boostsLS?.boost && boostsLS.boost > 1) {
-        const newEarned = state.earned + tabValue;
+        const newEarned = state.earned + tabValue * (isTurboBoostActive ? 5 : 1); // при активном turbo boost
         const newTouches = state.touches + 1;
 
         setState({ earned: newEarned, touches: newTouches });
