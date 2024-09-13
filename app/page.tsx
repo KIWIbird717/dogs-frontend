@@ -7,6 +7,7 @@ import { DuckBackground } from "@/widgets/DuckBackground";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { useEffect } from "react";
 import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface ILoadingPageProps {}
 
@@ -31,10 +32,12 @@ const handleGuildInvitation = (inviterId?: string) => {
 };
 
 const LoadingPage: NextPage<ILoadingPageProps> = () => {
+  const logger = new Logger("LoadingPage");
   const telegram = useTelegram();
   const startAppParams = telegram?.initDataUnsafe.start_param;
 
   useEffect(() => {
+    logger.debug({ startAppParams, rest: telegram?.initDataUnsafe });
     handleFriendInvitation(startAppParams);
     handleGuildInvitation(startAppParams);
   }, [startAppParams]);
