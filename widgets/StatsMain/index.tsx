@@ -12,6 +12,7 @@ import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { AnimatePresence } from "framer-motion";
 import { leagues } from "./shared/constants/leagues";
 import dynamic from "next/dynamic";
+import { sleep } from "@/shared/lib/utils/sleep";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
 
@@ -69,19 +70,34 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     [isLoading, isFetching, hasNextPage],
   );
 
-  console.log({ currentSlide });
+  useEffect(() => {
+    if (!me.league) return;
+    setCurrentSlide(me.league - 1);
+  }, [me.league]);
+
   const handlePrevious = () => {
-    setCurrentSlide((prev) => (prev === 0 ? leagues.length - 1 : prev - 1));
+    setCurrentSlide((prev) => {
+      if (prev < 0) return prev;
+      return prev - 1;
+    });
   };
 
   const handleNext = () => {
-    setCurrentSlide((prev) => (prev === leagues.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => {
+      if (prev >= leagues.length - 1) return prev;
+      return prev + 1;
+    });
   };
 
   return (
     <div className={"z-[10] flex w-full flex-col gap-4"}>
       <div className={"flex flex-col gap-2 pb-2"}>
-        <CarouselWrapper handlePrevious={handlePrevious} handleNext={handleNext} ranks={leagues} />
+        <CarouselWrapper
+          myLeague={me.league}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          ranks={leagues}
+        />
 
         <Progress
           currentRank={currentRank}

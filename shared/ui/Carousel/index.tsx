@@ -9,17 +9,20 @@ import RightArrow from "@/public/images/svg/leaderboard/right-arrow.svg";
 
 import { cn } from "@/shared/lib/utils/cn";
 import { Button } from "@/shared/ui/ButtonShadCN/button";
+import { ICarouselWrapperProps } from "@/widgets/CarouselWrapper";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
 type CarouselPlugin = UseCarouselParameters[1];
 
-type CarouselProps = {
+export type CarouselProps = {
   opts?: CarouselOptions;
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
+  scrollTo?: (index: number, jump?: boolean) => void;
+  myLeague?: ICarouselWrapperProps["myLeague"];
 };
 
 type CarouselContextProps = {
@@ -44,7 +47,7 @@ function useCarousel() {
 }
 
 const Carousel = React.forwardRef<
-  HTMLDivElement,
+  UseEmblaCarouselType[1] | null,
   React.HTMLAttributes<HTMLDivElement> &
     CarouselProps & {
       onSettle?: (e: Exclude<ReturnType<typeof useEmblaCarousel>["1"], undefined>) => void;
@@ -61,6 +64,12 @@ const Carousel = React.forwardRef<
       },
       plugins,
     );
+
+    React.useEffect(() => {
+      if (!props.myLeague) return;
+      api?.scrollTo(props.myLeague - 1, true);
+    }, [props.myLeague, api]);
+
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
 
@@ -131,7 +140,6 @@ const Carousel = React.forwardRef<
         }}
       >
         <div
-          ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
           role="region"

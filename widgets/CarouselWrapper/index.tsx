@@ -1,35 +1,33 @@
-import { FC } from "react";
+import { FC, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselProps,
 } from "@/shared/ui/Carousel";
 import { ILeague } from "../StatsMain/shared/constants/leagues";
 import Image from "next/image";
+import { UseEmblaCarouselType } from "embla-carousel-react";
+import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 
-interface ICarouselWrapperProps {
+export interface ICarouselWrapperProps {
   handlePrevious: () => void;
   handleNext: () => void;
   ranks: ILeague[];
+  myLeague?: UserSlice.IUserSlice["league"];
 }
 
-export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
-  handleNext,
-  handlePrevious,
-  ranks,
-}) => {
-  const handlerRedirect = () => {};
-
+export const CarouselWrapper: FC<ICarouselWrapperProps> = (props) => {
   return (
     <div className={"h-[304px] w-full"}>
-      <Carousel>
+      <Carousel myLeague={props.myLeague}>
         <CarouselContent>
-          {ranks.map((item, i) => {
+          {props.ranks.map((item, i) => {
             return (
               <CarouselItem key={i} className={"flex flex-col items-center justify-center gap-2"}>
-                <button onClick={handlerRedirect}>
+                <button>
                   <Image
                     src={item.image}
                     alt={`carousel-image-${i}`}
@@ -44,11 +42,11 @@ export const CarouselWrapper: FC<ICarouselWrapperProps> = ({
         </CarouselContent>
         <CarouselPrevious
           className={"left-0 top-[40%] h-full w-full translate-x-[-45%]"}
-          onClick={handlePrevious}
+          onClick={props.handlePrevious}
         />
         <CarouselNext
           className={"right-0 top-[40%] h-full w-full translate-x-[45%]"}
-          onClick={handleNext}
+          onClick={props.handleNext}
         />
       </Carousel>
     </div>
