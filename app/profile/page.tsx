@@ -19,6 +19,7 @@ const ProfilePage = () => {
 
   const { data } = useSWR("/stats/all-users-stats", StatsService.getAllUsersStats);
   const balance = useAppSelector((store) => store.user.balance);
+  const onlinePlayers = useAppSelector((store) => store.stats.online);
 
   const statics = useMemo(
     () => [
@@ -32,10 +33,10 @@ const ProfilePage = () => {
       },
       {
         title: "Online Players",
-        value: data?.data.online || 0,
+        value: onlinePlayers || 0,
       },
     ],
-    [data?.data.totalUsers, data?.data.dailyUsers, data?.data.online],
+    [data?.data.totalUsers, data?.data.dailyUsers, onlinePlayers],
   );
 
   return (

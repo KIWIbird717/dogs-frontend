@@ -10,6 +10,7 @@ import { usePreventZoom } from "@/shared/hooks/usePreventZoom";
 import { useOnTelegramWebAppRefresh } from "@/shared/hooks/useOnTelegramWebAppRefresh";
 import { Toaster } from "react-hot-toast";
 import { useOpenWebappWindow } from "@/shared/hooks/useOpenWebappWindow";
+import { OnlineUsersHandler } from "@/features/OnlineUsersHandler";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
           <StoreProvider>
             <Toaster />
             <ModalProvider />
+            <OnlineUsersHandler />
             <div className="relative h-svh max-h-[100svh] w-svw max-w-[100svw] overflow-hidden">
               {children}
             </div>
