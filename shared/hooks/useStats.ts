@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { StatsSlice } from "@/shared/lib/redux-store/slices/stats-slice/statsSlice";
-import IStatsSlice = StatsSlice.IStatsSlice;
+import IStatsSlice = StatsSlice.Type;
 
 export const useStats = () => {
   const dispatch = useAppDispatch();

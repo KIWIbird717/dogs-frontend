@@ -23,6 +23,6 @@ export namespace StatsService {
    * GET /stats/all-users-stats
    */
   export const getAllUsersStats = () => {
-    return serverApi.get<StatsSlice.IStatsSlice>(`/stats/all-users-stats`);
+    return serverApi.get<StatsSlice.Type>(`/stats/all-users-stats`);
   };
 }
