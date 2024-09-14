@@ -6,5 +6,5 @@ export const useOpenWebappWindow = () => {
 
   useEffect(() => {
     telegram?.expand();
-  }, []);
+  }, [telegram]);
 };
