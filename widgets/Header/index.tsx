@@ -1,10 +1,8 @@
 "use client";
 
 import { FC, memo, useEffect, useState } from "react";
-import Image from "next/image";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import { Button } from "@/shared/ui/Button/Button";
-
 import WalletIcon from "@/public/images/svg/wallet.svg";
 import QuestionIcon from "@/public/images/svg/question-icon.svg";
 import SettingsIcon from "@/public/images/svg/settings.svg";
