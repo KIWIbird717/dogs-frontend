@@ -33,6 +33,7 @@ export namespace UsersService {
 
   /**
    * POST /users/add-friend
+   * @deprecated
    */
   export const addFriend = (userId: string) => {
     return serverApi.post("/users/add-friend", {

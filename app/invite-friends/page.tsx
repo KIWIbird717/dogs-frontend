@@ -12,18 +12,14 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { GuildPlayers } from "@/widgets/GuildPlayers";
 import { Bonus } from "@/widgets/Bonus";
-
-import Gradient1 from "@/public/images/svg/invite-friends/gradient/gradient1.svg";
-import Gradient2 from "@/public/images/svg/invite-friends/gradient/gradient2.svg";
 import useSWR from "swr";
 import { UsersService } from "@/shared/lib/services/users/users";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { Gradient } from "@/shared/ui/Gradient";
 
 interface IInviteFriendsProps {}
 const inviteText = "Join and play DOGS with me";
-const inviteTitle = "Join to DOGS";
 
 const InviteFriends: NextPage<IInviteFriendsProps> = () => {
   const [isShowBonus, setIsShowBonus] = useState(false);
@@ -36,7 +32,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
     ? inviteLink
     : "we can not create invite link :(";
 
-  const { data } = useSWR("/task", UsersService.getMyFriends);
+  const { data } = useSWR("GET /users/my-friends", UsersService.getMyFriends);
   const friends = data?.data;
 
   const handleToggle = () => setIsShowBonus(!isShowBonus);

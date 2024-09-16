@@ -1,32 +1,21 @@
-import { useEffect, useState } from "react";
-import { UserApiTypes } from "@/shared/lib/services/users/types";
+"use client";
+
+import { useState } from "react";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
+import useSWR, { useSWRConfig } from "swr";
 
 export const useBonusFriend = () => {
-  const [bonus, setBonus] = useState<UserApiTypes.BonusFriendResponse | null>(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const logger = new Logger("useBonusFriend");
 
-  const getBonusFriend = async () => {
-    try {
-      const { data } = await UsersService.getBonusFriend();
-      setBonus(data);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await getBonusFriend();
-    })();
-  }, []);
+  const { data } = useSWR("GET /users/bonus/friend", UsersService.getBonusFriend);
+  const { mutate } = useSWRConfig();
 
   const onClaimBonusFriend = async () => {
     try {
       await UsersService.setBonusFriend();
-      await getBonusFriend();
+      mutate("GET /users/bonus/friend");
     } catch (error) {
       logger.error(error);
     }
@@ -35,11 +24,9 @@ export const useBonusFriend = () => {
   const onToggleDisabled = (disabled: boolean) => setIsDisabled(disabled);
 
   return {
-    bonus,
+    bonus: data?.data,
     isDisabled,
-
-    getBonusFriend,
     onClaimBonusFriend,
-    onToggleDisabled
-  }
-}
+    onToggleDisabled,
+  };
+};

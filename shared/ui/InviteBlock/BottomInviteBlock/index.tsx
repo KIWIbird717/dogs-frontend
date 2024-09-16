@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { TotalCoin } from "@/shared/ui/TotalCoin";
@@ -7,13 +9,11 @@ import { useBonusFriend } from "@/shared/hooks/useBonusFriend";
 import { CountDownWrapper } from "@/shared/ui/CountDownWrapper";
 import { Typography } from "@/shared/ui/Typography/Typography";
 
-interface IBottomInviteBlockProps {
-
-}
+interface IBottomInviteBlockProps {}
 
 export const BottomInviteBlock: FC<IBottomInviteBlockProps> = () => {
   const { bonus, isDisabled, onToggleDisabled, onClaimBonusFriend } = useBonusFriend();
-  const newFormatCoins = formatNumber(5000);
+  const newFormatCoins = formatNumber(bonus?.amount || 0);
   const timeStamp = new Date(bonus?.nextUsage!).getTime() - new Date().getTime();
 
   return (
@@ -28,27 +28,31 @@ export const BottomInviteBlock: FC<IBottomInviteBlockProps> = () => {
         disabled={bonus?.amount === 0 || isDisabled}
         onClick={onClaimBonusFriend}
       >
-        {bonus
-          ? bonus?.amount !== 0
-            ?
-            <CountDownWrapper timeStamp={timeStamp}
-                              onToggleDisabled={onToggleDisabled}
-                              titleCompleted={"Claim"}
-                              titleUnCompleted={"Claim at"}
-                              key={String(new Date(bonus?.nextUsage!).getTime())}
+        {bonus ? (
+          bonus?.amount !== 0 ? (
+            <CountDownWrapper
+              timeStamp={timeStamp}
+              onToggleDisabled={onToggleDisabled}
+              titleCompleted={"Claim"}
+              titleUnCompleted={"Claim at"}
+              key={String(new Date(bonus?.nextUsage!).getTime())}
             />
-            : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
-                          tag={"p"}
+          ) : (
+            <Typography
+              className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
+              tag={"p"}
             >
               You don&apos;t have any friends
             </Typography>
-          : <Typography className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
-                        tag={"p"}
+          )
+        ) : (
+          <Typography
+            className={twMerge("text-[18px] font-bold leading-6 text-white-900")}
+            tag={"p"}
           >
             Claim
           </Typography>
-        }
-
+        )}
       </Button>
     </div>
   );

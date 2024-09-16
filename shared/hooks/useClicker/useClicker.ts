@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEvent, TouchEvent, useCallback, useEffect, useState } from "react";
+import { TouchEvent, useCallback, useEffect, useState } from "react";
 import debounce from "lodash.debounce";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { UsersService } from "@/shared/lib/services/users/users";
@@ -64,16 +64,19 @@ export const useClicker = (isSetInterval?: boolean) => {
       dispatch(UserSlice.setCurrentBoost(newBoost));
       setBoostsLS({ time: currentTime.toString(), boost: newBoost });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boostsLS, dispatch, maxBoost]);
 
   useEffect(() => {
     calculateBoosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (boostsLS) {
       dispatch(UserSlice.setCurrentBoost(boostsLS.boost));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boostsLS]);
 
   const sendCoins = async (clickEffectValue: number, touches: number) => {
@@ -93,6 +96,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSendEarned = useCallback(debounce(sendCoins, 2000), []);
 
   const onIncrementEarn = useCallback(
@@ -127,6 +131,7 @@ export const useClicker = (isSetInterval?: boolean) => {
         dispatch(UserSlice.updateUser({ level: userLevel, league: userLevel }));
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned],
   );
 
@@ -215,6 +220,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     return () => {
       clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateNow, onIncrementEarn, tapBotExpired]);
 
   const onMaxBoost = useCallback(() => {
@@ -223,6 +229,7 @@ export const useClicker = (isSetInterval?: boolean) => {
       boost: maxBoost,
       time: Date.now().toString(),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maxBoost]);
 
   return {
