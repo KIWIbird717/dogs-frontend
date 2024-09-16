@@ -18,8 +18,6 @@ export const Board: FC<IBoardProps> = (props) => {
 
   const level = useAppSelector((store) => store.user.level);
   const guildName = useAppSelector((store) => store.user.guildName);
-  // const balance = useAppSelector((store) => store.user.balance);
-
   const levelProgress = useGetLevelProgressPercentage(props.balance);
 
   useEffect(() => {
@@ -45,7 +43,9 @@ export const Board: FC<IBoardProps> = (props) => {
         {typeof levelProgress === "number" ? (
           <ProgressBarV2 progressPercentage={levelProgress} />
         ) : (
-          "max"
+          <Typography tag="p" className="leading-[8px]">
+            max
+          </Typography>
         )}
       </Button>
 

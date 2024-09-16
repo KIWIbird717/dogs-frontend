@@ -123,7 +123,8 @@ export const useClicker = (isSetInterval?: boolean) => {
           }
         }
 
-        dispatch(UserSlice.updateUser({ level: userLevel }));
+        // обновляем сразу и лигу и уровень, т.к. это одно и тоже
+        dispatch(UserSlice.updateUser({ level: userLevel, league: userLevel }));
       }
     },
     [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned],

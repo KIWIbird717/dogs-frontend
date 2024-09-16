@@ -15,10 +15,11 @@ export const useGetLevelProgressPercentage = (balance: number) => {
     const balanceFrom = levels[level as GameServiceTypes.Levels];
     const balanceTo = levels[(level + 1) as GameServiceTypes.Levels] || null;
 
-    if (!balanceTo) return;
-
     // если максимальный уровень
-    if (!balanceTo) setPercentage("max");
+    if (!balanceTo) {
+      setPercentage("max");
+      return;
+    }
 
     setPercentage(((balance - balanceFrom) / (balanceTo - balanceFrom)) * 100);
   }, [balance, level, levels]);

@@ -12,6 +12,7 @@ import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { AnimatePresence } from "framer-motion";
 import { leagues } from "./shared/constants/leagues";
 import dynamic from "next/dynamic";
+import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { sleep } from "@/shared/lib/utils/sleep";
 
 const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion.div));
@@ -19,6 +20,8 @@ const MotionDiv = dynamic(() => import("framer-motion").then((mod) => mod.motion
 interface IStatsMainProps {}
 
 export const StatsMain: FC<IStatsMainProps> = () => {
+  const logger = new Logger("StatsMain");
+
   const me = useAppSelector((store) => store.user);
   const [currentSlide, setCurrentSlide] = useState(0);
   const currentRank = leagues[currentSlide].rank;
@@ -34,7 +37,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     return data;
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isLoading } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetching, isLoading, refetch } = useInfiniteQuery({
     queryKey: ["statsUsersByLevel", currentSlide],
     queryFn: fetchUsers,
     initialPageParam: 0,
@@ -50,6 +53,21 @@ export const StatsMain: FC<IStatsMainProps> = () => {
     () => (data ? data.pages.flatMap((page) => page.leaders) : []),
     [data, currentSlide],
   );
+
+  logger.debug({ meLeague: me.league });
+
+  // revalidate on stats change
+  useEffect(() => {
+    const meInStats = flattenedData.find((user) => user.username === me.username);
+
+    if (!meInStats) return;
+
+    if (meInStats.balance !== me.balance) {
+      setCurrentSlide(me.league - 1);
+      sleep(1000);
+      refetch();
+    }
+  }, [flattenedData, me.balance, me.username, refetch]);
 
   const observer = useRef<IntersectionObserver>();
 
@@ -104,7 +122,7 @@ export const StatsMain: FC<IStatsMainProps> = () => {
           serialNumber={data?.pages[0].myPlace || 0}
           statusBar={data?.pages[0].statusBar}
           isMyPlaceVisible={isMyRank}
-          isProgressVisible={isMyRank}
+          isProgressVisible={me.league >= leagues[leagues.length - 1].level ? false : isMyRank}
         />
       </div>
 

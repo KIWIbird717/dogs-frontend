@@ -172,7 +172,7 @@ export namespace UserSlice {
         state,
         action: PayloadAction<
           Pick<IUserSlice, "balance"> &
-            Pick<GameSlice.Type, "levels"> & { level: GameServiceTypes.Levels }
+            Pick<GameSlice.Type, "levels" | "leagues"> & { level: GameServiceTypes.Levels }
         >,
       ) => {
         state.balance += action.payload.balance;
@@ -186,15 +186,22 @@ export namespace UserSlice {
         const balanceForNextLevel =
           action.payload.levels[(action.payload.level + 1) as GameServiceTypes.Levels];
 
+        // обновляем сразу и лигу и уровень, т.к. это одно и тоже
         if (state.balance >= balanceForNextLevel) {
           state.level += 1;
+          state.league += 1;
         }
       },
       /**
-       * Ревалидация уровня пользователя
+       * Ревалидация уровня и лиги пользователя
+       * (ревалидируем сразу и лигу и уровень, т.к. в данный момент лига и уровень одинаковы и имеют одинаковою механику обновления,
+       * т.е. лига коррелирует уровню)
        * Проверка уровня пользователя в соответствии с его текущим балансом
        */
-      _revalidateLevel: (state, action: PayloadAction<Pick<GameSlice.Type, "levels">>) => {
+      _revalidateLevel: (
+        state,
+        action: PayloadAction<Pick<GameSlice.Type, "levels" | "leagues">>,
+      ) => {
         if (!action.payload.levels) return;
 
         let userLevel = 1;
@@ -207,7 +214,9 @@ export namespace UserSlice {
           }
         }
 
+        // обновляем сразу и лигу и уровень, т.к. это одно и тоже
         state.level = userLevel;
+        state.league = userLevel;
       },
     },
   });
@@ -221,10 +230,11 @@ export namespace UserSlice {
     async (coins: number, { getState, dispatch }) => {
       const state = getState() as RootState;
       const levels = state.game.levels;
+      const leagues = state.game.leagues;
       const level = state.user.level as GameServiceTypes.Levels;
 
       if (levels) {
-        dispatch(userSlice.actions._addCoins({ balance: coins, levels, level }));
+        dispatch(userSlice.actions._addCoins({ balance: coins, levels, level, leagues }));
       }
     },
   );
@@ -238,9 +248,10 @@ export namespace UserSlice {
     async (_: never, { getState, dispatch }) => {
       const state = getState() as RootState;
       const levels = state.game.levels;
+      const leagues = state.game.leagues;
 
       if (levels) {
-        dispatch(userSlice.actions._revalidateLevel({ levels }));
+        dispatch(userSlice.actions._revalidateLevel({ levels, leagues }));
       }
     },
   );
