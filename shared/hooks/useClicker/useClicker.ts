@@ -227,7 +227,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   return {
     boosts: currentBoost,
     maxBoost,
-    tabValue,
+    tabValue: tabValue * (isTurboBoostActive ? 5 : 1), // при активном турбо
     earned: state.earned,
     clickEffects,
     onIncrementEarn,

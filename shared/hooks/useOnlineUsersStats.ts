@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import io from "socket.io-client";
 import { useAppDispatch } from "../lib/redux-store/hooks";
 import { StatsSlice } from "../lib/redux-store/slices/stats-slice/statsSlice";
-import { Logger } from "../lib/utils/logger/Logger";
 
 export const useOnlineUsersStats = () => {
   const dispatch = useAppDispatch();
