@@ -53,7 +53,9 @@ export const BoostBowl: FC<IBoostBowlProps> = () => {
 
         <div className={"flex w-full flex-col gap-2"}>
           {secondBowlItems.map((item, i) => {
-            return <BoostBowlItem key={i} item={item} onClick={item.onClick} />;
+            return (
+              <BoostBowlItem key={i} item={item} onClick={item.onClick} disabled={item.disabled} />
+            );
           })}
         </div>
       </div>

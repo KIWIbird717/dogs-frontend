@@ -107,9 +107,9 @@ export const useBoostsInfo = () => {
       {
         icon: <TapBotImg />,
         title: "Tap Bot",
-        info: `${formatNumber(user.boosts.tapBot.price)} Coins for 8 hours`,
+        info: `1 000 000 Coins for 8 hours`,
         buttonTitle: "Buy",
-        price: user.boosts.tapBot.price,
+        price: 1_000_000,
         onClick: () => {
           BoostsService.useTapBot(dispatch, () => {
             router.push("/main");
@@ -154,6 +154,7 @@ export const useBoostsInfo = () => {
         icon: <TapIcon />,
         title: "Multitap",
         description: "1 Tap 20 Energy",
+        disabled: user.boosts.multitap.level >= 20,
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[2] });
         },
@@ -162,6 +163,7 @@ export const useBoostsInfo = () => {
         icon: <EnergyLimitIcon />,
         title: "Energy Limit",
         description: `${formatNumber(user.boosts.energyLimit.upgradePrice)} coins`,
+        disabled: user.boosts.energyLimit.level >= 20,
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[3] });
         },
@@ -178,7 +180,7 @@ export const useBoostsInfo = () => {
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
-        description: `${formatNumber(user.boosts.tapBot.price)} Coins for 8 hours`,
+        description: `1 000 000 Coins for 8 hours`,
         disabled: new Date(user.boosts.tapBot.activeFor).getTime() > Date.now(),
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[5] });

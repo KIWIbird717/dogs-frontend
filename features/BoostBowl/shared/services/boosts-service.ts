@@ -69,7 +69,7 @@ export namespace BoostsService {
     ssrPreventionCheck();
 
     const { data } = await UsersService.boost(UserApiTypes.BoostName.MULTITAP);
-    toast.success(`Multitap activate`);
+    toast.success(`Multitap level ${data.boosts.multitap.level}`);
 
     dispatch(UserSlice.updateBoosts({ key: "multitap", updates: data.boosts.multitap }));
     dispatch(UserSlice.setBalance(data.balance));
@@ -82,7 +82,7 @@ export namespace BoostsService {
     ssrPreventionCheck();
 
     const { data } = await UsersService.boost(UserApiTypes.BoostName.ENERY_LIMIT);
-    toast.success(`Energy limit updated to ${data.boosts.energyLimit.energyLimit}`);
+    toast.success(`Energy limit updated level ${data.boosts.energyLimit.level}`);
 
     dispatch(UserSlice.updateBoosts({ key: "energyLimit", updates: data.boosts.energyLimit }));
     dispatch(UserSlice.setBalance(data.balance));
@@ -110,7 +110,10 @@ export namespace BoostsService {
     ssrPreventionCheck();
 
     const { data } = await UsersService.boost(UserApiTypes.BoostName.TAP_BOT);
-    toast.success(`Tapbot active for ${getTimeLeftUntil(data.boosts.tapBot.activeFor)}`);
+    const timeTillEnd = getTimeLeftUntil(data.boosts.tapBot.activeFor);
+    toast.success(
+      `Tapbot active for ${timeTillEnd === "expired" ? timeTillEnd : timeTillEnd.hours}`,
+    );
 
     dispatch(UserSlice.updateBoosts({ key: "tapBot", updates: data.boosts.tapBot }));
     dispatch(UserSlice.setBalance(data.balance));
