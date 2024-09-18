@@ -161,7 +161,7 @@ export const useBoostsInfo = () => {
       {
         icon: <EnergyLimitIcon />,
         title: "Energy Limit",
-        description: "800 000 Coin",
+        description: `${formatNumber(user.boosts.energyLimit.upgradePrice)} coins`,
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[3] });
         },
@@ -169,7 +169,8 @@ export const useBoostsInfo = () => {
       {
         icon: <RechargingIcon />,
         title: "Recharning Speed",
-        description: "5 Energy",
+        description: `${user.boosts.rechargingSpeed.energyRechargeMultiplication} Energy`,
+        disabled: user.boosts.rechargingSpeed.level >= 5,
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[4] });
         },
@@ -177,7 +178,8 @@ export const useBoostsInfo = () => {
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
-        description: "1 000 000 Coins for 8 hours",
+        description: `${formatNumber(user.boosts.tapBot.price)} Coins for 8 hours`,
+        disabled: new Date(user.boosts.tapBot.activeFor).getTime() > Date.now(),
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[5] });
         },
