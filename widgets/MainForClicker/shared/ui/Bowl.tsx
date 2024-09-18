@@ -18,7 +18,7 @@ export const Bowl: FC<BowlProps> = (props) => {
         <img
           src={bowl.src}
           alt={`bowl-${index + 1}`}
-          className={"h-full max-h-full w-full max-w-full scale-125 object-cover"}
+          className={"h-full max-h-full w-full max-w-full scale-105 object-cover"}
           width={100}
           height={100}
         />
