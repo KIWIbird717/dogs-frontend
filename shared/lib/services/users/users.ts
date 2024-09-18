@@ -8,13 +8,13 @@ export namespace UsersService {
    * GET /users/get-user
    */
   export const getUser = (userId: string) => {
-    return serverApi.get<any>(`/users/get-getUser/${userId}`);
+    return serverApi.get<UserApiTypes.GetMeResponseType>(`/users/get-getUser/${userId}`);
   };
   /**
    * GET /users/get-me
    */
   export const getMe = () => {
-    return serverApi.get<IUserSlice>("/users/get-me");
+    return serverApi.get<UserApiTypes.GetMeResponseType>("/users/get-me");
   };
 
   /**

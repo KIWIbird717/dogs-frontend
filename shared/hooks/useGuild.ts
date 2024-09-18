@@ -61,7 +61,7 @@ export const useGuild = () => {
     if (isMyGuild) {
       try {
         await GuildsService.leaveGuild();
-        dispatch(UserSlice.updateUser({ guild: null, guildName: null }));
+        dispatch(UserSlice.updateUser({ guild: undefined, guildName: null }));
         router.push("/guilds");
       } catch (error) {
         logger.error(error);

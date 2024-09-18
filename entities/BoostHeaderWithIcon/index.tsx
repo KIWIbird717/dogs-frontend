@@ -7,14 +7,14 @@ import { Block } from "@/widgets/Block";
 import { useAppSelector } from "@/shared/lib/redux-store/hooks";
 
 export const BoostHeaderWithIcon = () => {
-  const maxBoost = useAppSelector((store) => store.user.energyLimit);
-  const currentEnergy = useAppSelector((store) => store.user.currentBoost);
+  const energyLimit = useAppSelector((store) => store.user.boosts.energyLimit.energyLimit);
+  const currentEnergy = useAppSelector((store) => store.clicker.currentEnergy);
 
   return (
     <HeaderWithIcon
       title={"Boost"}
       icon={<RacketIcon />}
-      button={<Block icon={<EnergyIcon />} title={`${currentEnergy}/${maxBoost}`} />}
+      button={<Block icon={<EnergyIcon />} title={`${currentEnergy}/${energyLimit}`} />}
     />
   );
 };

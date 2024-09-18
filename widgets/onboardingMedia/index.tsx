@@ -48,7 +48,7 @@ export const OnboardingMedia: FC<IOnboardingMediaProps> = () => {
         await UsersService.createUser();
         sleep(1000); // fo sure user is created
         const me = await UsersService.getMe();
-        dispatch(UserSlice.setUser(me.data));
+        dispatch(UserSlice.updateUser(me.data));
       } catch (error) {
         logger.error(error);
       }

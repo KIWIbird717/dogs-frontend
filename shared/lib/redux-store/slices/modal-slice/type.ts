@@ -27,7 +27,7 @@ export interface IBoost {
   value?: number | null;
   boosts?: number;
   buttonTitle: string;
-  onClick: () => Promise<void>;
+  onClick: () => void | Promise<void>;
 }
 
 export interface IModalData {

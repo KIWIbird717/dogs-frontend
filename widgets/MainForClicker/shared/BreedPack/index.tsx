@@ -9,6 +9,8 @@ import { useLocalStorage } from "@/shared/hooks/useLocalStorage";
 import { cn } from "@/shared/lib/utils/cn";
 import { getRandomPosition } from "./shared/func/getRandomPosition";
 import { DAY_IN_MS, MAX_INTERVAL, MIN_INTERVAL, TOTAL_PRIZES } from "./shared/constants";
+import { useClicker } from "@/shared/hooks/useClicker/useClicker";
+import { ClickerSlice } from "@/shared/lib/redux-store/slices/clicker-slice/clickerSlice";
 
 const MotionButton = dynamic(() => import("framer-motion").then((mod) => mod.motion.button));
 
@@ -19,7 +21,7 @@ type BreedPackProps = {
 
 export const BreedPack: FC<BreedPackProps> = (props) => {
   const dispatch = useAppDispatch();
-  const maxBoost = useAppSelector((store) => store.user.energyLimit);
+  const energyLimit = useAppSelector((store) => store.user.boosts.energyLimit.energyLimit);
 
   // LocalStorage для хранения количества пойманных призов
   const [prizesCaught, setPrizesCaught] = useLocalStorage<number>("prizesCaught", 0);
@@ -64,7 +66,7 @@ export const BreedPack: FC<BreedPackProps> = (props) => {
     clearTimer();
     startRandomTimer(); // Запускаем таймер заново
     capturePrize();
-    dispatch(UserSlice.setCurrentBoost(maxBoost));
+    dispatch(ClickerSlice.setCurrentEnergy(energyLimit));
   };
 
   // Функция для показа приза

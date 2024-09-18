@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { useAppSelector } from "../../hooks";
-import { RootState, store } from "../../store";
+import { RootState } from "../../store";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
 import { GameSlice } from "../game-slice/gameSlice";
 import { GameServiceTypes } from "@/shared/lib/services/game/types";
+import { UserApiTypes } from "@/shared/lib/services/users/types";
 
 export namespace UserSlice {
   export type LastDailyRewardType = {
@@ -13,67 +13,20 @@ export namespace UserSlice {
     _id: string;
   };
 
-  export type IUserSlice = {
-    age?: number | null;
-    country?: string | null;
-    guild: string | null;
-    guildName: string | null;
-    energyLimit: number;
-    friendBonusTaken: Date;
-    //imageUrl: string
-    lastDailyReward: LastDailyRewardType;
-    rechargeMultiplication: number;
-    tapBotExpired: Date;
-    tapMultiplication: number;
-    telegram_id: number;
-
-    _id: string;
-    __v: number;
-    balance: number;
-    breedKey: string;
-    earnPerHour: number;
-    first_name: string;
-    lastOnline: Date;
-    level: number;
-    touches: number;
-    username: string;
-    doneTask: any[];
-    friends: any[];
-
-    currentBoost: number;
-
-    lastTap: Date | null;
-    eneryTankLeft: number | null;
-    rechargeEnergy: number | null;
-    turboBonusLeft: number | null;
-    turboBoostExpired: Date | null;
-
-    league: number;
-    leagueLevel: number;
-
-    avatar?: string;
-  };
+  export type IUserSlice = UserApiTypes.User;
 
   const initialState: IUserSlice = {
-    age: null,
-    country: null,
-    guild: null,
+    _id: "",
+    age: undefined,
+    country: undefined,
+    guild: undefined,
     guildName: null,
     lastDailyReward: {
       date: new Date(),
       value: 0,
-      _id: "0",
     },
-    //imageUrl: string
-    energyLimit: 0,
     friendBonusTaken: new Date(),
-    rechargeMultiplication: 0,
-    tapBotExpired: new Date(),
-    tapMultiplication: 0,
     telegram_id: 0,
-
-    _id: "0",
-    __v: 0,
     balance: 0,
     breedKey: "Husky",
     earnPerHour: 0,
@@ -82,21 +35,45 @@ export namespace UserSlice {
     level: 0,
     touches: 0,
     username: "User",
-    doneTask: [],
+    doneTasks: [],
     friends: [],
-
-    currentBoost: 500,
-
-    lastTap: null,
-    eneryTankLeft: null,
-    rechargeEnergy: null,
-    turboBonusLeft: null,
-    turboBoostExpired: null,
-
     league: 0,
-    leagueLevel: 0,
-
     avatar: undefined,
+    hasTelegramPremium: false,
+    rechargeEnergy: 0,
+    invitedBy: null,
+    boosts: {
+      multitap: {
+        tapMultiplication: 0,
+        energyClaimMultiplication: 0,
+        level: 0,
+        upgradePrice: 0,
+      },
+      energyLimit: {
+        level: 0,
+        upgradePrice: 0,
+        energyLimit: 0,
+      },
+      rechargingSpeed: {
+        level: 0,
+        energyRechargeMultiplication: 0,
+        upgradePrice: 0,
+      },
+      tapBot: {
+        price: 0,
+        activeFor: new Date(),
+      },
+      fullTank: {
+        fullTankLeft: 0,
+        availableToClaimIn: new Date(),
+      },
+      turbo: {
+        activeFor: new Date(),
+        turboLeft: 0,
+        multiplication: 0,
+      },
+    },
+    lastTap: new Date(),
   };
 
   export const userSlice = createSlice({
@@ -121,48 +98,18 @@ export namespace UserSlice {
       setLevel: (state, action: PayloadAction<IUserSlice["level"]>) => {
         state.level = action.payload;
       },
-      setCurrentBoost: (state, action: PayloadAction<IUserSlice["currentBoost"]>) => {
-        state.currentBoost = action.payload;
-      },
-      setUser: (state, action: PayloadAction<IUserSlice>) => {
-        state._id = action.payload._id;
-        state.__v = action.payload.__v;
-        state.balance = action.payload.balance;
-        state.breedKey = action.payload.breedKey;
-        state.earnPerHour = action.payload.earnPerHour;
-        state.first_name = action.payload.first_name;
-        state.lastOnline = action.payload.lastOnline;
-        state.level = action.payload.level;
-        state.touches = action.payload.touches;
-        state.username = action.payload.username;
-        state.doneTask = action.payload.doneTask;
-        state.friends = action.payload.friends;
-        state.age = action.payload.age;
-        state.country = action.payload.country;
-        state.guild = action.payload.guild;
-        state.guildName = action.payload.guildName;
-        state.energyLimit = action.payload.energyLimit;
-        state.friendBonusTaken = action.payload.friendBonusTaken;
-        state.lastDailyReward = action.payload.lastDailyReward;
-        state.rechargeMultiplication = action.payload.rechargeMultiplication;
-        state.tapBotExpired = action.payload.tapBotExpired;
-        state.tapMultiplication = action.payload.tapMultiplication;
-        state.telegram_id = action.payload.telegram_id;
-
-        state.lastTap = action.payload.lastTap;
-        state.eneryTankLeft = action.payload.eneryTankLeft;
-        state.rechargeEnergy = action.payload.rechargeEnergy;
-        state.turboBonusLeft = action.payload.turboBonusLeft;
-        state.turboBoostExpired = action.payload.turboBoostExpired;
-
-        state.league = action.payload.league;
-        state.leagueLevel = action.payload.leagueLevel;
-
-        state.avatar = action.payload.avatar;
-      },
-
       updateUser: (state, action: PayloadAction<Partial<IUserSlice>>) => {
         Object.assign(state, action.payload);
+      },
+      updateBoosts: <K extends keyof IUserSlice["boosts"]>(
+        state: IUserSlice,
+        action: PayloadAction<{ key: K; updates: Partial<IUserSlice["boosts"][K]> }>,
+      ) => {
+        const { key, updates } = action.payload;
+        state.boosts[key] = {
+          ...state.boosts[key],
+          ...updates,
+        };
       },
       /**
        * Добавление заработка пользователю
@@ -214,7 +161,7 @@ export namespace UserSlice {
           }
         }
 
-        // обновляем сразу и лигу и уровень, т.к. это одно и тоже
+        // 🟡🟡🟡 обновляем сразу и лигу и уровень, т.к. это одно и тоже 🟡🟡🟡
         state.level = userLevel;
         state.league = userLevel;
       },
@@ -240,7 +187,9 @@ export namespace UserSlice {
   );
 
   /**
-   * Ревалидация уровня пользователя
+   * Ревалидация уровня и лиги пользователя
+   * (ревалидируем сразу и лигу и уровень, т.к. в данный момент лига и уровень одинаковы и имеют одинаковою механику обновления,
+   * т.е. лига коррелирует уровню)
    * Проверка уровня пользователя в соответствии с его текущим балансом
    */
   export const revalidateLevel = createAsyncThunk(
@@ -260,11 +209,10 @@ export namespace UserSlice {
     setAge,
     setLevel,
     setBalance,
+    updateBoosts,
     setGuildName,
     setBreed,
     setCountry,
-    setUser,
-    setCurrentBoost,
     updateUser,
   } = userSlice.actions;
   export const userReducer = userSlice.reducer;

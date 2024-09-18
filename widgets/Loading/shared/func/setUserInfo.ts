@@ -4,5 +4,5 @@ import { UsersService } from "@/shared/lib/services/users/users";
 
 export const setUserInfo = async (dispatch: ReturnType<typeof useAppDispatch>) => {
   const { data } = await UsersService.getMe();
-  dispatch(UserSlice.setUser(data));
+  dispatch(UserSlice.updateUser(data));
 };

@@ -15,6 +15,7 @@ export function getTimeLeftUntil(endDate: Date): string {
   const days = duration.days || 0;
   const hours = duration.hours || 0;
   const minutes = duration.minutes || 0;
+  const seconds = duration.seconds || 0;
 
   let result = "";
 
@@ -28,6 +29,10 @@ export function getTimeLeftUntil(endDate: Date): string {
 
   if (minutes > 0) {
     result += `${minutes} minute${minutes > 1 ? "s" : ""}`;
+  }
+
+  if (seconds > 0) {
+    result += `${seconds} minute${seconds > 1 ? "s" : ""}`;
   }
 
   return result.trim(); // Убираем лишние пробелы

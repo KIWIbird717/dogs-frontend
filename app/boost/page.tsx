@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
-import { BoostBowl } from "@/widgets/BoostBowl";
+import { BoostBowl } from "@/features/BoostBowl";
 import { Gradient } from "@/shared/ui/Gradient";
 import { BoostHeaderWithIcon } from "@/entities/BoostHeaderWithIcon";
 

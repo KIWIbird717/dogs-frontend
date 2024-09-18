@@ -2,9 +2,8 @@ import { FC } from "react";
 import { Typography } from "@/shared/ui/Typography/Typography";
 import ArrowRightIcon from "@/public/images/svg/arrow-right.svg";
 import { Button } from "@/shared/ui/Button/Button";
-import { BoostBowlItemType } from "@/widgets/BoostBowl";
+import { BoostBowlItemType } from "@/features/BoostBowl";
 import { twMerge } from "tailwind-merge";
-import { BoostModal } from "../BoostBowl/shared/BoostModal";
 
 interface IBoostBowlItemProps {
   item: BoostBowlItemType;
@@ -35,8 +34,6 @@ export const BoostBowlItem: FC<IBoostBowlItemProps> = ({ item, className, disabl
           </div>
         </div>
       </Button>
-
-      {/* <BoostModal title={item.title} isOpen={false} /> */}
     </>
   );
 };

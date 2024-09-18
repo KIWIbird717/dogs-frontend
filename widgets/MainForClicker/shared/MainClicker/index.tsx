@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 
 export const MainClicker = () => {
   const [isPackModalOpen, setIsPackModalOpen] = useState(false);
-  const { clickEffects, handleClick, tabValue, maxBoost, boosts, earned, onMaxBoost } =
+  const { clickEffects, handleClick, tabValue, energyLimit, boosts, earned, onMaxBoost } =
     useClicker(true);
 
   const balance = useAppSelector((store) => store.user.balance);
@@ -53,7 +53,7 @@ export const MainClicker = () => {
       <EnergyBoost
         className="absolute bottom-[60px]"
         boosts={boosts}
-        maxBoost={maxBoost}
+        maxBoost={energyLimit}
         onMaxBoost={onMaxBoost}
       />
     </div>

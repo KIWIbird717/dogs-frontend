@@ -24,7 +24,13 @@ export type GuildResponseWithMembersType = {
   guildBalacne: null | number;
   image: string;
   membersCount: number;
-  members: IUserSlice[];
+  members: {
+    first_name: string;
+    username: string;
+    level: number;
+    balance: number;
+    role: string;
+  }[];
 };
 
 export namespace GuildsService {

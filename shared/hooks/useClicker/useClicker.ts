@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { useLocalStorage } from "../useLocalStorage";
 import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
+import { ClickerSlice } from "@/shared/lib/redux-store/slices/clicker-slice/clickerSlice";
 
 export interface ClickEffect {
   id: number;
@@ -20,27 +21,31 @@ const HZ_VARIABLE_NET_VREMENY_DEBAZHIT_NO_TAK_RABOTAET = 1;
 export const useClicker = (isSetInterval?: boolean) => {
   const dispatch = useAppDispatch();
   const logger = new Logger("useClicker");
-  const currentBoost = useAppSelector((store) => store.user.currentBoost);
-  const [boostsLS, setBoostsLS] = useLocalStorage<{
+  const currentEnergy = useAppSelector((store) => store.clicker.currentEnergy);
+
+  const [energyLS, setEnergyLS] = useLocalStorage<{
     boost: number;
     time: string;
   } | null>(LocalStorageKeys.Clicker, {
-    boost: currentBoost,
+    boost: currentEnergy,
     time: new Date().toString(),
   });
 
-  const energyLimit = useAppSelector((store) => store.user.energyLimit);
-  const rechargeMultiplication = useAppSelector((store) => store.user.rechargeMultiplication);
-  const tapMultiplication = useAppSelector((store) => store.user.tapMultiplication);
-  const tapBotExpired = useAppSelector((store) => store.user.tapBotExpired);
   const levels = useAppSelector((store) => store.game.levels);
   const balance = useAppSelector((store) => store.user.balance);
-  const turboBoostExpired = useAppSelector((store) => store.user.turboBoostExpired);
+
+  const energyLimit = useAppSelector((store) => store.user.boosts.energyLimit.energyLimit);
+  const rechargeMultiplication = useAppSelector(
+    (store) => store.user.boosts.rechargingSpeed.energyRechargeMultiplication,
+  );
+  const tapMultiplication = useAppSelector((store) => store.user.boosts.multitap);
+  const tapBotExpired = useAppSelector((store) => store.user.boosts.tapBot.activeFor);
+  const turboBoostExpired = useAppSelector((store) => store.user.boosts.turbo.activeFor);
 
   const isTurboBoostActive =
     new Date(turboBoostExpired || new Date()).getTime() > new Date().getTime();
 
-  const tabValue = 1 * rechargeMultiplication * tapMultiplication;
+  const tabValue = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
 
   const [state, setState] = useState({
     earned: 0,
@@ -49,23 +54,21 @@ export const useClicker = (isSetInterval?: boolean) => {
   const [clickEffects, setClickEffects] = useState<ClickEffect[]>([]);
   const [dateNow, setDateNow] = useState<number[]>([]);
 
-  const maxBoost = energyLimit;
-
   const calculateBoosts = useCallback(() => {
-    if (!boostsLS) return;
+    if (!energyLS) return;
 
     const currentTime = Date.now();
-    const timeElapsed = currentTime - parseInt(boostsLS.time, 10);
+    const timeElapsed = currentTime - parseInt(energyLS.time, 10);
     const boostsToAdd = Math.floor(timeElapsed / 1000) * 3;
 
-    const newBoost = Math.min(boostsLS.boost + boostsToAdd, maxBoost);
+    const newEnergy = Math.min(energyLS.boost + boostsToAdd, energyLimit);
 
-    if (newBoost > boostsLS.boost) {
-      dispatch(UserSlice.setCurrentBoost(newBoost));
-      setBoostsLS({ time: currentTime.toString(), boost: newBoost });
+    if (newEnergy > energyLS.boost) {
+      dispatch(ClickerSlice.setCurrentEnergy(newEnergy));
+      setEnergyLS({ time: currentTime.toString(), boost: newEnergy });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boostsLS, dispatch, maxBoost]);
+  }, [energyLS, dispatch, energyLimit]);
 
   useEffect(() => {
     calculateBoosts();
@@ -73,11 +76,11 @@ export const useClicker = (isSetInterval?: boolean) => {
   }, []);
 
   useEffect(() => {
-    if (boostsLS) {
-      dispatch(UserSlice.setCurrentBoost(boostsLS.boost));
+    if (energyLS) {
+      dispatch(ClickerSlice.setCurrentEnergy(energyLS.boost));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boostsLS]);
+  }, [energyLS]);
 
   const sendCoins = async (clickEffectValue: number, touches: number) => {
     try {
@@ -101,13 +104,13 @@ export const useClicker = (isSetInterval?: boolean) => {
 
   const onIncrementEarn = useCallback(
     async (dateNowValue: number) => {
-      if (boostsLS?.boost && boostsLS.boost > 1) {
+      if (energyLS?.boost && energyLS.boost > 1) {
         const newEarned = state.earned + tabValue * (isTurboBoostActive ? 5 : 1); // при активном turbo boost
         const newTouches = state.touches + 1;
 
         setState({ earned: newEarned, touches: newTouches });
-        setBoostsLS({ time: Date.now().toString(), boost: currentBoost - tabValue });
-        dispatch(UserSlice.setCurrentBoost(currentBoost - tabValue));
+        setEnergyLS({ time: Date.now().toString(), boost: currentEnergy - tabValue });
+        dispatch(ClickerSlice.setCurrentEnergy(currentEnergy));
         debouncedSendEarned(dateNowValue, newTouches);
 
         const currentBalance = balance + state.earned;
@@ -132,29 +135,29 @@ export const useClicker = (isSetInterval?: boolean) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentBoost, state.earned, state.touches, dispatch, debouncedSendEarned],
+    [currentEnergy, state.earned, state.touches, dispatch, debouncedSendEarned],
   );
 
   useEffect(() => {
-    if (!isSetInterval || currentBoost >= maxBoost) return;
+    if (!isSetInterval || currentEnergy >= energyLimit) return;
 
     const interval = setInterval(() => {
-      const energyIncome = 1 * rechargeMultiplication * tapMultiplication;
-      const newBoost = Math.min(currentBoost + energyIncome, maxBoost);
+      const energyIncome = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
+      const newBoost = Math.min(currentEnergy + energyIncome, energyLimit);
 
-      setBoostsLS({ time: Date.now().toString(), boost: newBoost });
-      dispatch(UserSlice.setCurrentBoost(newBoost));
+      setEnergyLS({ time: Date.now().toString(), boost: newBoost });
+      dispatch(ClickerSlice.setCurrentEnergy(newBoost));
     }, 1000);
 
     return () => clearInterval(interval);
   }, [
     isSetInterval,
-    currentBoost,
-    maxBoost,
+    currentEnergy,
+    energyLimit,
     rechargeMultiplication,
     tapMultiplication,
     dispatch,
-    setBoostsLS,
+    setEnergyLS,
   ]);
 
   const handleClick = useCallback(
@@ -163,8 +166,8 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       for (let index = 0; index <= event.touches.length; index++) {
         if (index >= 5) return;
-        const energyIncome = 1 * rechargeMultiplication * tapMultiplication;
-        if (boostsLS?.boost && boostsLS.boost < energyIncome + 1) return; // если не хватает энергии на тап
+        const energyIncome = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
+        if (energyLS?.boost && energyLS.boost < energyIncome + 1) return; // если не хватает энергии на тап
 
         const { currentTarget } = event;
         const { clientX, clientY } = event.changedTouches.item(index);
@@ -181,7 +184,7 @@ export const useClicker = (isSetInterval?: boolean) => {
         onIncrementEarn(dateNow[0]);
       }
     },
-    [boostsLS?.boost, dateNow, onIncrementEarn, rechargeMultiplication, tapMultiplication],
+    [energyLS?.boost, dateNow, onIncrementEarn, rechargeMultiplication, tapMultiplication],
   );
 
   /**
@@ -205,7 +208,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     if (!isTapbotActive) return;
 
     const interval = setInterval(() => {
-      if (currentBoost < tabValue) return; // если не хватает энергии на тап
+      if (currentEnergy < tabValue) return; // если не хватает энергии на тап
 
       const x = "50%";
       const y = "50%";
@@ -224,17 +227,17 @@ export const useClicker = (isSetInterval?: boolean) => {
   }, [dateNow, onIncrementEarn, tapBotExpired]);
 
   const onMaxBoost = useCallback(() => {
-    dispatch(UserSlice.setCurrentBoost(maxBoost));
-    setBoostsLS({
-      boost: maxBoost,
+    dispatch(ClickerSlice.setCurrentEnergy(energyLimit));
+    setEnergyLS({
+      boost: energyLimit,
       time: Date.now().toString(),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [maxBoost]);
+  }, [energyLimit]);
 
   return {
-    boosts: currentBoost,
-    maxBoost,
+    boosts: currentEnergy,
+    energyLimit,
     tabValue: tabValue * (isTurboBoostActive ? 5 : 1), // при активном турбо
     earned: state.earned,
     clickEffects,

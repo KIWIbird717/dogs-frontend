@@ -1,11 +1,77 @@
-import { UserSlice } from "../../redux-store/slices/user-slice/userSlice";
-
 /**
  * Partial - делать все типы внутри объекта необязательными
  * Omi - Исключение типа
  * Pick - выбор определенного типа
  */
 export namespace UserApiTypes {
+  export interface User {
+    _id: string;
+    telegram_id: number;
+    hasTelegramPremium: boolean;
+    age?: number;
+    country?: string;
+    first_name: string;
+    username: string;
+    guild?: string; // Идентификатор или объект Guild
+    guildName?: string | null;
+    friends: {
+      id: string;
+      isFirsBonusClaimed: boolean;
+      hasPremium: boolean;
+      lastBalance: number;
+    }[];
+    doneTasks: string[];
+    balance: number;
+    level: number;
+    rechargeEnergy: number;
+    friendBonusTaken: Date;
+    earnPerHour: number;
+    lastDailyReward: {
+      date: Date;
+      value: number;
+    };
+    lastTap: Date;
+    breedKey: string;
+    touches: number;
+    lastOnline?: Date;
+    league: number;
+    invitedBy?: string | null;
+    avatar?: string;
+    avatarId?: string;
+    avatarUpdateDate?: Date;
+    boosts: {
+      multitap: {
+        level: number;
+        tapMultiplication: number;
+        energyClaimMultiplication: number;
+        upgradePrice: number;
+      };
+      energyLimit: {
+        level: number;
+        upgradePrice: number;
+        energyLimit: number;
+      };
+      rechargingSpeed: {
+        level: number;
+        energyRechargeMultiplication: number;
+        upgradePrice: number;
+      };
+      tapBot: {
+        price: number;
+        activeFor: Date;
+      };
+      fullTank: {
+        fullTankLeft: number;
+        availableToClaimIn: Date;
+      };
+      turbo: {
+        activeFor: Date;
+        turboLeft: number;
+        multiplication: number;
+      };
+    };
+  }
+
   export type UserDto = {
     age: number;
     first_name: string;
@@ -41,18 +107,7 @@ export namespace UserApiTypes {
     TAP_BOT = "TAP_BOT",
   }
 
-  export type BoostResponse = {
-    boost: keyof typeof BoostName;
-    TURBO: Date;
-    turboBonusLeft: number;
-    FULL_TANK: boolean;
-    tankBonusLeft: number;
-    MULTITAP: number;
-    ENERY_LIMIT: number;
-    RECHAGE_SPEED: number;
-    TAP_BOT: Date;
-    balance: number;
-  };
+  export type BoostResponse = Pick<User, "boosts" | "balance">;
 
   export type DailyRewardResponse = {
     currentLevel: number;
@@ -70,10 +125,10 @@ export namespace UserApiTypes {
   export type MyFriendsResponse = {
     username: string;
     balance: number;
-    guild: null | string;
-    guildName: string | null;
-    league: number;
-    breedKey: string;
+    guild?: null | string;
+    guildName?: string | null;
+    league?: number;
+    breedKey?: string;
     level: number;
     avatar?: string;
   };
@@ -84,11 +139,11 @@ export namespace UserApiTypes {
 
   export type IAmFromInviteLinkResponse = {
     inviter: {
-      _id: UserSlice.Type["_id"];
-      username: UserSlice.Type["username"];
-      balance: UserSlice.Type["balance"];
-      level: UserSlice.Type["level"];
-      league: UserSlice.Type["league"];
+      _id: User["_id"];
+      username: User["username"];
+      balance: User["balance"];
+      level: User["level"];
+      league: User["league"];
     };
     timestamp: number;
   };
@@ -99,4 +154,6 @@ export namespace UserApiTypes {
     balance: number;
     avaliableTimer: number;
   };
+
+  export type GetMeResponseType = User;
 }
