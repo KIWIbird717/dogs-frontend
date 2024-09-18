@@ -1,8 +1,8 @@
 "use client";
 
-import { useOnlineUsersStats } from "@/shared/hooks/useOnlineUsersStats";
+import { useWsConnection } from "@/shared/hooks/useWsConnection";
 
 export const OnlineUsersHandler = () => {
-  useOnlineUsersStats();
+  useWsConnection();
   return null;
 };

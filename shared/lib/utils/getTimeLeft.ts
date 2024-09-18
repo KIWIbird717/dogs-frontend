@@ -1,6 +1,6 @@
 import { intervalToDuration } from "date-fns";
 
-export function getTimeLeftUntil(endDate: Date): string {
+export function getTimeLeftUntil(endDate: Date) {
   const now = new Date(); // Текущая дата и время
 
   // Если конечная дата в прошлом, возвращаем сообщение, что действие завершено
@@ -17,23 +17,42 @@ export function getTimeLeftUntil(endDate: Date): string {
   const minutes = duration.minutes || 0;
   const seconds = duration.seconds || 0;
 
+  let daysResult = ";";
+  let hoursResult = "";
+  let minutesResult = "";
+  let secondsResult = "";
+
   let result = "";
 
   if (days > 0) {
-    result += `${days} day${days > 1 ? "s" : ""} `;
+    const formatted = `${days} day${days > 1 ? "s" : ""} `;
+    result += formatted;
+    daysResult += formatted;
   }
 
   if (hours > 0) {
-    result += `${hours} hour${hours > 1 ? "s" : ""}`;
+    const formatted = `${hours} hour${hours > 1 ? "s" : ""}`;
+    result += formatted;
+    hoursResult += formatted;
   }
 
   if (minutes > 0) {
-    result += `${minutes} minute${minutes > 1 ? "s" : ""}`;
+    const formatted = `${minutes} minute${minutes > 1 ? "s" : ""}`;
+    result += formatted;
+    minutesResult += formatted;
   }
 
   if (seconds > 0) {
-    result += `${seconds} minute${seconds > 1 ? "s" : ""}`;
+    const formatted = `${seconds} seconds${seconds > 1 ? "s" : ""}`;
+    result += formatted;
+    secondsResult += formatted;
   }
 
-  return result.trim(); // Убираем лишние пробелы
+  return {
+    full: result.trim(),
+    days: daysResult.trim(),
+    hours: hoursResult.trim(),
+    minutes: minutesResult.trim(),
+    seconds: secondsResult.trim(),
+  };
 }

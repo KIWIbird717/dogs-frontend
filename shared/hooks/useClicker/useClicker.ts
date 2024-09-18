@@ -45,7 +45,7 @@ export const useClicker = (isSetInterval?: boolean) => {
   const isTurboBoostActive =
     new Date(turboBoostExpired || new Date()).getTime() > new Date().getTime();
 
-  const tabValue = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
+  const tabValue = 1 * tapMultiplication.tapMultiplication;
 
   const [state, setState] = useState({
     earned: 0,
@@ -142,7 +142,7 @@ export const useClicker = (isSetInterval?: boolean) => {
     if (!isSetInterval || currentEnergy >= energyLimit) return;
 
     const interval = setInterval(() => {
-      const energyIncome = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
+      const energyIncome = 1 * rechargeMultiplication;
       const newBoost = Math.min(currentEnergy + energyIncome, energyLimit);
 
       setEnergyLS({ time: Date.now().toString(), boost: newBoost });
@@ -166,8 +166,7 @@ export const useClicker = (isSetInterval?: boolean) => {
 
       for (let index = 0; index <= event.touches.length; index++) {
         if (index >= 5) return;
-        const energyIncome = 1 * rechargeMultiplication * tapMultiplication.tapMultiplication;
-        if (energyLS?.boost && energyLS.boost < energyIncome + 1) return; // если не хватает энергии на тап
+        if (energyLS?.boost && energyLS.boost < tabValue + 1) return; // если не хватает энергии на тап
 
         const { currentTarget } = event;
         const { clientX, clientY } = event.changedTouches.item(index);

@@ -16,7 +16,7 @@ import MultiTapImg from "@/public/images/svg/modal/boosts/multi-tap.svg";
 import EnergyLimitImg from "@/public/images/svg/modal/boosts/energy-limit.svg";
 import TapBotImg from "@/public/images/svg/modal/boosts/tap-bot.svg";
 import { useRouter } from "next/navigation";
-import { BoostsService } from "../func/boosts-service";
+import { BoostsService } from "../services/boosts-service";
 import { formatNumber } from "@/shared/lib/utils/formatNumber";
 import { useClicker } from "@/shared/hooks/useClicker/useClicker";
 import { useModal } from "@/shared/hooks/useModal";
@@ -62,6 +62,7 @@ export const useBoostsInfo = () => {
         boosts,
         onClick: () => {
           BoostsService.useFullTank(dispatch, () => {
+            onMaxBoost();
             router.push("/main");
           });
         },
@@ -135,9 +136,11 @@ export const useBoostsInfo = () => {
         icon: <BatteryIcon />,
         title: "Full Tank",
         description: `${user.boosts.fullTank.fullTankLeft}/3 in day`,
-        disabled: boosts >= energyLimit,
+        disabled:
+          boosts >= energyLimit ||
+          new Date(user.boosts.fullTank.availableToClaimIn).getTime() > Date.now(),
         onClick: () => {
-          if (energyLimit >= boosts) return;
+          if (boosts >= energyLimit) return;
           onOpenModal("boosts", { boost: boostsInfo[1] });
         },
       },
@@ -174,7 +177,7 @@ export const useBoostsInfo = () => {
       {
         icon: <ReloadIcon />,
         title: "Tap Bot",
-        description: "1 000 000 Coin in 8 hours",
+        description: "1 000 000 Coins for 8 hours",
         onClick: () => {
           onOpenModal("boosts", { boost: boostsInfo[5] });
         },

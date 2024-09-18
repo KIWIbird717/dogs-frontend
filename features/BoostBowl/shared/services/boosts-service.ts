@@ -31,8 +31,9 @@ export namespace BoostsService {
     if (!turboLeft) return;
 
     const response = await UsersService.boost(UserApiTypes.BoostName.TURBO);
+    const timeTillEnd = getTimeLeftUntil(new Date(response.data.boosts.turbo.activeFor));
     toast.success(
-      `Turbo active for ${getTimeLeftUntil(new Date(response.data.boosts.turbo.activeFor))}`,
+      `Turbo active for ${timeTillEnd === "expired" ? timeTillEnd : timeTillEnd.hours}`,
     );
 
     dispatch(UserSlice.updateBoosts({ key: "turbo", updates: response.data.boosts.turbo }));

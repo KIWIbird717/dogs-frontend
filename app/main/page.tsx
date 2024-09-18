@@ -6,6 +6,7 @@ import { InvitationHandler } from "@/entities/MainPage/InvitationHandler";
 import { usePreventOnSwipeWindowClose } from "@/shared/hooks/usePreventSwipeClose";
 import dynamic from "next/dynamic";
 import { Gradient } from "@/shared/ui/Gradient";
+import { useErudaDevTooling } from "@/shared/hooks/useErudaDevTooling";
 
 const MainForClicker = dynamic(
   () => import("@/widgets/MainForClicker").then((mod) => mod.MainForClicker),
@@ -14,6 +15,7 @@ const MainForClicker = dynamic(
 
 const MainPage = () => {
   usePreventOnSwipeWindowClose(true);
+  useErudaDevTooling();
 
   return (
     <View
