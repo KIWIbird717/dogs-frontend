@@ -4,14 +4,10 @@ import { Typography } from "@/shared/ui/Typography/Typography";
 import TickIcon from "@/public/images/svg/breed/tick.svg";
 
 interface IDaysProps {
-  level: number
+  level: number;
 }
 
-export const Days: FC<IDaysProps> = (
-  {
-    level
-  }
-) => {
+export const Days: FC<IDaysProps> = ({ level }) => {
   return (
     <div className={"flex w-full gap-2"}>
       {Array.from(Array(7)).map((_, index) => {

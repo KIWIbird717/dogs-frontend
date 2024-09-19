@@ -1,9 +1,13 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
-import { BoostBowl } from "@/features/BoostBowl";
 import { Gradient } from "@/shared/ui/Gradient";
 import { BoostHeaderWithIcon } from "@/entities/BoostHeaderWithIcon";
+import dynamic from "next/dynamic";
+
+const BoostBowl = dynamic(() => import("@/features/BoostBowl").then((mod) => mod.BoostBowl), {
+  ssr: false,
+});
 
 interface IBoostPageProps {}
 

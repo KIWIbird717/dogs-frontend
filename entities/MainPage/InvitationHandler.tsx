@@ -6,7 +6,7 @@ import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice"
 import { GuildsService } from "@/shared/lib/services/guilds/guilds";
 import { UsersService } from "@/shared/lib/services/users/users";
 import { Logger } from "@/shared/lib/utils/logger/Logger";
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 /**

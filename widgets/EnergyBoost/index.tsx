@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { EnergyButton } from "./shared/EnergyButton";
 import { BoostsButton } from "./shared/BoostsButton";
 import { cn } from "@/shared/lib/utils/cn";
-import { isNumber } from "@/shared/lib/utils/isNumber";
 import { getBoostHeight } from "./shared/func/getEnergyHeight";
 
 interface IEnergyBoostProps {

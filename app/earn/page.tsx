@@ -1,8 +1,10 @@
 import { NextPage } from "next";
 import { View } from "@/shared/layout/View";
 import { Navbar } from "@/widgets/Navbar";
-import { EarnTasks } from "@/features/EarnTasks";
 import { Gradient } from "@/shared/ui/Gradient";
+import dynamic from "next/dynamic";
+
+const EarnTasks = dynamic(() => import("@/features/EarnTasks").then((mod) => mod.EarnTasks));
 
 interface IEarnPageProps {}
 

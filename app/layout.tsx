@@ -10,7 +10,12 @@ import { usePreventZoom } from "@/shared/hooks/usePreventZoom";
 import { useOnTelegramWebAppRefresh } from "@/shared/hooks/useOnTelegramWebAppRefresh";
 import { Toaster } from "react-hot-toast";
 import { useOpenWebappWindow } from "@/shared/hooks/useOpenWebappWindow";
-import { OnlineUsersHandler } from "@/features/OnlineUsersHandler";
+import dynamic from "next/dynamic";
+
+const OnlineUsersHandler = dynamic(
+  () => import("@/features/OnlineUsersHandler").then((mod) => mod.OnlineUsersHandler),
+  { ssr: false },
+);
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 

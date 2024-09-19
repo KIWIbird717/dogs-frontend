@@ -16,10 +16,9 @@ import { useAppDispatch, useAppSelector } from "@/shared/lib/redux-store/hooks";
 import { cn } from "@/shared/lib/utils/cn";
 import { AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { UserSlice } from "@/shared/lib/redux-store/slices/user-slice/userSlice";
 import { useRouter } from "next/navigation";
-import { AxiosError } from "axios";
 
 const MotionImage = dynamic(() => import("framer-motion").then((mod) => mod.motion.img));
 
@@ -103,8 +102,6 @@ export const CreateGuildFields: FC<ICreateGuildFieldsProps> = () => {
       className={"z-[10] flex w-full flex-col gap-3 pb-[100px]"}
       onSubmit={handleSubmit(submitForm)}
     >
-      {/* <Toaster /> */}
-
       <Field.Input
         onChange={(e) => setValue("name", e.target.value, { shouldValidate: true })}
         type="text"

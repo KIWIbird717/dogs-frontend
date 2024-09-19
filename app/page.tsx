@@ -7,7 +7,6 @@ import { DuckBackground } from "@/widgets/DuckBackground";
 import { useTelegram } from "@/shared/hooks/useTelegram";
 import { useEffect } from "react";
 import { LocalStorageKeys } from "@/shared/constants/localstorage-keys";
-import { Logger } from "@/shared/lib/utils/logger/Logger";
 
 interface ILoadingPageProps {}
 

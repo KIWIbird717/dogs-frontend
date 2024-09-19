@@ -1,10 +1,5 @@
 import { FC } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionTrigger,
-  AccordionItem,
-} from "@/shared/ui/Accordion";
+import { AccordionContent, AccordionTrigger, AccordionItem } from "@/shared/ui/Accordion";
 import { Typography } from "@/shared/ui/Typography/Typography";
 
 interface IAccordionListItemProps {

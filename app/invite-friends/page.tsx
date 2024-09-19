@@ -50,10 +50,9 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
         fadeInOnLoad
         className="relative z-[2] flex h-screen w-full flex-col gap-4 overflow-x-hidden px-4 pt-6"
       >
-        {/* <Toaster /> */}
-        <HeaderWithIcon title={"Invite Friends"} icon={<PeopleIcon />} />
+        <HeaderWithIcon title="Invite Friends" icon={<PeopleIcon />} />
 
-        <div className={"flex h-full w-full flex-col gap-4"}>
+        <div className="flex h-full w-full flex-col gap-4">
           <InviteBanner />
 
           <div className={"z-[10] h-[56px] w-full"}>
@@ -70,7 +69,7 @@ const InviteFriends: NextPage<IInviteFriendsProps> = () => {
           </div>
 
           {!isShowBonus && (
-            <GuildPlayers title={"Friends"} classNameList={"pb-[190px]"} friends={friends} />
+            <GuildPlayers title={"Friends"} classNameList="pb-[190px]" friends={friends} />
           )}
           {isShowBonus && <Bonus />}
         </div>
