@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { EnergyButton } from "./shared/EnergyButton";
 import { BoostsButton } from "./shared/BoostsButton";
 import { cn } from "@/shared/lib/utils/cn";
+import { isNumber } from "@/shared/lib/utils/isNumber";
+import { getBoostHeight } from "./shared/func/getEnergyHeight";
 
 interface IEnergyBoostProps {
   boosts: number;
@@ -28,7 +30,12 @@ export const EnergyBoost: FC<IEnergyBoostProps> = ({ boosts, maxBoost, onMaxBoos
         icon={<EnergyIcon />}
         className="w-[155px]"
         title={
-          <span className="flex w-full justify-end text-[17px] font-bold tabular-nums leading-6 text-white-900">
+          <span
+            style={{
+              fontSize: getBoostHeight(maxBoost),
+            }}
+            className="flex w-full justify-end text-[17px] font-bold tabular-nums leading-6 text-white-900"
+          >
             {boosts}/{maxBoost}
           </span>
         }
